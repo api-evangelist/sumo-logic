@@ -1,0 +1,96 @@
+extends: [[spectral:oas, recommended]]
+
+rules:
+  # Sumo Logic uses versioned paths /v1/ and /v2/
+  sumo-logic-versioned-paths:
+    description: Sumo Logic API paths must be versioned with /v1/ or /v2/
+    message: "{{description}} - path '{{property}}' must start with /v1/ or /v2/"
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v[12]/"
+
+  # All operations must have summaries
+  sumo-logic-operation-summary-required:
+    description: All Sumo Logic operations must have a summary
+    message: "{{description}} - operation is missing a summary"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  # All operations must have an operationId
+  sumo-logic-operation-id-required:
+    description: All Sumo Logic operations must have an operationId
+    message: "{{description}} - operation is missing an operationId"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  # Sumo Logic uses camelCase operationIds
+  sumo-logic-operation-id-camel-case:
+    description: Sumo Logic operationIds should use camelCase
+    message: "{{description}} - '{{value}}' should use camelCase"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  # Basic authentication is required
+  sumo-logic-basic-auth:
+    description: Sumo Logic uses Basic authentication (accessId:accessKey)
+    message: "{{description}} - security scheme should reference basicAuth"
+    severity: warn
+    given: "$.components.securitySchemes"
+    then:
+      field: basicAuth
+      function: truthy
+
+  # All operations must have tags
+  sumo-logic-operation-tags-required:
+    description: All Sumo Logic operations must be tagged
+    message: "{{description}} - operation is missing tags"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  # Response error models should have errorCode
+  sumo-logic-error-response-code:
+    description: Sumo Logic error responses should include errorCode
+    message: "{{description}} - error response schema should include errorCode field"
+    severity: info
+    given: "$.components.schemas[?(@.properties.errorCode)]"
+    then:
+      field: properties.errorCode
+      function: truthy
+
+  # 200 responses for GET should have schema
+  sumo-logic-get-response-schema:
+    description: Sumo Logic GET operations should have a 200 response schema
+    message: "{{description}} - GET operation should return a schema"
+    severity: warn
+    given: "$.paths[*].get.responses['200']"
+    then:
+      field: content
+      function: truthy
+
+  # Pagination parameters should use standard names
+  sumo-logic-pagination-limit:
+    description: Sumo Logic uses 'limit' for pagination page size
+    message: "{{description}} - use 'limit' for pagination (not 'pageSize' or 'count')"
+    severity: info
+    given: "$.paths[*][*].parameters[?(@.name == 'pageSize' || @.name == 'count')]"
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        notMatch: "pageSize|count"

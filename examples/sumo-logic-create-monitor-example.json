@@ -1,0 +1,63 @@
+{
+  "operation": "Create A Monitor",
+  "description": "Example request/response for POST /v1/monitors",
+  "request": {
+    "method": "POST",
+    "url": "https://api.sumologic.com/api/v1/monitors",
+    "headers": {
+      "Authorization": "Basic BASE64_ENCODED_ACCESS_ID_COLON_ACCESS_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "High Error Rate Alert",
+      "description": "Alert when error rate exceeds 5% in a 5-minute window",
+      "monitorType": "Logs",
+      "queries": [
+        {
+          "rowId": "A",
+          "query": "_sourceCategory=prod/app/logs level=error | count"
+        }
+      ],
+      "triggers": [
+        {
+          "triggerType": "Critical",
+          "threshold": 100,
+          "thresholdType": "GreaterThan",
+          "timeRange": "-5m"
+        },
+        {
+          "triggerType": "ResolvedCritical",
+          "threshold": 100,
+          "thresholdType": "LessThanOrEqual",
+          "timeRange": "-5m"
+        }
+      ],
+      "notifications": [
+        {
+          "notification": {
+            "connectionType": "Email",
+            "recipients": ["oncall@example.com"],
+            "subject": "Sumo Logic Alert: {{Name}}",
+            "timeZone": "America/New_York"
+          },
+          "runForTriggerTypes": ["Critical", "ResolvedCritical"]
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "id": "0000000005D6E7F8",
+      "name": "High Error Rate Alert",
+      "description": "Alert when error rate exceeds 5% in a 5-minute window",
+      "monitorType": "Logs",
+      "isDisabled": false,
+      "status": ["Normal"],
+      "createdAt": "2026-05-02T15:00:00Z",
+      "modifiedAt": "2026-05-02T15:00:00Z",
+      "createdBy": "0000000001A2B3C4",
+      "modifiedBy": "0000000001A2B3C4"
+    }
+  }
+}

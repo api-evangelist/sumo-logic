@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.sumologic.com/schemas/user",
+  "title": "Sumo Logic User",
+  "description": "A user account in the Sumo Logic platform.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the user"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "First name of the user"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Last name of the user"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the user"
+    },
+    "roleIds": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of role IDs assigned to the user"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the user account is active"
+    },
+    "isLocked": {
+      "type": "boolean",
+      "description": "Whether the user account is locked"
+    },
+    "isMfaEnabled": {
+      "type": "boolean",
+      "description": "Whether multi-factor authentication is enabled"
+    },
+    "lastLoginTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the user's last login"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the user was created"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the user was last modified"
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "ID of the user who created this account"
+    },
+    "modifiedBy": {
+      "type": "string",
+      "description": "ID of the user who last modified this account"
+    }
+  },
+  "required": ["id", "firstName", "lastName", "email"],
+  "additionalProperties": false
+}

@@ -1,49 +1,73 @@
-# Sumo Logic (sumo-logic)
-The Role Management API allows you to manage roles from HTTP endpoints. To manage roles, you must have an administrator role or your role must have been ...
+# Sumo Logic
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/apis.yml)
+Sumo Logic is a cloud-native, machine data analytics platform delivering real-time, continuous intelligence for operations, security, and business insights. It provides a comprehensive REST API with 289 endpoints for log analytics, dashboards, monitors, alerts, users, roles, collectors, search jobs, metrics, and traces.
 
-## Scope
+## Links
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
-
-## Tags:
-
- - API
-
-## Timestamps
-
-- **Created:** 2025-01-08 
-- **Modified:** 2026-03-16 
+- [Website](https://www.sumologic.com/)
+- [Developer Portal](https://developer.sumologic.com/)
+- [API Documentation](https://help.sumologic.com/docs/api/)
+- [Interactive API Reference](https://api.sumologic.com/docs/)
+- [Getting Started](https://help.sumologic.com/docs/api/about-apis/getting-started/)
+- [Status](https://status.sumologic.com)
 
 ## APIs
 
-### Sumo Logic
-The Role Management API allows you to manage roles from HTTP endpoints. To manage roles, you must have an administrator role or your role must have been ...
+### Sumo Logic API
 
-**Human URL:** [https://help.sumologic.com/docs/api/](https://help.sumologic.com/docs/api/)
+Base URL: `https://api.{deployment}.sumologic.com/api/` (US1: `https://api.sumologic.com/api/`)
 
+Authentication: HTTP Basic Auth with Access ID and Access Key
 
-#### Tags:
+**289 endpoints across 54 resource domains including:**
+- **Account & User Management** — Users, roles, access keys, SAML, SCIM, password policy
+- **Log Analytics** — Search jobs, log searches, extraction rules, parsers, field management
+- **Dashboards** — Dashboard creation, panels, and sharing
+- **Monitors & Alerts** — Alerting monitors, SLOs, muting schedules
+- **Collectors & Sources** — Log collection configuration
+- **Content Management** — Folders, content, permissions
+- **Metrics** — Metric search, ingest budget management
+- **Traces** — Distributed tracing, span analytics, service maps
+- **Security** — Threat intelligence, data masking, SOAR connections
+- **Apps** — App catalog management
 
- - Logging, Observability, Security
+## Artifacts
 
-#### Properties
+### OpenAPI
 
-- [Documentation](https://help.sumologic.com/docs/api/)
-- [Reference](https://api.sumologic.com/docs/)
+- [sumo-logic-openapi.yml](openapi/sumo-logic-openapi.yml) — Complete OpenAPI 3.0 specification with 289 endpoints
 
-## Common Properties
+### Spectral Rules
 
-- [Portal](https://developer.sumologic.com/)
-- [Documentation](https://help.sumologic.com/docs/api/)
-- [Reference](https://api.sumologic.com/docs/)
-- [Website](https://www.sumologic.com/)
+- [sumo-logic-rules.yml](rules/sumo-logic-rules.yml) — Spectral ruleset enforcing Sumo Logic API conventions
+
+### Capabilities
+
+- [log-analytics-observability.yaml](capabilities/log-analytics-observability.yaml) — Workflow capability for log analytics, monitoring, and observability
+- [shared/sumo-logic.yaml](capabilities/shared/sumo-logic.yaml) — Per-API shared capability definition
+
+### JSON Schema
+
+- [sumo-logic-user-schema.json](json-schema/sumo-logic-user-schema.json) — JSON Schema for user resources
+- [sumo-logic-monitor-schema.json](json-schema/sumo-logic-monitor-schema.json) — JSON Schema for alerting monitors
+
+### JSON Structure
+
+- [sumo-logic-user-structure.json](json-structure/sumo-logic-user-structure.json) — Documented field structure for user resources
+
+### JSON-LD
+
+- [sumo-logic-context.jsonld](json-ld/sumo-logic-context.jsonld) — JSON-LD context mapping Sumo Logic vocabulary to schema.org
+
+### Examples
+
+- [sumo-logic-list-users-example.json](examples/sumo-logic-list-users-example.json) — Example list users request/response
+- [sumo-logic-create-monitor-example.json](examples/sumo-logic-create-monitor-example.json) — Example create monitor request/response
+
+### Vocabulary
+
+- [sumo-logic-vocabulary.yml](vocabulary/sumo-logic-vocabulary.yml) — Domain vocabulary for log analytics, observability, and security concepts
 
 ## Maintainers
 
-**FN:** Kin Lane
-
-**Email:** kin@apievangelist.com
+- **Kin Lane** — kin@apievangelist.com

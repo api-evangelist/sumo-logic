@@ -1,0 +1,295 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Sumo Logic Log Analytics and Observability"
+  description: >-
+    Workflow capability for DevOps and platform engineering teams using
+    Sumo Logic for log analytics, monitoring, alerting, and security observability.
+    Covers search jobs, dashboards, monitors, user management, and ingestion.
+  tags:
+    - Logging
+    - Observability
+    - Security
+    - Monitoring
+    - Analytics
+    - DevOps
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SUMO_LOGIC_ACCESS_ID: SUMO_LOGIC_ACCESS_ID
+      SUMO_LOGIC_ACCESS_KEY: SUMO_LOGIC_ACCESS_KEY
+
+capability:
+  consumes:
+    - import: sumo-logic
+      location: ./shared/sumo-logic.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: sumo-logic-observability-api
+      description: "Unified REST API for Sumo Logic log analytics and observability workflows."
+      resources:
+        - path: /v1/users
+          name: users
+          description: "User account management"
+          operations:
+            - method: GET
+              name: list-users
+              description: "List all users in the organization"
+              call: "sumo-logic.list-users"
+              with:
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-user
+              description: "Create a new user"
+              call: "sumo-logic.create-user"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/users/{id}
+          name: user
+          description: "Individual user management"
+          operations:
+            - method: GET
+              name: get-user
+              description: "Get a user by ID"
+              call: "sumo-logic.get-user"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-user
+              description: "Delete a user"
+              call: "sumo-logic.delete-user"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/roles
+          name: roles
+          description: "Role-based access control"
+          operations:
+            - method: GET
+              name: list-roles
+              description: "List all roles"
+              call: "sumo-logic.list-roles"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-role
+              description: "Create a new role"
+              call: "sumo-logic.create-role"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/monitors
+          name: monitors
+          description: "Alerting monitors"
+          operations:
+            - method: GET
+              name: list-monitors
+              description: "List all monitors"
+              call: "sumo-logic.list-monitors"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-monitor
+              description: "Create a new monitor"
+              call: "sumo-logic.create-monitor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v2/dashboards
+          name: dashboards
+          description: "Dashboard management"
+          operations:
+            - method: GET
+              name: list-dashboards
+              description: "List all dashboards"
+              call: "sumo-logic.list-dashboards"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-dashboard
+              description: "Create a new dashboard"
+              call: "sumo-logic.create-dashboard"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/search-jobs
+          name: search-jobs
+          description: "Log search execution"
+          operations:
+            - method: POST
+              name: create-search-job
+              description: "Run a log search query"
+              call: "sumo-logic.create-search-job"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/access-keys
+          name: access-keys
+          description: "Access key management"
+          operations:
+            - method: GET
+              name: list-access-keys
+              description: "List all access keys"
+              call: "sumo-logic.list-access-keys"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-access-key
+              description: "Create a new access key"
+              call: "sumo-logic.create-access-key"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: sumo-logic-observability-mcp
+      transport: http
+      description: "MCP server for AI-assisted log analytics and observability."
+      tools:
+        - name: list-users
+          description: "List all users in the Sumo Logic organization"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-users"
+          with:
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-user
+          description: "Get a specific Sumo Logic user by ID"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.get-user"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-user
+          description: "Create a new Sumo Logic user"
+          hints:
+            readOnly: false
+          call: "sumo-logic.create-user"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-user
+          description: "Delete a Sumo Logic user"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "sumo-logic.delete-user"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-roles
+          description: "List all roles for access control management"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-roles"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-role
+          description: "Create a new role with specific capabilities and filter predicates"
+          hints:
+            readOnly: false
+          call: "sumo-logic.create-role"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-monitors
+          description: "List all alerting monitors"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-monitors"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-monitor
+          description: "Create a new alerting monitor with query and trigger conditions"
+          hints:
+            readOnly: false
+          call: "sumo-logic.create-monitor"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-dashboards
+          description: "List all Sumo Logic dashboards"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-dashboards"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-dashboard
+          description: "Create a new observability dashboard"
+          hints:
+            readOnly: false
+          call: "sumo-logic.create-dashboard"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: run-log-search
+          description: "Execute a Sumo Logic log search query with time range"
+          hints:
+            readOnly: true
+            idempotent: false
+          call: "sumo-logic.create-search-job"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-access-keys
+          description: "List all API access keys"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-access-keys"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-access-key
+          description: "Create a new API access key"
+          hints:
+            readOnly: false
+          call: "sumo-logic.create-access-key"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-ingest-budgets
+          description: "List ingestion budgets for data volume management"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sumo-logic.list-ingest-budgets"
+          outputParameters:
+            - type: object
+              mapping: "$."

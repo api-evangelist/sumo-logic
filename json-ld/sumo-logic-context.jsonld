@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "sumo": "https://api.sumologic.com/vocab#",
+
+    "User": {
+      "@id": "sumo:User",
+      "@type": "@id",
+      "schema:sameAs": "schema:Person"
+    },
+    "Role": {
+      "@id": "sumo:Role",
+      "@type": "@id"
+    },
+    "Dashboard": {
+      "@id": "sumo:Dashboard",
+      "@type": "@id"
+    },
+    "Monitor": {
+      "@id": "sumo:Monitor",
+      "@type": "@id"
+    },
+    "SearchJob": {
+      "@id": "sumo:SearchJob",
+      "@type": "@id"
+    },
+    "AccessKey": {
+      "@id": "sumo:AccessKey",
+      "@type": "@id"
+    },
+    "IngestBudget": {
+      "@id": "sumo:IngestBudget",
+      "@type": "@id"
+    },
+    "Connection": {
+      "@id": "sumo:Connection",
+      "@type": "@id"
+    },
+
+    "id": "@id",
+    "name": "schema:name",
+    "description": "schema:description",
+    "email": "schema:email",
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "isActive": "sumo:isActive",
+    "isLocked": "sumo:isLocked",
+    "isMfaEnabled": "sumo:isMfaEnabled",
+    "roleIds": "sumo:roleIds",
+    "monitorType": "sumo:monitorType",
+    "status": "schema:status",
+    "queries": "sumo:queries",
+    "triggers": "sumo:triggers",
+    "createdAt": "schema:dateCreated",
+    "modifiedAt": "schema:dateModified",
+    "createdBy": "schema:author",
+    "lastLoginTimestamp": "sumo:lastLoginTimestamp"
+  }
+}

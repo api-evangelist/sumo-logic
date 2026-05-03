@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.sumologic.com/schemas/monitor",
+  "title": "Sumo Logic Monitor",
+  "description": "An alerting monitor in Sumo Logic that evaluates log or metric queries and triggers notifications.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the monitor"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the monitor"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what the monitor detects"
+    },
+    "monitorType": {
+      "type": "string",
+      "enum": ["Logs", "Metrics"],
+      "description": "Whether this monitor evaluates log queries or metrics"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "description": "Whether the monitor is currently disabled"
+    },
+    "status": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["Normal", "Critical", "Warning", "MissingData", "ResolvedCritical", "ResolvedWarning", "ResolvedMissingData"]
+      },
+      "description": "Current status conditions of the monitor"
+    },
+    "queries": {
+      "type": "array",
+      "description": "Log or metric queries evaluated by the monitor",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rowId": { "type": "string" },
+          "query": { "type": "string" }
+        }
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "description": "Trigger conditions that activate alerts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "triggerType": {
+            "type": "string",
+            "enum": ["Critical", "Warning", "MissingData", "ResolvedCritical", "ResolvedWarning", "ResolvedMissingData"]
+          },
+          "threshold": { "type": "number" },
+          "thresholdType": { "type": "string", "enum": ["GreaterThan", "GreaterThanOrEqual", "LessThan", "LessThanOrEqual"] },
+          "timeRange": { "type": "string" }
+        }
+      }
+    },
+    "notifications": {
+      "type": "array",
+      "description": "Notification channels for alerts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "notification": { "type": "object" },
+          "runForTriggerTypes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "createdBy": { "type": "string" },
+    "modifiedBy": { "type": "string" }
+  },
+  "required": ["id", "name", "monitorType"],
+  "additionalProperties": false
+}

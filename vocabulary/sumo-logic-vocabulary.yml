@@ -1,0 +1,168 @@
+vocabulary:
+  name: Sumo Logic Vocabulary
+  description: >-
+    Domain vocabulary for Sumo Logic, the cloud-native log analytics and
+    observability platform. Covers logging, security, monitoring, and data
+    management concepts.
+  version: '1.0'
+  created: '2026-05-02'
+  modified: '2026-05-02'
+  tags:
+    - Logging
+    - Observability
+    - Security
+    - Monitoring
+
+  terms:
+    - term: Access ID
+      definition: >-
+        The username portion of Sumo Logic API credentials, combined with an
+        Access Key to authenticate API requests via HTTP Basic Auth.
+      tags:
+        - Authentication
+        - Security
+
+    - term: Access Key
+      definition: >-
+        The password portion of Sumo Logic API credentials, shown only once
+        upon creation and used with the Access ID for API authentication.
+      tags:
+        - Authentication
+        - Security
+
+    - term: Collector
+      definition: >-
+        A Sumo Logic agent (Installed or Hosted) that receives log data and
+        forwards it to the Sumo Logic platform for ingestion and analysis.
+      tags:
+        - Ingestion
+        - Core Concept
+
+    - term: Source
+      definition: >-
+        A specific data stream configuration within a Collector that defines
+        where to read log data from (file, syslog, HTTP endpoint, cloud service).
+      tags:
+        - Ingestion
+        - Configuration
+
+    - term: Search Job
+      definition: >-
+        An asynchronous log search query submitted via the API, using Sumo
+        Logic's query language to analyze ingested log data across a time range.
+      tags:
+        - Analytics
+        - Search
+
+    - term: Dashboard
+      definition: >-
+        A visual display panel containing charts and panels that visualize
+        log analytics, metrics, and traces for operational insights.
+      tags:
+        - Visualization
+        - Observability
+
+    - term: Monitor
+      definition: >-
+        An automated alerting rule that evaluates log queries or metrics on a
+        schedule and triggers notifications when threshold conditions are met.
+      tags:
+        - Alerting
+        - Monitoring
+
+    - term: Role
+      definition: >-
+        A named set of capabilities and data access permissions assigned to
+        users for controlling what they can view and do in Sumo Logic.
+      tags:
+        - Access Control
+        - Security
+
+    - term: Ingest Budget
+      definition: >-
+        A configurable limit on the volume of log data ingested per day,
+        used to control costs and prevent unexpected data spikes.
+      tags:
+        - Administration
+        - Cost Management
+
+    - term: Partition
+      definition: >-
+        A named index subset of ingested data, used to improve search
+        performance by restricting queries to specific data subsets.
+      tags:
+        - Performance
+        - Data Management
+
+    - term: Field Extraction Rule
+      definition: >-
+        A named rule that automatically parses fields from log messages
+        at ingest time, making data searchable and usable in dashboards.
+      tags:
+        - Data Processing
+        - Parsing
+
+    - term: Scheduled View
+      definition: >-
+        A pre-aggregated data index built from a search query, enabling
+        faster dashboards and reports on high-volume data.
+      tags:
+        - Performance
+        - Analytics
+
+    - term: Lookup Table
+      definition: >-
+        A key-value data store that can be joined with log searches to
+        enrich log data with external reference data.
+      tags:
+        - Data Enrichment
+        - Analytics
+
+    - term: Log Level
+      definition: >-
+        The severity classification of a log message, typically one of
+        DEBUG, INFO, WARN, ERROR, FATAL — used in monitoring and alerting.
+      tags:
+        - Logging
+        - Taxonomy
+
+    - term: Deployment
+      definition: >-
+        A geographic region hosting a Sumo Logic instance, each with its own
+        API endpoint (e.g., US1, US2, AU, DE, EU, JP). API requests must use
+        the endpoint matching the account's deployment.
+      tags:
+        - Infrastructure
+        - Configuration
+
+    - term: SLO
+      definition: >-
+        Service Level Objective — a reliability target defined in Sumo Logic
+        for measuring and alerting on service health metrics and error budgets.
+      tags:
+        - Observability
+        - Reliability
+
+    - term: Trace
+      definition: >-
+        A distributed trace record captured via OpenTelemetry or other
+        tracing instrumentation, viewable in Sumo Logic's trace analytics.
+      tags:
+        - Observability
+        - Tracing
+
+    - term: Data Forwarding
+      definition: >-
+        A Sumo Logic feature for forwarding ingested log data to external
+        storage like Amazon S3 for long-term archival.
+      tags:
+        - Data Management
+        - Integration
+
+    - term: Transformation Rule
+      definition: >-
+        A rule that transforms or redacts log data at ingest time before
+        storage, used for data masking or normalization.
+      tags:
+        - Data Processing
+        - Security

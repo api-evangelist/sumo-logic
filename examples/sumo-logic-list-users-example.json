@@ -1,0 +1,35 @@
+{
+  "operation": "Get A List Of Users",
+  "description": "Example response from GET /v1/users",
+  "request": {
+    "method": "GET",
+    "url": "https://api.sumologic.com/api/v1/users?limit=10",
+    "headers": {
+      "Authorization": "Basic BASE64_ENCODED_ACCESS_ID_COLON_ACCESS_KEY",
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "id": "0000000001A2B3C4",
+          "firstName": "Jane",
+          "lastName": "Smith",
+          "email": "jane.smith@example.com",
+          "roleIds": ["0000000002B3C4D5"],
+          "isActive": true,
+          "isLocked": false,
+          "isMfaEnabled": true,
+          "lastLoginTimestamp": "2026-05-01T14:30:00Z",
+          "createdAt": "2025-03-15T09:00:00Z",
+          "modifiedAt": "2026-04-20T11:22:00Z",
+          "createdBy": "FFFFFFFFFFFFFFFF",
+          "modifiedBy": "FFFFFFFFFFFFFFFF"
+        }
+      ],
+      "next": null
+    }
+  }
+}
