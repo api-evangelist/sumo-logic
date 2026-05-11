@@ -64,6 +64,45 @@ common:
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
   - type: Status
     url: https://status.sumologic.com
+  - type: Integrations
+    url: https://www.sumologic.com/partners
+integrations:
+  - name: sumologic Homepage
+  - name: Dojo AI
+  - name: opentelemetry page
+  - name: Amazon Web Services – App Catalog
+  - name: Google Cloud Platform – App Catalog
+  - name: Microsoft Azure – App Catalog
+  - name: Bugcrowd
+  - name: language switcher
+  - name: icon peer networking icon RGB
+  - name: icon system integrators
+  - name: icon Velocity
+  - name: shi logo clr
+  - name: icon Guardian
+  - name: srg logo clr
+  - name: icon Collaborator
+  - name: logo channel pro
+  - name: logo mssp v2
+  - name: RSA 2026 Web thumb
+  - name: thumb Driving Customer Outcomes v4 1
+  - name: accelera
+  - name: logo activereach
+  - name: logo advantio 1
+  - name: logo Akoova
+  - name: logo alphaMountain 2 1
+  - name: logo
+  - name: logo Amber CyberEye
+  - name: logo aqua@x2 1
+  - name: logo ascension 1
+  - name: Auto
+  - name: logo Avalon Cyber Logo 2
+  - name: AWS partnerNetwork
+  - name: logo baidam 1
+  - name: AICPA SOC2
+  - name: FedRAMP
+  - name: PCI DSS Compliant
+  - name: COALFIRE
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
