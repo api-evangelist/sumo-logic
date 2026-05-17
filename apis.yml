@@ -62,7 +62,7 @@ common:
     url: https://www.sumologic.com/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: Status
+  - type: StatusPage
     url: https://status.sumologic.com
   - type: Integrations
     url: https://www.sumologic.com/partners
