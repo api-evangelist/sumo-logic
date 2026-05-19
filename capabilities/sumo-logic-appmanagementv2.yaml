@@ -1,0 +1,512 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — appManagementV2
+  description: 'Sumo Logic API — appManagementV2. 11 operations. Lead operation: List Apps. Self-contained Naftiko capability
+    covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - appManagementV2
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-appmanagementv2
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — appManagementV2 business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-apps
+      path: /v2/apps
+      operations:
+      - name: listappsv2
+        method: GET
+        description: List Apps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: Name of the app.
+        - name: author
+          in: query
+          type: string
+          description: Author of the app.
+    - name: v2-apps-install-jobId-status
+      path: /v2/apps/install/{jobId}/status
+      operations:
+      - name: getasyncinstallappstatus
+        method: GET
+        description: App Install Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: Identifier of the asynchronous job for installing the app.
+          required: true
+    - name: v2-apps-uninstall-jobId-status
+      path: /v2/apps/uninstall/{jobId}/status
+      operations:
+      - name: getasyncuninstallappstatus
+        method: GET
+        description: App Uninstall Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: Identifier of the asynchronous job for uninstalling the app.
+          required: true
+    - name: v2-apps-upgrade-jobId-status
+      path: /v2/apps/upgrade/{jobId}/status
+      operations:
+      - name: getasyncupgradeappstatus
+        method: GET
+        description: App Upgrade Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: Identifier of the asynchronous job for upgrading the app.
+          required: true
+    - name: v2-apps-uuid-details
+      path: /v2/apps/{uuid}/details
+      operations:
+      - name: getappdetails
+        method: GET
+        description: Get Details Of An App Version.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app.
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: Version of the app. The latest version is used if this is omitted or specified as "latest".
+    - name: v2-apps-uuid-install
+      path: /v2/apps/{uuid}/install
+      operations:
+      - name: asyncinstallapp
+        method: POST
+        description: Start App Install Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app to install.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-apps-uuid-subscription
+      path: /v2/apps/{uuid}/subscription
+      operations:
+      - name: getappnotificationsubscriptionstatus
+        method: GET
+        description: Get Subscription Status For The User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app.
+          required: true
+      - name: subscribetoappnotification
+        method: POST
+        description: Subscribe To An App Upgrade Notification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app to subscribe to.
+          required: true
+      - name: unsubscribefromappnotification
+        method: DELETE
+        description: Unsubscribe From An App Upgrade Notification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app to unsubscribe from.
+          required: true
+    - name: v2-apps-uuid-uninstall
+      path: /v2/apps/{uuid}/uninstall
+      operations:
+      - name: asyncuninstallapp
+        method: POST
+        description: Start App Uninstall Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app to uninstall.
+          required: true
+    - name: v2-apps-uuid-upgrade
+      path: /v2/apps/{uuid}/upgrade
+      operations:
+      - name: asyncupgradeapp
+        method: POST
+        description: Start App Upgrade Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uuid
+          in: path
+          type: string
+          description: UUID of the app to upgrade.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-appmanagementv2-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — appManagementV2. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/apps
+      name: v2-apps
+      description: REST surface for v2-apps.
+      operations:
+      - method: GET
+        name: listappsv2
+        description: List Apps
+        call: sumo-logic-appmanagementv2.listappsv2
+        with:
+          name: rest.name
+          author: rest.author
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/install/{jobid}/status
+      name: v2-apps-install-jobid-status
+      description: REST surface for v2-apps-install-jobId-status.
+      operations:
+      - method: GET
+        name: getasyncinstallappstatus
+        description: App Install Job Status
+        call: sumo-logic-appmanagementv2.getasyncinstallappstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/uninstall/{jobid}/status
+      name: v2-apps-uninstall-jobid-status
+      description: REST surface for v2-apps-uninstall-jobId-status.
+      operations:
+      - method: GET
+        name: getasyncuninstallappstatus
+        description: App Uninstall Job Status
+        call: sumo-logic-appmanagementv2.getasyncuninstallappstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/upgrade/{jobid}/status
+      name: v2-apps-upgrade-jobid-status
+      description: REST surface for v2-apps-upgrade-jobId-status.
+      operations:
+      - method: GET
+        name: getasyncupgradeappstatus
+        description: App Upgrade Job Status
+        call: sumo-logic-appmanagementv2.getasyncupgradeappstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/{uuid}/details
+      name: v2-apps-uuid-details
+      description: REST surface for v2-apps-uuid-details.
+      operations:
+      - method: GET
+        name: getappdetails
+        description: Get Details Of An App Version.
+        call: sumo-logic-appmanagementv2.getappdetails
+        with:
+          uuid: rest.uuid
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/{uuid}/install
+      name: v2-apps-uuid-install
+      description: REST surface for v2-apps-uuid-install.
+      operations:
+      - method: POST
+        name: asyncinstallapp
+        description: Start App Install Job
+        call: sumo-logic-appmanagementv2.asyncinstallapp
+        with:
+          uuid: rest.uuid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/{uuid}/subscription
+      name: v2-apps-uuid-subscription
+      description: REST surface for v2-apps-uuid-subscription.
+      operations:
+      - method: GET
+        name: getappnotificationsubscriptionstatus
+        description: Get Subscription Status For The User
+        call: sumo-logic-appmanagementv2.getappnotificationsubscriptionstatus
+        with:
+          uuid: rest.uuid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: subscribetoappnotification
+        description: Subscribe To An App Upgrade Notification
+        call: sumo-logic-appmanagementv2.subscribetoappnotification
+        with:
+          uuid: rest.uuid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: unsubscribefromappnotification
+        description: Unsubscribe From An App Upgrade Notification
+        call: sumo-logic-appmanagementv2.unsubscribefromappnotification
+        with:
+          uuid: rest.uuid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/{uuid}/uninstall
+      name: v2-apps-uuid-uninstall
+      description: REST surface for v2-apps-uuid-uninstall.
+      operations:
+      - method: POST
+        name: asyncuninstallapp
+        description: Start App Uninstall Job
+        call: sumo-logic-appmanagementv2.asyncuninstallapp
+        with:
+          uuid: rest.uuid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/apps/{uuid}/upgrade
+      name: v2-apps-uuid-upgrade
+      description: REST surface for v2-apps-uuid-upgrade.
+      operations:
+      - method: POST
+        name: asyncupgradeapp
+        description: Start App Upgrade Job
+        call: sumo-logic-appmanagementv2.asyncupgradeapp
+        with:
+          uuid: rest.uuid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-appmanagementv2-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — appManagementV2. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-apps
+      description: List Apps
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.listappsv2
+      with:
+        name: tools.name
+        author: tools.author
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: app-install-job-status
+      description: App Install Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.getasyncinstallappstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: app-uninstall-job-status
+      description: App Uninstall Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.getasyncuninstallappstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: app-upgrade-job-status
+      description: App Upgrade Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.getasyncupgradeappstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-app-version
+      description: Get Details Of An App Version.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.getappdetails
+      with:
+        uuid: tools.uuid
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-app-install-job
+      description: Start App Install Job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-appmanagementv2.asyncinstallapp
+      with:
+        uuid: tools.uuid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-subscription-status-user
+      description: Get Subscription Status For The User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-appmanagementv2.getappnotificationsubscriptionstatus
+      with:
+        uuid: tools.uuid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: subscribe-app-upgrade-notification
+      description: Subscribe To An App Upgrade Notification
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-appmanagementv2.subscribetoappnotification
+      with:
+        uuid: tools.uuid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unsubscribe-app-upgrade-notification
+      description: Unsubscribe From An App Upgrade Notification
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-appmanagementv2.unsubscribefromappnotification
+      with:
+        uuid: tools.uuid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-app-uninstall-job
+      description: Start App Uninstall Job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-appmanagementv2.asyncuninstallapp
+      with:
+        uuid: tools.uuid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-app-upgrade-job
+      description: Start App Upgrade Job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-appmanagementv2.asyncupgradeapp
+      with:
+        uuid: tools.uuid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

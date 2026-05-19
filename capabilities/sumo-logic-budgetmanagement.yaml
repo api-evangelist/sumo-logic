@@ -1,0 +1,333 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — budgetManagement
+  description: 'Sumo Logic API — budgetManagement. 7 operations. Lead operation: Get Budgets. Self-contained Naftiko capability
+    covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - budgetManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-budgetmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — budgetManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-budgets
+      path: /v1/budgets
+      operations:
+      - name: getbudgets
+        method: GET
+        description: Get Budgets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of budgets returned in the response. The number of budgets returned may be less than
+            the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createbudget
+        method: POST
+        description: Creates A Budget Definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-budgets-usage
+      path: /v1/budgets/usage
+      operations:
+      - name: getbudgetusages
+        method: GET
+        description: Get Budget Usages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of budget usages returned in the response. The number of budget usages returned may
+            be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+    - name: v1-budgets-budgetId
+      path: /v1/budgets/{budgetId}
+      operations:
+      - name: getbudget
+        method: GET
+        description: Get Budget
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: budgetId
+          in: path
+          type: string
+          description: The id of the budget.
+          required: true
+      - name: updatebudget
+        method: PUT
+        description: Update Budget
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: budgetId
+          in: path
+          type: string
+          description: The id of the budget.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletebudget
+        method: DELETE
+        description: Delete Budget
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: budgetId
+          in: path
+          type: string
+          description: The id of the budget.
+          required: true
+    - name: v1-budgets-budgetId-usage
+      path: /v1/budgets/{budgetId}/usage
+      operations:
+      - name: getbudgetusage
+        method: GET
+        description: Get Budget Usage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: budgetId
+          in: path
+          type: string
+          description: The id of the budget.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-budgetmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — budgetManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/budgets
+      name: v1-budgets
+      description: REST surface for v1-budgets.
+      operations:
+      - method: GET
+        name: getbudgets
+        description: Get Budgets
+        call: sumo-logic-budgetmanagement.getbudgets
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbudget
+        description: Creates A Budget Definition
+        call: sumo-logic-budgetmanagement.createbudget
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/budgets/usage
+      name: v1-budgets-usage
+      description: REST surface for v1-budgets-usage.
+      operations:
+      - method: GET
+        name: getbudgetusages
+        description: Get Budget Usages
+        call: sumo-logic-budgetmanagement.getbudgetusages
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/budgets/{budgetid}
+      name: v1-budgets-budgetid
+      description: REST surface for v1-budgets-budgetId.
+      operations:
+      - method: GET
+        name: getbudget
+        description: Get Budget
+        call: sumo-logic-budgetmanagement.getbudget
+        with:
+          budgetId: rest.budgetId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatebudget
+        description: Update Budget
+        call: sumo-logic-budgetmanagement.updatebudget
+        with:
+          budgetId: rest.budgetId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletebudget
+        description: Delete Budget
+        call: sumo-logic-budgetmanagement.deletebudget
+        with:
+          budgetId: rest.budgetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/budgets/{budgetid}/usage
+      name: v1-budgets-budgetid-usage
+      description: REST surface for v1-budgets-budgetId-usage.
+      operations:
+      - method: GET
+        name: getbudgetusage
+        description: Get Budget Usage
+        call: sumo-logic-budgetmanagement.getbudgetusage
+        with:
+          budgetId: rest.budgetId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-budgetmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — budgetManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-budgets
+      description: Get Budgets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-budgetmanagement.getbudgets
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-budget-definition
+      description: Creates A Budget Definition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-budgetmanagement.createbudget
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-budget-usages
+      description: Get Budget Usages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-budgetmanagement.getbudgetusages
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-budget
+      description: Get Budget
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-budgetmanagement.getbudget
+      with:
+        budgetId: tools.budgetId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-budget
+      description: Update Budget
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-budgetmanagement.updatebudget
+      with:
+        budgetId: tools.budgetId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-budget
+      description: Delete Budget
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-budgetmanagement.deletebudget
+      with:
+        budgetId: tools.budgetId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-budget-usage
+      description: Get Budget Usage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-budgetmanagement.getbudgetusage
+      with:
+        budgetId: tools.budgetId
+      outputParameters:
+      - type: object
+        mapping: $.

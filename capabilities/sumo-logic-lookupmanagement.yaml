@@ -1,0 +1,444 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — lookupManagement
+  description: 'Sumo Logic API — lookupManagement. 9 operations. Lead operation: Create A Lookup Table.. Self-contained Naftiko
+    capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - lookupManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-lookupmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — lookupManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-lookupTables
+      path: /v1/lookupTables
+      operations:
+      - name: createtable
+        method: POST
+        description: Create A Lookup Table.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-lookupTables-jobs-jobId-status
+      path: /v1/lookupTables/jobs/{jobId}/status
+      operations:
+      - name: requestjobstatus
+        method: GET
+        description: Get The Status Of An Async Job.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: An identifier returned in response to an asynchronous request.
+          required: true
+    - name: v1-lookupTables-id
+      path: /v1/lookupTables/{id}
+      operations:
+      - name: lookuptablebyid
+        method: GET
+        description: Get A Lookup Table.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table.
+          required: true
+      - name: updatetable
+        method: PUT
+        description: Edit A Lookup Table.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletetable
+        method: DELETE
+        description: Delete A Lookup Table.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table.
+          required: true
+    - name: v1-lookupTables-id-deleteTableRow
+      path: /v1/lookupTables/{id}/deleteTableRow
+      operations:
+      - name: deletetablerow
+        method: PUT
+        description: Delete A Lookup Table Row.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-lookupTables-id-row
+      path: /v1/lookupTables/{id}/row
+      operations:
+      - name: updatetablerow
+        method: PUT
+        description: Insert Or Update A Lookup Table Row.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-lookupTables-id-truncate
+      path: /v1/lookupTables/{id}/truncate
+      operations:
+      - name: truncatetable
+        method: POST
+        description: Empty A Lookup Table.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the table to clear.
+          required: true
+    - name: v1-lookupTables-id-upload
+      path: /v1/lookupTables/{id}/upload
+      operations:
+      - name: uploadfile
+        method: POST
+        description: Upload A CSV File.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the lookup table to populate.
+          required: true
+        - name: merge
+          in: query
+          type: boolean
+          description: This indicates whether the file contents will be merged with existing data in the lookup table or not.
+            If this is true then data with the same primary keys will
+        - name: fileEncoding
+          in: query
+          type: string
+          description: File encoding of file being uploaded.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-lookupmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — lookupManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/lookuptables
+      name: v1-lookuptables
+      description: REST surface for v1-lookupTables.
+      operations:
+      - method: POST
+        name: createtable
+        description: Create A Lookup Table.
+        call: sumo-logic-lookupmanagement.createtable
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/jobs/{jobid}/status
+      name: v1-lookuptables-jobs-jobid-status
+      description: REST surface for v1-lookupTables-jobs-jobId-status.
+      operations:
+      - method: GET
+        name: requestjobstatus
+        description: Get The Status Of An Async Job.
+        call: sumo-logic-lookupmanagement.requestjobstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/{id}
+      name: v1-lookuptables-id
+      description: REST surface for v1-lookupTables-id.
+      operations:
+      - method: GET
+        name: lookuptablebyid
+        description: Get A Lookup Table.
+        call: sumo-logic-lookupmanagement.lookuptablebyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetable
+        description: Edit A Lookup Table.
+        call: sumo-logic-lookupmanagement.updatetable
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetable
+        description: Delete A Lookup Table.
+        call: sumo-logic-lookupmanagement.deletetable
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/{id}/deletetablerow
+      name: v1-lookuptables-id-deletetablerow
+      description: REST surface for v1-lookupTables-id-deleteTableRow.
+      operations:
+      - method: PUT
+        name: deletetablerow
+        description: Delete A Lookup Table Row.
+        call: sumo-logic-lookupmanagement.deletetablerow
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/{id}/row
+      name: v1-lookuptables-id-row
+      description: REST surface for v1-lookupTables-id-row.
+      operations:
+      - method: PUT
+        name: updatetablerow
+        description: Insert Or Update A Lookup Table Row.
+        call: sumo-logic-lookupmanagement.updatetablerow
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/{id}/truncate
+      name: v1-lookuptables-id-truncate
+      description: REST surface for v1-lookupTables-id-truncate.
+      operations:
+      - method: POST
+        name: truncatetable
+        description: Empty A Lookup Table.
+        call: sumo-logic-lookupmanagement.truncatetable
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/lookuptables/{id}/upload
+      name: v1-lookuptables-id-upload
+      description: REST surface for v1-lookupTables-id-upload.
+      operations:
+      - method: POST
+        name: uploadfile
+        description: Upload A CSV File.
+        call: sumo-logic-lookupmanagement.uploadfile
+        with:
+          id: rest.id
+          merge: rest.merge
+          fileEncoding: rest.fileEncoding
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-lookupmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — lookupManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-lookup-table
+      description: Create A Lookup Table.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-lookupmanagement.createtable
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-status-async-job
+      description: Get The Status Of An Async Job.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-lookupmanagement.requestjobstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-lookup-table
+      description: Get A Lookup Table.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-lookupmanagement.lookuptablebyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: edit-lookup-table
+      description: Edit A Lookup Table.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-lookupmanagement.updatetable
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-lookup-table
+      description: Delete A Lookup Table.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-lookupmanagement.deletetable
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-lookup-table-row
+      description: Delete A Lookup Table Row.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-lookupmanagement.deletetablerow
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: insert-update-lookup-table-row
+      description: Insert Or Update A Lookup Table Row.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-lookupmanagement.updatetablerow
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: empty-lookup-table
+      description: Empty A Lookup Table.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-lookupmanagement.truncatetable
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-csv-file
+      description: Upload A CSV File.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-lookupmanagement.uploadfile
+      with:
+        id: tools.id
+        merge: tools.merge
+        fileEncoding: tools.fileEncoding
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

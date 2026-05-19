@@ -1,0 +1,498 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — userManagement
+  description: 'Sumo Logic API — userManagement. 10 operations. Lead operation: Get A List Of Users.. Self-contained Naftiko
+    capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - userManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-usermanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — userManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-users
+      path: /v1/users
+      operations:
+      - name: listusers
+        method: GET
+        description: Get A List Of Users.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of users returned in the response. The number of users returned may be less than the
+            `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+        - name: sortBy
+          in: query
+          type: string
+          description: Sort the list of users by the `firstName`, `lastName`, or `email` field.
+        - name: email
+          in: query
+          type: string
+          description: Find user with the given email address.
+        - name: includeServiceAccounts
+          in: query
+          type: boolean
+          description: Include service accounts while listing users within the organization.
+      - name: createuser
+        method: POST
+        description: Create A New User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-users-id
+      path: /v1/users/{id}
+      operations:
+      - name: getuser
+        method: GET
+        description: Get A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of user to return.
+          required: true
+      - name: updateuser
+        method: PUT
+        description: Update A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteuser
+        method: DELETE
+        description: Delete A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to delete.
+          required: true
+        - name: transferTo
+          in: query
+          type: string
+          description: 'Identifier of the user to receive the transfer of content from the deleted user. <br> **Note:** If
+            `deleteContent` is not set to `true`, and no user identifier '
+        - name: deleteContent
+          in: query
+          type: boolean
+          description: 'Whether to delete content from the deleted user or not. <br> **Warning:** If `deleteContent` is set
+            to `true`, all of the content for the user being deleted is '
+    - name: v1-users-id-email-requestChange
+      path: /v1/users/{id}/email/requestChange
+      operations:
+      - name: requestchangeemail
+        method: POST
+        description: Change Email Address.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to change email address.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-users-id-mfa-disable
+      path: /v1/users/{id}/mfa/disable
+      operations:
+      - name: disablemfa
+        method: PUT
+        description: Disable MFA For User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to disable MFA for.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-users-id-password-reset
+      path: /v1/users/{id}/password/reset
+      operations:
+      - name: resetpassword
+        method: POST
+        description: Reset Password.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to reset password.
+          required: true
+    - name: v1-users-id-resendWelcomeEmail
+      path: /v1/users/{id}/resendWelcomeEmail
+      operations:
+      - name: resendwelcomeemail
+        method: POST
+        description: Resend Verification Email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the user to resend the welcome email.
+          required: true
+    - name: v1-users-id-unlock
+      path: /v1/users/{id}/unlock
+      operations:
+      - name: unlockuser
+        method: POST
+        description: Unlock A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The id of the user that needs to be unlocked.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-usermanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — userManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/users
+      name: v1-users
+      description: REST surface for v1-users.
+      operations:
+      - method: GET
+        name: listusers
+        description: Get A List Of Users.
+        call: sumo-logic-usermanagement.listusers
+        with:
+          limit: rest.limit
+          token: rest.token
+          sortBy: rest.sortBy
+          email: rest.email
+          includeServiceAccounts: rest.includeServiceAccounts
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createuser
+        description: Create A New User.
+        call: sumo-logic-usermanagement.createuser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}
+      name: v1-users-id
+      description: REST surface for v1-users-id.
+      operations:
+      - method: GET
+        name: getuser
+        description: Get A User.
+        call: sumo-logic-usermanagement.getuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateuser
+        description: Update A User.
+        call: sumo-logic-usermanagement.updateuser
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteuser
+        description: Delete A User.
+        call: sumo-logic-usermanagement.deleteuser
+        with:
+          id: rest.id
+          transferTo: rest.transferTo
+          deleteContent: rest.deleteContent
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}/email/requestchange
+      name: v1-users-id-email-requestchange
+      description: REST surface for v1-users-id-email-requestChange.
+      operations:
+      - method: POST
+        name: requestchangeemail
+        description: Change Email Address.
+        call: sumo-logic-usermanagement.requestchangeemail
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}/mfa/disable
+      name: v1-users-id-mfa-disable
+      description: REST surface for v1-users-id-mfa-disable.
+      operations:
+      - method: PUT
+        name: disablemfa
+        description: Disable MFA For User.
+        call: sumo-logic-usermanagement.disablemfa
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}/password/reset
+      name: v1-users-id-password-reset
+      description: REST surface for v1-users-id-password-reset.
+      operations:
+      - method: POST
+        name: resetpassword
+        description: Reset Password.
+        call: sumo-logic-usermanagement.resetpassword
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}/resendwelcomeemail
+      name: v1-users-id-resendwelcomeemail
+      description: REST surface for v1-users-id-resendWelcomeEmail.
+      operations:
+      - method: POST
+        name: resendwelcomeemail
+        description: Resend Verification Email.
+        call: sumo-logic-usermanagement.resendwelcomeemail
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{id}/unlock
+      name: v1-users-id-unlock
+      description: REST surface for v1-users-id-unlock.
+      operations:
+      - method: POST
+        name: unlockuser
+        description: Unlock A User.
+        call: sumo-logic-usermanagement.unlockuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-usermanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — userManagement. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-list-users
+      description: Get A List Of Users.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-usermanagement.listusers
+      with:
+        limit: tools.limit
+        token: tools.token
+        sortBy: tools.sortBy
+        email: tools.email
+        includeServiceAccounts: tools.includeServiceAccounts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-user
+      description: Create A New User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-usermanagement.createuser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user
+      description: Get A User.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-usermanagement.getuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-user
+      description: Update A User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-usermanagement.updateuser
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-user
+      description: Delete A User.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-usermanagement.deleteuser
+      with:
+        id: tools.id
+        transferTo: tools.transferTo
+        deleteContent: tools.deleteContent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: change-email-address
+      description: Change Email Address.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-usermanagement.requestchangeemail
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-mfa-user
+      description: Disable MFA For User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-usermanagement.disablemfa
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reset-password
+      description: Reset Password.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-usermanagement.resetpassword
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resend-verification-email
+      description: Resend Verification Email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-usermanagement.resendwelcomeemail
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unlock-user
+      description: Unlock A User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-usermanagement.unlockuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

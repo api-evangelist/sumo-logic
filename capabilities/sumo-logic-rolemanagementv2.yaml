@@ -1,0 +1,345 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — roleManagementV2
+  description: 'Sumo Logic API — roleManagementV2. 7 operations. Lead operation: Get A List Of Roles.. Self-contained Naftiko
+    capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - roleManagementV2
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-rolemanagementv2
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — roleManagementV2 business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-roles
+      path: /v2/roles
+      operations:
+      - name: listrolesv2
+        method: GET
+        description: Get A List Of Roles.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of roles returned in the response. The number of roles returned may be less than the
+            `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+        - name: sortBy
+          in: query
+          type: string
+          description: Sort the list of roles by the `name` field.
+        - name: name
+          in: query
+          type: string
+          description: Only return roles matching the given name.
+      - name: createrolev2
+        method: POST
+        description: Create A New Role.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-roles-id
+      path: /v2/roles/{id}
+      operations:
+      - name: getrolev2
+        method: GET
+        description: Get A Role.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the role to fetch.
+          required: true
+      - name: updaterolev2
+        method: PUT
+        description: Update A Role.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the role to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleterolev2
+        method: DELETE
+        description: Delete A Role.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the role to delete.
+          required: true
+    - name: v2-roles-roleId-users-userId
+      path: /v2/roles/{roleId}/users/{userId}
+      operations:
+      - name: assignroletouserv2
+        method: PUT
+        description: Assign A Role To A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: roleId
+          in: path
+          type: string
+          description: Identifier of the role to assign.
+          required: true
+        - name: userId
+          in: path
+          type: string
+          description: Identifier of the user to assign the role to.
+          required: true
+      - name: removerolefromuserv2
+        method: DELETE
+        description: Remove Role From A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: roleId
+          in: path
+          type: string
+          description: Identifier of the role to delete.
+          required: true
+        - name: userId
+          in: path
+          type: string
+          description: Identifier of the user to remove the role from.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-rolemanagementv2-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — roleManagementV2. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/roles
+      name: v2-roles
+      description: REST surface for v2-roles.
+      operations:
+      - method: GET
+        name: listrolesv2
+        description: Get A List Of Roles.
+        call: sumo-logic-rolemanagementv2.listrolesv2
+        with:
+          limit: rest.limit
+          token: rest.token
+          sortBy: rest.sortBy
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createrolev2
+        description: Create A New Role.
+        call: sumo-logic-rolemanagementv2.createrolev2
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/roles/{id}
+      name: v2-roles-id
+      description: REST surface for v2-roles-id.
+      operations:
+      - method: GET
+        name: getrolev2
+        description: Get A Role.
+        call: sumo-logic-rolemanagementv2.getrolev2
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updaterolev2
+        description: Update A Role.
+        call: sumo-logic-rolemanagementv2.updaterolev2
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterolev2
+        description: Delete A Role.
+        call: sumo-logic-rolemanagementv2.deleterolev2
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/roles/{roleid}/users/{userid}
+      name: v2-roles-roleid-users-userid
+      description: REST surface for v2-roles-roleId-users-userId.
+      operations:
+      - method: PUT
+        name: assignroletouserv2
+        description: Assign A Role To A User.
+        call: sumo-logic-rolemanagementv2.assignroletouserv2
+        with:
+          roleId: rest.roleId
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removerolefromuserv2
+        description: Remove Role From A User.
+        call: sumo-logic-rolemanagementv2.removerolefromuserv2
+        with:
+          roleId: rest.roleId
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-rolemanagementv2-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — roleManagementV2. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-roles
+      description: Get A List Of Roles.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.listrolesv2
+      with:
+        limit: tools.limit
+        token: tools.token
+        sortBy: tools.sortBy
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-role
+      description: Create A New Role.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-rolemanagementv2.createrolev2
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-role
+      description: Get A Role.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.getrolev2
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-role
+      description: Update A Role.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.updaterolev2
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-role
+      description: Delete A Role.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.deleterolev2
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: assign-role-user
+      description: Assign A Role To A User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.assignroletouserv2
+      with:
+        roleId: tools.roleId
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-role-user
+      description: Remove Role From A User.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-rolemanagementv2.removerolefromuserv2
+      with:
+        roleId: tools.roleId
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.

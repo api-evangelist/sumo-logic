@@ -1,0 +1,751 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — dashboardManagement
+  description: 'Sumo Logic API — dashboardManagement. 17 operations. Lead operation: List All Dashboard Report Schedules..
+    Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - dashboardManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-dashboardmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — dashboardManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-dashboards-reportSchedules
+      path: /v1/dashboards/reportSchedules
+      operations:
+      - name: listreportschedules
+        method: GET
+        description: List All Dashboard Report Schedules.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dashboardId
+          in: query
+          type: string
+          description: UUID of the dashboard that the report shedules are associated with.
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of dashboard report schedules returned in the response. The number of dashboard report
+            schedules returned may be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createschedulereport
+        method: POST
+        description: Schedule Dashboard Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-dashboards-reportSchedules-scheduleId
+      path: /v1/dashboards/reportSchedules/{scheduleId}
+      operations:
+      - name: getreportschedule
+        method: GET
+        description: Get Dashboard Report Schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scheduleId
+          in: path
+          type: string
+          description: Identifier of the dashboard report schedule to return.
+          required: true
+      - name: updatereportschedule
+        method: PUT
+        description: Update Dashboard Report Schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scheduleId
+          in: path
+          type: string
+          description: identifier of the dashboard report schedule to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletereportschedule
+        method: DELETE
+        description: Delete Dashboard Report Schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scheduleId
+          in: path
+          type: string
+          description: UUID of the dashboard report schedule to delete.
+          required: true
+    - name: v2-dashboards
+      path: /v2/dashboards
+      operations:
+      - name: listdashboards
+        method: GET
+        description: List All Dashboards.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of dashboard returned in the response. The number of dashboards returned may be less
+            than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+        - name: mode
+          in: query
+          type: string
+          description: whether to list all viewable dashboards under the folders
+      - name: createdashboard
+        method: POST
+        description: Create A New Dashboard.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-dashboards-migrate
+      path: /v2/dashboards/migrate
+      operations:
+      - name: migratereporttodashboard
+        method: POST
+        description: Migrate Legacy Dashboards To Dashboards(New)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-dashboards-migrate-preview
+      path: /v2/dashboards/migrate/preview
+      operations:
+      - name: previewmigratereporttodashboard
+        method: POST
+        description: Preview Of Migrating Legacy Dashboards To Dashboards(New)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-dashboards-migrate-jobId-result
+      path: /v2/dashboards/migrate/{jobId}/result
+      operations:
+      - name: getdashboardmigrationresult
+        method: GET
+        description: Get Dashboard Migration Result.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Dashboard Migration job.
+          required: true
+    - name: v2-dashboards-migrate-jobId-status
+      path: /v2/dashboards/migrate/{jobId}/status
+      operations:
+      - name: getdashboardmigrationstatus
+        method: GET
+        description: Get Dashboard Migration Status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Dashboard Migration job.
+          required: true
+    - name: v2-dashboards-reportJobs
+      path: /v2/dashboards/reportJobs
+      operations:
+      - name: generatedashboardreport
+        method: POST
+        description: Start A Report Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-dashboards-reportJobs-jobId-result
+      path: /v2/dashboards/reportJobs/{jobId}/result
+      operations:
+      - name: getasyncreportgenerationresult
+        method: GET
+        description: Get Report Generation Job Result
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous report generation job.
+          required: true
+    - name: v2-dashboards-reportJobs-jobId-status
+      path: /v2/dashboards/reportJobs/{jobId}/status
+      operations:
+      - name: getasyncreportgenerationstatus
+        method: GET
+        description: Get Report Generation Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous report generation job.
+          required: true
+    - name: v2-dashboards-id
+      path: /v2/dashboards/{id}
+      operations:
+      - name: getdashboard
+        method: GET
+        description: Get A Dashboard.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: UUID of the dashboard to return.
+          required: true
+      - name: updatedashboard
+        method: PUT
+        description: Update A Dashboard.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the dashboard to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedashboard
+        method: DELETE
+        description: Delete A Dashboard.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the dashboard to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-dashboardmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — dashboardManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/dashboards/reportschedules
+      name: v1-dashboards-reportschedules
+      description: REST surface for v1-dashboards-reportSchedules.
+      operations:
+      - method: GET
+        name: listreportschedules
+        description: List All Dashboard Report Schedules.
+        call: sumo-logic-dashboardmanagement.listreportschedules
+        with:
+          dashboardId: rest.dashboardId
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createschedulereport
+        description: Schedule Dashboard Report
+        call: sumo-logic-dashboardmanagement.createschedulereport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/dashboards/reportschedules/{scheduleid}
+      name: v1-dashboards-reportschedules-scheduleid
+      description: REST surface for v1-dashboards-reportSchedules-scheduleId.
+      operations:
+      - method: GET
+        name: getreportschedule
+        description: Get Dashboard Report Schedule.
+        call: sumo-logic-dashboardmanagement.getreportschedule
+        with:
+          scheduleId: rest.scheduleId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatereportschedule
+        description: Update Dashboard Report Schedule.
+        call: sumo-logic-dashboardmanagement.updatereportschedule
+        with:
+          scheduleId: rest.scheduleId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletereportschedule
+        description: Delete Dashboard Report Schedule.
+        call: sumo-logic-dashboardmanagement.deletereportschedule
+        with:
+          scheduleId: rest.scheduleId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards
+      name: v2-dashboards
+      description: REST surface for v2-dashboards.
+      operations:
+      - method: GET
+        name: listdashboards
+        description: List All Dashboards.
+        call: sumo-logic-dashboardmanagement.listdashboards
+        with:
+          limit: rest.limit
+          token: rest.token
+          mode: rest.mode
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdashboard
+        description: Create A New Dashboard.
+        call: sumo-logic-dashboardmanagement.createdashboard
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/migrate
+      name: v2-dashboards-migrate
+      description: REST surface for v2-dashboards-migrate.
+      operations:
+      - method: POST
+        name: migratereporttodashboard
+        description: Migrate Legacy Dashboards To Dashboards(New)
+        call: sumo-logic-dashboardmanagement.migratereporttodashboard
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/migrate/preview
+      name: v2-dashboards-migrate-preview
+      description: REST surface for v2-dashboards-migrate-preview.
+      operations:
+      - method: POST
+        name: previewmigratereporttodashboard
+        description: Preview Of Migrating Legacy Dashboards To Dashboards(New)
+        call: sumo-logic-dashboardmanagement.previewmigratereporttodashboard
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/migrate/{jobid}/result
+      name: v2-dashboards-migrate-jobid-result
+      description: REST surface for v2-dashboards-migrate-jobId-result.
+      operations:
+      - method: GET
+        name: getdashboardmigrationresult
+        description: Get Dashboard Migration Result.
+        call: sumo-logic-dashboardmanagement.getdashboardmigrationresult
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/migrate/{jobid}/status
+      name: v2-dashboards-migrate-jobid-status
+      description: REST surface for v2-dashboards-migrate-jobId-status.
+      operations:
+      - method: GET
+        name: getdashboardmigrationstatus
+        description: Get Dashboard Migration Status.
+        call: sumo-logic-dashboardmanagement.getdashboardmigrationstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/reportjobs
+      name: v2-dashboards-reportjobs
+      description: REST surface for v2-dashboards-reportJobs.
+      operations:
+      - method: POST
+        name: generatedashboardreport
+        description: Start A Report Job
+        call: sumo-logic-dashboardmanagement.generatedashboardreport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/reportjobs/{jobid}/result
+      name: v2-dashboards-reportjobs-jobid-result
+      description: REST surface for v2-dashboards-reportJobs-jobId-result.
+      operations:
+      - method: GET
+        name: getasyncreportgenerationresult
+        description: Get Report Generation Job Result
+        call: sumo-logic-dashboardmanagement.getasyncreportgenerationresult
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/reportjobs/{jobid}/status
+      name: v2-dashboards-reportjobs-jobid-status
+      description: REST surface for v2-dashboards-reportJobs-jobId-status.
+      operations:
+      - method: GET
+        name: getasyncreportgenerationstatus
+        description: Get Report Generation Job Status
+        call: sumo-logic-dashboardmanagement.getasyncreportgenerationstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/dashboards/{id}
+      name: v2-dashboards-id
+      description: REST surface for v2-dashboards-id.
+      operations:
+      - method: GET
+        name: getdashboard
+        description: Get A Dashboard.
+        call: sumo-logic-dashboardmanagement.getdashboard
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedashboard
+        description: Update A Dashboard.
+        call: sumo-logic-dashboardmanagement.updatedashboard
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedashboard
+        description: Delete A Dashboard.
+        call: sumo-logic-dashboardmanagement.deletedashboard
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-dashboardmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — dashboardManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-dashboard-report-schedules
+      description: List All Dashboard Report Schedules.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.listreportschedules
+      with:
+        dashboardId: tools.dashboardId
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: schedule-dashboard-report
+      description: Schedule Dashboard Report
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dashboardmanagement.createschedulereport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dashboard-report-schedule
+      description: Get Dashboard Report Schedule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getreportschedule
+      with:
+        scheduleId: tools.scheduleId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-dashboard-report-schedule
+      description: Update Dashboard Report Schedule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.updatereportschedule
+      with:
+        scheduleId: tools.scheduleId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-dashboard-report-schedule
+      description: Delete Dashboard Report Schedule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.deletereportschedule
+      with:
+        scheduleId: tools.scheduleId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-dashboards
+      description: List All Dashboards.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.listdashboards
+      with:
+        limit: tools.limit
+        token: tools.token
+        mode: tools.mode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-dashboard
+      description: Create A New Dashboard.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dashboardmanagement.createdashboard
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: migrate-legacy-dashboards-dashboards-new
+      description: Migrate Legacy Dashboards To Dashboards(New)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dashboardmanagement.migratereporttodashboard
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: preview-migrating-legacy-dashboards-dashboards-new
+      description: Preview Of Migrating Legacy Dashboards To Dashboards(New)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dashboardmanagement.previewmigratereporttodashboard
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dashboard-migration-result
+      description: Get Dashboard Migration Result.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getdashboardmigrationresult
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dashboard-migration-status
+      description: Get Dashboard Migration Status.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getdashboardmigrationstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-report-job
+      description: Start A Report Job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dashboardmanagement.generatedashboardreport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-report-generation-job-result
+      description: Get Report Generation Job Result
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getasyncreportgenerationresult
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-report-generation-job-status
+      description: Get Report Generation Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getasyncreportgenerationstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dashboard
+      description: Get A Dashboard.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.getdashboard
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-dashboard
+      description: Update A Dashboard.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.updatedashboard
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-dashboard
+      description: Delete A Dashboard.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-dashboardmanagement.deletedashboard
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

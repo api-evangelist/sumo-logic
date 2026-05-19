@@ -1,0 +1,454 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — accountManagement
+  description: 'Sumo Logic API — accountManagement. 12 operations. Lead operation: Get The Owner Of An Account.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - accountManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-accountmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — accountManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-account-accountOwner
+      path: /v1/account/accountOwner
+      operations:
+      - name: getaccountowner
+        method: GET
+        description: Get The Owner Of An Account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-account-status
+      path: /v1/account/status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get Overview Of The Account Status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-account-subdomain
+      path: /v1/account/subdomain
+      operations:
+      - name: getsubdomain
+        method: GET
+        description: Get The Configured Subdomain.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesubdomain
+        method: PUT
+        description: Update Account Subdomain.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: createsubdomain
+        method: POST
+        description: Create Account Subdomain.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletesubdomain
+        method: DELETE
+        description: Delete The Configured Subdomain.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-account-subdomain-recover
+      path: /v1/account/subdomain/recover
+      operations:
+      - name: recoversubdomains
+        method: POST
+        description: Recover Subdomains For A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Email address of the user to get subdomain information.
+          required: true
+    - name: v1-account-usage-report
+      path: /v1/account/usage/report
+      operations:
+      - name: exportusagereport
+        method: POST
+        description: Export Credits Usage Details As CSV.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-account-usage-report-jobId-status
+      path: /v1/account/usage/report/{jobId}/status
+      operations:
+      - name: getstatusforreport
+        method: GET
+        description: Get Report Generation Status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: Job Id for the report to be exported.
+          required: true
+    - name: v1-account-usageForecast
+      path: /v1/account/usageForecast
+      operations:
+      - name: getusageforecast
+        method: GET
+        description: Get Usage Forecast With Respect To Last Number Of Days Specified.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: numberOfDays
+          in: query
+          type: number
+          description: Number of days to use for calculating average usage and forecast.
+    - name: v1-plan-pendingUpdateRequest
+      path: /v1/plan/pendingUpdateRequest
+      operations:
+      - name: getpendingupdaterequest
+        method: GET
+        description: Get The Pending Plan Update Request, If Any.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletependingupdaterequest
+        method: DELETE
+        description: Delete The Pending Plan Update Request, If Any.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-accountmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — accountManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/account/accountowner
+      name: v1-account-accountowner
+      description: REST surface for v1-account-accountOwner.
+      operations:
+      - method: GET
+        name: getaccountowner
+        description: Get The Owner Of An Account.
+        call: sumo-logic-accountmanagement.getaccountowner
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/status
+      name: v1-account-status
+      description: REST surface for v1-account-status.
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get Overview Of The Account Status.
+        call: sumo-logic-accountmanagement.getstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/subdomain
+      name: v1-account-subdomain
+      description: REST surface for v1-account-subdomain.
+      operations:
+      - method: GET
+        name: getsubdomain
+        description: Get The Configured Subdomain.
+        call: sumo-logic-accountmanagement.getsubdomain
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatesubdomain
+        description: Update Account Subdomain.
+        call: sumo-logic-accountmanagement.updatesubdomain
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsubdomain
+        description: Create Account Subdomain.
+        call: sumo-logic-accountmanagement.createsubdomain
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesubdomain
+        description: Delete The Configured Subdomain.
+        call: sumo-logic-accountmanagement.deletesubdomain
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/subdomain/recover
+      name: v1-account-subdomain-recover
+      description: REST surface for v1-account-subdomain-recover.
+      operations:
+      - method: POST
+        name: recoversubdomains
+        description: Recover Subdomains For A User.
+        call: sumo-logic-accountmanagement.recoversubdomains
+        with:
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/usage/report
+      name: v1-account-usage-report
+      description: REST surface for v1-account-usage-report.
+      operations:
+      - method: POST
+        name: exportusagereport
+        description: Export Credits Usage Details As CSV.
+        call: sumo-logic-accountmanagement.exportusagereport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/usage/report/{jobid}/status
+      name: v1-account-usage-report-jobid-status
+      description: REST surface for v1-account-usage-report-jobId-status.
+      operations:
+      - method: GET
+        name: getstatusforreport
+        description: Get Report Generation Status.
+        call: sumo-logic-accountmanagement.getstatusforreport
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/account/usageforecast
+      name: v1-account-usageforecast
+      description: REST surface for v1-account-usageForecast.
+      operations:
+      - method: GET
+        name: getusageforecast
+        description: Get Usage Forecast With Respect To Last Number Of Days Specified.
+        call: sumo-logic-accountmanagement.getusageforecast
+        with:
+          numberOfDays: rest.numberOfDays
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/plan/pendingupdaterequest
+      name: v1-plan-pendingupdaterequest
+      description: REST surface for v1-plan-pendingUpdateRequest.
+      operations:
+      - method: GET
+        name: getpendingupdaterequest
+        description: Get The Pending Plan Update Request, If Any.
+        call: sumo-logic-accountmanagement.getpendingupdaterequest
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletependingupdaterequest
+        description: Delete The Pending Plan Update Request, If Any.
+        call: sumo-logic-accountmanagement.deletependingupdaterequest
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-accountmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — accountManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-owner-account
+      description: Get The Owner Of An Account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getaccountowner
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-overview-account-status
+      description: Get Overview Of The Account Status.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getstatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-configured-subdomain
+      description: Get The Configured Subdomain.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getsubdomain
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-account-subdomain
+      description: Update Account Subdomain.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.updatesubdomain
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-account-subdomain
+      description: Create Account Subdomain.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-accountmanagement.createsubdomain
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-configured-subdomain
+      description: Delete The Configured Subdomain.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-accountmanagement.deletesubdomain
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: recover-subdomains-user
+      description: Recover Subdomains For A User.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-accountmanagement.recoversubdomains
+      with:
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: export-credits-usage-details-csv
+      description: Export Credits Usage Details As CSV.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-accountmanagement.exportusagereport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-report-generation-status
+      description: Get Report Generation Status.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getstatusforreport
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-usage-forecast-respect-last
+      description: Get Usage Forecast With Respect To Last Number Of Days Specified.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getusageforecast
+      with:
+        numberOfDays: tools.numberOfDays
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-pending-plan-update-request
+      description: Get The Pending Plan Update Request, If Any.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-accountmanagement.getpendingupdaterequest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-pending-plan-update-request
+      description: Delete The Pending Plan Update Request, If Any.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-accountmanagement.deletependingupdaterequest
+      outputParameters:
+      - type: object
+        mapping: $.

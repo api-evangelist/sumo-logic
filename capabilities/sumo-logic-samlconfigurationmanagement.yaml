@@ -1,0 +1,405 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — samlConfigurationManagement
+  description: 'Sumo Logic API — samlConfigurationManagement. 10 operations. Lead operation: Get List Of Allowlisted Users..
+    Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - samlConfigurationManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-samlconfigurationmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — samlConfigurationManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-saml-allowlistedUsers
+      path: /v1/saml/allowlistedUsers
+      operations:
+      - name: getallowlistedusers
+        method: GET
+        description: Get List Of Allowlisted Users.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-saml-allowlistedUsers-userId
+      path: /v1/saml/allowlistedUsers/{userId}
+      operations:
+      - name: createallowlisteduser
+        method: POST
+        description: Allowlist A User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Identifier of the user.
+          required: true
+      - name: deleteallowlisteduser
+        method: DELETE
+        description: Remove An Allowlisted User.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Identifier of user that will no longer be allowlisted from SAML Lockdown.
+          required: true
+    - name: v1-saml-identityProviders
+      path: /v1/saml/identityProviders
+      operations:
+      - name: getidentityproviders
+        method: GET
+        description: Get A List Of SAML Configurations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createidentityprovider
+        method: POST
+        description: Create A New SAML Configuration.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-saml-identityProviders-id
+      path: /v1/saml/identityProviders/{id}
+      operations:
+      - name: updateidentityprovider
+        method: PUT
+        description: Update A SAML Configuration.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the SAML configuration to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteidentityprovider
+        method: DELETE
+        description: Delete A SAML Configuration.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the SAML configuration to delete.
+          required: true
+    - name: v1-saml-identityProviders-id-metadata
+      path: /v1/saml/identityProviders/{id}/metadata
+      operations:
+      - name: getsamlmetadata
+        method: GET
+        description: Get SAML Configuration Metadata XML.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the SAML configuration for which metadata should be returned.
+          required: true
+    - name: v1-saml-lockdown-disable
+      path: /v1/saml/lockdown/disable
+      operations:
+      - name: disablesamllockdown
+        method: POST
+        description: Disable SAML Lockdown.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-saml-lockdown-enable
+      path: /v1/saml/lockdown/enable
+      operations:
+      - name: enablesamllockdown
+        method: POST
+        description: Require SAML For Sign-in.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-samlconfigurationmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — samlConfigurationManagement. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/saml/allowlistedusers
+      name: v1-saml-allowlistedusers
+      description: REST surface for v1-saml-allowlistedUsers.
+      operations:
+      - method: GET
+        name: getallowlistedusers
+        description: Get List Of Allowlisted Users.
+        call: sumo-logic-samlconfigurationmanagement.getallowlistedusers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/allowlistedusers/{userid}
+      name: v1-saml-allowlistedusers-userid
+      description: REST surface for v1-saml-allowlistedUsers-userId.
+      operations:
+      - method: POST
+        name: createallowlisteduser
+        description: Allowlist A User.
+        call: sumo-logic-samlconfigurationmanagement.createallowlisteduser
+        with:
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteallowlisteduser
+        description: Remove An Allowlisted User.
+        call: sumo-logic-samlconfigurationmanagement.deleteallowlisteduser
+        with:
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/identityproviders
+      name: v1-saml-identityproviders
+      description: REST surface for v1-saml-identityProviders.
+      operations:
+      - method: GET
+        name: getidentityproviders
+        description: Get A List Of SAML Configurations.
+        call: sumo-logic-samlconfigurationmanagement.getidentityproviders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createidentityprovider
+        description: Create A New SAML Configuration.
+        call: sumo-logic-samlconfigurationmanagement.createidentityprovider
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/identityproviders/{id}
+      name: v1-saml-identityproviders-id
+      description: REST surface for v1-saml-identityProviders-id.
+      operations:
+      - method: PUT
+        name: updateidentityprovider
+        description: Update A SAML Configuration.
+        call: sumo-logic-samlconfigurationmanagement.updateidentityprovider
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteidentityprovider
+        description: Delete A SAML Configuration.
+        call: sumo-logic-samlconfigurationmanagement.deleteidentityprovider
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/identityproviders/{id}/metadata
+      name: v1-saml-identityproviders-id-metadata
+      description: REST surface for v1-saml-identityProviders-id-metadata.
+      operations:
+      - method: GET
+        name: getsamlmetadata
+        description: Get SAML Configuration Metadata XML.
+        call: sumo-logic-samlconfigurationmanagement.getsamlmetadata
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/lockdown/disable
+      name: v1-saml-lockdown-disable
+      description: REST surface for v1-saml-lockdown-disable.
+      operations:
+      - method: POST
+        name: disablesamllockdown
+        description: Disable SAML Lockdown.
+        call: sumo-logic-samlconfigurationmanagement.disablesamllockdown
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/saml/lockdown/enable
+      name: v1-saml-lockdown-enable
+      description: REST surface for v1-saml-lockdown-enable.
+      operations:
+      - method: POST
+        name: enablesamllockdown
+        description: Require SAML For Sign-in.
+        call: sumo-logic-samlconfigurationmanagement.enablesamllockdown
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-samlconfigurationmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — samlConfigurationManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-list-allowlisted-users
+      description: Get List Of Allowlisted Users.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.getallowlistedusers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: allowlist-user
+      description: Allowlist A User.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-samlconfigurationmanagement.createallowlisteduser
+      with:
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-allowlisted-user
+      description: Remove An Allowlisted User.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.deleteallowlisteduser
+      with:
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-saml-configurations
+      description: Get A List Of SAML Configurations.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.getidentityproviders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-saml-configuration
+      description: Create A New SAML Configuration.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-samlconfigurationmanagement.createidentityprovider
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-saml-configuration
+      description: Update A SAML Configuration.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.updateidentityprovider
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-saml-configuration
+      description: Delete A SAML Configuration.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.deleteidentityprovider
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-saml-configuration-metadata-xml
+      description: Get SAML Configuration Metadata XML.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-samlconfigurationmanagement.getsamlmetadata
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-saml-lockdown
+      description: Disable SAML Lockdown.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-samlconfigurationmanagement.disablesamllockdown
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: require-saml-sign
+      description: Require SAML For Sign-in.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-samlconfigurationmanagement.enablesamllockdown
+      outputParameters:
+      - type: object
+        mapping: $.

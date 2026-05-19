@@ -1,0 +1,242 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — logSearchesManagement
+  description: 'Sumo Logic API — logSearchesManagement. 5 operations. Lead operation: List All Saved Log Searches.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - logSearchesManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-logsearchesmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — logSearchesManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-logSearches
+      path: /v1/logSearches
+      operations:
+      - name: listlogsearches
+        method: GET
+        description: List All Saved Log Searches.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of log searches returned in the response. The number of log searches returned may
+            be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createlogsearch
+        method: POST
+        description: Save A Log Search.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-logSearches-id
+      path: /v1/logSearches/{id}
+      operations:
+      - name: getlogsearch
+        method: GET
+        description: Get The Saved Log Search.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the saved log search.
+          required: true
+      - name: updatelogsearch
+        method: PUT
+        description: Update The Saved Log Search.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the saved log search.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletelogsearch
+        method: DELETE
+        description: Delete The Saved Log Search.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the saved log search.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-logsearchesmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — logSearchesManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/logsearches
+      name: v1-logsearches
+      description: REST surface for v1-logSearches.
+      operations:
+      - method: GET
+        name: listlogsearches
+        description: List All Saved Log Searches.
+        call: sumo-logic-logsearchesmanagement.listlogsearches
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createlogsearch
+        description: Save A Log Search.
+        call: sumo-logic-logsearchesmanagement.createlogsearch
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/logsearches/{id}
+      name: v1-logsearches-id
+      description: REST surface for v1-logSearches-id.
+      operations:
+      - method: GET
+        name: getlogsearch
+        description: Get The Saved Log Search.
+        call: sumo-logic-logsearchesmanagement.getlogsearch
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatelogsearch
+        description: Update The Saved Log Search.
+        call: sumo-logic-logsearchesmanagement.updatelogsearch
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletelogsearch
+        description: Delete The Saved Log Search.
+        call: sumo-logic-logsearchesmanagement.deletelogsearch
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-logsearchesmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — logSearchesManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-saved-log-searches
+      description: List All Saved Log Searches.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsearchesmanagement.listlogsearches
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: save-log-search
+      description: Save A Log Search.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-logsearchesmanagement.createlogsearch
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-saved-log-search
+      description: Get The Saved Log Search.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsearchesmanagement.getlogsearch
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-saved-log-search
+      description: Update The Saved Log Search.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsearchesmanagement.updatelogsearch
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-saved-log-search
+      description: Delete The Saved Log Search.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-logsearchesmanagement.deletelogsearch
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

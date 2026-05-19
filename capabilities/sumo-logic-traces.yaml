@@ -1,0 +1,748 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — traces
+  description: 'Sumo Logic API — traces. 15 operations. Lead operation: Get Trace Search Query Metrics.. Self-contained Naftiko
+    capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - traces
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-traces
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — traces business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-tracing-metrics
+      path: /v1/tracing/metrics
+      operations:
+      - name: getmetrics
+        method: GET
+        description: Get Trace Search Query Metrics.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-tracing-tracequery
+      path: /v1/tracing/tracequery
+      operations:
+      - name: createtracequery
+        method: POST
+        description: Run A Trace Search Query Asynchronously.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-tracing-tracequery-fields
+      path: /v1/tracing/tracequery/fields
+      operations:
+      - name: gettracequeryfields
+        method: GET
+        description: Get Filter Fields For Trace Search Queries.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-tracing-tracequery-fields-field-values
+      path: /v1/tracing/tracequery/fields/{field}/values
+      operations:
+      - name: gettracequeryfieldvalues
+        method: GET
+        description: Get Trace Search Query Filter Field Values.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: field
+          in: path
+          type: string
+          description: Field identifier.
+          required: true
+        - name: query
+          in: query
+          type: string
+          description: Search filter to apply on the values to be returned. Only values containing the search query term will
+            be returned.
+        - name: limit
+          in: query
+          type: integer
+          description: The maximum number of results to fetch.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+        - name: fieldType
+          in: query
+          type: string
+          description: 'Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`.'
+    - name: v1-tracing-tracequery-queryId
+      path: /v1/tracing/tracequery/{queryId}
+      operations:
+      - name: canceltracequery
+        method: DELETE
+        description: Cancel A Trace Search Query.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: queryId
+          in: path
+          type: string
+          description: Identifier of the query to cancel.
+          required: true
+    - name: v1-tracing-tracequery-queryId-rows-rowId-traces
+      path: /v1/tracing/tracequery/{queryId}/rows/{rowId}/traces
+      operations:
+      - name: gettracequeryresult
+        method: GET
+        description: Get Results Of A Trace Search Query.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: queryId
+          in: path
+          type: string
+          description: Identifier of the executed query.
+          required: true
+        - name: rowId
+          in: path
+          type: string
+          description: Identifier of the query row.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Limit of the number of traces returned in the response.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+    - name: v1-tracing-tracequery-queryId-status
+      path: /v1/tracing/tracequery/{queryId}/status
+      operations:
+      - name: gettracequerystatus
+        method: GET
+        description: Get A Trace Search Query Status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: queryId
+          in: path
+          type: string
+          description: Identifier of the executed query.
+          required: true
+    - name: v1-tracing-traces-traceId
+      path: /v1/tracing/traces/{traceId}
+      operations:
+      - name: gettrace
+        method: GET
+        description: Get Trace Details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace to get the details.
+          required: true
+    - name: v1-tracing-traces-traceId-criticalPath
+      path: /v1/tracing/traces/{traceId}/criticalPath
+      operations:
+      - name: getcriticalpath
+        method: GET
+        description: Get A Critical Path Of A Trace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: The maximum number of results to fetch.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+    - name: v1-tracing-traces-traceId-criticalPath-breakdown-service
+      path: /v1/tracing/traces/{traceId}/criticalPath/breakdown/service
+      operations:
+      - name: getcriticalpathservicebreakdown
+        method: GET
+        description: Get A Critical Path Service Breakdown Of A Trace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace.
+          required: true
+    - name: v1-tracing-traces-traceId-exists
+      path: /v1/tracing/traces/{traceId}/exists
+      operations:
+      - name: traceexists
+        method: GET
+        description: Check If The Trace Exists.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace to check.
+          required: true
+    - name: v1-tracing-traces-traceId-spans
+      path: /v1/tracing/traces/{traceId}/spans
+      operations:
+      - name: getspans
+        method: GET
+        description: Get A List Of Trace Spans.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace to get the spans.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: The maximum number of results to fetch.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+    - name: v1-tracing-traces-traceId-spans-spanId
+      path: /v1/tracing/traces/{traceId}/spans/{spanId}
+      operations:
+      - name: getspan
+        method: GET
+        description: Get Span Details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace the span belongs to.
+          required: true
+        - name: spanId
+          in: path
+          type: string
+          description: Identifier of the span to get the details.
+          required: true
+    - name: v1-tracing-traces-traceId-spans-spanId-billingInfo
+      path: /v1/tracing/traces/{traceId}/spans/{spanId}/billingInfo
+      operations:
+      - name: getspanbillinginfo
+        method: GET
+        description: Get Span Billing Details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace the span belongs to.
+          required: true
+        - name: spanId
+          in: path
+          type: string
+          description: Identifier of the span to get the billing info.
+          required: true
+    - name: v1-tracing-traces-traceId-traceEvents
+      path: /v1/tracing/traces/{traceId}/traceEvents
+      operations:
+      - name: gettracelightevents
+        method: GET
+        description: Get A List Of Events (without Their Attributes) Per Span For A Trace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: traceId
+          in: path
+          type: string
+          description: Identifier of the trace for which span events will be returned.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: The maximum number of spans with events returned by a single query.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-traces-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — traces. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/tracing/metrics
+      name: v1-tracing-metrics
+      description: REST surface for v1-tracing-metrics.
+      operations:
+      - method: GET
+        name: getmetrics
+        description: Get Trace Search Query Metrics.
+        call: sumo-logic-traces.getmetrics
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery
+      name: v1-tracing-tracequery
+      description: REST surface for v1-tracing-tracequery.
+      operations:
+      - method: POST
+        name: createtracequery
+        description: Run A Trace Search Query Asynchronously.
+        call: sumo-logic-traces.createtracequery
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery/fields
+      name: v1-tracing-tracequery-fields
+      description: REST surface for v1-tracing-tracequery-fields.
+      operations:
+      - method: GET
+        name: gettracequeryfields
+        description: Get Filter Fields For Trace Search Queries.
+        call: sumo-logic-traces.gettracequeryfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery/fields/{field}/values
+      name: v1-tracing-tracequery-fields-field-values
+      description: REST surface for v1-tracing-tracequery-fields-field-values.
+      operations:
+      - method: GET
+        name: gettracequeryfieldvalues
+        description: Get Trace Search Query Filter Field Values.
+        call: sumo-logic-traces.gettracequeryfieldvalues
+        with:
+          field: rest.field
+          query: rest.query
+          limit: rest.limit
+          token: rest.token
+          fieldType: rest.fieldType
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery/{queryid}
+      name: v1-tracing-tracequery-queryid
+      description: REST surface for v1-tracing-tracequery-queryId.
+      operations:
+      - method: DELETE
+        name: canceltracequery
+        description: Cancel A Trace Search Query.
+        call: sumo-logic-traces.canceltracequery
+        with:
+          queryId: rest.queryId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery/{queryid}/rows/{rowid}/traces
+      name: v1-tracing-tracequery-queryid-rows-rowid-traces
+      description: REST surface for v1-tracing-tracequery-queryId-rows-rowId-traces.
+      operations:
+      - method: GET
+        name: gettracequeryresult
+        description: Get Results Of A Trace Search Query.
+        call: sumo-logic-traces.gettracequeryresult
+        with:
+          queryId: rest.queryId
+          rowId: rest.rowId
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/tracequery/{queryid}/status
+      name: v1-tracing-tracequery-queryid-status
+      description: REST surface for v1-tracing-tracequery-queryId-status.
+      operations:
+      - method: GET
+        name: gettracequerystatus
+        description: Get A Trace Search Query Status.
+        call: sumo-logic-traces.gettracequerystatus
+        with:
+          queryId: rest.queryId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}
+      name: v1-tracing-traces-traceid
+      description: REST surface for v1-tracing-traces-traceId.
+      operations:
+      - method: GET
+        name: gettrace
+        description: Get Trace Details.
+        call: sumo-logic-traces.gettrace
+        with:
+          traceId: rest.traceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/criticalpath
+      name: v1-tracing-traces-traceid-criticalpath
+      description: REST surface for v1-tracing-traces-traceId-criticalPath.
+      operations:
+      - method: GET
+        name: getcriticalpath
+        description: Get A Critical Path Of A Trace.
+        call: sumo-logic-traces.getcriticalpath
+        with:
+          traceId: rest.traceId
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/criticalpath/breakdown/service
+      name: v1-tracing-traces-traceid-criticalpath-breakdown-service
+      description: REST surface for v1-tracing-traces-traceId-criticalPath-breakdown-service.
+      operations:
+      - method: GET
+        name: getcriticalpathservicebreakdown
+        description: Get A Critical Path Service Breakdown Of A Trace.
+        call: sumo-logic-traces.getcriticalpathservicebreakdown
+        with:
+          traceId: rest.traceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/exists
+      name: v1-tracing-traces-traceid-exists
+      description: REST surface for v1-tracing-traces-traceId-exists.
+      operations:
+      - method: GET
+        name: traceexists
+        description: Check If The Trace Exists.
+        call: sumo-logic-traces.traceexists
+        with:
+          traceId: rest.traceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/spans
+      name: v1-tracing-traces-traceid-spans
+      description: REST surface for v1-tracing-traces-traceId-spans.
+      operations:
+      - method: GET
+        name: getspans
+        description: Get A List Of Trace Spans.
+        call: sumo-logic-traces.getspans
+        with:
+          traceId: rest.traceId
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/spans/{spanid}
+      name: v1-tracing-traces-traceid-spans-spanid
+      description: REST surface for v1-tracing-traces-traceId-spans-spanId.
+      operations:
+      - method: GET
+        name: getspan
+        description: Get Span Details.
+        call: sumo-logic-traces.getspan
+        with:
+          traceId: rest.traceId
+          spanId: rest.spanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/spans/{spanid}/billinginfo
+      name: v1-tracing-traces-traceid-spans-spanid-billinginfo
+      description: REST surface for v1-tracing-traces-traceId-spans-spanId-billingInfo.
+      operations:
+      - method: GET
+        name: getspanbillinginfo
+        description: Get Span Billing Details.
+        call: sumo-logic-traces.getspanbillinginfo
+        with:
+          traceId: rest.traceId
+          spanId: rest.spanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tracing/traces/{traceid}/traceevents
+      name: v1-tracing-traces-traceid-traceevents
+      description: REST surface for v1-tracing-traces-traceId-traceEvents.
+      operations:
+      - method: GET
+        name: gettracelightevents
+        description: Get A List Of Events (without Their Attributes) Per Span For A Trace.
+        call: sumo-logic-traces.gettracelightevents
+        with:
+          traceId: rest.traceId
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-traces-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — traces. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-trace-search-query-metrics
+      description: Get Trace Search Query Metrics.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getmetrics
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-trace-search-query-asynchronously
+      description: Run A Trace Search Query Asynchronously.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-traces.createtracequery
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-filter-fields-trace-search
+      description: Get Filter Fields For Trace Search Queries.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettracequeryfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trace-search-query-filter
+      description: Get Trace Search Query Filter Field Values.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettracequeryfieldvalues
+      with:
+        field: tools.field
+        query: tools.query
+        limit: tools.limit
+        token: tools.token
+        fieldType: tools.fieldType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-trace-search-query
+      description: Cancel A Trace Search Query.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-traces.canceltracequery
+      with:
+        queryId: tools.queryId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-results-trace-search-query
+      description: Get Results Of A Trace Search Query.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettracequeryresult
+      with:
+        queryId: tools.queryId
+        rowId: tools.rowId
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trace-search-query-status
+      description: Get A Trace Search Query Status.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettracequerystatus
+      with:
+        queryId: tools.queryId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trace-details
+      description: Get Trace Details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettrace
+      with:
+        traceId: tools.traceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-critical-path-trace
+      description: Get A Critical Path Of A Trace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getcriticalpath
+      with:
+        traceId: tools.traceId
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-critical-path-service-breakdown
+      description: Get A Critical Path Service Breakdown Of A Trace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getcriticalpathservicebreakdown
+      with:
+        traceId: tools.traceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-if-trace-exists
+      description: Check If The Trace Exists.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.traceexists
+      with:
+        traceId: tools.traceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-trace-spans
+      description: Get A List Of Trace Spans.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getspans
+      with:
+        traceId: tools.traceId
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-span-details
+      description: Get Span Details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getspan
+      with:
+        traceId: tools.traceId
+        spanId: tools.spanId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-span-billing-details
+      description: Get Span Billing Details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.getspanbillinginfo
+      with:
+        traceId: tools.traceId
+        spanId: tools.spanId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-events-without-their
+      description: Get A List Of Events (without Their Attributes) Per Span For A Trace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-traces.gettracelightevents
+      with:
+        traceId: tools.traceId
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.

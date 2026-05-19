@@ -1,0 +1,264 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — otCollectorManagementExternal
+  description: 'Sumo Logic API — otCollectorManagementExternal. 6 operations. Lead operation: Get Paginated List Of OT Collectors.
+    Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - otCollectorManagementExternal
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-otcollectormanagementexternal
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — otCollectorManagementExternal business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-otCollectors
+      path: /v1/otCollectors
+      operations:
+      - name: getpaginatedotcollectors
+        method: POST
+        description: Get Paginated List Of OT Collectors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-otCollectors-offline
+      path: /v1/otCollectors/offline
+      operations:
+      - name: deleteofflineotcollectors
+        method: DELETE
+        description: Delete All Offline OT Collectors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-otCollectors-otCollectorsByName
+      path: /v1/otCollectors/otCollectorsByName
+      operations:
+      - name: getotcollectorsbynames
+        method: GET
+        description: Get OT Collectors By Name.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: names
+          in: query
+          type: array
+          description: A required parameter that accepts a list of names for which we need to collect all metadata.
+          required: true
+    - name: v1-otCollectors-totalCount
+      path: /v1/otCollectors/totalCount
+      operations:
+      - name: getotcollectorscount
+        method: GET
+        description: Get A Count Of OT Collectors.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-otCollectors-id
+      path: /v1/otCollectors/{id}
+      operations:
+      - name: getotcollector
+        method: GET
+        description: Get OT Collector By ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the OT Collector to get.
+          required: true
+      - name: deleteotcollector
+        method: DELETE
+        description: Delete An OT Collector.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the OT Collector to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-otcollectormanagementexternal-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — otCollectorManagementExternal. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/otcollectors
+      name: v1-otcollectors
+      description: REST surface for v1-otCollectors.
+      operations:
+      - method: POST
+        name: getpaginatedotcollectors
+        description: Get Paginated List Of OT Collectors
+        call: sumo-logic-otcollectormanagementexternal.getpaginatedotcollectors
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/otcollectors/offline
+      name: v1-otcollectors-offline
+      description: REST surface for v1-otCollectors-offline.
+      operations:
+      - method: DELETE
+        name: deleteofflineotcollectors
+        description: Delete All Offline OT Collectors
+        call: sumo-logic-otcollectormanagementexternal.deleteofflineotcollectors
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/otcollectors/otcollectorsbyname
+      name: v1-otcollectors-otcollectorsbyname
+      description: REST surface for v1-otCollectors-otCollectorsByName.
+      operations:
+      - method: GET
+        name: getotcollectorsbynames
+        description: Get OT Collectors By Name.
+        call: sumo-logic-otcollectormanagementexternal.getotcollectorsbynames
+        with:
+          names: rest.names
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/otcollectors/totalcount
+      name: v1-otcollectors-totalcount
+      description: REST surface for v1-otCollectors-totalCount.
+      operations:
+      - method: GET
+        name: getotcollectorscount
+        description: Get A Count Of OT Collectors.
+        call: sumo-logic-otcollectormanagementexternal.getotcollectorscount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/otcollectors/{id}
+      name: v1-otcollectors-id
+      description: REST surface for v1-otCollectors-id.
+      operations:
+      - method: GET
+        name: getotcollector
+        description: Get OT Collector By ID.
+        call: sumo-logic-otcollectormanagementexternal.getotcollector
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteotcollector
+        description: Delete An OT Collector.
+        call: sumo-logic-otcollectormanagementexternal.deleteotcollector
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-otcollectormanagementexternal-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — otCollectorManagementExternal. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-paginated-list-ot-collectors
+      description: Get Paginated List Of OT Collectors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-otcollectormanagementexternal.getpaginatedotcollectors
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-all-offline-ot-collectors
+      description: Delete All Offline OT Collectors
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-otcollectormanagementexternal.deleteofflineotcollectors
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ot-collectors-name
+      description: Get OT Collectors By Name.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-otcollectormanagementexternal.getotcollectorsbynames
+      with:
+        names: tools.names
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-count-ot-collectors
+      description: Get A Count Of OT Collectors.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-otcollectormanagementexternal.getotcollectorscount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ot-collector-id
+      description: Get OT Collector By ID.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-otcollectormanagementexternal.getotcollector
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-ot-collector
+      description: Delete An OT Collector.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-otcollectormanagementexternal.deleteotcollector
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

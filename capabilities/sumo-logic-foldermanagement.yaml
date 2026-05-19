@@ -1,0 +1,590 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — folderManagement
+  description: 'Sumo Logic API — folderManagement. 13 operations. Lead operation: Create A New Folder.. Self-contained Naftiko
+    capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - folderManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-foldermanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — folderManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-content-folders
+      path: /v2/content/folders
+      operations:
+      - name: createfolder
+        method: POST
+        description: Create A New Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-content-folders-adminRecommended
+      path: /v2/content/folders/adminRecommended
+      operations:
+      - name: getadminrecommendedfolderasync
+        method: GET
+        description: Schedule Admin Recommended Folder Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+    - name: v2-content-folders-adminRecommended-jobId-result
+      path: /v2/content/folders/adminRecommended/{jobId}/result
+      operations:
+      - name: getadminrecommendedfolderasyncresult
+        method: GET
+        description: Get Admin Recommended Folder Job Result
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Admin Recommended folder job.
+          required: true
+    - name: v2-content-folders-adminRecommended-jobId-status
+      path: /v2/content/folders/adminRecommended/{jobId}/status
+      operations:
+      - name: getadminrecommendedfolderasyncstatus
+        method: GET
+        description: Get Admin Recommended Folder Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Admin Recommended folder job.
+          required: true
+    - name: v2-content-folders-global
+      path: /v2/content/folders/global
+      operations:
+      - name: getglobalfolderasync
+        method: GET
+        description: Schedule Global View Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+    - name: v2-content-folders-global-jobId-result
+      path: /v2/content/folders/global/{jobId}/result
+      operations:
+      - name: getglobalfolderasyncresult
+        method: GET
+        description: Get Global View Job Result
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Global View job.
+          required: true
+    - name: v2-content-folders-global-jobId-status
+      path: /v2/content/folders/global/{jobId}/status
+      operations:
+      - name: getglobalfolderasyncstatus
+        method: GET
+        description: Get Global View Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Global View job.
+          required: true
+    - name: v2-content-folders-installedApps
+      path: /v2/content/folders/installedApps
+      operations:
+      - name: getinstalledappsfolderasync
+        method: GET
+        description: Schedule Installed Apps Folder Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+    - name: v2-content-folders-installedApps-jobId-result
+      path: /v2/content/folders/installedApps/{jobId}/result
+      operations:
+      - name: getinstalledappsfolderasyncresult
+        method: GET
+        description: Get Installed Apps Folder Job Result
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Installed Apps folder job.
+          required: true
+    - name: v2-content-folders-installedApps-jobId-status
+      path: /v2/content/folders/installedApps/{jobId}/status
+      operations:
+      - name: getinstalledappsfolderasyncstatus
+        method: GET
+        description: Get Installed Apps Folder Job Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The identifier of the asynchronous Installed Apps folder job.
+          required: true
+    - name: v2-content-folders-personal
+      path: /v2/content/folders/personal
+      operations:
+      - name: getpersonalfolder
+        method: GET
+        description: Get Personal Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-content-folders-id
+      path: /v2/content/folders/{id}
+      operations:
+      - name: getfolder
+        method: GET
+        description: Get A Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the folder to fetch.
+          required: true
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+      - name: updatefolder
+        method: PUT
+        description: Update A Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the folder to update.
+          required: true
+        - name: isAdminMode
+          in: header
+          type: string
+          description: Set this to "true" if you want to perform the request as a Content Administrator.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-foldermanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — folderManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/content/folders
+      name: v2-content-folders
+      description: REST surface for v2-content-folders.
+      operations:
+      - method: POST
+        name: createfolder
+        description: Create A New Folder.
+        call: sumo-logic-foldermanagement.createfolder
+        with:
+          isAdminMode: rest.isAdminMode
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/adminrecommended
+      name: v2-content-folders-adminrecommended
+      description: REST surface for v2-content-folders-adminRecommended.
+      operations:
+      - method: GET
+        name: getadminrecommendedfolderasync
+        description: Schedule Admin Recommended Folder Job
+        call: sumo-logic-foldermanagement.getadminrecommendedfolderasync
+        with:
+          isAdminMode: rest.isAdminMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/adminrecommended/{jobid}/result
+      name: v2-content-folders-adminrecommended-jobid-result
+      description: REST surface for v2-content-folders-adminRecommended-jobId-result.
+      operations:
+      - method: GET
+        name: getadminrecommendedfolderasyncresult
+        description: Get Admin Recommended Folder Job Result
+        call: sumo-logic-foldermanagement.getadminrecommendedfolderasyncresult
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/adminrecommended/{jobid}/status
+      name: v2-content-folders-adminrecommended-jobid-status
+      description: REST surface for v2-content-folders-adminRecommended-jobId-status.
+      operations:
+      - method: GET
+        name: getadminrecommendedfolderasyncstatus
+        description: Get Admin Recommended Folder Job Status
+        call: sumo-logic-foldermanagement.getadminrecommendedfolderasyncstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/global
+      name: v2-content-folders-global
+      description: REST surface for v2-content-folders-global.
+      operations:
+      - method: GET
+        name: getglobalfolderasync
+        description: Schedule Global View Job
+        call: sumo-logic-foldermanagement.getglobalfolderasync
+        with:
+          isAdminMode: rest.isAdminMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/global/{jobid}/result
+      name: v2-content-folders-global-jobid-result
+      description: REST surface for v2-content-folders-global-jobId-result.
+      operations:
+      - method: GET
+        name: getglobalfolderasyncresult
+        description: Get Global View Job Result
+        call: sumo-logic-foldermanagement.getglobalfolderasyncresult
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/global/{jobid}/status
+      name: v2-content-folders-global-jobid-status
+      description: REST surface for v2-content-folders-global-jobId-status.
+      operations:
+      - method: GET
+        name: getglobalfolderasyncstatus
+        description: Get Global View Job Status
+        call: sumo-logic-foldermanagement.getglobalfolderasyncstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/installedapps
+      name: v2-content-folders-installedapps
+      description: REST surface for v2-content-folders-installedApps.
+      operations:
+      - method: GET
+        name: getinstalledappsfolderasync
+        description: Schedule Installed Apps Folder Job
+        call: sumo-logic-foldermanagement.getinstalledappsfolderasync
+        with:
+          isAdminMode: rest.isAdminMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/installedapps/{jobid}/result
+      name: v2-content-folders-installedapps-jobid-result
+      description: REST surface for v2-content-folders-installedApps-jobId-result.
+      operations:
+      - method: GET
+        name: getinstalledappsfolderasyncresult
+        description: Get Installed Apps Folder Job Result
+        call: sumo-logic-foldermanagement.getinstalledappsfolderasyncresult
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/installedapps/{jobid}/status
+      name: v2-content-folders-installedapps-jobid-status
+      description: REST surface for v2-content-folders-installedApps-jobId-status.
+      operations:
+      - method: GET
+        name: getinstalledappsfolderasyncstatus
+        description: Get Installed Apps Folder Job Status
+        call: sumo-logic-foldermanagement.getinstalledappsfolderasyncstatus
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/personal
+      name: v2-content-folders-personal
+      description: REST surface for v2-content-folders-personal.
+      operations:
+      - method: GET
+        name: getpersonalfolder
+        description: Get Personal Folder.
+        call: sumo-logic-foldermanagement.getpersonalfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/content/folders/{id}
+      name: v2-content-folders-id
+      description: REST surface for v2-content-folders-id.
+      operations:
+      - method: GET
+        name: getfolder
+        description: Get A Folder.
+        call: sumo-logic-foldermanagement.getfolder
+        with:
+          id: rest.id
+          isAdminMode: rest.isAdminMode
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatefolder
+        description: Update A Folder.
+        call: sumo-logic-foldermanagement.updatefolder
+        with:
+          id: rest.id
+          isAdminMode: rest.isAdminMode
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-foldermanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — folderManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-new-folder
+      description: Create A New Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-foldermanagement.createfolder
+      with:
+        isAdminMode: tools.isAdminMode
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: schedule-admin-recommended-folder-job
+      description: Schedule Admin Recommended Folder Job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getadminrecommendedfolderasync
+      with:
+        isAdminMode: tools.isAdminMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-admin-recommended-folder-job
+      description: Get Admin Recommended Folder Job Result
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getadminrecommendedfolderasyncresult
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-admin-recommended-folder-job-2
+      description: Get Admin Recommended Folder Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getadminrecommendedfolderasyncstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: schedule-global-view-job
+      description: Schedule Global View Job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getglobalfolderasync
+      with:
+        isAdminMode: tools.isAdminMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-global-view-job-result
+      description: Get Global View Job Result
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getglobalfolderasyncresult
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-global-view-job-status
+      description: Get Global View Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getglobalfolderasyncstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: schedule-installed-apps-folder-job
+      description: Schedule Installed Apps Folder Job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getinstalledappsfolderasync
+      with:
+        isAdminMode: tools.isAdminMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-installed-apps-folder-job
+      description: Get Installed Apps Folder Job Result
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getinstalledappsfolderasyncresult
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-installed-apps-folder-job-2
+      description: Get Installed Apps Folder Job Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getinstalledappsfolderasyncstatus
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-personal-folder
+      description: Get Personal Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getpersonalfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-folder
+      description: Get A Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.getfolder
+      with:
+        id: tools.id
+        isAdminMode: tools.isAdminMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-folder
+      description: Update A Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-foldermanagement.updatefolder
+      with:
+        id: tools.id
+        isAdminMode: tools.isAdminMode
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

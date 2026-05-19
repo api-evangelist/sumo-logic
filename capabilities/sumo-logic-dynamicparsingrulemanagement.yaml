@@ -1,0 +1,242 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — dynamicParsingRuleManagement
+  description: 'Sumo Logic API — dynamicParsingRuleManagement. 5 operations. Lead operation: Get A List Of Dynamic Parsing
+    Rules.. Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - dynamicParsingRuleManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-dynamicparsingrulemanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — dynamicParsingRuleManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-dynamicParsingRules
+      path: /v1/dynamicParsingRules
+      operations:
+      - name: listdynamicparsingrules
+        method: GET
+        description: Get A List Of Dynamic Parsing Rules.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of dynamic parsing rules returned in the response. The number of dynamic parsing rules
+            returned may be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createdynamicparsingrule
+        method: POST
+        description: Create A New Dynamic Parsing Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-dynamicParsingRules-id
+      path: /v1/dynamicParsingRules/{id}
+      operations:
+      - name: getdynamicparsingrule
+        method: GET
+        description: Get A Dynamic Parsing Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of dynamic parsing rule to return.
+          required: true
+      - name: updatedynamicparsingrule
+        method: PUT
+        description: Update A Dynamic Parsing Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the dynamic parsing rule to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedynamicparsingrule
+        method: DELETE
+        description: Delete A Dynamic Parsing Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the dynamic parsing rule to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-dynamicparsingrulemanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — dynamicParsingRuleManagement. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/dynamicparsingrules
+      name: v1-dynamicparsingrules
+      description: REST surface for v1-dynamicParsingRules.
+      operations:
+      - method: GET
+        name: listdynamicparsingrules
+        description: Get A List Of Dynamic Parsing Rules.
+        call: sumo-logic-dynamicparsingrulemanagement.listdynamicparsingrules
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdynamicparsingrule
+        description: Create A New Dynamic Parsing Rule.
+        call: sumo-logic-dynamicparsingrulemanagement.createdynamicparsingrule
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/dynamicparsingrules/{id}
+      name: v1-dynamicparsingrules-id
+      description: REST surface for v1-dynamicParsingRules-id.
+      operations:
+      - method: GET
+        name: getdynamicparsingrule
+        description: Get A Dynamic Parsing Rule.
+        call: sumo-logic-dynamicparsingrulemanagement.getdynamicparsingrule
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedynamicparsingrule
+        description: Update A Dynamic Parsing Rule.
+        call: sumo-logic-dynamicparsingrulemanagement.updatedynamicparsingrule
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedynamicparsingrule
+        description: Delete A Dynamic Parsing Rule.
+        call: sumo-logic-dynamicparsingrulemanagement.deletedynamicparsingrule
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-dynamicparsingrulemanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — dynamicParsingRuleManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-list-dynamic-parsing-rules
+      description: Get A List Of Dynamic Parsing Rules.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dynamicparsingrulemanagement.listdynamicparsingrules
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-dynamic-parsing-rule
+      description: Create A New Dynamic Parsing Rule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-dynamicparsingrulemanagement.createdynamicparsingrule
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dynamic-parsing-rule
+      description: Get A Dynamic Parsing Rule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dynamicparsingrulemanagement.getdynamicparsingrule
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-dynamic-parsing-rule
+      description: Update A Dynamic Parsing Rule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-dynamicparsingrulemanagement.updatedynamicparsingrule
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-dynamic-parsing-rule
+      description: Delete A Dynamic Parsing Rule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-dynamicparsingrulemanagement.deletedynamicparsingrule
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

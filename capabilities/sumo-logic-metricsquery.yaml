@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — metricsQuery
+  description: 'Sumo Logic API — metricsQuery. 1 operations. Lead operation: Run Metrics Queries. Self-contained Naftiko capability
+    covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - metricsQuery
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-metricsquery
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — metricsQuery business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-metricsQueries
+      path: /v1/metricsQueries
+      operations:
+      - name: runmetricsqueries
+        method: POST
+        description: Run Metrics Queries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-metricsquery-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — metricsQuery. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/metricsqueries
+      name: v1-metricsqueries
+      description: REST surface for v1-metricsQueries.
+      operations:
+      - method: POST
+        name: runmetricsqueries
+        description: Run Metrics Queries
+        call: sumo-logic-metricsquery.runmetricsqueries
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-metricsquery-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — metricsQuery. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: run-metrics-queries
+      description: Run Metrics Queries
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-metricsquery.runmetricsqueries
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

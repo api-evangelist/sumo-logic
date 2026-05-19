@@ -1,0 +1,973 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — monitorsLibraryManagement
+  description: 'Sumo Logic API — monitorsLibraryManagement. 22 operations. Lead operation: Bulk Read A Monitor Or Folder..
+    Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - monitorsLibraryManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-monitorslibrarymanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — monitorsLibraryManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-monitors
+      path: /v1/monitors
+      operations:
+      - name: monitorsreadbyids
+        method: GET
+        description: Bulk Read A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: ids
+          in: query
+          type: array
+          description: A comma-separated list of identifiers.
+          required: true
+        - name: skipChildren
+          in: query
+          type: boolean
+          description: a boolean parameter to control skipping fetching children of requested folder(s)
+      - name: monitorscreate
+        method: POST
+        description: Create A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: parentId
+          in: query
+          type: string
+          description: Identifier of the parent folder in which to create the monitor or folder.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: monitorsdeletebyids
+        method: DELETE
+        description: Bulk Delete A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: ids
+          in: query
+          type: array
+          description: A comma-separated list of identifiers.
+          required: true
+    - name: v1-monitors-disable
+      path: /v1/monitors/disable
+      operations:
+      - name: disablemonitorbyids
+        method: PUT
+        description: Disable Monitors.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: ids
+          in: query
+          type: array
+          description: A comma-separated list of identifiers.
+          required: true
+    - name: v1-monitors-path
+      path: /v1/monitors/path
+      operations:
+      - name: monitorsgetbypath
+        method: GET
+        description: Read A Monitor Or Folder By Its Path.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: query
+          type: string
+          description: The path of the monitor or folder.
+          required: true
+    - name: v1-monitors-permissions-revoke
+      path: /v1/monitors/permissions/revoke
+      operations:
+      - name: monitorsrevokepermissions
+        method: PUT
+        description: Revoke All Permissions On Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-monitors-permissions-set
+      path: /v1/monitors/permissions/set
+      operations:
+      - name: monitorssetpermissions
+        method: PUT
+        description: Set Permissions On Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-monitors-playbooks
+      path: /v1/monitors/playbooks
+      operations:
+      - name: getmonitorplaybooks
+        method: GET
+        description: List All Playbooks.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: playbookType
+          in: query
+          type: string
+          description: A string value for playbook type.
+    - name: v1-monitors-playbooksDetails
+      path: /v1/monitors/playbooksDetails
+      operations:
+      - name: getplaybooksdetails
+        method: GET
+        description: Get Playbook Details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: ids
+          in: query
+          type: array
+          description: A comma-separated list of playbook identifiers.
+          required: true
+    - name: v1-monitors-root
+      path: /v1/monitors/root
+      operations:
+      - name: getmonitorslibraryroot
+        method: GET
+        description: Get The Root Monitors Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-monitors-search
+      path: /v1/monitors/search
+      operations:
+      - name: monitorssearch
+        method: GET
+        description: Search For A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: 'The search query to find monitor or folder. Below is the list of different filters with examples:'
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of items you want in the response.
+        - name: offset
+          in: query
+          type: integer
+          description: The position or row from where to start the search operation.
+        - name: skipChildren
+          in: query
+          type: boolean
+          description: a boolean parameter to control skipping fetching children of requested folder(s)
+    - name: v1-monitors-usageInfo
+      path: /v1/monitors/usageInfo
+      operations:
+      - name: getmonitorusageinfo
+        method: GET
+        description: Usage Info Of Monitors.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-monitors-id
+      path: /v1/monitors/{id}
+      operations:
+      - name: monitorsreadbyid
+        method: GET
+        description: Get A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to read.
+          required: true
+      - name: monitorsupdatebyid
+        method: PUT
+        description: Update A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: monitorsdeletebyid
+        method: DELETE
+        description: Delete A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to delete.
+          required: true
+    - name: v1-monitors-id-copy
+      path: /v1/monitors/{id}/copy
+      operations:
+      - name: monitorscopy
+        method: POST
+        description: Copy A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to copy.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-monitors-id-export
+      path: /v1/monitors/{id}/export
+      operations:
+      - name: monitorsexportitem
+        method: GET
+        description: Export A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to export.
+          required: true
+    - name: v1-monitors-id-move
+      path: /v1/monitors/{id}/move
+      operations:
+      - name: monitorsmove
+        method: POST
+        description: Move A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to move.
+          required: true
+        - name: parentId
+          in: query
+          type: string
+          description: Identifier of the parent folder to move the monitor or folder to.
+          required: true
+    - name: v1-monitors-id-path
+      path: /v1/monitors/{id}/path
+      operations:
+      - name: getmonitorsfullpath
+        method: GET
+        description: Get The Path Of A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder.
+          required: true
+    - name: v1-monitors-id-permissionSummariesBySubjects
+      path: /v1/monitors/{id}/permissionSummariesBySubjects
+      operations:
+      - name: monitorsreadpermissionsummariesbyidgroupbysubjects
+        method: GET
+        description: List Permission Summaries For A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to list permissions.
+          required: true
+    - name: v1-monitors-id-permissions
+      path: /v1/monitors/{id}/permissions
+      operations:
+      - name: monitorsreadpermissionsbyid
+        method: GET
+        description: List Explicit Permissions On Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the monitor or folder to list permissions.
+          required: true
+    - name: v1-monitors-parentId-import
+      path: /v1/monitors/{parentId}/import
+      operations:
+      - name: monitorsimportitem
+        method: POST
+        description: Import A Monitor Or Folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: parentId
+          in: path
+          type: string
+          description: Identifier of the parent folder in which to import the monitor or folder.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-monitorslibrarymanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — monitorsLibraryManagement. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/monitors
+      name: v1-monitors
+      description: REST surface for v1-monitors.
+      operations:
+      - method: GET
+        name: monitorsreadbyids
+        description: Bulk Read A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsreadbyids
+        with:
+          ids: rest.ids
+          skipChildren: rest.skipChildren
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: monitorscreate
+        description: Create A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorscreate
+        with:
+          parentId: rest.parentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: monitorsdeletebyids
+        description: Bulk Delete A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsdeletebyids
+        with:
+          ids: rest.ids
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/disable
+      name: v1-monitors-disable
+      description: REST surface for v1-monitors-disable.
+      operations:
+      - method: PUT
+        name: disablemonitorbyids
+        description: Disable Monitors.
+        call: sumo-logic-monitorslibrarymanagement.disablemonitorbyids
+        with:
+          ids: rest.ids
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/path
+      name: v1-monitors-path
+      description: REST surface for v1-monitors-path.
+      operations:
+      - method: GET
+        name: monitorsgetbypath
+        description: Read A Monitor Or Folder By Its Path.
+        call: sumo-logic-monitorslibrarymanagement.monitorsgetbypath
+        with:
+          path: rest.path
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/permissions/revoke
+      name: v1-monitors-permissions-revoke
+      description: REST surface for v1-monitors-permissions-revoke.
+      operations:
+      - method: PUT
+        name: monitorsrevokepermissions
+        description: Revoke All Permissions On Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsrevokepermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/permissions/set
+      name: v1-monitors-permissions-set
+      description: REST surface for v1-monitors-permissions-set.
+      operations:
+      - method: PUT
+        name: monitorssetpermissions
+        description: Set Permissions On Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorssetpermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/playbooks
+      name: v1-monitors-playbooks
+      description: REST surface for v1-monitors-playbooks.
+      operations:
+      - method: GET
+        name: getmonitorplaybooks
+        description: List All Playbooks.
+        call: sumo-logic-monitorslibrarymanagement.getmonitorplaybooks
+        with:
+          playbookType: rest.playbookType
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/playbooksdetails
+      name: v1-monitors-playbooksdetails
+      description: REST surface for v1-monitors-playbooksDetails.
+      operations:
+      - method: GET
+        name: getplaybooksdetails
+        description: Get Playbook Details.
+        call: sumo-logic-monitorslibrarymanagement.getplaybooksdetails
+        with:
+          ids: rest.ids
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/root
+      name: v1-monitors-root
+      description: REST surface for v1-monitors-root.
+      operations:
+      - method: GET
+        name: getmonitorslibraryroot
+        description: Get The Root Monitors Folder.
+        call: sumo-logic-monitorslibrarymanagement.getmonitorslibraryroot
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/search
+      name: v1-monitors-search
+      description: REST surface for v1-monitors-search.
+      operations:
+      - method: GET
+        name: monitorssearch
+        description: Search For A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorssearch
+        with:
+          query: rest.query
+          limit: rest.limit
+          offset: rest.offset
+          skipChildren: rest.skipChildren
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/usageinfo
+      name: v1-monitors-usageinfo
+      description: REST surface for v1-monitors-usageInfo.
+      operations:
+      - method: GET
+        name: getmonitorusageinfo
+        description: Usage Info Of Monitors.
+        call: sumo-logic-monitorslibrarymanagement.getmonitorusageinfo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}
+      name: v1-monitors-id
+      description: REST surface for v1-monitors-id.
+      operations:
+      - method: GET
+        name: monitorsreadbyid
+        description: Get A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsreadbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: monitorsupdatebyid
+        description: Update A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsupdatebyid
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: monitorsdeletebyid
+        description: Delete A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsdeletebyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/copy
+      name: v1-monitors-id-copy
+      description: REST surface for v1-monitors-id-copy.
+      operations:
+      - method: POST
+        name: monitorscopy
+        description: Copy A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorscopy
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/export
+      name: v1-monitors-id-export
+      description: REST surface for v1-monitors-id-export.
+      operations:
+      - method: GET
+        name: monitorsexportitem
+        description: Export A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsexportitem
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/move
+      name: v1-monitors-id-move
+      description: REST surface for v1-monitors-id-move.
+      operations:
+      - method: POST
+        name: monitorsmove
+        description: Move A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsmove
+        with:
+          id: rest.id
+          parentId: rest.parentId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/path
+      name: v1-monitors-id-path
+      description: REST surface for v1-monitors-id-path.
+      operations:
+      - method: GET
+        name: getmonitorsfullpath
+        description: Get The Path Of A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.getmonitorsfullpath
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/permissionsummariesbysubjects
+      name: v1-monitors-id-permissionsummariesbysubjects
+      description: REST surface for v1-monitors-id-permissionSummariesBySubjects.
+      operations:
+      - method: GET
+        name: monitorsreadpermissionsummariesbyidgroupbysubjects
+        description: List Permission Summaries For A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsreadpermissionsummariesbyidgroupbysubjects
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{id}/permissions
+      name: v1-monitors-id-permissions
+      description: REST surface for v1-monitors-id-permissions.
+      operations:
+      - method: GET
+        name: monitorsreadpermissionsbyid
+        description: List Explicit Permissions On Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsreadpermissionsbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/monitors/{parentid}/import
+      name: v1-monitors-parentid-import
+      description: REST surface for v1-monitors-parentId-import.
+      operations:
+      - method: POST
+        name: monitorsimportitem
+        description: Import A Monitor Or Folder.
+        call: sumo-logic-monitorslibrarymanagement.monitorsimportitem
+        with:
+          parentId: rest.parentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-monitorslibrarymanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — monitorsLibraryManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: bulk-read-monitor-folder
+      description: Bulk Read A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsreadbyids
+      with:
+        ids: tools.ids
+        skipChildren: tools.skipChildren
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-monitor-folder
+      description: Create A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-monitorslibrarymanagement.monitorscreate
+      with:
+        parentId: tools.parentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-delete-monitor-folder
+      description: Bulk Delete A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsdeletebyids
+      with:
+        ids: tools.ids
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-monitors
+      description: Disable Monitors.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.disablemonitorbyids
+      with:
+        ids: tools.ids
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-monitor-folder-its-path
+      description: Read A Monitor Or Folder By Its Path.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsgetbypath
+      with:
+        path: tools.path
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-all-permissions-monitor-folder
+      description: Revoke All Permissions On Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsrevokepermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-permissions-monitor-folder
+      description: Set Permissions On Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorssetpermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-playbooks
+      description: List All Playbooks.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.getmonitorplaybooks
+      with:
+        playbookType: tools.playbookType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-playbook-details
+      description: Get Playbook Details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.getplaybooksdetails
+      with:
+        ids: tools.ids
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-root-monitors-folder
+      description: Get The Root Monitors Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.getmonitorslibraryroot
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-monitor-folder
+      description: Search For A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorssearch
+      with:
+        query: tools.query
+        limit: tools.limit
+        offset: tools.offset
+        skipChildren: tools.skipChildren
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: usage-info-monitors
+      description: Usage Info Of Monitors.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.getmonitorusageinfo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-monitor-folder
+      description: Get A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsreadbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-monitor-folder
+      description: Update A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsupdatebyid
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-monitor-folder
+      description: Delete A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsdeletebyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: copy-monitor-folder
+      description: Copy A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-monitorslibrarymanagement.monitorscopy
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: export-monitor-folder
+      description: Export A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsexportitem
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: move-monitor-folder
+      description: Move A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-monitorslibrarymanagement.monitorsmove
+      with:
+        id: tools.id
+        parentId: tools.parentId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-path-monitor-folder
+      description: Get The Path Of A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.getmonitorsfullpath
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-permission-summaries-monitor-folder
+      description: List Permission Summaries For A Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsreadpermissionsummariesbyidgroupbysubjects
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-explicit-permissions-monitor-folder
+      description: List Explicit Permissions On Monitor Or Folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-monitorslibrarymanagement.monitorsreadpermissionsbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: import-monitor-folder
+      description: Import A Monitor Or Folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-monitorslibrarymanagement.monitorsimportitem
+      with:
+        parentId: tools.parentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

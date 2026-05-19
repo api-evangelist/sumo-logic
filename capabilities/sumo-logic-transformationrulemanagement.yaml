@@ -1,0 +1,241 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — transformationRuleManagement
+  description: 'Sumo Logic API — transformationRuleManagement. 5 operations. Lead operation: Get A List Of Transformation
+    Rules.. Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - transformationRuleManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-transformationrulemanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — transformationRuleManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-transformationRules
+      path: /v1/transformationRules
+      operations:
+      - name: gettransformationrules
+        method: GET
+        description: Get A List Of Transformation Rules.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of transformation rules returned in the response.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createrule
+        method: POST
+        description: Create A New Transformation Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-transformationRules-id
+      path: /v1/transformationRules/{id}
+      operations:
+      - name: gettransformationrule
+        method: GET
+        description: Get A Transformation Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of transformation rule to return.
+          required: true
+      - name: updatetransformationrule
+        method: PUT
+        description: Update A Transformation Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the transformation rule to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleterule
+        method: DELETE
+        description: Delete A Transformation Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the transformation rule to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-transformationrulemanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — transformationRuleManagement. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/transformationrules
+      name: v1-transformationrules
+      description: REST surface for v1-transformationRules.
+      operations:
+      - method: GET
+        name: gettransformationrules
+        description: Get A List Of Transformation Rules.
+        call: sumo-logic-transformationrulemanagement.gettransformationrules
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createrule
+        description: Create A New Transformation Rule.
+        call: sumo-logic-transformationrulemanagement.createrule
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/transformationrules/{id}
+      name: v1-transformationrules-id
+      description: REST surface for v1-transformationRules-id.
+      operations:
+      - method: GET
+        name: gettransformationrule
+        description: Get A Transformation Rule.
+        call: sumo-logic-transformationrulemanagement.gettransformationrule
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetransformationrule
+        description: Update A Transformation Rule.
+        call: sumo-logic-transformationrulemanagement.updatetransformationrule
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterule
+        description: Delete A Transformation Rule.
+        call: sumo-logic-transformationrulemanagement.deleterule
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-transformationrulemanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — transformationRuleManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-list-transformation-rules
+      description: Get A List Of Transformation Rules.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-transformationrulemanagement.gettransformationrules
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-transformation-rule
+      description: Create A New Transformation Rule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-transformationrulemanagement.createrule
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-transformation-rule
+      description: Get A Transformation Rule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-transformationrulemanagement.gettransformationrule
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-transformation-rule
+      description: Update A Transformation Rule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-transformationrulemanagement.updatetransformationrule
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-transformation-rule
+      description: Delete A Transformation Rule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-transformationrulemanagement.deleterule
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

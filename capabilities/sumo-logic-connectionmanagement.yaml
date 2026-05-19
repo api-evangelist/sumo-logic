@@ -1,0 +1,352 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — connectionManagement
+  description: 'Sumo Logic API — connectionManagement. 7 operations. Lead operation: Get A List Of Connections.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - connectionManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-connectionmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — connectionManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-connections
+      path: /v1/connections
+      operations:
+      - name: listconnections
+        method: GET
+        description: Get A List Of Connections.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of connections returned in the response. The number of connections returned may be
+            less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createconnection
+        method: POST
+        description: Create A New Connection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-connections-incidentTemplates
+      path: /v1/connections/incidentTemplates
+      operations:
+      - name: getincidenttemplates
+        method: POST
+        description: Get Incident Templates For CloudSOAR Connections.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-connections-test
+      path: /v1/connections/test
+      operations:
+      - name: testconnection
+        method: POST
+        description: Test A New Connection Url.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: functionalities
+          in: query
+          type: array
+          description: 'A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`.'
+        - name: connectionId
+          in: query
+          type: string
+          description: Unique identifier of an existing connection to test. It should be provided when the request body of
+            an existing connection contains masked authorization headers
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-connections-id
+      path: /v1/connections/{id}
+      operations:
+      - name: getconnection
+        method: GET
+        description: Get A Connection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of connection to return.
+          required: true
+        - name: type
+          in: query
+          type: string
+          description: Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+      - name: updateconnection
+        method: PUT
+        description: Update A Connection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the connection to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteconnection
+        method: DELETE
+        description: Delete A Connection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the connection to delete.
+          required: true
+        - name: type
+          in: query
+          type: string
+          description: Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-connectionmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — connectionManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/connections
+      name: v1-connections
+      description: REST surface for v1-connections.
+      operations:
+      - method: GET
+        name: listconnections
+        description: Get A List Of Connections.
+        call: sumo-logic-connectionmanagement.listconnections
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createconnection
+        description: Create A New Connection.
+        call: sumo-logic-connectionmanagement.createconnection
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connections/incidenttemplates
+      name: v1-connections-incidenttemplates
+      description: REST surface for v1-connections-incidentTemplates.
+      operations:
+      - method: POST
+        name: getincidenttemplates
+        description: Get Incident Templates For CloudSOAR Connections.
+        call: sumo-logic-connectionmanagement.getincidenttemplates
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connections/test
+      name: v1-connections-test
+      description: REST surface for v1-connections-test.
+      operations:
+      - method: POST
+        name: testconnection
+        description: Test A New Connection Url.
+        call: sumo-logic-connectionmanagement.testconnection
+        with:
+          functionalities: rest.functionalities
+          connectionId: rest.connectionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connections/{id}
+      name: v1-connections-id
+      description: REST surface for v1-connections-id.
+      operations:
+      - method: GET
+        name: getconnection
+        description: Get A Connection.
+        call: sumo-logic-connectionmanagement.getconnection
+        with:
+          id: rest.id
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateconnection
+        description: Update A Connection.
+        call: sumo-logic-connectionmanagement.updateconnection
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteconnection
+        description: Delete A Connection.
+        call: sumo-logic-connectionmanagement.deleteconnection
+        with:
+          id: rest.id
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-connectionmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — connectionManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-connections
+      description: Get A List Of Connections.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-connectionmanagement.listconnections
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-connection
+      description: Create A New Connection.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-connectionmanagement.createconnection
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-incident-templates-cloudsoar-connections
+      description: Get Incident Templates For CloudSOAR Connections.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-connectionmanagement.getincidenttemplates
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: test-new-connection-url
+      description: Test A New Connection Url.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: sumo-logic-connectionmanagement.testconnection
+      with:
+        functionalities: tools.functionalities
+        connectionId: tools.connectionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connection
+      description: Get A Connection.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-connectionmanagement.getconnection
+      with:
+        id: tools.id
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-connection
+      description: Update A Connection.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-connectionmanagement.updateconnection
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-connection
+      description: Delete A Connection.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-connectionmanagement.deleteconnection
+      with:
+        id: tools.id
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,225 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — tokensLibraryManagement
+  description: 'Sumo Logic API — tokensLibraryManagement. 5 operations. Lead operation: Get A List Of Tokens.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - tokensLibraryManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-tokenslibrarymanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — tokensLibraryManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-tokens
+      path: /v1/tokens
+      operations:
+      - name: listtokens
+        method: GET
+        description: Get A List Of Tokens.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtoken
+        method: POST
+        description: Create A Token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-tokens-id
+      path: /v1/tokens/{id}
+      operations:
+      - name: gettoken
+        method: GET
+        description: Get A Token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the token to return.
+          required: true
+      - name: updatetoken
+        method: PUT
+        description: Update A Token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the token to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletetoken
+        method: DELETE
+        description: Delete A Token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the token to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-tokenslibrarymanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — tokensLibraryManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/tokens
+      name: v1-tokens
+      description: REST surface for v1-tokens.
+      operations:
+      - method: GET
+        name: listtokens
+        description: Get A List Of Tokens.
+        call: sumo-logic-tokenslibrarymanagement.listtokens
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtoken
+        description: Create A Token.
+        call: sumo-logic-tokenslibrarymanagement.createtoken
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tokens/{id}
+      name: v1-tokens-id
+      description: REST surface for v1-tokens-id.
+      operations:
+      - method: GET
+        name: gettoken
+        description: Get A Token.
+        call: sumo-logic-tokenslibrarymanagement.gettoken
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetoken
+        description: Update A Token.
+        call: sumo-logic-tokenslibrarymanagement.updatetoken
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetoken
+        description: Delete A Token.
+        call: sumo-logic-tokenslibrarymanagement.deletetoken
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-tokenslibrarymanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — tokensLibraryManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-list-tokens
+      description: Get A List Of Tokens.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-tokenslibrarymanagement.listtokens
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-token
+      description: Create A Token.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-tokenslibrarymanagement.createtoken
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-token
+      description: Get A Token.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-tokenslibrarymanagement.gettoken
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-token
+      description: Update A Token.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-tokenslibrarymanagement.updatetoken
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-token
+      description: Delete A Token.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-tokenslibrarymanagement.deletetoken
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

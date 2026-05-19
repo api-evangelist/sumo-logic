@@ -1,0 +1,405 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — fieldManagementV1
+  description: 'Sumo Logic API — fieldManagementV1. 10 operations. Lead operation: Get A List Of All Custom Fields.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - fieldManagementV1
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-fieldmanagementv1
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — fieldManagementV1 business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-fields
+      path: /v1/fields
+      operations:
+      - name: listcustomfields
+        method: GET
+        description: Get A List Of All Custom Fields.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createfield
+        method: POST
+        description: Create A New Field.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-fields-builtin
+      path: /v1/fields/builtin
+      operations:
+      - name: listbuiltinfields
+        method: GET
+        description: Get A List Of Built-in Fields.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-fields-builtin-id
+      path: /v1/fields/builtin/{id}
+      operations:
+      - name: getbuiltinfield
+        method: GET
+        description: Get A Built-in Field.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of a built-in field.
+          required: true
+    - name: v1-fields-dropped
+      path: /v1/fields/dropped
+      operations:
+      - name: listdroppedfields
+        method: GET
+        description: Get A List Of Dropped Fields.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-fields-quota
+      path: /v1/fields/quota
+      operations:
+      - name: getfieldquota
+        method: GET
+        description: Get Capacity Information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-fields-id
+      path: /v1/fields/{id}
+      operations:
+      - name: getcustomfield
+        method: GET
+        description: Get A Custom Field.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of a field.
+          required: true
+      - name: deletefield
+        method: DELETE
+        description: Delete A Custom Field.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of a field to delete.
+          required: true
+    - name: v1-fields-id-disable
+      path: /v1/fields/{id}/disable
+      operations:
+      - name: disablefield
+        method: DELETE
+        description: Disable A Custom Field.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of a field to disable.
+          required: true
+    - name: v1-fields-id-enable
+      path: /v1/fields/{id}/enable
+      operations:
+      - name: enablefield
+        method: PUT
+        description: Enable Custom Field With A Specified Identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of a field to enable.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-fieldmanagementv1-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — fieldManagementV1. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/fields
+      name: v1-fields
+      description: REST surface for v1-fields.
+      operations:
+      - method: GET
+        name: listcustomfields
+        description: Get A List Of All Custom Fields.
+        call: sumo-logic-fieldmanagementv1.listcustomfields
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createfield
+        description: Create A New Field.
+        call: sumo-logic-fieldmanagementv1.createfield
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/builtin
+      name: v1-fields-builtin
+      description: REST surface for v1-fields-builtin.
+      operations:
+      - method: GET
+        name: listbuiltinfields
+        description: Get A List Of Built-in Fields.
+        call: sumo-logic-fieldmanagementv1.listbuiltinfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/builtin/{id}
+      name: v1-fields-builtin-id
+      description: REST surface for v1-fields-builtin-id.
+      operations:
+      - method: GET
+        name: getbuiltinfield
+        description: Get A Built-in Field.
+        call: sumo-logic-fieldmanagementv1.getbuiltinfield
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/dropped
+      name: v1-fields-dropped
+      description: REST surface for v1-fields-dropped.
+      operations:
+      - method: GET
+        name: listdroppedfields
+        description: Get A List Of Dropped Fields.
+        call: sumo-logic-fieldmanagementv1.listdroppedfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/quota
+      name: v1-fields-quota
+      description: REST surface for v1-fields-quota.
+      operations:
+      - method: GET
+        name: getfieldquota
+        description: Get Capacity Information.
+        call: sumo-logic-fieldmanagementv1.getfieldquota
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/{id}
+      name: v1-fields-id
+      description: REST surface for v1-fields-id.
+      operations:
+      - method: GET
+        name: getcustomfield
+        description: Get A Custom Field.
+        call: sumo-logic-fieldmanagementv1.getcustomfield
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletefield
+        description: Delete A Custom Field.
+        call: sumo-logic-fieldmanagementv1.deletefield
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/{id}/disable
+      name: v1-fields-id-disable
+      description: REST surface for v1-fields-id-disable.
+      operations:
+      - method: DELETE
+        name: disablefield
+        description: Disable A Custom Field.
+        call: sumo-logic-fieldmanagementv1.disablefield
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/fields/{id}/enable
+      name: v1-fields-id-enable
+      description: REST surface for v1-fields-id-enable.
+      operations:
+      - method: PUT
+        name: enablefield
+        description: Enable Custom Field With A Specified Identifier.
+        call: sumo-logic-fieldmanagementv1.enablefield
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-fieldmanagementv1-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — fieldManagementV1. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-all-custom-fields
+      description: Get A List Of All Custom Fields.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.listcustomfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-field
+      description: Create A New Field.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-fieldmanagementv1.createfield
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-built-fields
+      description: Get A List Of Built-in Fields.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.listbuiltinfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-built-field
+      description: Get A Built-in Field.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.getbuiltinfield
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-dropped-fields
+      description: Get A List Of Dropped Fields.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.listdroppedfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-capacity-information
+      description: Get Capacity Information.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.getfieldquota
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-custom-field
+      description: Get A Custom Field.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.getcustomfield
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-custom-field
+      description: Delete A Custom Field.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.deletefield
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-custom-field
+      description: Disable A Custom Field.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.disablefield
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-custom-field-specified-identifier
+      description: Enable Custom Field With A Specified Identifier.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-fieldmanagementv1.enablefield
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

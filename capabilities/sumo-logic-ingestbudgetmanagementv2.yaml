@@ -1,0 +1,284 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — ingestBudgetManagementV2
+  description: 'Sumo Logic API — ingestBudgetManagementV2. 6 operations. Lead operation: Get A List Of Ingest Budgets.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - ingestBudgetManagementV2
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-ingestbudgetmanagementv2
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — ingestBudgetManagementV2 business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-ingestBudgets
+      path: /v2/ingestBudgets
+      operations:
+      - name: listingestbudgetsv2
+        method: GET
+        description: Get A List Of Ingest Budgets.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of budgets returned in the response. The number of budgets returned may be less than
+            the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createingestbudgetv2
+        method: POST
+        description: Create A New Ingest Budget.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ingestBudgets-id
+      path: /v2/ingestBudgets/{id}
+      operations:
+      - name: getingestbudgetv2
+        method: GET
+        description: Get An Ingest Budget.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of ingest budget to return.
+          required: true
+      - name: updateingestbudgetv2
+        method: PUT
+        description: Update An Ingest Budget.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the ingest budget to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteingestbudgetv2
+        method: DELETE
+        description: Delete An Ingest Budget.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the ingest budget to delete.
+          required: true
+    - name: v2-ingestBudgets-id-usage-reset
+      path: /v2/ingestBudgets/{id}/usage/reset
+      operations:
+      - name: resetusagev2
+        method: POST
+        description: Reset Usage.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the ingest budget to reset usage.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-ingestbudgetmanagementv2-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — ingestBudgetManagementV2. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/ingestbudgets
+      name: v2-ingestbudgets
+      description: REST surface for v2-ingestBudgets.
+      operations:
+      - method: GET
+        name: listingestbudgetsv2
+        description: Get A List Of Ingest Budgets.
+        call: sumo-logic-ingestbudgetmanagementv2.listingestbudgetsv2
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createingestbudgetv2
+        description: Create A New Ingest Budget.
+        call: sumo-logic-ingestbudgetmanagementv2.createingestbudgetv2
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ingestbudgets/{id}
+      name: v2-ingestbudgets-id
+      description: REST surface for v2-ingestBudgets-id.
+      operations:
+      - method: GET
+        name: getingestbudgetv2
+        description: Get An Ingest Budget.
+        call: sumo-logic-ingestbudgetmanagementv2.getingestbudgetv2
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateingestbudgetv2
+        description: Update An Ingest Budget.
+        call: sumo-logic-ingestbudgetmanagementv2.updateingestbudgetv2
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteingestbudgetv2
+        description: Delete An Ingest Budget.
+        call: sumo-logic-ingestbudgetmanagementv2.deleteingestbudgetv2
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ingestbudgets/{id}/usage/reset
+      name: v2-ingestbudgets-id-usage-reset
+      description: REST surface for v2-ingestBudgets-id-usage-reset.
+      operations:
+      - method: POST
+        name: resetusagev2
+        description: Reset Usage.
+        call: sumo-logic-ingestbudgetmanagementv2.resetusagev2
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-ingestbudgetmanagementv2-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — ingestBudgetManagementV2. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-list-ingest-budgets
+      description: Get A List Of Ingest Budgets.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-ingestbudgetmanagementv2.listingestbudgetsv2
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-ingest-budget
+      description: Create A New Ingest Budget.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-ingestbudgetmanagementv2.createingestbudgetv2
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ingest-budget
+      description: Get An Ingest Budget.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-ingestbudgetmanagementv2.getingestbudgetv2
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-ingest-budget
+      description: Update An Ingest Budget.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-ingestbudgetmanagementv2.updateingestbudgetv2
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-ingest-budget
+      description: Delete An Ingest Budget.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-ingestbudgetmanagementv2.deleteingestbudgetv2
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reset-usage
+      description: Reset Usage.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-ingestbudgetmanagementv2.resetusagev2
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

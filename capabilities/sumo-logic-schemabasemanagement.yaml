@@ -1,0 +1,71 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — schemaBaseManagement
+  description: 'Sumo Logic API — schemaBaseManagement. 1 operations. Lead operation: Get Schema Base Identities Grouped By
+    Type And Sorted By Version.. Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - schemaBaseManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-schemabasemanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — schemaBaseManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-schemaIdentitiesGrouped
+      path: /v1/schemaIdentitiesGrouped
+      operations:
+      - name: getschemaidentitiesgrouped
+        method: GET
+        description: Get Schema Base Identities Grouped By Type And Sorted By Version.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-schemabasemanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — schemaBaseManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/schemaidentitiesgrouped
+      name: v1-schemaidentitiesgrouped
+      description: REST surface for v1-schemaIdentitiesGrouped.
+      operations:
+      - method: GET
+        name: getschemaidentitiesgrouped
+        description: Get Schema Base Identities Grouped By Type And Sorted By Version.
+        call: sumo-logic-schemabasemanagement.getschemaidentitiesgrouped
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-schemabasemanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — schemaBaseManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-schema-base-identities-grouped
+      description: Get Schema Base Identities Grouped By Type And Sorted By Version.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-schemabasemanagement.getschemaidentitiesgrouped
+      outputParameters:
+      - type: object
+        mapping: $.

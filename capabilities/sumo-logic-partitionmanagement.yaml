@@ -1,0 +1,329 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — partitionManagement
+  description: 'Sumo Logic API — partitionManagement. 7 operations. Lead operation: Get A List Of Partitions.. Self-contained
+    Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - partitionManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-partitionmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — partitionManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-partitions
+      path: /v1/partitions
+      operations:
+      - name: listpartitions
+        method: GET
+        description: Get A List Of Partitions.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of partitions returned in the response. The number of partitions returned may be less
+            than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+        - name: viewTypes
+          in: query
+          type: array
+          description: 'The type of partitions to retrieve. Valid values are:'
+      - name: createpartition
+        method: POST
+        description: Create A New Partition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-partitions-quota
+      path: /v1/partitions/quota
+      operations:
+      - name: getpartitionsquota
+        method: GET
+        description: Provides Information About Partitions Quota.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-partitions-id
+      path: /v1/partitions/{id}
+      operations:
+      - name: getpartition
+        method: GET
+        description: Get A Partition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of partition to return.
+          required: true
+      - name: updatepartition
+        method: PUT
+        description: Update A Partition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the partition to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-partitions-id-cancelRetentionUpdate
+      path: /v1/partitions/{id}/cancelRetentionUpdate
+      operations:
+      - name: cancelretentionupdate
+        method: POST
+        description: Cancel A Retention Update For A Partition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the partition to cancel the retention update for.
+          required: true
+    - name: v1-partitions-id-decommission
+      path: /v1/partitions/{id}/decommission
+      operations:
+      - name: decommissionpartition
+        method: POST
+        description: Decommission A Partition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the partition to decommission.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-partitionmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — partitionManagement. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/partitions
+      name: v1-partitions
+      description: REST surface for v1-partitions.
+      operations:
+      - method: GET
+        name: listpartitions
+        description: Get A List Of Partitions.
+        call: sumo-logic-partitionmanagement.listpartitions
+        with:
+          limit: rest.limit
+          token: rest.token
+          viewTypes: rest.viewTypes
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpartition
+        description: Create A New Partition.
+        call: sumo-logic-partitionmanagement.createpartition
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/partitions/quota
+      name: v1-partitions-quota
+      description: REST surface for v1-partitions-quota.
+      operations:
+      - method: GET
+        name: getpartitionsquota
+        description: Provides Information About Partitions Quota.
+        call: sumo-logic-partitionmanagement.getpartitionsquota
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/partitions/{id}
+      name: v1-partitions-id
+      description: REST surface for v1-partitions-id.
+      operations:
+      - method: GET
+        name: getpartition
+        description: Get A Partition.
+        call: sumo-logic-partitionmanagement.getpartition
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatepartition
+        description: Update A Partition.
+        call: sumo-logic-partitionmanagement.updatepartition
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/partitions/{id}/cancelretentionupdate
+      name: v1-partitions-id-cancelretentionupdate
+      description: REST surface for v1-partitions-id-cancelRetentionUpdate.
+      operations:
+      - method: POST
+        name: cancelretentionupdate
+        description: Cancel A Retention Update For A Partition
+        call: sumo-logic-partitionmanagement.cancelretentionupdate
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/partitions/{id}/decommission
+      name: v1-partitions-id-decommission
+      description: REST surface for v1-partitions-id-decommission.
+      operations:
+      - method: POST
+        name: decommissionpartition
+        description: Decommission A Partition.
+        call: sumo-logic-partitionmanagement.decommissionpartition
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-partitionmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — partitionManagement. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-partitions
+      description: Get A List Of Partitions.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-partitionmanagement.listpartitions
+      with:
+        limit: tools.limit
+        token: tools.token
+        viewTypes: tools.viewTypes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-partition
+      description: Create A New Partition.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-partitionmanagement.createpartition
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: provides-information-about-partitions-quota
+      description: Provides Information About Partitions Quota.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-partitionmanagement.getpartitionsquota
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-partition
+      description: Get A Partition.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-partitionmanagement.getpartition
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-partition
+      description: Update A Partition.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-partitionmanagement.updatepartition
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-retention-update-partition
+      description: Cancel A Retention Update For A Partition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-partitionmanagement.cancelretentionupdate
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: decommission-partition
+      description: Decommission A Partition.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-partitionmanagement.decommissionpartition
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

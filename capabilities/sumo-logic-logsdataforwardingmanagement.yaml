@@ -1,0 +1,445 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sumo Logic API — logsDataForwardingManagement
+  description: 'Sumo Logic API — logsDataForwardingManagement. 10 operations. Lead operation: Get Amazon S3 Data Forwarding
+    Destinations.. Self-contained Naftiko capability covering one Sumo Logic business surface.'
+  tags:
+  - Sumo Logic
+  - logsDataForwardingManagement
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SUMO_LOGIC_API_KEY: SUMO_LOGIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sumo-logic-logsdataforwardingmanagement
+    baseUri: https://api.au.sumologic.com/api
+    description: Sumo Logic API — logsDataForwardingManagement business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-logsDataForwarding-destinations
+      path: /v1/logsDataForwarding/destinations
+      operations:
+      - name: getdataforwardingbuckets
+        method: GET
+        description: Get Amazon S3 Data Forwarding Destinations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of data forwarding destinations returned in the response. The number of data forwarding
+            destinations returned may be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createdataforwardingbucket
+        method: POST
+        description: Create An S3 Data Forwarding Destination.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-logsDataForwarding-destinations-id
+      path: /v1/logsDataForwarding/destinations/{id}
+      operations:
+      - name: getdataforwardingdestination
+        method: GET
+        description: Get An S3 Data Forwarding Destination.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the S3 data forwarding destination to return.
+          required: true
+      - name: updatedataforwardingbucket
+        method: PUT
+        description: Update An S3 Data Forwarding Destination.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the data forwarding destination to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedataforwardingbucket
+        method: DELETE
+        description: Delete An S3 Data Forwarding Destination.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Identifier of the data forwarding destination to delete.
+          required: true
+    - name: v1-logsDataForwarding-rules
+      path: /v1/logsDataForwarding/rules
+      operations:
+      - name: getrulesandbuckets
+        method: GET
+        description: Get All S3 Data Forwarding Rules.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Limit the number of data forwarding rules returned in the response. The number of data forwarding rules
+            returned may be less than the `limit`.
+        - name: token
+          in: query
+          type: string
+          description: Continuation token to get the next page of results. A page object with the next continuation token
+            is returned in the response body. Subsequent GET requests sho
+      - name: createdataforwardingrule
+        method: POST
+        description: Create An S3 Data Forwarding Rule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-logsDataForwarding-rules-indexId
+      path: /v1/logsDataForwarding/rules/{indexId}
+      operations:
+      - name: getdataforwardingrule
+        method: GET
+        description: Get An S3 Data Forwarding Rule By Its Index.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: indexId
+          in: path
+          type: string
+          description: The `id` of the Partition or Scheduled View.
+          required: true
+      - name: updatedataforwardingrule
+        method: PUT
+        description: Update An S3 Data Forwarding Rule By Its Index.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: indexId
+          in: path
+          type: string
+          description: The `id` of the Partition or Scheduled View with the data forwarding rule to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedataforwardingrule
+        method: DELETE
+        description: Delete An S3 Data Forwarding Rule By Its Index.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: indexId
+          in: path
+          type: string
+          description: The `id` of the Partition or Scheduled View with the data forwarding rule to delete.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.SUMO_LOGIC_USER}}'
+      password: '{{env.SUMO_LOGIC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: sumo-logic-logsdataforwardingmanagement-rest
+    port: 8080
+    description: REST adapter for Sumo Logic API — logsDataForwardingManagement. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/logsdataforwarding/destinations
+      name: v1-logsdataforwarding-destinations
+      description: REST surface for v1-logsDataForwarding-destinations.
+      operations:
+      - method: GET
+        name: getdataforwardingbuckets
+        description: Get Amazon S3 Data Forwarding Destinations.
+        call: sumo-logic-logsdataforwardingmanagement.getdataforwardingbuckets
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdataforwardingbucket
+        description: Create An S3 Data Forwarding Destination.
+        call: sumo-logic-logsdataforwardingmanagement.createdataforwardingbucket
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/logsdataforwarding/destinations/{id}
+      name: v1-logsdataforwarding-destinations-id
+      description: REST surface for v1-logsDataForwarding-destinations-id.
+      operations:
+      - method: GET
+        name: getdataforwardingdestination
+        description: Get An S3 Data Forwarding Destination.
+        call: sumo-logic-logsdataforwardingmanagement.getdataforwardingdestination
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedataforwardingbucket
+        description: Update An S3 Data Forwarding Destination.
+        call: sumo-logic-logsdataforwardingmanagement.updatedataforwardingbucket
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedataforwardingbucket
+        description: Delete An S3 Data Forwarding Destination.
+        call: sumo-logic-logsdataforwardingmanagement.deletedataforwardingbucket
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/logsdataforwarding/rules
+      name: v1-logsdataforwarding-rules
+      description: REST surface for v1-logsDataForwarding-rules.
+      operations:
+      - method: GET
+        name: getrulesandbuckets
+        description: Get All S3 Data Forwarding Rules.
+        call: sumo-logic-logsdataforwardingmanagement.getrulesandbuckets
+        with:
+          limit: rest.limit
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdataforwardingrule
+        description: Create An S3 Data Forwarding Rule.
+        call: sumo-logic-logsdataforwardingmanagement.createdataforwardingrule
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/logsdataforwarding/rules/{indexid}
+      name: v1-logsdataforwarding-rules-indexid
+      description: REST surface for v1-logsDataForwarding-rules-indexId.
+      operations:
+      - method: GET
+        name: getdataforwardingrule
+        description: Get An S3 Data Forwarding Rule By Its Index.
+        call: sumo-logic-logsdataforwardingmanagement.getdataforwardingrule
+        with:
+          indexId: rest.indexId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedataforwardingrule
+        description: Update An S3 Data Forwarding Rule By Its Index.
+        call: sumo-logic-logsdataforwardingmanagement.updatedataforwardingrule
+        with:
+          indexId: rest.indexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedataforwardingrule
+        description: Delete An S3 Data Forwarding Rule By Its Index.
+        call: sumo-logic-logsdataforwardingmanagement.deletedataforwardingrule
+        with:
+          indexId: rest.indexId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sumo-logic-logsdataforwardingmanagement-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sumo Logic API — logsDataForwardingManagement. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-amazon-s3-data-forwarding
+      description: Get Amazon S3 Data Forwarding Destinations.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.getdataforwardingbuckets
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-s3-data-forwarding-destination
+      description: Create An S3 Data Forwarding Destination.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-logsdataforwardingmanagement.createdataforwardingbucket
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-s3-data-forwarding-destination
+      description: Get An S3 Data Forwarding Destination.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.getdataforwardingdestination
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-s3-data-forwarding-destination
+      description: Update An S3 Data Forwarding Destination.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.updatedataforwardingbucket
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-s3-data-forwarding-destination
+      description: Delete An S3 Data Forwarding Destination.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.deletedataforwardingbucket
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-s3-data-forwarding
+      description: Get All S3 Data Forwarding Rules.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.getrulesandbuckets
+      with:
+        limit: tools.limit
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-s3-data-forwarding-rule
+      description: Create An S3 Data Forwarding Rule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: sumo-logic-logsdataforwardingmanagement.createdataforwardingrule
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-s3-data-forwarding-rule
+      description: Get An S3 Data Forwarding Rule By Its Index.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.getdataforwardingrule
+      with:
+        indexId: tools.indexId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-s3-data-forwarding-rule
+      description: Update An S3 Data Forwarding Rule By Its Index.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.updatedataforwardingrule
+      with:
+        indexId: tools.indexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-s3-data-forwarding-rule
+      description: Delete An S3 Data Forwarding Rule By Its Index.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: sumo-logic-logsdataforwardingmanagement.deletedataforwardingrule
+      with:
+        indexId: tools.indexId
+      outputParameters:
+      - type: object
+        mapping: $.
