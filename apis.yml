@@ -1,214 +1,110 @@
 aid: sumo-logic
 name: Sumo Logic
-description: Sumo Logic is a cloud-native, machine data analytics platform delivering real-time, continuous intelligence for
-  operations, security, and business insights. It provides a comprehensive REST API with 289 endpoints spanning log analytics,
+description: Sumo Logic is a cloud-native, machine data analytics platform delivering
+  real-time, continuous intelligence for operations, security, and business insights.
+  It provides a comprehensive REST API with 289 endpoints spanning log analytics,
   dashboards, monitors, roles, users, metrics, traces, and more.
 type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Logging
-  - Observability
-  - Security
-  - Monitoring
-  - Analytics
-  - DevOps
-  - SIEM
+- Logging
+- Observability
+- Security
+- Monitoring
+- Analytics
+- DevOps
+- SIEM
 url: https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/apis.yml
 created: '2025-01-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: sumo-logic:sumo-logic
-    name: Sumo Logic API
-    description: Sumo Logic REST API providing 289 endpoints for managing log analytics, users, roles, dashboards, monitors,
-      connections, collectors, sources, search jobs, ingest budgets, partitions, field extraction, metrics, traces, and security
-      operations. Uses Basic Auth with Access ID and Key.
-    humanURL: https://help.sumologic.com/docs/api/
-    baseURL: https://api.sumologic.com/api
-    tags:
-    - Logging
-    - Observability
-    - Security
-    - Monitoring
-    - Analytics
-    - Users
-    - Roles
-    - Dashboards
-    properties:
-    - type: Documentation
-      url: https://help.sumologic.com/docs/api/
-    - type: Reference
-      url: https://api.sumologic.com/docs/
-    - type: OpenAPI
-      url: https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/openapi/sumo-logic-openapi.yml
-    - type: GettingStarted
-      url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-accesskeymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-accountmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-appmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-appmanagementv2.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-archivemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-budgetmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-connectionmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-contentmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-contentpermissions.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-dashboardmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-datadeletionrules.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-datamaskingmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-dynamicparsingrulemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-eventanalytics.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-extractionrulemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-fieldmanagementv1.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-foldermanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-healthevents.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-ingestbudgetmanagementv2.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-logsearchesestimatedusage.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-logsearchesmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-logsdataforwardingmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-lookupmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-macromanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-metricsquery.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-metricssearchesmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-metricssearchesmanagementv2.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-monitorslibrarymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-mutingscheduleslibrarymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-oauthmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-orgsmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-otcollectormanagementexternal.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-parserslibrarymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-partitionmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-passwordpolicy.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-policiesmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-rolemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-rolemanagementv2.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-samlconfigurationmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-scheduledviewmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-schemabasemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-scimusermanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-serviceaccountmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-serviceallowlistmanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-servicemap.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-sloslibrarymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-sourcetemplatemanagementexternal.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-spananalytics.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-threatintelingest.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-threatintelingestproducer.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-tokenslibrarymanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-traces.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-transformationrulemanagement.yaml
-    - type: NaftikoCapability
-      url: capabilities/sumo-logic-usermanagement.yaml
-common:
-  - type: GitHubOrganization
-    url: https://github.com/sumologic
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/sumo-logic
-  - type: Portal
-    url: https://developer.sumologic.com/
+- aid: sumo-logic:sumo-logic
+  name: Sumo Logic API
+  description: Sumo Logic REST API providing 289 endpoints for managing log analytics,
+    users, roles, dashboards, monitors, connections, collectors, sources, search jobs,
+    ingest budgets, partitions, field extraction, metrics, traces, and security operations.
+    Uses Basic Auth with Access ID and Key.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Logging
+  - Observability
+  - Security
+  - Monitoring
+  - Analytics
+  - Users
+  - Roles
+  - Dashboards
+  properties:
   - type: Documentation
     url: https://help.sumologic.com/docs/api/
   - type: Reference
     url: https://api.sumologic.com/docs/
-  - type: Website
-    url: https://www.sumologic.com/
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/openapi/sumo-logic-openapi.yml
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: StatusPage
-    url: https://status.sumologic.com
-  - type: Integrations
-    url: https://www.sumologic.com/partners
+  - url: graphql/sumo-logic-graphql.md
+    type: GraphQL
+common:
+- type: GitHubOrganization
+  url: https://github.com/sumologic
+- type: LinkedIn
+  url: https://www.linkedin.com/company/sumo-logic
+- type: Portal
+  url: https://developer.sumologic.com/
+- type: Documentation
+  url: https://help.sumologic.com/docs/api/
+- type: Reference
+  url: https://api.sumologic.com/docs/
+- type: Website
+  url: https://www.sumologic.com/
+- type: GettingStarted
+  url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+- type: StatusPage
+  url: https://status.sumologic.com
+- type: Integrations
+  url: https://www.sumologic.com/partners
 integrations:
-  - name: sumologic Homepage
-  - name: Dojo AI
-  - name: opentelemetry page
-  - name: Amazon Web Services – App Catalog
-  - name: Google Cloud Platform – App Catalog
-  - name: Microsoft Azure – App Catalog
-  - name: Bugcrowd
-  - name: language switcher
-  - name: icon peer networking icon RGB
-  - name: icon system integrators
-  - name: icon Velocity
-  - name: shi logo clr
-  - name: icon Guardian
-  - name: srg logo clr
-  - name: icon Collaborator
-  - name: logo channel pro
-  - name: logo mssp v2
-  - name: RSA 2026 Web thumb
-  - name: thumb Driving Customer Outcomes v4 1
-  - name: accelera
-  - name: logo activereach
-  - name: logo advantio 1
-  - name: logo Akoova
-  - name: logo alphaMountain 2 1
-  - name: logo
-  - name: logo Amber CyberEye
-  - name: logo aqua@x2 1
-  - name: logo ascension 1
-  - name: Auto
-  - name: logo Avalon Cyber Logo 2
-  - name: AWS partnerNetwork
-  - name: logo baidam 1
-  - name: AICPA SOC2
-  - name: FedRAMP
-  - name: PCI DSS Compliant
-  - name: COALFIRE
+- name: sumologic Homepage
+- name: Dojo AI
+- name: opentelemetry page
+- name: Amazon Web Services – App Catalog
+- name: Google Cloud Platform – App Catalog
+- name: Microsoft Azure – App Catalog
+- name: Bugcrowd
+- name: language switcher
+- name: icon peer networking icon RGB
+- name: icon system integrators
+- name: icon Velocity
+- name: shi logo clr
+- name: icon Guardian
+- name: srg logo clr
+- name: icon Collaborator
+- name: logo channel pro
+- name: logo mssp v2
+- name: RSA 2026 Web thumb
+- name: thumb Driving Customer Outcomes v4 1
+- name: accelera
+- name: logo activereach
+- name: logo advantio 1
+- name: logo Akoova
+- name: logo alphaMountain 2 1
+- name: logo
+- name: logo Amber CyberEye
+- name: logo aqua@x2 1
+- name: logo ascension 1
+- name: Auto
+- name: logo Avalon Cyber Logo 2
+- name: AWS partnerNetwork
+- name: logo baidam 1
+- name: AICPA SOC2
+- name: FedRAMP
+- name: PCI DSS Compliant
+- name: COALFIRE
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

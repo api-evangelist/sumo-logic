@@ -1,0 +1,1120 @@
+"""
+Sumo Logic GraphQL Schema
+Conceptual schema derived from the Sumo Logic REST API v1.
+Docs: https://api.sumologic.com/docs/
+"""
+
+# ─── Scalars ────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Long
+
+# ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum SourceType {
+  HTTP
+  S3
+  CLOUDFRONT
+  SYSLOG
+  WINDOWS_EVENT
+  LOCAL_FILE
+  REMOTE_FILE
+  DOCKER_LOG
+  KINESIS_LOG
+  GOOGLE_CLOUD_LOGGING
+  AZURE_EVENT_HUB
+  INSTALLED
+  HOSTED
+}
+
+enum CollectorType {
+  HOSTED
+  INSTALLED
+}
+
+enum SearchJobState {
+  NOT_STARTED
+  GATHERING_CHUNKS
+  GENERATING_HISTOGRAMS
+  WAITING_FOR_CHUNKS
+  PAUSED
+  DONE_GATHERING_CHUNKS
+  CANCELLED
+  FORCE_PAUSED
+}
+
+enum PanelChartType {
+  AREA
+  BAR
+  COLUMN
+  COMBO
+  LINE
+  MAP
+  PIE
+  SCATTER
+  SINGLE_VALUE
+  TABLE
+  TEXT
+  HONEYCOMB
+  BOXPLOT
+}
+
+enum MonitorStatus {
+  NORMAL
+  CRITICAL
+  WARNING
+  MISSING_DATA
+  DISABLED
+}
+
+enum AlertSeverity {
+  CRITICAL
+  WARNING
+  MISSING_DATA
+}
+
+enum ContentType {
+  FOLDER
+  SEARCH
+  DASHBOARD
+  REPORT
+  MONITOR
+}
+
+enum DeliveryFormat {
+  PDF
+  PNG
+  CSV
+}
+
+enum PermissionType {
+  READ
+  WRITE
+  MANAGE
+  ADMIN
+}
+
+enum MetricAggregation {
+  AVG
+  SUM
+  MIN
+  MAX
+  COUNT
+  LAST
+  FIRST
+}
+
+enum WebhookMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+}
+
+# ─── Collector Types ─────────────────────────────────────────────────────────
+
+type HostedCollector {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  fields: [LogField!]
+  timezone: String
+  alive: Boolean
+  lastSeenAlive: DateTime
+  collectorVersion: String
+  ephemeral: Boolean
+  sourceSyncMode: String
+  targetCpu: Int
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type InstalledCollector {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  fields: [LogField!]
+  timezone: String
+  alive: Boolean
+  lastSeenAlive: DateTime
+  collectorVersion: String
+  osName: String
+  osVersion: String
+  osArch: String
+  hostname: String
+  ephemeral: Boolean
+  targetCpu: Int
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+# ─── Source Types ────────────────────────────────────────────────────────────
+
+type Source {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  hostName: String
+  timezone: String
+  automaticDateParsing: Boolean
+  multilineProcessingEnabled: Boolean
+  useAutolineMatching: Boolean
+  contentType: String
+  forceTimeZone: Boolean
+  defaultDateFormats: [String!]
+  filters: [JSON]
+  fields: [LogField!]
+  sourceType: SourceType!
+  alive: Boolean
+  collectorId: ID
+}
+
+type SourceDetails {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  sourceType: SourceType!
+  encoding: String
+  multilineProcessingEnabled: Boolean
+  useAutolineMatching: Boolean
+  manualPrefixRegexp: String
+  forceTimeZone: Boolean
+  defaultDateFormats: [String!]
+  filters: [JSON]
+  fields: [LogField!]
+  blacklist: [String!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+type HTTPSource {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  url: String
+  messagePerRequest: Boolean
+  multilineProcessingEnabled: Boolean
+  useAutolineMatching: Boolean
+  fields: [LogField!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+type S3Source {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  thirdPartyRef: JSON
+  scanInterval: Int
+  paused: Boolean
+  fields: [LogField!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+type CloudFront {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  thirdPartyRef: JSON
+  scanInterval: Int
+  paused: Boolean
+  fields: [LogField!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+type SyslogSource {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  protocol: String
+  port: Int
+  fields: [LogField!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+type WindowsEventSource {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  logTypes: [String!]
+  renderMessages: Boolean
+  fields: [LogField!]
+  alive: Boolean
+  collectorId: ID
+  created: DateTime
+  modified: DateTime
+}
+
+# ─── Log Types ───────────────────────────────────────────────────────────────
+
+type LogField {
+  name: String!
+  value: String!
+}
+
+type LogMetadata {
+  sourceId: String
+  sourceCategory: String
+  sourceName: String
+  sourceHost: String
+  collectorId: String
+  collectorName: String
+  fields: [LogField!]
+}
+
+type LogEntry {
+  message: String!
+  map: JSON
+  time: DateTime
+  metadata: LogMetadata
+}
+
+# ─── Search Types ────────────────────────────────────────────────────────────
+
+type SearchQuery {
+  query: String!
+  from: DateTime!
+  to: DateTime!
+  timeZone: String
+  byReceiptTime: Boolean
+  autoParsingMode: String
+}
+
+type SearchJob {
+  id: ID!
+  query: String!
+  from: DateTime!
+  to: DateTime!
+  timeZone: String
+  byReceiptTime: Boolean
+  status: SearchJobState!
+  created: DateTime
+  modified: DateTime
+}
+
+type SearchJobDetails {
+  id: ID!
+  query: String!
+  from: DateTime!
+  to: DateTime!
+  timeZone: String
+  byReceiptTime: Boolean
+  status: SearchJobState!
+  messageCount: Int
+  recordCount: Int
+  pendingErrors: [String!]
+  pendingWarnings: [String!]
+  histogramBuckets: [HistogramBucket!]
+}
+
+type SearchJobStatus {
+  state: SearchJobState!
+  messageCount: Int
+  recordCount: Int
+  pendingErrors: [String!]
+  pendingWarnings: [String!]
+  histogramBuckets: [HistogramBucket!]
+}
+
+type HistogramBucket {
+  startTimestamp: Long
+  length: Long
+  count: Int
+}
+
+type SearchMessages {
+  messages: [LogEntry!]!
+  fields: [FieldDefinition!]!
+}
+
+type SearchRecord {
+  map: JSON!
+}
+
+type SearchAggregation {
+  records: [SearchRecord!]!
+  fields: [FieldDefinition!]!
+}
+
+type FieldDefinition {
+  name: String!
+  fieldType: String
+  keyField: Boolean
+}
+
+type ParsedMessage {
+  message: String!
+  fields: [LogField!]!
+  time: DateTime
+}
+
+type Query {
+  # Collectors
+  collector(id: ID!): HostedCollector
+  collectors(limit: Int, offset: Int): [HostedCollector!]!
+  installedCollector(id: ID!): InstalledCollector
+  installedCollectors(limit: Int, offset: Int): [InstalledCollector!]!
+
+  # Sources
+  source(collectorId: ID!, sourceId: ID!): Source
+  sourceDetails(collectorId: ID!, sourceId: ID!): SourceDetails
+  sources(collectorId: ID!): [Source!]!
+
+  # Search
+  searchJob(id: ID!): SearchJobDetails
+  searchJobStatus(id: ID!): SearchJobStatus
+  searchMessages(id: ID!, offset: Int, limit: Int): SearchMessages
+  searchAggregations(id: ID!, offset: Int, limit: Int): SearchAggregation
+
+  # Dashboards
+  dashboard(id: ID!): DashboardDetails
+  dashboards(limit: Int, token: String): DashboardPage!
+
+  # Monitors
+  monitor(id: ID!): MonitorDetails
+  monitors(limit: Int, token: String): MonitorPage!
+
+  # Users
+  user(id: ID!): UserDetails
+  users(limit: Int, token: String): UserPage!
+  currentUser: UserDetails
+
+  # Roles
+  role(id: ID!): Role
+  roles(limit: Int, token: String): RolePage!
+
+  # Content
+  folder(id: ID!): Folder
+  content(id: ID!): Content
+
+  # Metrics
+  metricsQuery(query: MetricsQueryInput!): MetricsResult
+
+  # Partitions
+  partition(id: ID!): PartitionDetails
+  partitions(limit: Int, token: String): PartitionPage!
+
+  # Fields
+  field(fieldName: String!): Field
+  fields: [Field!]!
+
+  # Tokens
+  token(id: ID!): Token
+  tokens: [Token!]!
+
+  # Rate limits
+  rateLimitInfo: RateLimitInfo
+
+  # Organization
+  organization: Organization
+
+  # Alerts
+  alertGroup(id: ID!): AlertGroup
+  alertGroups(limit: Int, token: String): AlertGroupPage!
+}
+
+# ─── Time Series / Metrics ───────────────────────────────────────────────────
+
+type TimeSeries {
+  metric: String!
+  dimensions: [LogField!]
+  datapoints: [MetricDataPoint!]!
+}
+
+type MetricDataPoint {
+  timestamp: Long!
+  value: Float!
+}
+
+input MetricsQueryInput {
+  query: [MetricsQueryRow!]!
+  startTime: DateTime!
+  endTime: DateTime!
+  maxDataPoints: Int
+  desiredQuantizationInSecs: Int
+}
+
+input MetricsQueryRow {
+  rowId: String!
+  query: String!
+}
+
+type MetricsResult {
+  queryResult: [MetricsQueryResult!]!
+}
+
+type MetricsQueryResult {
+  rowId: String!
+  results: [TimeSeries!]!
+  errorType: String
+  errorMessage: String
+}
+
+type MetricsQuery {
+  id: ID!
+  query: String!
+  rowId: String
+  quantization: Int
+  rollup: MetricAggregation
+}
+
+# ─── Dashboards ──────────────────────────────────────────────────────────────
+
+type Dashboard {
+  id: ID!
+  title: String!
+  description: String
+  folderId: String
+  topologyLabelMap: JSON
+  domain: String
+  refreshInterval: Int
+  timeRange: JSON
+  theme: String
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type DashboardDetails {
+  id: ID!
+  title: String!
+  description: String
+  folderId: String
+  topologyLabelMap: JSON
+  domain: String
+  refreshInterval: Int
+  timeRange: JSON
+  theme: String
+  panels: [PanelDetails!]
+  variables: [JSON]
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type DashboardPage {
+  data: [Dashboard!]!
+  next: String
+}
+
+type Panel {
+  id: ID!
+  key: String!
+  title: String
+  visualSettings: JSON
+  keepVisualSettingsConsistentWithParent: Boolean
+  panelType: String
+}
+
+type PanelDetails {
+  id: ID!
+  key: String!
+  title: String
+  visualSettings: JSON
+  keepVisualSettingsConsistentWithParent: Boolean
+  panelType: String
+  chartType: PanelChartType
+  queries: [PanelQuery!]
+  description: String
+  timeRange: JSON
+  coloringRules: [JSON]
+  linkedDashboards: [LinkedDashboard!]
+}
+
+type PanelQuery {
+  queryString: String!
+  queryType: String!
+  queryKey: String!
+  metricsQueryMode: String
+  metricsQueryData: MetricsQuery
+}
+
+type LinkedDashboard {
+  id: String!
+  relativePath: String
+  includeTimeRange: Boolean
+  includeVariables: Boolean
+}
+
+# ─── Monitors ────────────────────────────────────────────────────────────────
+
+type Monitor {
+  id: ID!
+  name: String!
+  description: String
+  type: String!
+  isLocked: Boolean
+  status: [MonitorStatus!]
+  groupType: String
+  queries: [MonitorQuery!]
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type MonitorDetails {
+  id: ID!
+  name: String!
+  description: String
+  type: String!
+  isLocked: Boolean
+  status: [MonitorStatus!]
+  groupType: String
+  queries: [MonitorQuery!]
+  triggers: [MonitorCondition!]
+  notifications: [MonitorNotification!]
+  playbook: String
+  sloId: String
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type MonitorPage {
+  data: [Monitor!]!
+  next: String
+}
+
+type MonitorQuery {
+  rowId: String!
+  query: String!
+  queryType: String!
+}
+
+type MonitorCondition {
+  detectionMethod: String!
+  triggerType: String!
+  threshold: Float
+  thresholdType: String
+  occurrenceType: String
+  windowType: String
+  windowSize: String
+  timeRange: String
+}
+
+type MonitorNotification {
+  notification: JSON
+  runForTriggerTypes: [String!]
+}
+
+# ─── Alerts ──────────────────────────────────────────────────────────────────
+
+type AlertGroup {
+  id: ID!
+  name: String!
+  monitorId: String!
+  triggerType: String!
+  status: AlertSeverity!
+  alerts: [AlertDetails!]
+  created: DateTime
+  modified: DateTime
+}
+
+type AlertGroupPage {
+  data: [AlertGroup!]!
+  next: String
+}
+
+type AlertDetails {
+  id: ID!
+  name: String!
+  monitorId: String!
+  triggerType: String!
+  status: AlertSeverity!
+  startTime: DateTime
+  endTime: DateTime
+  resolvedAt: DateTime
+  muteScheduleIds: [String!]
+  entityId: String
+  alertCondition: String
+}
+
+type AlertSummary {
+  totalCount: Int!
+  criticalCount: Int!
+  warningCount: Int!
+  missingDataCount: Int!
+}
+
+type AlertConnection {
+  id: ID!
+  type: String!
+  name: String!
+  description: String
+  url: String!
+  headers: [LogField!]
+  customHeaders: [LogField!]
+  defaultPayload: String
+  webhooks: [AlertWebhook!]
+  created: DateTime
+  modified: DateTime
+}
+
+type AlertWebhook {
+  url: String!
+  method: WebhookMethod!
+  headers: [LogField!]
+  payload: String
+  resolution: Boolean
+}
+
+# ─── Content / Folders ───────────────────────────────────────────────────────
+
+type Folder {
+  id: ID!
+  name: String!
+  description: String
+  parentId: String
+  contentType: ContentType!
+  globallySearchable: Boolean
+  isFavorite: Boolean
+  permissions: [String!]
+  itemStatus: String
+  children: [Content!]
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type Content {
+  id: ID!
+  name: String!
+  description: String
+  parentId: String
+  contentType: ContentType!
+  globallySearchable: Boolean
+  isFavorite: Boolean
+  permissions: [String!]
+  itemStatus: String
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+# ─── Reports ─────────────────────────────────────────────────────────────────
+
+type Report {
+  id: ID!
+  name: String!
+  description: String
+  timezone: String
+  template: ReportTemplate
+  schedule: ReportSchedule
+  lastModifiedBy: String
+  created: DateTime
+  modified: DateTime
+}
+
+type ReportTemplate {
+  type: String!
+  id: String!
+}
+
+type ReportSchedule {
+  frequency: String!
+  minute: Int
+  hour: Int
+  weekdays: [Int!]
+  days: [Int!]
+  cronExpression: String
+  notificationThreshold: Int
+  parameters: JSON
+  delivery: [ReportDelivery!]
+}
+
+type ReportDelivery {
+  recipientType: String!
+  recipients: [String!]!
+  format: DeliveryFormat!
+  timezone: String
+}
+
+# ─── Users & Roles ───────────────────────────────────────────────────────────
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  roleIds: [String!]
+  isActive: Boolean
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type UserDetails {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  roleIds: [String!]
+  isActive: Boolean
+  isMfaEnabled: Boolean
+  lastLoginTimestamp: DateTime
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type UserPage {
+  data: [User!]!
+  next: String
+}
+
+type UserRole {
+  userId: ID!
+  roleId: ID!
+  assignedAt: DateTime
+}
+
+type Role {
+  id: ID!
+  name: String!
+  description: String
+  filterPredicate: String
+  users: [String!]
+  capabilities: [String!]
+  systemDefined: Boolean
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type RolePage {
+  data: [Role!]!
+  next: String
+}
+
+type Permission {
+  permissionType: PermissionType!
+  sourceType: String!
+  sourceId: String!
+  contentId: String!
+  grantedTo: String!
+  grantedAt: DateTime
+}
+
+# ─── Organization ────────────────────────────────────────────────────────────
+
+type Organization {
+  orgId: String!
+  orgName: String!
+  environment: String!
+  tier: String
+  credits: Int
+  maxUsersAllowed: Int
+  maxConcurrentSearches: Int
+  created: DateTime
+  modified: DateTime
+}
+
+# ─── Partitions ──────────────────────────────────────────────────────────────
+
+type PartitionDetails {
+  id: ID!
+  name: String!
+  routingExpression: String!
+  analyticsTier: String
+  retentionPeriod: Int
+  isCompliant: Boolean
+  dataForwardingId: String
+  totalBytes: Long
+  isActive: Boolean
+  indexType: String
+  created: DateTime
+  modified: DateTime
+}
+
+type PartitionPage {
+  data: [PartitionDetails!]!
+  next: String
+}
+
+type PartitionInfo {
+  id: ID!
+  name: String!
+  routingExpression: String!
+  analyticsTier: String
+  retentionPeriod: Int
+  totalBytes: Long
+  isActive: Boolean
+}
+
+# ─── Fields ──────────────────────────────────────────────────────────────────
+
+type Field {
+  fieldId: ID!
+  fieldName: String!
+  dataType: String!
+  state: String!
+}
+
+# ─── Tokens & API Keys ───────────────────────────────────────────────────────
+
+type Token {
+  id: ID!
+  name: String!
+  description: String
+  type: String!
+  status: String!
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+type APIKey {
+  id: ID!
+  name: String!
+  accessId: String!
+  accessKey: String
+  corsHeaders: [String!]
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  modifiedBy: String
+}
+
+# ─── Rate Limits ─────────────────────────────────────────────────────────────
+
+type RateLimitInfo {
+  requestsPerMinute: Int!
+  requestsPerHour: Int!
+  remainingRequestsPerMinute: Int!
+  remainingRequestsPerHour: Int!
+  resetAtMinute: DateTime
+  resetAtHour: DateTime
+}
+
+# ─── Mutations ───────────────────────────────────────────────────────────────
+
+type Mutation {
+  # Collectors
+  createHostedCollector(input: CollectorInput!): HostedCollector!
+  updateHostedCollector(id: ID!, input: CollectorInput!): HostedCollector!
+  deleteCollector(id: ID!): Boolean!
+
+  # Sources
+  createSource(collectorId: ID!, input: SourceInput!): Source!
+  updateSource(collectorId: ID!, sourceId: ID!, input: SourceInput!): Source!
+  deleteSource(collectorId: ID!, sourceId: ID!): Boolean!
+
+  # Search Jobs
+  createSearchJob(input: SearchJobInput!): SearchJob!
+  deleteSearchJob(id: ID!): Boolean!
+
+  # Dashboards
+  createDashboard(input: DashboardInput!): DashboardDetails!
+  updateDashboard(id: ID!, input: DashboardInput!): DashboardDetails!
+  deleteDashboard(id: ID!): Boolean!
+
+  # Monitors
+  createMonitor(input: MonitorInput!): MonitorDetails!
+  updateMonitor(id: ID!, input: MonitorInput!): MonitorDetails!
+  deleteMonitor(id: ID!): Boolean!
+
+  # Users
+  createUser(input: UserInput!): UserDetails!
+  updateUser(id: ID!, input: UserInput!): UserDetails!
+  deleteUser(id: ID!): Boolean!
+  assignRoleToUser(userId: ID!, roleId: ID!): UserDetails!
+  removeRoleFromUser(userId: ID!, roleId: ID!): UserDetails!
+
+  # Roles
+  createRole(input: RoleInput!): Role!
+  updateRole(id: ID!, input: RoleInput!): Role!
+  deleteRole(id: ID!): Boolean!
+
+  # Partitions
+  createPartition(input: PartitionInput!): PartitionDetails!
+  updatePartition(id: ID!, input: PartitionInput!): PartitionDetails!
+  cancelRetentionUpdate(id: ID!): Boolean!
+
+  # Fields
+  createField(fieldName: String!): Field!
+  deleteField(fieldName: String!): Boolean!
+
+  # Tokens
+  createToken(input: TokenInput!): Token!
+  updateToken(id: ID!, input: TokenInput!): Token!
+  deleteToken(id: ID!): Boolean!
+
+  # Connections (Webhooks)
+  createConnection(input: AlertConnectionInput!): AlertConnection!
+  updateConnection(id: ID!, input: AlertConnectionInput!): AlertConnection!
+  deleteConnection(id: ID!): Boolean!
+}
+
+# ─── Input Types ─────────────────────────────────────────────────────────────
+
+input CollectorInput {
+  name: String!
+  description: String
+  category: String
+  fields: [LogFieldInput!]
+  timezone: String
+  ephemeral: Boolean
+  targetCpu: Int
+}
+
+input LogFieldInput {
+  name: String!
+  value: String!
+}
+
+input SourceInput {
+  name: String!
+  description: String
+  category: String
+  sourceType: SourceType!
+  encoding: String
+  multilineProcessingEnabled: Boolean
+  useAutolineMatching: Boolean
+  forceTimeZone: Boolean
+  fields: [LogFieldInput!]
+}
+
+input SearchJobInput {
+  query: String!
+  from: DateTime!
+  to: DateTime!
+  timeZone: String!
+  byReceiptTime: Boolean
+  autoParsingMode: String
+}
+
+input DashboardInput {
+  title: String!
+  description: String
+  folderId: String
+  topologyLabelMap: JSON
+  domain: String
+  refreshInterval: Int
+  timeRange: JSON
+  theme: String
+  panels: [PanelInput!]
+}
+
+input PanelInput {
+  key: String!
+  title: String
+  panelType: String!
+  chartType: PanelChartType
+  queries: [PanelQueryInput!]
+  visualSettings: JSON
+}
+
+input PanelQueryInput {
+  queryString: String!
+  queryType: String!
+  queryKey: String!
+}
+
+input MonitorInput {
+  name: String!
+  description: String
+  type: String!
+  queries: [MonitorQueryInput!]!
+  triggers: [MonitorConditionInput!]
+  notifications: [JSON]
+  playbook: String
+}
+
+input MonitorQueryInput {
+  rowId: String!
+  query: String!
+  queryType: String!
+}
+
+input MonitorConditionInput {
+  detectionMethod: String!
+  triggerType: String!
+  threshold: Float
+  thresholdType: String
+  timeRange: String
+}
+
+input UserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  roleIds: [String!]
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  filterPredicate: String
+  capabilities: [String!]
+}
+
+input PartitionInput {
+  name: String!
+  routingExpression: String!
+  analyticsTier: String
+  retentionPeriod: Int
+  isCompliant: Boolean
+}
+
+input TokenInput {
+  name: String!
+  description: String
+  type: String!
+  status: String!
+}
+
+input AlertConnectionInput {
+  type: String!
+  name: String!
+  description: String
+  url: String!
+  headers: [LogFieldInput!]
+  defaultPayload: String
+  webhooks: [AlertWebhookInput!]
+}
+
+input AlertWebhookInput {
+  url: String!
+  method: WebhookMethod!
+  headers: [LogFieldInput!]
+  payload: String
+  resolution: Boolean
+}
