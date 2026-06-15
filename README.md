@@ -1,73 +1,72 @@
-# Sumo Logic
+# Sumo Logic (sumo-logic)
 
-Sumo Logic is a cloud-native, machine data analytics platform delivering real-time, continuous intelligence for operations, security, and business insights. It provides a comprehensive REST API with 289 endpoints for log analytics, dashboards, monitors, alerts, users, roles, collectors, search jobs, metrics, and traces.
+Sumo Logic is a cloud-native, machine data analytics platform delivering real-time, continuous intelligence for operations, security, and business insights. It provides a comprehensive REST API with 289 endpoints spanning log analytics, dashboards, monitors, roles, users, metrics, traces, and more.
 
-## Links
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/apis.yml)
 
-- [Website](https://www.sumologic.com/)
-- [Developer Portal](https://developer.sumologic.com/)
-- [API Documentation](https://help.sumologic.com/docs/api/)
-- [Interactive API Reference](https://api.sumologic.com/docs/)
-- [Getting Started](https://help.sumologic.com/docs/api/about-apis/getting-started/)
-- [Status](https://status.sumologic.com)
+## Scope
+
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
+
+## Tags
+
+- Logging
+- Observability
+- Security
+- Monitoring
+- Analytics
+- DevOps
+- SIEM
+
+## Timestamps
+
+- **Created:** 2025-01-08
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Sumo Logic API
 
-Base URL: `https://api.{deployment}.sumologic.com/api/` (US1: `https://api.sumologic.com/api/`)
+Sumo Logic REST API providing 289 endpoints for managing log analytics, users, roles, dashboards, monitors, connections, collectors, sources, search jobs, ingest budgets, partitions, field extraction, metrics, traces, and security operations. Uses Basic Auth with Access ID and Key.
 
-Authentication: HTTP Basic Auth with Access ID and Access Key
+- **Human URL:** [https://help.sumologic.com/docs/api/](https://help.sumologic.com/docs/api/)
+- **Base URL:** `https://api.sumologic.com/api`
 
-**289 endpoints across 54 resource domains including:**
-- **Account & User Management** — Users, roles, access keys, SAML, SCIM, password policy
-- **Log Analytics** — Search jobs, log searches, extraction rules, parsers, field management
-- **Dashboards** — Dashboard creation, panels, and sharing
-- **Monitors & Alerts** — Alerting monitors, SLOs, muting schedules
-- **Collectors & Sources** — Log collection configuration
-- **Content Management** — Folders, content, permissions
-- **Metrics** — Metric search, ingest budget management
-- **Traces** — Distributed tracing, span analytics, service maps
-- **Security** — Threat intelligence, data masking, SOAR connections
-- **Apps** — App catalog management
+#### Tags
 
-## Artifacts
+- Logging
+- Observability
+- Security
+- Monitoring
+- Analytics
+- Users
+- Roles
+- Dashboards
 
-### OpenAPI
+#### Properties
 
-- [sumo-logic-openapi.yml](openapi/sumo-logic-openapi.yml) — Complete OpenAPI 3.0 specification with 289 endpoints
+- [Documentation](https://help.sumologic.com/docs/api/)
+- [Reference](https://api.sumologic.com/docs/)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/sumo-logic/refs/heads/main/openapi/sumo-logic-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Getting Started](https://help.sumologic.com/docs/api/about-apis/getting-started/)
+- [Postman Collection](collections/sumo-logic.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sumo-logic.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-### Spectral Rules
+## Common Properties
 
-- [sumo-logic-rules.yml](rules/sumo-logic-rules.yml) — Spectral ruleset enforcing Sumo Logic API conventions
-
-### Capabilities
-
-- [log-analytics-observability.yaml](capabilities/log-analytics-observability.yaml) — Workflow capability for log analytics, monitoring, and observability
-- [shared/sumo-logic.yaml](capabilities/shared/sumo-logic.yaml) — Per-API shared capability definition
-
-### JSON Schema
-
-- [sumo-logic-user-schema.json](json-schema/sumo-logic-user-schema.json) — JSON Schema for user resources
-- [sumo-logic-monitor-schema.json](json-schema/sumo-logic-monitor-schema.json) — JSON Schema for alerting monitors
-
-### JSON Structure
-
-- [sumo-logic-user-structure.json](json-structure/sumo-logic-user-structure.json) — Documented field structure for user resources
-
-### JSON-LD
-
-- [sumo-logic-context.jsonld](json-ld/sumo-logic-context.jsonld) — JSON-LD context mapping Sumo Logic vocabulary to schema.org
-
-### Examples
-
-- [sumo-logic-list-users-example.json](examples/sumo-logic-list-users-example.json) — Example list users request/response
-- [sumo-logic-create-monitor-example.json](examples/sumo-logic-create-monitor-example.json) — Example create monitor request/response
-
-### Vocabulary
-
-- [sumo-logic-vocabulary.yml](vocabulary/sumo-logic-vocabulary.yml) — Domain vocabulary for log analytics, observability, and security concepts
+- [GitHub Organization](https://github.com/sumologic)
+- [LinkedIn](https://www.linkedin.com/company/sumo-logic)
+- [Portal](https://developer.sumologic.com/)
+- [Documentation](https://help.sumologic.com/docs/api/)
+- [Reference](https://api.sumologic.com/docs/)
+- [Website](https://www.sumologic.com/)
+- [Getting Started](https://help.sumologic.com/docs/api/about-apis/getting-started/)
+- [Status Page](https://status.sumologic.com)
+- [Integrations](https://www.sumologic.com/partners)
 
 ## Maintainers
 
-- **Kin Lane** — kin@apievangelist.com
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
