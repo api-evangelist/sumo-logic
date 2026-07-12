@@ -50,6 +50,12 @@ apis:
   - url: graphql/sumo-logic-graphql.md
     type: GraphQL
 common:
+- type: TrustCenter
+  url: security/sumo-logic-trust-center.yml
+- type: DomainSecurity
+  url: security/sumo-logic-domain-security.yml
+- type: Authentication
+  url: authentication/sumo-logic-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/sumologic
 - type: LinkedIn
@@ -68,6 +74,8 @@ common:
   url: https://status.sumologic.com
 - type: Integrations
   url: https://www.sumologic.com/partners
+- url: https://www.sumologic.com/blog/
+  type: Blog
 integrations:
 - name: sumologic Homepage
 - name: Dojo AI
