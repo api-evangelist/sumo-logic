@@ -1,0 +1,14 @@
+{
+  "repo": "sumo-logic",
+  "feeds": [
+    {
+      "source": "https://www.sumologic.com/blog/",
+      "feed_url": "https://www.sumologic.com/feed",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 12
+}
