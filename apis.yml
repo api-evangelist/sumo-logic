@@ -50,6 +50,8 @@ apis:
   - url: graphql/sumo-logic-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/sumo-logic-agentic-access.yml
 - type: TrustCenter
   url: security/sumo-logic-trust-center.yml
 - type: DomainSecurity
