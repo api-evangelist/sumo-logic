@@ -1,0 +1,731 @@
+openapi: 3.0.0
+info:
+  title: Sumo Logic accessKeyManagement folderManagement API
+  description: "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n"
+  version: 1.0.0
+  x-logo:
+    url: ./sumologic_logo.png
+servers:
+- url: https://api.au.sumologic.com/api/
+  description: AU deployment API server
+- url: https://api.ca.sumologic.com/api/
+  description: CA deployment API server
+- url: https://api.de.sumologic.com/api/
+  description: DE deployment API server
+- url: https://api.eu.sumologic.com/api/
+  description: EU deployment API server
+- url: https://api.fed.sumologic.com/api/
+  description: FED deployment API server
+- url: https://api.jp.sumologic.com/api/
+  description: JP deployment API server
+- url: https://api.kr.sumologic.com/api/
+  description: KR deployment API server
+- url: https://api.in.sumologic.com/api/
+  description: IN deployment API server
+- url: https://api.sumologic.com/api/
+  description: US1 deployment API server
+- url: https://api.us2.sumologic.com/api/
+  description: US2 deployment API server
+security:
+- basicAuth: []
+tags:
+- name: folderManagement
+  description: 'Folder management API.
+
+
+    You can add folders and subfolders to the Library in order to organize your content for easy access or to share content. For more information, see [Add Folders to the Library](https://help.sumologic.com/?cid=5020). You can perform the request as a Content Administrator by using the `isAdminMode` parameter. For more information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).
+
+    '
+  x-displayName: Folders
+paths:
+  /v2/content/folders:
+    post:
+      tags:
+      - folderManagement
+      summary: Create A New Folder.
+      description: Creates a new folder under the given parent folder. Set the header parameter `isAdminMode` to `"true"` to create a folder inside "Admin Recommended" folder.
+      operationId: createFolder
+      parameters:
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Information about the new folder.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderDefinition'
+        required: true
+      responses:
+        '200':
+          description: The folder has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/{id}:
+    get:
+      tags:
+      - folderManagement
+      summary: Get A Folder.
+      description: Get a folder with the given identifier. Set the header parameter `isAdminMode` to `"true"` if fetching a folder inside "Admin Recommended" folder.
+      operationId: getFolder
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the folder to fetch.
+        required: true
+        schema:
+          type: string
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Folder that was requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - folderManagement
+      summary: Update A Folder.
+      description: Update an existing folder with the given identifier. Set the header parameter `isAdminMode` to `"true"` if updating a folder inside "Admin Recommended" folder.
+      operationId: updateFolder
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the folder to update.
+        required: true
+        schema:
+          type: string
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Information to update about the folder.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFolderRequest'
+        required: true
+      responses:
+        '200':
+          description: The folder was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/personal:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Personal Folder.
+      description: Get the personal folder of the current user.
+      operationId: getPersonalFolder
+      responses:
+        '200':
+          description: 'The personal folder of the current user.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/global:
+    get:
+      tags:
+      - folderManagement
+      summary: Schedule Global View Job
+      description: 'Schedule an asynchronous job to get Global View. Global View contains all top-level content items that a user has permissions to view in the organization. User can traverse the top-level folders using [GetFolder API](#operation/getFolder) to get rest of the content items. Make sure you set `isAdminMode` header parameter to `true` when traversing top-level items.
+
+
+        _Global View is not a real folder, therefore there is no folder identifier associated with it_.
+
+
+        _You get back a identifier of asynchronous job in response to this endpoint. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to work with asynchronous request._'
+      operationId: getGlobalFolderAsync
+      parameters:
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: An asynchronous job to get a list of all content items been scheduled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeginAsyncJobResponse'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/global/{jobId}/status:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Global View Job Status
+      description: Get the status of an asynchronous Global View job for the given job identifier. If job succeeds, use [Global View Result](#operation/getGlobalFolderAsyncResult) endpoint to fetch all content items that you have permissions to view.
+      operationId: getGlobalFolderAsyncStatus
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Global View job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Asynchronous Global View job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobStatus'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/global/{jobId}/result:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Global View Job Result
+      description: Get result of a Global View job for the given job identifier. The result will be a list of all content items that a user has permissions to view in the organization.
+      operationId: getGlobalFolderAsyncResult
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Global View job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of all content items with view permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentList'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/adminRecommended:
+    get:
+      tags:
+      - folderManagement
+      summary: Schedule Admin Recommended Folder Job
+      description: 'Schedule an asynchronous job to get the top-level Admin Recommended content items. You can read more about Admin Recommended folder [here](https://help.sumologic.com/Manage/Content_Sharing/Admin_Mode#move-important-content-to-admin-recommended).
+
+
+        _You get back a identifier of asynchronous job in response to this endpoint. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to work with asynchronous request._'
+      operationId: getAdminRecommendedFolderAsync
+      parameters:
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: An asynchronous job to get the Admin Recommended folder has been scheduled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeginAsyncJobResponse'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/adminRecommended/{jobId}/status:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Admin Recommended Folder Job Status
+      description: Get the status of an asynchronous Admin Recommended folder job for the given job identifier. If job succeeds, use [Admin Recommended Job Result](#operation/getAdminRecommendedFolderAsyncResult) endpoint to fetch top-level content items in Admin Recommended folder.
+      operationId: getAdminRecommendedFolderAsyncStatus
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Admin Recommended folder job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Asynchronous Admin Recommended folder job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobStatus'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/adminRecommended/{jobId}/result:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Admin Recommended Folder Job Result
+      description: Get result of an Admin Recommended job for the given job identifier. The result will be "Admin Recommended" folder with a list of top-level Admin Recommended content items in `children` field.
+      operationId: getAdminRecommendedFolderAsyncResult
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Admin Recommended folder job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Admin Recommended folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/installedApps:
+    get:
+      tags:
+      - folderManagement
+      summary: Schedule Installed Apps Folder Job
+      description: 'Schedule an asynchronous job to get the top-level Installed Apps content items.
+
+
+        _You get back a identifier of asynchronous job in response to this endpoint. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to work with asynchronous request._'
+      operationId: getInstalledAppsFolderAsync
+      parameters:
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: An asynchronous job to get the Installed Apps folder has been scheduled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeginAsyncJobResponse'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/installedApps/{jobId}/status:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Installed Apps Folder Job Status
+      description: Get the status of an asynchronous Installed Apps folder job for the given job identifier. If job succeeds, use [Installed Apps Job Result](#operation/getInstalledAppsFolderAsyncResult) endpoint to fetch top-level content items in Installed Apps folder.
+      operationId: getInstalledAppsFolderAsyncStatus
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Installed Apps folder job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Asynchronous Installed Apps folder job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobStatus'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/folders/installedApps/{jobId}/result:
+    get:
+      tags:
+      - folderManagement
+      summary: Get Installed Apps Folder Job Result
+      description: Get result of an Installed Apps job for the given job identifier. The result will be "Installed Apps" folder with a list of top-level Installed Apps content items in `children` field.
+      operationId: getInstalledAppsFolderAsyncResult
+      parameters:
+      - name: jobId
+        in: path
+        description: The identifier of the asynchronous Installed Apps folder job.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Installed Apps folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        default:
+          description: The operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Folder:
+      allOf:
+      - $ref: '#/components/schemas/Content'
+      - type: object
+        properties:
+          description:
+            maxLength: 255
+            minLength: 0
+            type: string
+            description: The description of the folder.
+            example: This is a sample folder.
+          children:
+            type: array
+            description: A list of the content items.
+            items:
+              $ref: '#/components/schemas/Content'
+    FolderDefinition:
+      required:
+      - name
+      - parentId
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
+        parentId:
+          type: string
+          description: The identifier of the parent folder.
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    Content:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        - itemType
+        - name
+        - parentId
+        - permissions
+        properties:
+          id:
+            type: string
+            description: Identifier of the content item.
+            example: 000000000C1C17C6
+          name:
+            type: string
+            description: The name of the content item.
+            example: Personal
+          itemType:
+            type: string
+            description: "Type of the content item. Supported values are:\n  1. Folder\n  2. Search\n  3. Report (for old dashboards)\n  4. Dashboard (for new dashboards)\n  5. Lookups"
+            example: Folder
+          parentId:
+            type: string
+            description: Identifier of the parent content item.
+            example: 0000000001C41EF2
+          permissions:
+            type: array
+            description: List of permissions the user has on the content item.
+            example:
+            - View
+            - GrantView
+            - Edit
+            items:
+              type: string
+          description:
+            type: string
+            description: Description of the content item.
+            example: Personal folder for John Doe
+          isScheduled:
+            type: boolean
+            description: Indicates whether the content item refers to scheduled search. This field is only relevant to `Search` content type.
+            example: false
+            default: false
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
+    UpdateFolderRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ContentList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of the content items.
+          items:
+            $ref: '#/components/schemas/Content'
+    AsyncJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-tagGroups:
+- name: Archive Management
+  tags:
+  - archiveManagement
+- name: Health Events
+  tags:
+  - healthEvents
+- name: Infrequent Data Tier
+  tags:
+  - logSearchesEstimatedUsage
+- name: Ingest Budgets Management V2
+  tags:
+  - ingestBudgetManagementV2
+- name: Library Management
+  tags:
+  - appManagement
+  - appManagementV2
+  - contentManagement
+  - dashboardManagement
+  - folderManagement
+  - lookupManagement
+  - contentPermissions
+  - logSearchesManagement
+  - parsersLibraryManagement
+- name: Metrics
+  tags:
+  - metricsSearchesManagement
+  - transformationRuleManagement
+  - metricsQuery
+  - metricsSearchesManagementV2
+- name: Security Management
+  tags:
+  - accessKeyManagement
+  - oauthManagement
+  - accountManagement
+  - passwordPolicy
+  - policiesManagement
+  - samlConfigurationManagement
+  - serviceAllowlistManagement
+  - serviceAccountManagement
+  - scimUserManagement
+- name: Organizations Management
+  tags:
+  - orgsManagement
+- name: Settings Management
+  tags:
+  - connectionManagement
+  - dynamicParsingRuleManagement
+  - extractionRuleManagement
+  - fieldManagementV1
+  - partitionManagement
+  - scheduledViewManagement
+  - logsDataForwardingManagement
+  - dataDeletionRules
+- name: Tokens Management
+  tags:
+  - tokensLibraryManagement
+- name: Tracing
+  tags:
+  - traces
+  - spanAnalytics
+  - serviceMap
+- name: Users and Roles Management
+  tags:
+  - roleManagement
+  - roleManagementV2
+  - userManagement
+- name: Threat Intel Ingest Management
+  tags:
+  - threatIntelIngest
+  - threatIntelIngestProducer
+- name: OpenTelemetry Collector Management
+  tags:
+  - otCollectorManagementExternal
+- name: Source Template Management
+  tags:
+  - sourceTemplateManagementExternal
+- name: Schema Base Management
+  tags:
+  - schemaBaseManagement
+- name: Event Analytics Management
+  tags:
+  - eventAnalytics
+- name: Budget Management
+  tags:
+  - budgetManagement
+- name: Macro Management
+  tags:
+  - macroManagement
+- name: Muting Schedules Management
+  tags:
+  - mutingSchedulesLibraryManagement
+- name: SLO Management
+  tags:
+  - slosLibraryManagement
+- name: Monitor Management
+  tags:
+  - monitorsLibraryManagement
