@@ -1,0 +1,84 @@
+openapi: 3.1.0
+info:
+  title: Sumo Logic REST Collectors Monitors API
+  description: 'Sumo Logic is a cloud-native log analytics, observability, and security
+
+    platform. The REST API exposes search jobs, dashboards, metrics, monitors and
+
+    alerts, content management, roles, users, collectors, connections, partitions,
+
+    lookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.
+
+
+    Sumo Logic operates multiple regional deployments. Each deployment exposes a
+
+    deployment-specific API endpoint; the `servers` section below enumerates them.
+
+    Authentication uses HTTP Basic with the Access ID as username and Access Key as
+
+    password, or service-account credentials.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Sumo Logic Help
+    url: https://www.sumologic.com/help/docs/api/
+  license:
+    name: Proprietary
+servers:
+- url: https://api.sumologic.com/api
+  description: US1 deployment
+- url: https://api.us2.sumologic.com/api
+  description: US2 deployment
+- url: https://api.eu.sumologic.com/api
+  description: EU (Dublin) deployment
+- url: https://api.au.sumologic.com/api
+  description: Australia (Sydney) deployment
+- url: https://api.ca.sumologic.com/api
+  description: Canada (Montreal) deployment
+- url: https://api.de.sumologic.com/api
+  description: Germany (Frankfurt) deployment
+- url: https://api.jp.sumologic.com/api
+  description: Japan (Tokyo) deployment
+- url: https://api.in.sumologic.com/api
+  description: India (Mumbai) deployment
+- url: https://api.kr.sumologic.com/api
+  description: South Korea (Seoul) deployment
+- url: https://api.fed.sumologic.com/api
+  description: US Federal (FedRAMP) deployment
+security:
+- basicAuth: []
+tags:
+- name: Monitors
+paths:
+  /v1/monitors:
+    get:
+      tags:
+      - Monitors
+      summary: List monitors
+      operationId: listMonitors
+      responses:
+        '200':
+          description: A list of monitors
+    post:
+      tags:
+      - Monitors
+      summary: Create a monitor
+      operationId: createMonitor
+      responses:
+        '201':
+          description: The created monitor
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic Authentication. Use your Sumo Logic Access ID as username and
+
+        the corresponding Access Key as password. Service account tokens may also
+
+        be used. Generate credentials in the Sumo Logic UI under Administration
+
+        > Security > Access Keys.
+
+        '

@@ -1,0 +1,581 @@
+asyncapi: '2.6.0'
+id: 'urn:com:sumologic:webhooks'
+info:
+  title: Sumo Logic Webhook Connections
+  version: '1.0.0'
+  description: |
+    AsyncAPI description of Sumo Logic's outbound webhook surfaces. Sumo Logic
+    delivers alert and recovery notifications via HTTP POST to user-configured
+    webhook connections. Each connection type targets a different third-party
+    receiver and carries a JSON payload that Sumo Logic renders by substituting
+    monitor/alert variables (for example, `{{Name}}`, `{{TriggerType}}`,
+    `{{TriggerTime}}`, `{{Query}}`, `{{ResultsJson}}`, `{{AlertResponseUrl}}`)
+    into the payload template configured on the connection.
+
+    This document models the webhook connection types that Sumo Logic publicly
+    documents under "Webhook Connections": Generic Webhook, Slack, Microsoft
+    Teams, PagerDuty (Events API V2), Jira Cloud, and ServiceNow (ITSM /
+    Events). Sumo Logic also exposes a Search Job API for executing and paging
+    through search results; that API is HTTP polling only (no streaming or
+    websocket surface) and is documented in the project's OpenAPI definition.
+    Live Tail is a UI feature with no documented public push API and is not
+    represented here.
+
+    The application in this AsyncAPI document is Sumo Logic, which acts as the
+    HTTP client publishing notifications to receivers configured by the
+    customer.
+  contact:
+    name: Sumo Logic Help
+    url: https://www.sumologic.com/help/docs/alerts/webhook-connections/
+  license:
+    name: Proprietary
+defaultContentType: application/json
+servers:
+  generic:
+    url: '{webhookUrl}'
+    protocol: https
+    description: |
+      User-configured HTTPS endpoint that receives Sumo Logic webhook POST
+      requests. HTTPS URLs may use any port; HTTP URLs are limited to port 80.
+    variables:
+      webhookUrl:
+        description: Full URL of the target receiver, as configured on the connection.
+        default: https://example.com/sumologic-webhook
+channels:
+  generic-webhook:
+    description: |
+      Fully customizable webhook connection. Sumo Logic posts a user-defined
+      JSON payload to the configured URL. Optional Basic Authentication and up
+      to five custom comma-separated key-value headers are supported. The body
+      below is illustrative; operators define the payload template at
+      connection creation time.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postGenericWebhook
+      summary: Deliver a Sumo Logic alert to a generic webhook receiver.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/GenericAlert'
+  slack:
+    description: |
+      Slack Incoming Webhook. Sumo Logic POSTs an Incoming-Webhook-compatible
+      JSON payload (typically using `attachments`, or optionally `blocks`) to
+      a URL of the form `https://hooks.slack.com/services/{T}/{B}/{secret}`.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postSlackWebhook
+      summary: Deliver a Sumo Logic alert to a Slack Incoming Webhook.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/SlackAlert'
+  microsoft-teams:
+    description: |
+      Microsoft Teams webhook. Modern connections use a Microsoft Workflows
+      URL and post an Adaptive Card (`type: message` with an
+      `application/vnd.microsoft.card.adaptive` attachment). Legacy Microsoft
+      Connector endpoints accept `MessageCard` payloads but are on
+      Microsoft's deprecation path.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postMicrosoftTeamsWebhook
+      summary: Deliver a Sumo Logic alert to Microsoft Teams.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TeamsAdaptiveCardAlert'
+          - $ref: '#/components/messages/TeamsMessageCardAlert'
+  pagerduty:
+    description: |
+      PagerDuty Events API V2. Sumo Logic POSTs to
+      `https://events.pagerduty.com/v2/enqueue` with a routing key, event
+      action (`trigger` or `resolve`), client metadata, and a `payload`
+      object describing the incident. Per Sumo Logic guidance, the
+      `routing_key`, `event_action`, and `dedup_key` fields must not be
+      altered in the payload template.
+    servers:
+      - generic
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postPagerDutyEvent
+      summary: Deliver a Sumo Logic alert as a PagerDuty Events API V2 event.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        oneOf:
+          - $ref: '#/components/messages/PagerDutyTriggerEvent'
+          - $ref: '#/components/messages/PagerDutyResolveEvent'
+  jira-cloud:
+    description: |
+      Jira Cloud REST API. Sumo Logic POSTs an issue-creation payload to
+      `https://<jira_cloud_instance>/rest/api/2/issue`. Authentication uses
+      HTTP Basic with the Atlassian account email as the username and an
+      API token as the password.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postJiraCloudIssue
+      summary: Create a Jira Cloud issue from a Sumo Logic alert.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/JiraCloudIssue'
+  servicenow-incident:
+    description: |
+      ServiceNow ITSM. Sumo Logic POSTs a JSON object to
+      `https://<your-instance>.service-now.com/api/now/table/incident`.
+      Authentication uses either HTTP Basic (ServiceNow username and password)
+      or a custom Authorization header.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postServiceNowIncident
+      summary: Create a ServiceNow incident from a Sumo Logic alert.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/ServiceNowIncident'
+  servicenow-event:
+    description: |
+      ServiceNow Event Management. Sumo Logic POSTs a JSON object to
+      `https://<your-instance>.service-now.com/api/now/table/em_event`.
+      Authentication uses HTTP Basic or a custom Authorization header.
+    bindings:
+      http:
+        bindingVersion: '0.1.0'
+        type: request
+        method: POST
+    publish:
+      operationId: postServiceNowEvent
+      summary: Create a ServiceNow event from a Sumo Logic alert.
+      bindings:
+        http:
+          bindingVersion: '0.1.0'
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/ServiceNowEvent'
+components:
+  messages:
+    GenericAlert:
+      name: GenericAlert
+      title: Generic webhook alert payload
+      summary: |
+        User-defined JSON payload posted to a generic webhook connection.
+        Sumo Logic substitutes alert variables (for example, `{{Name}}`,
+        `{{TriggerType}}`, `{{TriggerTime}}`, `{{Query}}`,
+        `{{AlertResponseUrl}}`) into the configured template before sending.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/GenericAlertPayload'
+    SlackAlert:
+      name: SlackAlert
+      title: Slack Incoming Webhook payload
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SlackAlertPayload'
+    TeamsAdaptiveCardAlert:
+      name: TeamsAdaptiveCardAlert
+      title: Microsoft Teams Adaptive Card payload (Workflows)
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TeamsAdaptiveCardPayload'
+    TeamsMessageCardAlert:
+      name: TeamsMessageCardAlert
+      title: Microsoft Teams MessageCard payload (legacy Connectors)
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TeamsMessageCardPayload'
+    PagerDutyTriggerEvent:
+      name: PagerDutyTriggerEvent
+      title: PagerDuty Events API V2 trigger event
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PagerDutyTriggerPayload'
+    PagerDutyResolveEvent:
+      name: PagerDutyResolveEvent
+      title: PagerDuty Events API V2 resolve event
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PagerDutyResolvePayload'
+    JiraCloudIssue:
+      name: JiraCloudIssue
+      title: Jira Cloud issue creation payload
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JiraCloudIssuePayload'
+    ServiceNowIncident:
+      name: ServiceNowIncident
+      title: ServiceNow incident payload
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ServiceNowIncidentPayload'
+    ServiceNowEvent:
+      name: ServiceNowEvent
+      title: ServiceNow event payload
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ServiceNowEventPayload'
+  schemas:
+    GenericAlertPayload:
+      type: object
+      description: |
+        Free-form JSON object. The template is configured on the connection.
+        Any of the documented Sumo Logic webhook payload variables may be
+        interpolated (see `AlertVariables`).
+      additionalProperties: true
+    SlackAlertPayload:
+      type: object
+      description: |
+        Slack Incoming Webhook payload. Sumo Logic's default template uses
+        `attachments`; `blocks` is also supported. Operators populate fields
+        with Sumo Logic alert variables.
+      properties:
+        text:
+          type: string
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              fallback:
+                type: string
+              pretext:
+                type: string
+              title:
+                type: string
+              text:
+                type: string
+              color:
+                type: string
+                description: Hex color (for example, `#29A1E6`).
+              mrkdwn_in:
+                type: array
+                items:
+                  type: string
+              fields:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    value:
+                      type: string
+                    short:
+                      type: boolean
+        blocks:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+    TeamsAdaptiveCardPayload:
+      type: object
+      required:
+        - type
+        - attachments
+      properties:
+        type:
+          type: string
+          enum:
+            - message
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              contentType:
+                type: string
+                enum:
+                  - application/vnd.microsoft.card.adaptive
+              content:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - AdaptiveCard
+                  schema:
+                    type: string
+                    description: Adaptive Card schema URI.
+                  version:
+                    type: string
+                    description: Adaptive Card version (for example, `1.4`).
+                additionalProperties: true
+    TeamsMessageCardPayload:
+      type: object
+      properties:
+        '@type':
+          type: string
+          enum:
+            - MessageCard
+        '@context':
+          type: string
+          enum:
+            - http://schema.org/extensions
+        themeColor:
+          type: string
+        summary:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+      additionalProperties: true
+    PagerDutyTriggerPayload:
+      type: object
+      required:
+        - routing_key
+        - event_action
+        - payload
+      properties:
+        routing_key:
+          type: string
+          description: PagerDuty integration (service) key.
+        event_action:
+          type: string
+          enum:
+            - trigger
+        client:
+          type: string
+          example: Sumo Logic
+        client_url:
+          type: string
+          description: Typically `{{AlertResponseURL}}`.
+        payload:
+          type: object
+          required:
+            - summary
+            - source
+            - severity
+          properties:
+            summary:
+              type: string
+            source:
+              type: string
+            severity:
+              type: string
+              enum:
+                - critical
+                - error
+                - warning
+                - info
+            custom_details:
+              type: object
+              additionalProperties: true
+    PagerDutyResolvePayload:
+      type: object
+      required:
+        - routing_key
+        - event_action
+        - dedup_key
+      properties:
+        routing_key:
+          type: string
+        event_action:
+          type: string
+          enum:
+            - resolve
+        dedup_key:
+          type: string
+        payload:
+          type: object
+          properties:
+            summary:
+              type: string
+            source:
+              type: string
+            severity:
+              type: string
+              enum:
+                - critical
+                - error
+                - warning
+                - info
+            custom_details:
+              type: object
+              additionalProperties: true
+    JiraCloudIssuePayload:
+      type: object
+      required:
+        - fields
+      properties:
+        fields:
+          type: object
+          required:
+            - issuetype
+            - project
+            - summary
+          properties:
+            issuetype:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Bug
+            project:
+              type: object
+              properties:
+                key:
+                  type: string
+            summary:
+              type: string
+            priority:
+              type: object
+              properties:
+                id:
+                  type: string
+            description:
+              type: string
+          additionalProperties: true
+    ServiceNowIncidentPayload:
+      type: object
+      description: |
+        ServiceNow incident record. Field names match the ServiceNow
+        `incident` table. The payload template is user-defined; the
+        properties below are commonly used examples.
+      properties:
+        short_description:
+          type: string
+        description:
+          type: string
+        urgency:
+          type: string
+        impact:
+          type: string
+        category:
+          type: string
+        assignment_group:
+          type: string
+      additionalProperties: true
+    ServiceNowEventPayload:
+      type: object
+      description: |
+        ServiceNow Event Management event record. Field names match the
+        `em_event` table. The payload template is user-defined.
+      properties:
+        source:
+          type: string
+        node:
+          type: string
+        type:
+          type: string
+        resource:
+          type: string
+        severity:
+          type: string
+        description:
+          type: string
+        event_class:
+          type: string
+        message_key:
+          type: string
+      additionalProperties: true
+    AlertVariables:
+      type: object
+      description: |
+        Documented Sumo Logic alert/monitor variables that may be substituted
+        anywhere inside a webhook payload template. Listed for reference; not
+        used as a wire schema.
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        MonitorType:
+          type: string
+          description: Logs or Metrics.
+        Query:
+          type: string
+        QueryURL:
+          type: string
+        ResultsJson:
+          type: string
+        NumQueryResults:
+          type: integer
+        Id:
+          type: string
+        DetectionMethod:
+          type: string
+        TriggerType:
+          type: string
+          description: Normal, Critical, Warning, Missing Data, or resolved variants.
+        TriggerTimeRange:
+          type: string
+        TriggerTime:
+          type: string
+        TriggerCondition:
+          type: string
+        TriggerValue:
+          type: string
+        TriggerTimeStart:
+          type: integer
+          description: Unix time.
+        TriggerTimeEnd:
+          type: integer
+          description: Unix time.
+        SourceURL:
+          type: string
+          description: Monitor configuration/status URL (Monitors only).
+        AlertResponseUrl:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        HTTP Basic Authentication. Used by the Jira Cloud connection (email
+        plus API token), by the ServiceNow connection (ServiceNow username
+        plus password), and optionally by the Generic Webhook connection.
+    customHeader:
+      type: httpApiKey
+      name: Authorization
+      in: header
+      description: |
+        Custom Authorization header value supplied on the connection (for
+        example, a vendor-specific bearer or signature scheme). Sumo Logic
+        also allows up to five additional comma-separated key-value headers
+        per connection.
