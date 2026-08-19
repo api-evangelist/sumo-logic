@@ -1,0 +1,465 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement monitorsLibraryManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "monitorsLibraryManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Usage Info Of Monitors.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/usageInfo"
+          },
+          "docs": "Get the current number and the allowed number of log and metrics monitors."
+        },
+        {
+          "info": {
+            "name": "Disable Monitors.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/disable",
+            "params": [
+              {
+                "name": "ids",
+                "value": "0000000000000001,0000000000000002,0000000000000003",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              }
+            ]
+          },
+          "docs": "Bulk disable monitors by the given identifiers."
+        },
+        {
+          "info": {
+            "name": "List All Playbooks.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/playbooks",
+            "params": [
+              {
+                "name": "playbookType",
+                "value": "CSE",
+                "type": "query",
+                "description": "A string value for playbook type."
+              }
+            ]
+          },
+          "docs": "List all playbooks available to run."
+        },
+        {
+          "info": {
+            "name": "Get Playbook Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/playbooksDetails",
+            "params": [
+              {
+                "name": "ids",
+                "value": "649074b5b3d402d6e80b0d1d,649074b7b3d402d6e80b0da1,649074b6b3d402d6e80b0d75",
+                "type": "query",
+                "description": "A comma-separated list of playbook identifiers."
+              }
+            ]
+          },
+          "docs": "Get the details of the playbooks with the specified identifiers."
+        },
+        {
+          "info": {
+            "name": "Bulk Read A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors",
+            "params": [
+              {
+                "name": "ids",
+                "value": "0000000000000001,0000000000000002,0000000000000003",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              },
+              {
+                "name": "skipChildren",
+                "value": "",
+                "type": "query",
+                "description": "a boolean parameter to control skipping fetching children of requested folder(s)"
+              }
+            ]
+          },
+          "docs": "Bulk read a monitor or folder by the given identifiers from the monitors library."
+        },
+        {
+          "info": {
+            "name": "Create A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/monitors",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the parent folder in which to create the monitor or folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Bulk Delete A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/monitors",
+            "params": [
+              {
+                "name": "ids",
+                "value": "0000000000000001,0000000000000002,0000000000000003",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              }
+            ]
+          },
+          "docs": "Bulk delete a monitor or folder by the given identifiers in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Get The Root Monitors Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/root"
+          },
+          "docs": "Get the root folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Read A Monitor Or Folder By Its Path.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "The path of the monitor or folder."
+              }
+            ]
+          },
+          "docs": "Read a monitor or folder by its path in the monitors library structure."
+        },
+        {
+          "info": {
+            "name": "Search For A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/search",
+            "params": [
+              {
+                "name": "query",
+                "value": "createdBy:000000000000968B Test",
+                "type": "query",
+                "description": "The search query to find monitor or folder. Below is the list of different filters with examples:\n  - **createdBy** : Filter by the user's identifier who created the content. Example: `createdBy:000000000000968B`.\n  - **createdBefore** : Filter by the content objects created before the given timestamp(in milliseconds). Example: `createdBefore:1457997222`.\n  - **createdAfter** : Filter by the content objects created after the given timestamp(in milliseconds). Example: `createdAfter:1457997111`.\n  - **modifiedBefore** : Filter by the content objects modified before the given timestamp(in milliseconds). Example: `modifiedBefore:1457997222`.\n  - **modifiedAfter** : Filter by the content objects modified after the given timestamp(in milliseconds). Example: `modifiedAfter:1457997111`.\n  - **type** : Filter by the type of the content object. Example: `type:folder`.\n  - **monitorStatus** : Filter by the status of the monitor: Normal, Critical, Warning, MissingData, Disabled, AllTriggered. Example: `monitorStatus:Normal`.\n\nYou can also use multiple filters in one query. For example to search for all content objects created by user with identifier 000000000000968B with creation timestamp after 1457997222 containing the text Test, the query would look like:\n\n  `createdBy:000000000000968B createdAfter:1457997222 Test`"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Maximum number of items you want in the response."
+              },
+              {
+                "name": "offset",
+                "value": "5",
+                "type": "query",
+                "description": "The position or row from where to start the search operation."
+              },
+              {
+                "name": "skipChildren",
+                "value": "",
+                "type": "query",
+                "description": "a boolean parameter to control skipping fetching children of requested folder(s)"
+              }
+            ]
+          },
+          "docs": "Search for a monitor or folder in the monitors library structure."
+        },
+        {
+          "info": {
+            "name": "Get A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to read."
+              }
+            ]
+          },
+          "docs": "Get a monitor or folder from the monitors library."
+        },
+        {
+          "info": {
+            "name": "Update A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a monitor or folder in the monitors library. When making updates to existing monitors via API, all configurations are over-written. Make sure to include all configurations of the monitor (existing with new updates), not just the new configurations you want to apply."
+        },
+        {
+          "info": {
+            "name": "Delete A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to delete."
+              }
+            ]
+          },
+          "docs": "Delete a monitor or folder from the monitors library."
+        },
+        {
+          "info": {
+            "name": "Get The Path Of A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/path",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder."
+              }
+            ]
+          },
+          "docs": "Get the full path of the monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Move A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/move",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to move."
+              },
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the parent folder to move the monitor or folder to."
+              }
+            ]
+          },
+          "docs": "Move a monitor or folder to a different location in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Copy A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/copy",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to copy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copy a monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Export A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to export."
+              }
+            ]
+          },
+          "docs": "Export a monitor or folder. If the given identifier is a folder, everything under the folder is exported recursively with folder as the root."
+        },
+        {
+          "info": {
+            "name": "Import A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:parentId/import",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the parent folder in which to import the monitor or folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a monitor or folder."
+        },
+        {
+          "info": {
+            "name": "List Explicit Permissions On Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/permissions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to list permissions."
+              }
+            ]
+          },
+          "docs": "List explicit permissions on monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Set Permissions On Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/permissions/set",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set permissions on monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "Revoke All Permissions On Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/permissions/revoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke all permissions on monitor or folder in the monitors library."
+        },
+        {
+          "info": {
+            "name": "List Permission Summaries For A Monitor Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/monitors/:id/permissionSummariesBySubjects",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the monitor or folder to list permissions."
+              }
+            ]
+          },
+          "docs": "List permission summary meta(s) grouped by subjects on monitor or folder in the monitors library."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

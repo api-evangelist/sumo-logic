@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement mutingSchedulesLibraryManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "mutingSchedulesLibraryManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk Read A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules",
+            "params": [
+              {
+                "name": "ids",
+                "value": "0000000000000001,0000000000000002,0000000000000003",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              },
+              {
+                "name": "skipChildren",
+                "value": "",
+                "type": "query",
+                "description": "a boolean parameter to control skipping fetching children of requested folder(s)"
+              }
+            ]
+          },
+          "docs": "Bulk read a mutingschedule or folder by the given identifiers from the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Create A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the parent folder in which to create the mutingschedule or folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a mutingschedule or folder in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Bulk Delete A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules",
+            "params": [
+              {
+                "name": "ids",
+                "value": "0000000000000001,0000000000000002,0000000000000003",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              }
+            ]
+          },
+          "docs": "Bulk delete a mutingschedule or folder by the given identifiers in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Get The Root MutingSchedules Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/root"
+          },
+          "docs": "Get the root folder in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Search For A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/search",
+            "params": [
+              {
+                "name": "query",
+                "value": "createdBy:000000000000968B Test",
+                "type": "query",
+                "description": "The search query to find mutingschedule or folder. Below is the list of different filters with examples:\n  - **createdBy** : Filter by the user's identifier who created the content. Example: `createdBy:000000000000968B`.\n  - **createdBefore** : Filter by the content objects created before the given timestamp(in milliseconds). Example: `createdBefore:1457997222`.\n  - **createdAfter** : Filter by the content objects created after the given timestamp(in milliseconds). Example: `createdAfter:1457997111`.\n  - **modifiedBefore** : Filter by the content objects modified before the given timestamp(in milliseconds). Example: `modifiedBefore:1457997222`.\n  - **modifiedAfter** : Filter by the content objects modified after the given timestamp(in milliseconds). Example: `modifiedAfter:1457997111`.\n  - **type** : Filter by the type of the content object. Example: `type:folder`.\n\nYou can also use multiple filters in one query. For example to search for all content objects created by user with identifier 000000000000968B with creation timestamp after 1457997222 containing the text Test, the query would look like:\n\n  `createdBy:000000000000968B createdAfter:1457997222 Test`"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Maximum number of items you want in the response."
+              },
+              {
+                "name": "offset",
+                "value": "5",
+                "type": "query",
+                "description": "The position or row from where to start the search operation."
+              },
+              {
+                "name": "skipChildren",
+                "value": "",
+                "type": "query",
+                "description": "a boolean parameter to control skipping fetching children of requested folder(s)"
+              }
+            ]
+          },
+          "docs": "Search for a mutingschedule or folder in the mutingSchedules library structure."
+        },
+        {
+          "info": {
+            "name": "Get A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder to read."
+              }
+            ]
+          },
+          "docs": "Get a mutingschedule or folder from the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Update A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a mutingschedule or folder in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Delete A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder to delete."
+              }
+            ]
+          },
+          "docs": "Delete a mutingschedule or folder from the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Get The Path Of A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id/path",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder."
+              }
+            ]
+          },
+          "docs": "Get the full path of the mutingschedule or folder in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Copy A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id/copy",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder to copy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copy a mutingschedule or folder in the mutingSchedules library."
+        },
+        {
+          "info": {
+            "name": "Export A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the mutingschedule or folder to export."
+              }
+            ]
+          },
+          "docs": "Export a mutingschedule or folder. If the given identifier is a folder, everything under the folder is exported recursively with folder as the root."
+        },
+        {
+          "info": {
+            "name": "Import A Mutingschedule Or Folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/mutingSchedules/:parentId/import",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the parent folder in which to import the mutingschedule or folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a mutingschedule or folder."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

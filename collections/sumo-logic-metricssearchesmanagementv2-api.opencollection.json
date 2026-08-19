@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement metricsSearchesManagementV2 API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metricsSearchesManagementV2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Metrics Search Pages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/metricsSearches",
+            "params": [
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Limit the number of metric searches returned in the response. The number of metric searches returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "mode",
+                "value": "createdByUser",
+                "type": "query",
+                "description": "whether to list all viewable metric searches under the folders"
+              }
+            ]
+          },
+          "docs": "List all metrics search pages under the Personal folder created by the user or under folders viewable by user."
+        },
+        {
+          "info": {
+            "name": "Create A New Metrics Search Page.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/metricsSearches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new metrics search page."
+        },
+        {
+          "info": {
+            "name": "Get A Metrics Search Page.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the metrics search page to return."
+              }
+            ]
+          },
+          "docs": "Get a metrics search page by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Metrics Search Page.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the metrics search page to return."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a metrics search page by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete A Metrics Search Page.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the metrics search page to delete."
+              }
+            ]
+          },
+          "docs": "Delete metrics search page by the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

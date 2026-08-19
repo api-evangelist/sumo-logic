@@ -1,0 +1,1211 @@
+{
+  "item": [
+    {
+      "id": "9092e278-5105-4095-84b5-5b1a447b4f20",
+      "name": "roleManagementV2",
+      "description": {
+        "content": "Role management API (V2).\nRoles determine the functions that users are able to perform in Sumo Logic. It also allows to configure access on partitions. To manage roles, you must have an administrator role or your role must have been assigned the manage users and roles capability. For more information, see [Manage Roles](https://help.sumologic.com/?cid=5234).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c6434221-59d8-4a55-aa0a-123e2ed04c4a",
+          "name": "Get A List Of Roles.",
+          "request": {
+            "name": "Get A List Of Roles.",
+            "description": {
+              "content": "Get a list of all the roles in the organization. The response is paginated with a default limit of 100 roles per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit the number of roles returned in the response. The number of roles returned may be less than the `limit`."
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sort the list of roles by the `name` field."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Only return roles matching the given name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb5c92d5-8ba5-48b4-ab64-cd0ac51b2d29",
+              "name": "A paginated list of roles in the organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n      \"createdBy\": \"0000000006743FDD\",\n      \"id\": \"0000000000E20FE3\",\n      \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n      \"modifiedBy\": \"0000000006743FE8\",\n      \"name\": \"DataAdmin\",\n      \"description\": \"Manage data of the org.\",\n      \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n      \"auditDataFilter\": \"info\",\n      \"securityDataFilter\": \"error\",\n      \"selectionType\": \"All\",\n      \"selectedViews\": [\n        {\n          \"viewName\": \"auditData\"\n        },\n        {\n          \"viewName\": \"auditData\"\n        }\n      ],\n      \"users\": [\n        \"0000000006743FE0\",\n        \"0000000005FCE0EE\"\n      ],\n      \"capabilities\": [\n        \"manageContent\",\n        \"manageDataVolumeFeed\",\n        \"manageFieldExtractionRules\",\n        \"manageS3DataForwarding\"\n      ],\n      \"autofillDependencies\": true,\n      \"systemDefined\": false\n    },\n    {\n      \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n      \"createdBy\": \"0000000006743FDD\",\n      \"id\": \"0000000000E20FE3\",\n      \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n      \"modifiedBy\": \"0000000006743FE8\",\n      \"name\": \"DataAdmin\",\n      \"description\": \"Manage data of the org.\",\n      \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n      \"auditDataFilter\": \"info\",\n      \"securityDataFilter\": \"error\",\n      \"selectionType\": \"All\",\n      \"selectedViews\": [\n        {\n          \"viewName\": \"auditData\"\n        },\n        {\n          \"viewName\": \"auditData\"\n        }\n      ],\n      \"users\": [\n        \"0000000006743FE0\",\n        \"0000000005FCE0EE\"\n      ],\n      \"capabilities\": [\n        \"manageContent\",\n        \"manageDataVolumeFeed\",\n        \"manageFieldExtractionRules\",\n        \"manageS3DataForwarding\"\n      ],\n      \"autofillDependencies\": true,\n      \"systemDefined\": false\n    }\n  ],\n  \"next\": \"GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc2c8079-392d-4229-8414-07339007e4c4",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07b6d412-5372-4138-b46c-3d4e4f624789",
+          "name": "Create A New Role.",
+          "request": {
+            "name": "Create A New Role.",
+            "description": {
+              "content": "Create a new role in the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logAnalyticsFilter\": \"<string>\",\n  \"auditDataFilter\": \"<string>\",\n  \"securityDataFilter\": \"<string>\",\n  \"selectionType\": \"<string>\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"<string>\"\n    },\n    {\n      \"viewName\": \"<string>\"\n    }\n  ],\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"capabilities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autofillDependencies\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "90dc30f2-8629-4634-91ed-2adcd0e61d50",
+              "name": "The role has been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n  \"createdBy\": \"0000000006743FDD\",\n  \"id\": \"0000000000E20FE3\",\n  \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n  \"modifiedBy\": \"0000000006743FE8\",\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true,\n  \"systemDefined\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "937fa20a-81c2-4800-b46c-b88c1f223e4b",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb8bd795-4cdc-4a04-8032-d3cf95ed2ece",
+          "name": "Get A Role.",
+          "request": {
+            "name": "Get A Role.",
+            "description": {
+              "content": "Get a role with the given identifier in the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the role to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "819ab612-825b-48f6-9908-3f29ca4a8a36",
+              "name": "Role object that was requested.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n  \"createdBy\": \"0000000006743FDD\",\n  \"id\": \"0000000000E20FE3\",\n  \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n  \"modifiedBy\": \"0000000006743FE8\",\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true,\n  \"systemDefined\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "586e093c-cd57-42ca-9d83-339cb521686f",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "881d64cf-56e3-4561-84e1-c40eb011445a",
+          "name": "Update A Role.",
+          "request": {
+            "name": "Update A Role.",
+            "description": {
+              "content": "Update an existing role in the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the role to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"auditDataFilter\": \"<string>\",\n  \"capabilities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"logAnalyticsFilter\": \"<string>\",\n  \"name\": \"<string>\",\n  \"securityDataFilter\": \"<string>\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"<string>\"\n    },\n    {\n      \"viewName\": \"<string>\"\n    }\n  ],\n  \"selectionType\": \"<string>\",\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autofillDependencies\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b05f693f-0b9c-43ee-91ba-01259d29ade9",
+              "name": "The user was successfully modified.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auditDataFilter\": \"info\",\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"name\": \"DataAdmin\",\n  \"securityDataFilter\": \"error\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"selectionType\": \"All\",\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"autofillDependencies\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n  \"createdBy\": \"0000000006743FDD\",\n  \"id\": \"0000000000E20FE3\",\n  \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n  \"modifiedBy\": \"0000000006743FE8\",\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true,\n  \"systemDefined\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91e10f43-a32a-405e-a8ac-c1916d2f72be",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auditDataFilter\": \"info\",\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"name\": \"DataAdmin\",\n  \"securityDataFilter\": \"error\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"selectionType\": \"All\",\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"autofillDependencies\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5aad034-f6ae-4db2-a0de-38e919919da6",
+          "name": "Delete A Role.",
+          "request": {
+            "name": "Delete A Role.",
+            "description": {
+              "content": "Delete a role with the given identifier from the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the role to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b90d798-f9ac-454c-ba82-75d17f91ea8a",
+              "name": "Role was deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "685c6d69-5d50-4cac-b514-879e925998a2",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the role to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b63980df-5bc2-4b41-817b-4b73db413f4d",
+          "name": "Assign A Role To A User.",
+          "request": {
+            "name": "Assign A Role To A User.",
+            "description": {
+              "content": "Assign a role to a user in the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles",
+                ":roleId",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "roleId",
+                  "description": "(Required) Identifier of the role to assign."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Identifier of the user to assign the role to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f2ce612-9f2a-4396-8ec5-ea74be96b791",
+              "name": "Role was successfully assigned to the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":roleId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleId",
+                      "description": "(Required) Identifier of the role to assign."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Identifier of the user to assign the role to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n  \"createdBy\": \"0000000006743FDD\",\n  \"id\": \"0000000000E20FE3\",\n  \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n  \"modifiedBy\": \"0000000006743FE8\",\n  \"name\": \"DataAdmin\",\n  \"description\": \"Manage data of the org.\",\n  \"logAnalyticsFilter\": \"!_sourceCategory=collector\",\n  \"auditDataFilter\": \"info\",\n  \"securityDataFilter\": \"error\",\n  \"selectionType\": \"All\",\n  \"selectedViews\": [\n    {\n      \"viewName\": \"auditData\"\n    },\n    {\n      \"viewName\": \"auditData\"\n    }\n  ],\n  \"users\": [\n    \"0000000006743FE0\",\n    \"0000000005FCE0EE\"\n  ],\n  \"capabilities\": [\n    \"manageContent\",\n    \"manageDataVolumeFeed\",\n    \"manageFieldExtractionRules\",\n    \"manageS3DataForwarding\"\n  ],\n  \"autofillDependencies\": true,\n  \"systemDefined\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2205145c-3567-46d4-b169-2c2533cb7ee2",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":roleId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleId",
+                      "description": "(Required) Identifier of the role to assign."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Identifier of the user to assign the role to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc76b924-7ea4-409b-8a44-1b984ed05833",
+          "name": "Remove Role From A User.",
+          "request": {
+            "name": "Remove Role From A User.",
+            "description": {
+              "content": "Remove a role from a user in the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "roles",
+                ":roleId",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "roleId",
+                  "description": "(Required) Identifier of the role to delete."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Identifier of the user to remove the role from."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5551577-1a14-41b4-bd28-d852b1048f6c",
+              "name": "Role was successfully removed from the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":roleId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleId",
+                      "description": "(Required) Identifier of the role to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Identifier of the user to remove the role from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a19b78ef-b49b-44e3-9339-6d2984868ac4",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "roles",
+                    ":roleId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleId",
+                      "description": "(Required) Identifier of the role to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Identifier of the user to remove the role from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.au.sumologic.com/api/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5f20a3c4-96b4-4760-a5c1-09250aa0de3f",
+    "name": "Sumo Logic accessKeyManagement roleManagementV2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement parsersLibraryManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "parsersLibraryManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get The Root Folder In The Library.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/root"
+          },
+          "docs": "Get the root folder in the library.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Read Folders And Parsers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              }
+            ]
+          },
+          "docs": "Bulk read folders and parsers by the given identifiers from the library.\n"
+        },
+        {
+          "info": {
+            "name": "Create A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the parent folder in which to create the folder or parser."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Delete Folders And Parsers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/parsers",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of identifiers."
+              }
+            ]
+          },
+          "docs": "Bulk delete folders and parsers by the given identifiers from the library.\n"
+        },
+        {
+          "info": {
+            "name": "Read A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to read."
+              }
+            ]
+          },
+          "docs": "Read a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Update A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Delete A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to delete."
+              }
+            ]
+          },
+          "docs": "Delete a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Get Full Path Of Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/path",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser."
+              }
+            ]
+          },
+          "docs": "Get full path of folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Lock A Folder Or A Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/lock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the folder or parser that needs to be locked."
+              }
+            ]
+          },
+          "docs": "Locking requires the `LockParsers` capability. When an object is locked, it can't be moved or deleted and only the local fields can be modified. Locking recursively locks all of the objects children.\n"
+        },
+        {
+          "info": {
+            "name": "Unlock A Folder Or A Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/unlock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the folder or parser that needs to be unlocked."
+              }
+            ]
+          },
+          "docs": "Unlocking requires the `LockParsers` capability. It is only possible to unlock the highest locked object in a tree of locked objects. Unlocking recursively unlocks all of the objects children.\n"
+        },
+        {
+          "info": {
+            "name": "Move A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/move",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to move."
+              },
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the parent folder to move the folder or parser to."
+              }
+            ]
+          },
+          "docs": "Move a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Copy A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/copy",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to copy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copy a folder or parser.\n"
+        },
+        {
+          "info": {
+            "name": "Export A Folder Or Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the folder or parser to export."
+              },
+              {
+                "name": "preserveLock",
+                "value": "",
+                "type": "query",
+                "description": "Set this to true if you want to export an object and preserve the locked status.\n"
+              }
+            ]
+          },
+          "docs": "Export a folder or parser."
+        },
+        {
+          "info": {
+            "name": "Import A Folder Or Parser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/:parentId/import",
+            "params": [
+              {
+                "name": "parentId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the parent folder in which to import the folder or parser."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a folder or parser\n"
+        },
+        {
+          "info": {
+            "name": "Read A Folder Or Parser By Its Path.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "The path of the folder or parser."
+              }
+            ]
+          },
+          "docs": "Read a folder or parser by its path.\n"
+        },
+        {
+          "info": {
+            "name": "Search For Folders Or Parsers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/parsers/search",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The search query to find folder or parsers. Below is the list of different filters with examples:\n  - **createdBy** : Filter by the user's identifier who created the content. Example: `createdBy:000000000000968B`.\n  - **createdBefore** : Filter by the content objects created before the given timestamp(in milliseconds). Example: `createdBefore:1457997222`.\n  - **createdAfter** : Filter by the content objects created after the given timestamp(in milliseconds). Example: `createdAfter:1457997111`.\n  - **modifiedBefore** : Filter by the content objects modified before the given timestamp(in milliseconds). Example: `modifiedBefore:1457997222`.\n  - **modifiedAfter** : Filter by the content objects modified after the given timestamp(in milliseconds). Example: `modifiedAfter:1457997111`.\n  - **type** : Filter by the type of the content object. Example: `type:folder`.\nYou can also use multiple filters in one query. For example to search for all content objects created by user with identifier 000000000000968B with creation timestamp after 1457997222 containing the text Test, the query would look like:\n  `createdBy:000000000000968B createdAfter:1457997222 Test`"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items you want in the response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The position or row from where to start the search operation."
+              }
+            ]
+          },
+          "docs": "Search for a folder or parser in the cloud SIEM parsers library structure."
+        },
+        {
+          "info": {
+            "name": "Lock A Folder Or A Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/system/parsers/:id/lock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the folder or parser that needs to be locked."
+              }
+            ]
+          },
+          "docs": "Locking requires the `LockParsers` capability. When an object is locked, it can't be moved or deleted and only the local fields can be modified. Locking recursively locks all of the objects children.\n"
+        },
+        {
+          "info": {
+            "name": "Unlock A Folder Or A Parser.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/system/parsers/:id/unlock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the folder or parser that needs to be unlocked."
+              }
+            ]
+          },
+          "docs": "Unlocking requires the `LockParsers` capability. It is only possible to unlock the highest locked object in a tree of locked objects. Unlocking recursively unlocks all of the objects children.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

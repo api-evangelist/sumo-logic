@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement samlConfigurationManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "samlConfigurationManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of SAML Configurations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/saml/identityProviders"
+          },
+          "docs": "Get a list of all SAML configurations in the organization."
+        },
+        {
+          "info": {
+            "name": "Create A New SAML Configuration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/saml/identityProviders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new SAML configuration in the organization."
+        },
+        {
+          "info": {
+            "name": "Update A SAML Configuration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/saml/identityProviders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the SAML configuration to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing SAML configuration in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete A SAML Configuration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/saml/identityProviders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the SAML configuration to delete."
+              }
+            ]
+          },
+          "docs": "Delete a SAML configuration with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Get List Of Allowlisted Users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/saml/allowlistedUsers"
+          },
+          "docs": "Get a list of allowlisted users."
+        },
+        {
+          "info": {
+            "name": "Allowlist A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/saml/allowlistedUsers/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user."
+              }
+            ]
+          },
+          "docs": "Allowlist a user from SAML lockdown allowing them to sign in using a password in addition to SAML."
+        },
+        {
+          "info": {
+            "name": "Remove An Allowlisted User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/saml/allowlistedUsers/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of user that will no longer be allowlisted from SAML Lockdown."
+              }
+            ]
+          },
+          "docs": "Remove an allowlisted user requiring them to sign in using SAML."
+        },
+        {
+          "info": {
+            "name": "Require SAML For Sign-in.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/saml/lockdown/enable"
+          },
+          "docs": "Enabling SAML lockdown requires users to sign in using SAML preventing them from logging in with an email and password."
+        },
+        {
+          "info": {
+            "name": "Disable SAML Lockdown.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/saml/lockdown/disable"
+          },
+          "docs": "Disable SAML lockdown for the organization."
+        },
+        {
+          "info": {
+            "name": "Get SAML Configuration Metadata XML.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/saml/identityProviders/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the SAML configuration for which metadata should be returned."
+              }
+            ]
+          },
+          "docs": "Get metadata XML for a specific SAML configuration within the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

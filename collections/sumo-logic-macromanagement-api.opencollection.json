@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement macroManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "macroManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Macros.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/macros",
+            "params": [
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Limit the number of macro returned in the response. The number of macros returned may be less than the `limit`. Default 50."
+              },
+              {
+                "name": "token",
+                "value": "GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "List all viewable macros for the customer."
+        },
+        {
+          "info": {
+            "name": "Create A New Macro.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/macros",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new macro."
+        },
+        {
+          "info": {
+            "name": "Get A Macro.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/macros/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the macro."
+              }
+            ]
+          },
+          "docs": "Get a macro by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Edit A Macro.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/macros/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the macro to edit."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edits an existing macro by id. Macro name is immutable."
+        },
+        {
+          "info": {
+            "name": "Delete A Macro.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/macros/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Id of macro to delete."
+              }
+            ]
+          },
+          "docs": "Delete a macro by id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

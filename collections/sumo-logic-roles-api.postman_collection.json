@@ -1,0 +1,179 @@
+{
+  "item": [
+    {
+      "id": "df0fbeb5-aea3-4923-96d3-290b04b7ecbd",
+      "name": "Roles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec1a70f7-9c95-4521-8668-3e836ee922cf",
+          "name": "List roles",
+          "request": {
+            "name": "List roles",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d57a8a02-3061-4dd7-9b4f-94f0be9baea7",
+              "name": "A list of roles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e1881ec-94f7-4629-9b22-1052545d4ce1",
+          "name": "Create a role",
+          "request": {
+            "name": "Create a role",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d468f0a-447f-452c-92f6-a906f521651e",
+              "name": "The created role",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sumologic.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "63b85373-36a1-4a5b-a195-a5a68e033e71",
+    "name": "Sumo Logic REST Collectors Roles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform. The REST API exposes search jobs, dashboards, metrics, monitors and\nalerts, content management, roles, users, collectors, connections, partitions,\nlookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.\n\nSumo Logic operates multiple regional deployments. Each deployment exposes a\ndeployment-specific API endpoint; the `servers` section below enumerates them.\nAuthentication uses HTTP Basic with the Access ID as username and Access Key as\npassword, or service-account credentials.\n\n\nContact Support:\n Name: Sumo Logic Help",
+      "type": "text/plain"
+    }
+  }
+}

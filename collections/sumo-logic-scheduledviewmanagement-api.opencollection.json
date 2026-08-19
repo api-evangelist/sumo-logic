@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement scheduledViewManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "scheduledViewManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Scheduled Views.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of scheduled views returned in the response. The number of scheduled views returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of all scheduled views in the organization. The response is paginated with a default limit of 100 scheduled views per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new scheduled view in the organization."
+        },
+        {
+          "info": {
+            "name": "Get A Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the scheduled view to fetch."
+              }
+            ]
+          },
+          "docs": "Get a scheduled view with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the scheduled view to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing scheduled view."
+        },
+        {
+          "info": {
+            "name": "Disable A Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/:id/disable",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the scheduled view to disable."
+              }
+            ]
+          },
+          "docs": "Disable a scheduled view with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Pause A Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/:id/pause",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the scheduled view to pause."
+              }
+            ]
+          },
+          "docs": "Pause a scheduled view with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Start A Scheduled View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/:id/start",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the scheduled view to start."
+              }
+            ]
+          },
+          "docs": "Start a scheduled view with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Provides Information About Scheduled Views Quota.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/scheduledViews/quota"
+          },
+          "docs": "Every customer can use a limited number of scheduled views. This endpoint allows learning about these limitations and remaining quota."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

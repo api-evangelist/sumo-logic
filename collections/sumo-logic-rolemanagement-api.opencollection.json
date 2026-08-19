@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement roleManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "roleManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Roles.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/roles",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of roles returned in the response. The number of roles returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sort the list of roles by the `name` field."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return roles matching the given name."
+              }
+            ]
+          },
+          "docs": "Get a list of all the roles in the organization. The response is paginated with a default limit of 100 roles per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Role.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new role in the organization."
+        },
+        {
+          "info": {
+            "name": "Get A Role.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the role to fetch."
+              }
+            ]
+          },
+          "docs": "Get a role with the given identifier in the organization."
+        },
+        {
+          "info": {
+            "name": "Update A Role.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the role to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing role in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete A Role.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the role to delete."
+              }
+            ]
+          },
+          "docs": "Delete a role with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Assign A Role To A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/roles/:roleId/users/:userId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the role to assign."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to assign the role to."
+              }
+            ]
+          },
+          "docs": "Assign a role to a user in the organization."
+        },
+        {
+          "info": {
+            "name": "Remove Role From A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/roles/:roleId/users/:userId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the role to delete."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to remove the role from."
+              }
+            ]
+          },
+          "docs": "Remove a role from a user in the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,349 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement sourceTemplateManagementExternal API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sourceTemplateManagementExternal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Source Templates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates",
+            "params": [
+              {
+                "name": "showDisabled",
+                "value": "",
+                "type": "query",
+                "description": "A boolean parameter to get all, including disabled source templates."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return source template matching the given name (exact match)."
+              }
+            ]
+          },
+          "docs": "Get a list of all source templates."
+        },
+        {
+          "info": {
+            "name": "Create Source Template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create source template."
+        },
+        {
+          "info": {
+            "name": "Get A Source Template By Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to get."
+              }
+            ]
+          },
+          "docs": "Get a source template with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update Source Template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a source template with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete A Source Template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to delete."
+              }
+            ]
+          },
+          "docs": "Delete a source template with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update Status Of Source Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status (enable or disable) of a source template."
+        },
+        {
+          "info": {
+            "name": "Upgrade Source Template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/:id/upgrade",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to upgrade."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upgrade a source template with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Preview Source Template Linking Changes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplates/getLinkedSourceTemplatesImpact",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given the set of tags user wants to update, display the list of source templates that will be linked/unlinked to the otCollector."
+        },
+        {
+          "info": {
+            "name": "Return All Source Templates Of A Customer (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate",
+            "params": [
+              {
+                "name": "showDisabled",
+                "value": "",
+                "type": "query",
+                "description": "A boolean parameter to get all, including disabled source templates."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return source template matching the given name (exact match)."
+              }
+            ]
+          },
+          "docs": "Get a list of source template.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use GET /v1/sourceTemplates instead.\n"
+        },
+        {
+          "info": {
+            "name": "Create Source Template (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create source template.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use POST /v1/sourceTemplates instead.\n"
+        },
+        {
+          "info": {
+            "name": "Get A Source Template By Id (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to get."
+              }
+            ]
+          },
+          "docs": "Get a source template with the given identifier.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use GET /v1/sourceTemplates/{id} instead.\n"
+        },
+        {
+          "info": {
+            "name": "Update Source Template (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a source template with the given identifier.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use POST /v1/sourceTemplates/{id} instead.\n"
+        },
+        {
+          "info": {
+            "name": "Delete A Source Template (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to delete."
+              }
+            ]
+          },
+          "docs": "Delete a source template with the given identifier.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use DELETE /v1/sourceTemplates/{id} instead.\n"
+        },
+        {
+          "info": {
+            "name": "Upgrade Source Template (deprecated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/upgrade/sourceTemplate/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to upgrade."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upgrade a source template with the given identifier.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use POST /v1/sourceTemplates/{id}/upgrade instead.\n"
+        },
+        {
+          "info": {
+            "name": "Get Linked Source Templates Update Based On The Ot-collector Tags User Is Wants To Update.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate/getLinkedSourceTemplatesImpact",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given the set of tags user wants to update, display the list of source templates that will be linked/unlinked to the otCollector."
+        },
+        {
+          "info": {
+            "name": "Update Status Of Source Template (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/sourceTemplate/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the source template to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status (enable or disable) of a source template.\n\n**DEPRECATED**: This endpoint will be removed soon. Please use PUT /v1/sourceTemplates/{id}/status instead.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement dataMaskingManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dataMaskingManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Data Masking Rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dataMaskingRules",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of data masking rules returned in the response. The number of rules returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get a list of all data masking rules for the current organization. The response is paginated with a default limit of 100 rules per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Data Masking Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/dataMaskingRules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new data masking rule. The rule will be applied to search results at query time, replacing matches of the regex pattern with the specified mask string."
+        },
+        {
+          "info": {
+            "name": "Get A Data Masking Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dataMaskingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the data masking rule to return."
+              }
+            ]
+          },
+          "docs": "Get a data masking rule with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Data Masking Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/dataMaskingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the data masking rule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing data masking rule. All properties specified in the request are replaced. Missing properties are set to their default values. The rule name is immutable and cannot be changed after creation."
+        },
+        {
+          "info": {
+            "name": "Delete A Data Masking Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/dataMaskingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the data masking rule to delete."
+              }
+            ]
+          },
+          "docs": "Delete a data masking rule with the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

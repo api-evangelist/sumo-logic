@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement threatIntelIngest API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "threatIntelIngest",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Threat Intel Indicators DB Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/db"
+          },
+          "docs": "Get threat intel indicators DB information, such as storage utilization and indicator counts"
+        },
+        {
+          "info": {
+            "name": "Remove The Threat Intel Indicators DB",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/db"
+          },
+          "docs": "Removes the entire database and all indicators associated with this tenant"
+        },
+        {
+          "info": {
+            "name": "Get Threat Intel Indicators Store Retention Period In Terms Of Days.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/retentionPeriod"
+          },
+          "docs": "Get the threat intel indicators store retention period in terms of days."
+        },
+        {
+          "info": {
+            "name": "Set The Threat Intel Indicators Store Retention Period In Terms Of Days.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/retentionPeriod",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the threat intel indicators store retention period in terms of days."
+        },
+        {
+          "info": {
+            "name": "Updates Source Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/dataSource/:dataSourceName",
+            "params": [
+              {
+                "name": "dataSourceName",
+                "value": "",
+                "type": "path",
+                "description": "Source name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates source properties"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

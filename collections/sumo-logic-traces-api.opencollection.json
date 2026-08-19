@@ -1,0 +1,380 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement traces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "traces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run A Trace Search Query Asynchronously.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a trace search query and get the id to fetch its status and results. Use the [Trace Query Status](#operation/getTraceQueryStatus) endpoint to check a query status. When the query has been completed, use the [Trace Query Result](#operation/getTraceQueryResult) endpoint to get the result of the asynchronous query."
+        },
+        {
+          "info": {
+            "name": "Cancel A Trace Search Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query to cancel."
+              }
+            ]
+          },
+          "docs": "Cancel a currently processed trace search query with the given id."
+        },
+        {
+          "info": {
+            "name": "Get A Trace Search Query Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery/:queryId/status",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              }
+            ]
+          },
+          "docs": "Get a status of a trace query with the given id. When the query has been completed, use the [Trace Query Result](#operation/getTraceQueryResult) endpoint to get the result of the asynchronous query."
+        },
+        {
+          "info": {
+            "name": "Get Results Of A Trace Search Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery/:queryId/rows/:rowId/traces",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query row."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of the number of traces returned in the response."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of traces matching a query with the specified id. The response is paginated with a default limit of 100 traces per page."
+        },
+        {
+          "info": {
+            "name": "Get Trace Search Query Metrics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/metrics"
+          },
+          "docs": "Get a list of available trace metrics that can be used in trace search queries."
+        },
+        {
+          "info": {
+            "name": "Get Filter Fields For Trace Search Queries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery/fields"
+          },
+          "docs": "Get a list of available fields which can be used in trace search queries."
+        },
+        {
+          "info": {
+            "name": "Get Trace Search Query Filter Field Values.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/tracequery/fields/:field/values",
+            "params": [
+              {
+                "name": "field",
+                "value": "",
+                "type": "path",
+                "description": "Field identifier."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search filter to apply on the values to be returned. Only values containing the search query term will be returned."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to fetch."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "fieldType",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`."
+              }
+            ]
+          },
+          "docs": "Get a list of available values for the given trace search query filter field. Not all fields support value listing. The response is paginated with a default limit of 10 values per page."
+        },
+        {
+          "info": {
+            "name": "Get Trace Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace to get the details."
+              }
+            ]
+          },
+          "docs": "Get details of a trace with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Check If The Trace Exists.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/exists",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace to check."
+              }
+            ]
+          },
+          "docs": "Check if the trace with the given identifier exists."
+        },
+        {
+          "info": {
+            "name": "Get A List Of Trace Spans.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/spans",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace to get the spans."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to fetch."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of spans for the given trace. The response is paginated with a default limit of 100 spans per page."
+        },
+        {
+          "info": {
+            "name": "Get A List Of Events (without Their Attributes) Per Span For A Trace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/traceEvents",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace for which span events will be returned."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of spans with events returned by a single query."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Gets a list of the events (without their attributes) attached to each span in a given trace. The response is paginated with a default limit of 100 spans per page."
+        },
+        {
+          "info": {
+            "name": "Get A Critical Path Of A Trace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/criticalPath",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to fetch."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of span segments composing the critical path of the trace. A span segment represents the processing time that was consumed within the span itself and does not incorporate the processing time of its children. The critical path is the sequence of span segments that contribute to the total trace duration. An increase of the processing time of any segment from the critical path would result in an increase of the total trace processing time."
+        },
+        {
+          "info": {
+            "name": "Get A Critical Path Service Breakdown Of A Trace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/criticalPath/breakdown/service",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace."
+              }
+            ]
+          },
+          "docs": "Get a critical path breakdown by services of the spans contributing to the critical path of a trace with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Get Span Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/spans/:spanId",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace the span belongs to."
+              },
+              {
+                "name": "spanId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the span to get the details."
+              }
+            ]
+          },
+          "docs": "Get details of a span with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Get Span Billing Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/traces/:traceId/spans/:spanId/billingInfo",
+            "params": [
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the trace the span belongs to."
+              },
+              {
+                "name": "spanId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the span to get the billing info."
+              }
+            ]
+          },
+          "docs": "Get the billing information of the span."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

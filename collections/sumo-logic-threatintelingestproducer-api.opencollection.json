@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement threatIntelIngestProducer API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "threatIntelIngestProducer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Uploads Indicators In A Sumo Normalized Format.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/indicators/normalized",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads a list indicators in a Sumo normalized format."
+        },
+        {
+          "info": {
+            "name": "Uploads Indicators In A STIX 2.x Json Format.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/indicators/stix",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads a list indicators in in a STIX 2.x json format."
+        },
+        {
+          "info": {
+            "name": "Removes Indicators By Their IDS",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/threatIntel/datastore/indicators",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes indicators by specifying a list of indicator IDs"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement contentPermissions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "contentPermissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Permissions Of A Content Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/permissions",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content item."
+              },
+              {
+                "name": "explicitOnly",
+                "value": "",
+                "type": "query",
+                "description": "There are two permission types: explicit and implicit. Permissions specifically assigned to the content item are explicit. Permissions derived from a parent content item, like a folder are implicit. To return only explicit permissions set this to true."
+              }
+            ]
+          },
+          "docs": "Returns content permissions of a content item with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Add Permissions To A Content Item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/permissions/add",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content item."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add permissions to a content item with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Remove Permissions From A Content Item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/permissions/remove",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content item."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove permissions from a content item with the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

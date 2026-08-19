@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement appManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "appManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Apps.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/apps"
+          },
+          "docs": "Lists all available apps from the App Catalog."
+        },
+        {
+          "info": {
+            "name": "Get An App By UUID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/apps/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the app to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets the app with the given universally unique identifier (UUID)."
+        },
+        {
+          "info": {
+            "name": "Install An App By UUID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/apps/:uuid/install",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the app to install."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Installs the app with given UUID in the folder specified using destinationFolderId."
+        },
+        {
+          "info": {
+            "name": "App Install Job Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/apps/install/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous install job."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous app install request for the given job identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

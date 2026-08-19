@@ -1,0 +1,233 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement policiesManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "policiesManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Audit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/audit"
+          },
+          "docs": "Get the Audit policy. This policy specifies whether audit records for your account are enabled. You can access details about reported account events in the Sumo Logic Audit Index. [Learn More](https://help.sumologic.com/Manage/Security/Audit-Index)"
+        },
+        {
+          "info": {
+            "name": "Set Audit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/audit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Audit policy. This policy specifies whether audit records for your account are enabled. You can access details about reported account events in the Sumo Logic Audit Index. [Learn More](https://help.sumologic.com/Manage/Security/Audit-Index)"
+        },
+        {
+          "info": {
+            "name": "Get Search Audit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/searchAudit"
+          },
+          "docs": "Get the Search Audit policy. This policy specifies whether search records for your account are enabled. You can access details about your account's search capacity, queries run by users from the Sumo Search Audit Index. [Learn More](https://help.sumologic.com/Manage/Security/Search_Audit_Index)"
+        },
+        {
+          "info": {
+            "name": "Set Search Audit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/searchAudit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Search Audit policy. This policy specifies whether search records for your account are enabled. You can access details about your account's search capacity, queries run by users from the Sumo Search Audit Index. [Learn More](https://help.sumologic.com/Manage/Security/Search_Audit_Index)"
+        },
+        {
+          "info": {
+            "name": "Get Share Dashboards Outside Organization Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/shareDashboardsOutsideOrganization"
+          },
+          "docs": "Get the Share Dashboards Outside Organization policy. This policy allows users to share the dashboard with view only privileges outside of the organization (capability must be enabled from the Roles page). Disabling this policy will disable all dashboards that have been shared outside of the organization. [Learn More](https://help.sumologic.com/Visualizations-and-Alerts/Dashboards/Share_Dashboards/Share_a_Dashboard_Outside_Your_Org)"
+        },
+        {
+          "info": {
+            "name": "Set Share Dashboards Outside Organization Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/shareDashboardsOutsideOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Share Dashboards Outside Organization policy. This policy allows users to share the dashboard with view only privileges outside of the organization (capability must be enabled from the Roles page). Disabling this policy will disable all dashboards that have been shared outside of the organization. [Learn More](https://help.sumologic.com/Visualizations-and-Alerts/Dashboards/Share_Dashboards/Share_a_Dashboard_Outside_Your_Org)"
+        },
+        {
+          "info": {
+            "name": "Get Data Access Level Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/dataAccessLevel"
+          },
+          "docs": "Get the Data Access Level policy. When enabled, this policy sets the default data access level for all newly created dashboards to the viewer’s role access filter. Otherwise, newly created dashboards will default to the sharer’s role access filter and might display data that viewers’ roles don’t allow them to view. [Learn More](https://help.sumologic.com/Manage/Security/Data_Access_Level_for_Shared_Dashboards)"
+        },
+        {
+          "info": {
+            "name": "Set Data Access Level Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/dataAccessLevel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Data Access Level policy. When enabled, this policy sets the default data access level for all newly created dashboards to the viewer’s role access filter. Otherwise, newly created dashboards will default to the sharer’s role access filter and might display data that viewers’ roles don’t allow them to view. [Learn More](https://help.sumologic.com/Manage/Security/Data_Access_Level_for_Shared_Dashboards)"
+        },
+        {
+          "info": {
+            "name": "Get User Concurrent Sessions Limit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/userConcurrentSessionsLimit"
+          },
+          "docs": "Get the User Concurrent Sessions Limit policy. When enabled, the number of concurrent sessions a user may have is limited to the value entered. If a user exceeds the allowed number of sessions, the user's oldest session will be logged out to accommodate the new one. Disabling this policy means a user may have an unlimited number of concurrent sessions. [Learn More](https://help.sumologic.com/Manage/Security/Set_a_Limit_for_User_Concurrent_Sessions)"
+        },
+        {
+          "info": {
+            "name": "Set User Concurrent Sessions Limit Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/userConcurrentSessionsLimit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the User Concurrent Sessions Limit policy. When enabled, the number of concurrent sessions a user may have is limited to the value entered. If a user exceeds the allowed number of sessions, the user's oldest session will be logged out to accommodate the new one. Disabling this policy means a user may have an unlimited number of concurrent sessions. [Learn More](https://help.sumologic.com/Manage/Security/Set_a_Limit_for_User_Concurrent_Sessions)"
+        },
+        {
+          "info": {
+            "name": "Get Max User Session Timeout Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/maxUserSessionTimeout"
+          },
+          "docs": "Get the Max User Session Timeout policy. When enabled, this policy sets the maximum web session timeout users are able to configure within their user preferences. Users preferences will be updated to match this value only if their current preference is set to a higher value. [Learn More](https://help.sumologic.com/Manage/Security/Set_a_Maximum_Web_Session_Timeout)"
+        },
+        {
+          "info": {
+            "name": "Set Max User Session Timeout Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/maxUserSessionTimeout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Max User Session Timeout policy. When enabled, this policy sets the maximum web session timeout users are able to configure within their user preferences. Users preferences will be updated to match this value only if their current preference is set to a higher value. [Learn More](https://help.sumologic.com/Manage/Security/Set_a_Maximum_Web_Session_Timeout)"
+        },
+        {
+          "info": {
+            "name": "Get Access Key Lifetime Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/accessKeysLifetime"
+          },
+          "docs": "Get access key lifetime policy. This policy defines the maximum time an access key has once it has been created or rotated before it must be rotated. Otherwise, it will no longer be able to be used. The value 0 represents that the access keys will never expire and the time specified can be configured  by the organization."
+        },
+        {
+          "info": {
+            "name": "Set Access Keys Lifetime Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/accessKeysLifetime",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the access keys lifetime policy. By setting this policy, the time  an access key has to live before it is expired or must be rotated is defined based on the period (default = never) configured for the organization. Setting the value to 0 would represent that the access keys never expire."
+        },
+        {
+          "info": {
+            "name": "Get Data Deletion Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/policies/dataDeletion"
+          },
+          "docs": "Get the Data Deletion policy. This policy specifies whether users are allowed to delete data from Sumo Logic. Disabling this policy prevents users from deleting log data. [Learn More](https://help.sumologic.com/Manage/Security/Data_Deletion)"
+        },
+        {
+          "info": {
+            "name": "Set Data Deletion Policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/policies/dataDeletion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the Data Deletion policy. This policy specifies whether users are allowed to delete data from Sumo Logic. Disabling this policy prevents users from deleting log data. [Learn More](https://help.sumologic.com/Manage/Security/Data_Deletion)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

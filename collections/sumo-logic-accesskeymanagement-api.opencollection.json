@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "accessKeyManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Access Keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of access keys returned in the response. The number of access keys returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "List all access keys in your account."
+        },
+        {
+          "info": {
+            "name": "Create An Access Key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new access ID and key pair. The new access key can be used from the domains specified in corsHeaders field. Whether Sumo Logic accepts or rejects an API request depends on whether it contains an ORIGIN header and the entries in the allowlist. Sumo Logic will reject:\n  1. Requests with an ORIGIN header but the allowlist is empty.\n  2. Requests with an ORIGIN header that don't match any entry in the allowlist."
+        },
+        {
+          "info": {
+            "name": "List Personal Keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys/personal"
+          },
+          "docs": "List all access keys that belong to your user."
+        },
+        {
+          "info": {
+            "name": "Get All Scopes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys/scopes"
+          },
+          "docs": "Get a list of all of the scopes that can be added to an access key."
+        },
+        {
+          "info": {
+            "name": "Update An Access Key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The accessId of the access key to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of existing accessKey by accessId. It can be used to enable or disable the access key and to update the corsHeaders list."
+        },
+        {
+          "info": {
+            "name": "Delete An Access Key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The accessId of the access key to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the access key with the given accessId."
+        },
+        {
+          "info": {
+            "name": "Rotate The Access Key Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/accessKeys/:id/rotate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The accessId of the access key to rotate the secret for."
+              }
+            ]
+          },
+          "docs": "Generates a new secret for the access key that is passed in the call, keeping the same access ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement serviceAllowlistManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "serviceAllowlistManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Allowlisted CIDRs/IP Addresses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/addresses"
+          },
+          "docs": "Get a list of all allowlisted CIDR notations and/or IP addresses for the organization."
+        },
+        {
+          "info": {
+            "name": "Allowlist CIDRs/IP Addresses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/addresses/add",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add CIDR notations and/or IP addresses to the allowlist of the organization if not already there. When service allowlisting functionality is enabled, CIDRs/IP addresses that are allowlisted will have access to Sumo Logic and/or content sharing."
+        },
+        {
+          "info": {
+            "name": "Remove Allowlisted CIDRs/IP Addresses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/addresses/remove",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove allowlisted CIDR notations and/or IP addresses from the organization. Removed CIDRs/IPs will immediately lose access to Sumo Logic and content sharing."
+        },
+        {
+          "info": {
+            "name": "Enable Service Allowlisting.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/enable",
+            "params": [
+              {
+                "name": "allowlistType",
+                "value": "",
+                "type": "query",
+                "description": "The type of allowlisting to be enabled. It can be one of: `Login`, `Content`, or `Both`."
+              }
+            ]
+          },
+          "docs": "Enable service allowlisting functionality for the organization. The service allowlisting can be for 1. Login: If enabled, access to Sumo Logic is granted only to CIDRs/IP addresses that are allowlisted. 2. Content: If enabled, dashboards can be shared with users connecting from CIDRs/IP addresses that are allowlisted without logging in."
+        },
+        {
+          "info": {
+            "name": "Disable Service Allowlisting.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/disable",
+            "params": [
+              {
+                "name": "allowlistType",
+                "value": "",
+                "type": "query",
+                "description": "The type of allowlisting to be disabled. It can be one of: `Login`, `Content`, or `Both`."
+              }
+            ]
+          },
+          "docs": "Disable service allowlisting functionality for login/API authentication or content sharing for the organization."
+        },
+        {
+          "info": {
+            "name": "Get The Allowlisting Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/serviceAllowlist/status"
+          },
+          "docs": "Get the status of the service allowlisting functionality for login/API authentication or content sharing for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

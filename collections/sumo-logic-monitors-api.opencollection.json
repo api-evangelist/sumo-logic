@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic REST Collectors Monitors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List monitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/monitors"
+          },
+          "docs": "List monitors"
+        },
+        {
+          "info": {
+            "name": "Create a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumologic.com/api/v1/monitors"
+          },
+          "docs": "Create a monitor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

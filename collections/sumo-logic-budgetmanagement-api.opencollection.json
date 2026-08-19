@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement budgetManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "budgetManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Budgets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/budgets",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of budgets returned in the response. The number of budgets returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get budgets"
+        },
+        {
+          "info": {
+            "name": "Creates A Budget Definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/budgets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a budget definition"
+        },
+        {
+          "info": {
+            "name": "Get Budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/budgets/:budgetId",
+            "params": [
+              {
+                "name": "budgetId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the budget."
+              }
+            ]
+          },
+          "docs": "Get budget"
+        },
+        {
+          "info": {
+            "name": "Update Budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/budgets/:budgetId",
+            "params": [
+              {
+                "name": "budgetId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the budget."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update budget"
+        },
+        {
+          "info": {
+            "name": "Delete Budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/budgets/:budgetId",
+            "params": [
+              {
+                "name": "budgetId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the budget."
+              }
+            ]
+          },
+          "docs": "Delete budget"
+        },
+        {
+          "info": {
+            "name": "Get Budget Usages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/budgets/usage",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of budget usages returned in the response. The number of budget usages returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get budget usages"
+        },
+        {
+          "info": {
+            "name": "Get Budget Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/budgets/:budgetId/usage",
+            "params": [
+              {
+                "name": "budgetId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the budget."
+              }
+            ]
+          },
+          "docs": "Get budget usage"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement spanAnalytics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "spanAnalytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run A Span Analytics Query Asynchronously.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a span analytics query and get the id to fetch its status and results. Use the [Span Query Status](#operation/getSpanQueryStatus) endpoint to check a query status. When the query has been completed, use the [Span Query Result](#operation/getSpanQueryResult) endpoint to get the result of the asynchronous query."
+        },
+        {
+          "info": {
+            "name": "Cancel A Span Analytics Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query to cancel."
+              }
+            ]
+          },
+          "docs": "Cancel a currently processed span search query with the given id."
+        },
+        {
+          "info": {
+            "name": "Get A Span Analytics Query Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/status",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              }
+            ]
+          },
+          "docs": "Get a status of a span analytics query with the given id. When the query has been completed, use the [Span Query Result](#operation/getSpanQueryResult) endpoint to get the result of the asynchronous query."
+        },
+        {
+          "info": {
+            "name": "Pause A Span Analytics Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/pause",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query to pause."
+              }
+            ]
+          },
+          "docs": "Pause a currently processed span search query with the given id."
+        },
+        {
+          "info": {
+            "name": "Resume A Span Analytics Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/resume",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query to resume."
+              }
+            ]
+          },
+          "docs": "Resume a previously paused span search query with the given id."
+        },
+        {
+          "info": {
+            "name": "Get Results Of A Span Analytics Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/rows/:rowId/spans",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query row."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of the number of spans returned in the response."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of spans matching a query with the specified id. The response is paginated with a default limit of 100 spans per page."
+        },
+        {
+          "info": {
+            "name": "Get A List Of Facets Of A Span Analytics Query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/rows/:rowId/facets",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the query row."
+              }
+            ]
+          },
+          "docs": "Get a list of facets of a span analytics query with the specified id."
+        },
+        {
+          "info": {
+            "name": "Get Span Analytics Query Aggregated Results.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/:queryId/aggregates",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the executed query."
+              }
+            ]
+          },
+          "docs": "Get span aggregation results for an aggregated span analytics query with the specified id. Only aggregated rows being part of the executed query will have matching results in the response of this endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Filter Fields For Span Analytics Queries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/fields"
+          },
+          "docs": "Get a list of available fields which can be used in span analytics queries."
+        },
+        {
+          "info": {
+            "name": "Get Span Analytics Query Filter Field Values.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/tracing/spanquery/fields/:field/values",
+            "params": [
+              {
+                "name": "field",
+                "value": "",
+                "type": "path",
+                "description": "Field identifier."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search filter to apply on the values to be returned. Only values containing the search query term will be returned."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to fetch."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of available values for the given span analytics query filter field. Not all fields support value listing. The response is paginated with a default limit of 10 field values per page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

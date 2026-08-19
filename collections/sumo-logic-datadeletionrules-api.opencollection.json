@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement dataDeletionRules API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dataDeletionRules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Data Deletion Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dataDeletionRules",
+            "params": [
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "Limit the number of deletion Rules returned in the response"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of data deletion rules in the organization. The response is paginated with a default limit of 50 rules."
+        },
+        {
+          "info": {
+            "name": "Create A New Data Deletion Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/dataDeletionRules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new data deletion rule to delete logs."
+        },
+        {
+          "info": {
+            "name": "Get Data Deletion Rule Information For The Given Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dataDeletionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Deletion Rule to fetch"
+              }
+            ]
+          },
+          "docs": "Get Data Deletion Rule information for the given Id with updated fields."
+        },
+        {
+          "info": {
+            "name": "Cancel The Data Deletion Rule With The Given Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/dataDeletionRules/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Deletion Rule to cancel"
+              }
+            ]
+          },
+          "docs": "Cancel the data Deletion Rule with the given Id. Allowed only if the rule is waiting for approval."
+        },
+        {
+          "info": {
+            "name": "Delete The Data Deletion Rule With The Given Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/dataDeletionRules/:id/delete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Deletion Rule to delete"
+              }
+            ]
+          },
+          "docs": "Delete the data Deletion Rule with the given Id. Allowed only if the rule is cancelled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

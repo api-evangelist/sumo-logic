@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement lookupManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "lookupManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create A Lookup Table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new lookup table by providing a schema and specifying its configuration. Providing parentFolderId\n is mandatory. Use the [getItemByPath](#operation/getItemByPath) endpoint to get content id of a path.\nPlease check [Content management API](#tag/contentManagement) and [Folder management API](#tag/folderManagement) for all available options."
+        },
+        {
+          "info": {
+            "name": "Get A Lookup Table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table."
+              }
+            ]
+          },
+          "docs": "Get a lookup table for the given identifier."
+        },
+        {
+          "info": {
+            "name": "Edit A Lookup Table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit the lookup table data. All the fields are mandatory in the request."
+        },
+        {
+          "info": {
+            "name": "Delete A Lookup Table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table."
+              }
+            ]
+          },
+          "docs": "Delete a lookup table completely. <br> **Warning:** `This operation cannot be undone`."
+        },
+        {
+          "info": {
+            "name": "Upload A CSV File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id/upload",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table to populate."
+              },
+              {
+                "name": "merge",
+                "value": "",
+                "type": "query",
+                "description": "This indicates whether the file contents will be merged with existing data in the lookup table or not. If this is true then data with the same primary keys will be updated while the rest of the rows will be appended. By default, merge is false. The response includes a request identifier that you need to use in the [Request Status API](#operation/requestStatus) to track the status of the upload request."
+              },
+              {
+                "name": "fileEncoding",
+                "value": "",
+                "type": "query",
+                "description": "File encoding of file being uploaded."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a request to populate a lookup table with a CSV file."
+        },
+        {
+          "info": {
+            "name": "Get The Status Of An Async Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/jobs/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "An identifier returned in response to an asynchronous request."
+              }
+            ]
+          },
+          "docs": "Retrieve the status of a previously made request. If the request was successful, the status of the response object will be `Success`."
+        },
+        {
+          "info": {
+            "name": "Empty A Lookup Table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id/truncate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the table to clear."
+              }
+            ]
+          },
+          "docs": "Delete all data from a lookup table."
+        },
+        {
+          "info": {
+            "name": "Insert Or Update A Lookup Table Row.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id/row",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Insert or update a row of a lookup table with the given identifier. A new row is inserted if the primary key does not exist already, otherwise the existing row with the specified primary key is updated. All the fields of the lookup table are required and will be updated to the given values. In case a field is not specified then it will be assumed to be set to null. If the table size exceeds the maximum limit of 100MB then based on the size limit action of the table the update will be processed o"
+        },
+        {
+          "info": {
+            "name": "Delete A Lookup Table Row.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/lookupTables/:id/deleteTableRow",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the lookup table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a row from lookup table by providing the row's primary keys' values. The complete set of primary key fields of the lookup table should be provided."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,360 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement dashboardManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dashboardManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Dashboards.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards",
+            "params": [
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Limit the number of dashboard returned in the response. The number of dashboards returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "mode",
+                "value": "createdByUser",
+                "type": "query",
+                "description": "whether to list all viewable dashboards under the folders"
+              }
+            ]
+          },
+          "docs": "List all dashboards under the Personal folder created by the user or under folders viewable by user."
+        },
+        {
+          "info": {
+            "name": "Create A New Dashboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new dashboard."
+        },
+        {
+          "info": {
+            "name": "Get A Dashboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the dashboard to return."
+              }
+            ]
+          },
+          "docs": "Get a dashboard by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Dashboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the dashboard to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a dashboard by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete A Dashboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the dashboard to delete."
+              }
+            ]
+          },
+          "docs": "Delete a dashboard by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Start A Report Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/reportJobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule an asynchronous job to generate a report from a template. All items in the template will be included unless specified. See template section for more details on individual templates. Reports can be generated in Pdf or Png format and exported in various methods (ex. direct download). You will get back an asynchronous job identifier on success. Use the [getAsyncReportGenerationStatus](#operation/getAsyncExportStatus) endpoint and the job identifier you got back in the response to track the"
+        },
+        {
+          "info": {
+            "name": "Get Report Generation Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/reportJobs/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous report generation job."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous report generation request for the given job identifier. On success, use the [getReportGenerationResult](#operation/getAsyncReportGenerationResult) endpoint to get the result of the report generation job."
+        },
+        {
+          "info": {
+            "name": "Get Report Generation Job Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/reportJobs/:jobId/result",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous report generation job."
+              }
+            ]
+          },
+          "docs": "Get the result of an asynchronous report generation request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Migrate Legacy Dashboards To Dashboards(New)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule an asynchronous job to migrate a list of legacy Dashboards to Dashboard(New). Once migration is finished, the migrated dashboards will be in the same folder as the corresponding legacy Dashboard.\nNote: This feature is in beta and may not support all existing features of legacy dashboards.\n"
+        },
+        {
+          "info": {
+            "name": "Preview Of Migrating Legacy Dashboards To Dashboards(New)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/migrate/preview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a preview of migrating Legacy Dashboards to Dashboard(New)"
+        },
+        {
+          "info": {
+            "name": "Get Dashboard Migration Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/migrate/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous Dashboard Migration job."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous Dashboard Migration job for the given job identifier. If job succeeds, use Dashboard Migration Result endpoint to see results of the migration."
+        },
+        {
+          "info": {
+            "name": "Get Dashboard Migration Result.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/dashboards/migrate/:jobId/result",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous Dashboard Migration job."
+              }
+            ]
+          },
+          "docs": "Get the result of an asynchronous Dashboard Migration request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "List All Dashboard Report Schedules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dashboards/reportSchedules",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the dashboard that the report shedules are associated with."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Limit the number of dashboard report schedules returned in the response. The number of dashboard report schedules returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "List all dashboard report schedules created by the user."
+        },
+        {
+          "info": {
+            "name": "Schedule Dashboard Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/dashboards/reportSchedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule dashboard report to send at a specific date and time. The report should be sent as attachment or downloadable URL in one of the following notification types: 'Email', 'AWSLambda', 'AzureFunctions', 'Datadog', 'HipChat', 'Jira', 'NewRelic', 'Opsgenie', 'PagerDuty', 'Slack', 'MicrosoftTeams', 'ServiceNow', 'SumoCloudSOAR' and 'Webhook'."
+        },
+        {
+          "info": {
+            "name": "Get Dashboard Report Schedule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dashboards/reportSchedules/:scheduleId",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the dashboard report schedule to return."
+              }
+            ]
+          },
+          "docs": "Get the schedule of a scheduled dashboard report by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update Dashboard Report Schedule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/dashboards/reportSchedules/:scheduleId",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "identifier of the dashboard report schedule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the schedule of a scheduled dashboard report by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete Dashboard Report Schedule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/dashboards/reportSchedules/:scheduleId",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the dashboard report schedule to delete."
+              }
+            ]
+          },
+          "docs": "Delete the schedule of a scheduled dashboard report by the given identifier. The scheduled dashboard report will no longer be generated and sent."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

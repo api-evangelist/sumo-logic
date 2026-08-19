@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement oauthManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oauthManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Scopes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/scopes"
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nGet a list of all of the scopes that can be added to an oauth client."
+        },
+        {
+          "info": {
+            "name": "List The OAuth Clients.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of OAuth clients returned in the response. The number of OAuth clients returned may be  less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is  returned in the response body. Subsequent GET requests should specify the continuation token to get the  next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "runAsId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the service account that the OAuth Client runs as."
+              }
+            ]
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nList all OAuth clients."
+        },
+        {
+          "info": {
+            "name": "Create A New OAuth Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nCreates a new OAuth clientId and clientSecret."
+        },
+        {
+          "info": {
+            "name": "Get An OAuth Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of an OAuth client to return."
+              }
+            ]
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nGet an OAuth client with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Update An OAuth Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path",
+                "description": "The id of an OAuth client to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nUpdates the properties of existing OAuth client by Id."
+        },
+        {
+          "info": {
+            "name": "Delete An OAuth Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the OAuth client to delete."
+              }
+            ]
+          },
+          "docs": "** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes. **\n\nDeletes the OAuth client with the given Id."
+        },
+        {
+          "info": {
+            "name": "Rotate The Oauth Client Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/clients/:clientId/rotate",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the oauth client to rotate the secret for."
+              }
+            ]
+          },
+          "docs": "Generates a new secret for the oauth client that is passed in the call, keeping the same client ID."
+        },
+        {
+          "info": {
+            "name": "List OAuth Consents.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/consents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of consents returned in the response."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results."
+              },
+              {
+                "name": "authorizedUser",
+                "value": "",
+                "type": "query",
+                "description": "Filter consents by the identifier of the user who authorized the consent."
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "query",
+                "description": "Filter consents by the clientId of a registered OAuth client."
+              }
+            ]
+          },
+          "docs": "Get a list of OAuth consents within the organization. Administrators can list all consents, while others can only list consents that they have authorized."
+        },
+        {
+          "info": {
+            "name": "Delete An OAuth Consent.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/oauth/consents/:consentId",
+            "params": [
+              {
+                "name": "consentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth consent to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the OAuth consent with the given Id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

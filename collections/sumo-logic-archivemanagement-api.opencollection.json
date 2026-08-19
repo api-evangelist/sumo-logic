@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement archiveManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "archiveManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Ingestion Jobs For An Archive Source.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/archive/:sourceId/jobs",
+            "params": [
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of an Archive Source."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of jobs returned in the response. The number of jobs returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of all the ingestion jobs created on an Archive Source. The response is paginated with a default limit of 10 jobs per page."
+        },
+        {
+          "info": {
+            "name": "Create An Ingestion Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/archive/:sourceId/jobs",
+            "params": [
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Archive Source for which the job is to be added."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an ingestion job to pull data from your S3 bucket."
+        },
+        {
+          "info": {
+            "name": "Delete An Ingestion Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/archive/:sourceId/jobs/:id",
+            "params": [
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Archive Source."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the ingestion job to delete."
+              }
+            ]
+          },
+          "docs": "Delete an ingestion job with the given identifier from the organization. The delete operation is only possible for jobs with a Succeeded or Failed status."
+        },
+        {
+          "info": {
+            "name": "List Ingestion Jobs For All Archive Sources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/archive/jobs/count"
+          },
+          "docs": "Get a list of all Archive Sources with the count and status of ingestion jobs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

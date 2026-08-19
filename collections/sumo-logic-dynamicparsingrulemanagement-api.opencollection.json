@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement dynamicParsingRuleManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dynamicParsingRuleManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Dynamic Parsing Rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dynamicParsingRules",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of dynamic parsing rules returned in the response. The number of dynamic parsing rules returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get a list of all dynamic parsing rules. The response is paginated with a default limit of 100 dynamic parsing rules per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Dynamic Parsing Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/dynamicParsingRules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new dynamic parsing rule."
+        },
+        {
+          "info": {
+            "name": "Get A Dynamic Parsing Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/dynamicParsingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of dynamic parsing rule to return."
+              }
+            ]
+          },
+          "docs": "Get a dynamic parsing rule with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Dynamic Parsing Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/dynamicParsingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the dynamic parsing rule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing dynamic parsing rule. All properties specified in the request are replaced. Missing properties are set to their default values."
+        },
+        {
+          "info": {
+            "name": "Delete A Dynamic Parsing Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/dynamicParsingRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the dynamic parsing rule to delete."
+              }
+            ]
+          },
+          "docs": "Delete a dynamic parsing rule with the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

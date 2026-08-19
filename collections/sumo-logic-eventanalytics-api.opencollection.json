@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement eventAnalytics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "eventAnalytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Event Extraction Rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules"
+          },
+          "docs": "Get all event extraction rules."
+        },
+        {
+          "info": {
+            "name": "Create Event Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create event extraction rule."
+        },
+        {
+          "info": {
+            "name": "Get Event Extraction Rules Quota.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules/quota"
+          },
+          "docs": "Every customer can use a limited number of Event Extraction Rules. This endpoint allows learning about these limitations and remaining quota."
+        },
+        {
+          "info": {
+            "name": "Get An Event Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "000000000000000A",
+                "type": "path",
+                "description": "The identifier of the event extraction rule."
+              }
+            ]
+          },
+          "docs": "Get an event extraction rule."
+        },
+        {
+          "info": {
+            "name": "Update An Event Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "000000000000000A",
+                "type": "path",
+                "description": "The identifier of the event extraction rule."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an event extraction rule."
+        },
+        {
+          "info": {
+            "name": "Delete An Event Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/eventExtractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "000000000000000A",
+                "type": "path",
+                "description": "The identifier of the event extraction rule."
+              }
+            ]
+          },
+          "docs": "Delete an event extraction rule."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

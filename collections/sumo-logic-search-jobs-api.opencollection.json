@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic REST Collectors Search Jobs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a search job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumologic.com/api/v1/search/jobs"
+          },
+          "docs": "Create a search job"
+        },
+        {
+          "info": {
+            "name": "Get search job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/search/jobs/:searchJobId",
+            "params": [
+              {
+                "name": "searchJobId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get search job status"
+        },
+        {
+          "info": {
+            "name": "Delete a search job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumologic.com/api/v1/search/jobs/:searchJobId",
+            "params": [
+              {
+                "name": "searchJobId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a search job"
+        },
+        {
+          "info": {
+            "name": "Page through messages produced by a search job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/search/jobs/:searchJobId/messages",
+            "params": [
+              {
+                "name": "searchJobId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Page through messages produced by a search job"
+        },
+        {
+          "info": {
+            "name": "Page through records produced by a search job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/search/jobs/:searchJobId/records",
+            "params": [
+              {
+                "name": "searchJobId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Page through records produced by a search job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement connectionManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "connectionManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Connections.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/connections",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of connections returned in the response. The number of connections returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of all connections in the organization. The response is paginated with a default limit of 100 connections per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Connection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/connections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new connection in the organization."
+        },
+        {
+          "info": {
+            "name": "Test A New Connection Url.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/connections/test",
+            "params": [
+              {
+                "name": "functionalities",
+                "value": "alert,resolution",
+                "type": "query",
+                "description": "A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`."
+              },
+              {
+                "name": "connectionId",
+                "value": "0000000000123ABC",
+                "type": "query",
+                "description": "Unique identifier of an existing connection to test. It should be provided when the request body of an existing connection contains masked authorization headers. If not provided, the authorization headers will not be correctly unmasked, and the test may fail due to unauthorized access."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test a new connection url is valid and can connect."
+        },
+        {
+          "info": {
+            "name": "Get Incident Templates For CloudSOAR Connections.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/connections/incidentTemplates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get incident templates for CloudSOAR connections."
+        },
+        {
+          "info": {
+            "name": "Get A Connection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of connection to return."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`."
+              }
+            ]
+          },
+          "docs": "Get a connection with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Connection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the connection to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing connection."
+        },
+        {
+          "info": {
+            "name": "Delete A Connection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the connection to delete."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`."
+              }
+            ]
+          },
+          "docs": "Delete a connection with the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

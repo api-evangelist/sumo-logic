@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement metricsSearchesManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metricsSearchesManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Save A Metrics Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/metricsSearches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Saves a metrics search in the content library. Metrics search consists of one or more queries, a time range, a quantization period and a set of chart properties like line width."
+        },
+        {
+          "info": {
+            "name": "Get A Metrics Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the metrics search."
+              }
+            ]
+          },
+          "docs": "Returns a metrics search with the specified identifier."
+        },
+        {
+          "info": {
+            "name": "Updates A Metrics Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the metrics search."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a metrics search with the specified identifier. Partial updates are not supported, you must provide values for all fields."
+        },
+        {
+          "info": {
+            "name": "Deletes A Metrics Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/metricsSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the metrics search."
+              }
+            ]
+          },
+          "docs": "Deletes a metrics search from the content library."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

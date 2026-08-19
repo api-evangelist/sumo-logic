@@ -1,0 +1,660 @@
+{
+  "item": [
+    {
+      "id": "93559d3c-fe25-418e-bc75-ae176d2386b1",
+      "name": "appManagement",
+      "description": {
+        "content": "App installation API.\n\nView and install Sumo Logic Applications that deliver out-of-the-box dashboards, saved searches, and field extraction for popular data sources. For more information, see [Sumo Logic Apps](https://help.sumologic.com/docs/integrations).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "55a41545-5918-4def-854e-f478b64bd81a",
+          "name": "List Available Apps.",
+          "request": {
+            "name": "List Available Apps.",
+            "description": {
+              "content": "Lists all available apps from the App Catalog.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2cd4a2e-991e-431d-ba27-5fdb0c6eb5dc",
+              "name": "List of all available apps.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apps\": [\n    {\n      \"appDefinition\": {\n        \"appVersion\": \"1.0\",\n        \"contentId\": \"00000000000011AE\",\n        \"name\": \"Sumo Config\",\n        \"uuid\": \"1c57fbc3-3141-4b12-aab3-5f40152bc3d9\",\n        \"preview\": true,\n        \"manifestVersion\": \"0.1\"\n      },\n      \"appManifest\": {\n        \"description\": \"A description for Sumo Logic Config App.\",\n        \"hoverText\": \"Sumo Config App\",\n        \"iconURL\": \"https://sumologic-app-data.sumologic.com/icons/sumoconfig.png\",\n        \"family\": \"IIS\",\n        \"categories\": [\n          \"Sumo Logic\",\n          \"Configuration\"\n        ],\n        \"screenshotURLs\": [\n          \"https://sumologic-app-data.sumologic.com/icons/sumoconfig/overview.png\",\n          \"https://sumologic-app-data.sumologic.com/screenshots/sumoconfig/details.png\"\n        ],\n        \"helpURL\": \"https://help.sumologic.com/\",\n        \"helpDocIdMap\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\",\n          \"key_4\": \"string\",\n          \"key_5\": \"string\",\n          \"key_6\": \"string\",\n          \"key_7\": \"string\",\n          \"key_8\": \"string\",\n          \"key_9\": \"string\",\n          \"key_10\": \"string\",\n          \"key_11\": \"string\",\n          \"key_12\": \"string\",\n          \"key_13\": \"string\",\n          \"key_14\": \"string\",\n          \"key_15\": \"string\",\n          \"key_16\": \"string\",\n          \"key_17\": \"string\",\n          \"key_18\": \"string\",\n          \"key_19\": \"string\",\n          \"key_20\": \"string\",\n          \"key_21\": \"string\",\n          \"key_22\": \"string\",\n          \"key_23\": \"string\",\n          \"key_24\": \"string\",\n          \"key_25\": \"string\",\n          \"key_26\": \"string\",\n          \"key_27\": \"string\",\n          \"key_28\": \"string\",\n          \"key_29\": \"string\",\n          \"key_30\": \"string\",\n          \"key_31\": \"string\",\n          \"key_32\": \"string\",\n          \"key_33\": \"string\",\n          \"key_34\": \"string\",\n          \"key_35\": \"string\",\n          \"key_36\": \"string\",\n          \"key_37\": \"string\",\n          \"key_38\": \"string\",\n          \"key_39\": \"string\",\n          \"key_40\": \"string\",\n          \"key_41\": \"string\",\n          \"key_42\": \"string\",\n          \"key_43\": \"string\",\n          \"key_44\": \"string\",\n          \"key_45\": \"string\",\n          \"key_46\": \"string\",\n          \"key_47\": \"string\",\n          \"key_48\": \"string\",\n          \"key_49\": \"string\",\n          \"key_50\": \"string\",\n          \"key_51\": \"string\",\n          \"key_52\": \"string\",\n          \"key_53\": \"string\",\n          \"key_54\": \"string\",\n          \"key_55\": \"string\",\n          \"key_56\": \"string\",\n          \"key_57\": \"string\",\n          \"key_58\": \"string\",\n          \"key_59\": \"string\",\n          \"key_60\": \"string\",\n          \"key_61\": \"string\",\n          \"key_62\": \"string\",\n          \"key_63\": \"string\",\n          \"key_64\": \"string\",\n          \"key_65\": \"string\",\n          \"key_66\": \"string\",\n          \"key_67\": \"string\",\n          \"key_68\": \"string\",\n          \"key_69\": \"string\",\n          \"key_70\": \"string\",\n          \"key_71\": \"string\",\n          \"key_72\": \"string\",\n          \"key_73\": \"string\",\n          \"key_74\": \"string\",\n          \"key_75\": \"string\",\n          \"key_76\": \"string\",\n          \"key_77\": \"string\",\n          \"key_78\": \"string\",\n          \"key_79\": \"string\",\n          \"key_80\": \"string\",\n          \"key_81\": \"string\",\n          \"key_82\": \"string\",\n          \"key_83\": \"string\",\n          \"key_84\": \"string\",\n          \"key_85\": \"string\",\n          \"key_86\": \"string\",\n          \"key_87\": \"string\",\n          \"key_88\": \"string\",\n          \"key_89\": \"string\",\n          \"key_90\": \"string\",\n          \"key_91\": \"string\",\n          \"key_92\": \"string\",\n          \"key_93\": \"string\",\n          \"key_94\": \"string\",\n          \"key_95\": \"string\",\n          \"key_96\": \"string\",\n          \"key_97\": \"string\",\n          \"key_98\": \"string\",\n          \"key_99\": \"string\",\n          \"key_100\": \"string\",\n          \"key_101\": \"string\",\n          \"key_102\": \"string\",\n          \"key_103\": \"string\",\n          \"key_104\": \"string\",\n          \"key_105\": \"string\",\n          \"key_106\": \"string\",\n          \"key_107\": \"string\",\n          \"key_108\": \"string\",\n          \"key_109\": \"string\",\n          \"key_110\": \"string\",\n          \"key_111\": \"string\",\n          \"key_112\": \"string\",\n          \"key_113\": \"string\",\n          \"key_114\": \"string\",\n          \"key_115\": \"string\",\n          \"key_116\": \"string\",\n          \"key_117\": \"string\",\n          \"key_118\": \"string\",\n          \"key_119\": \"string\",\n          \"key_120\": \"string\",\n          \"key_121\": \"string\",\n          \"key_122\": \"string\",\n          \"key_123\": \"string\",\n          \"key_124\": \"string\",\n          \"key_125\": \"string\",\n          \"key_126\": \"string\",\n          \"key_127\": \"string\",\n          \"key_128\": \"string\",\n          \"key_129\": \"string\",\n          \"key_130\": \"string\",\n          \"key_131\": \"string\",\n          \"key_132\": \"string\",\n          \"key_133\": \"string\",\n          \"key_134\": \"string\",\n          \"key_135\": \"string\",\n          \"key_136\": \"string\",\n          \"key_137\": \"string\",\n          \"key_138\": \"string\",\n          \"key_139\": \"string\",\n          \"key_140\": \"string\",\n          \"key_141\": \"string\",\n          \"key_142\": \"string\",\n          \"key_143\": \"string\",\n          \"key_144\": \"string\",\n          \"key_145\": \"string\",\n          \"key_146\": \"string\",\n          \"key_147\": \"string\",\n          \"key_148\": \"string\",\n          \"key_149\": \"string\",\n          \"key_150\": \"string\",\n          \"key_151\": \"string\",\n          \"key_152\": \"string\",\n          \"key_153\": \"string\",\n          \"key_154\": \"string\",\n          \"key_155\": \"string\",\n          \"key_156\": \"string\",\n          \"key_157\": \"string\",\n          \"key_158\": \"string\",\n          \"key_159\": \"string\",\n          \"key_160\": \"string\",\n          \"key_161\": \"string\",\n          \"key_162\": \"string\",\n          \"key_163\": \"string\",\n          \"key_164\": \"string\",\n          \"key_165\": \"string\",\n          \"key_166\": \"string\",\n          \"key_167\": \"string\",\n          \"key_168\": \"string\",\n          \"key_169\": \"string\",\n          \"key_170\": \"string\",\n          \"key_171\": \"string\",\n          \"key_172\": \"string\",\n          \"key_173\": \"string\",\n          \"key_174\": \"string\",\n          \"key_175\": \"string\",\n          \"key_176\": \"string\",\n          \"key_177\": \"string\",\n          \"key_178\": \"string\",\n          \"key_179\": \"string\",\n          \"key_180\": \"string\",\n          \"key_181\": \"string\",\n          \"key_182\": \"string\",\n          \"key_183\": \"string\",\n          \"key_184\": \"string\",\n          \"key_185\": \"string\",\n          \"key_186\": \"string\",\n          \"key_187\": \"string\",\n          \"key_188\": \"string\",\n          \"key_189\": \"string\",\n          \"key_190\": \"string\",\n          \"key_191\": \"string\",\n          \"key_192\": \"string\",\n          \"key_193\": \"string\",\n          \"key_194\": \"string\",\n          \"key_195\": \"string\",\n          \"key_196\": \"string\",\n          \"key_197\": \"string\",\n          \"key_198\": \"string\",\n          \"key_199\": \"string\",\n          \"key_200\": \"string\",\n          \"key_201\": \"string\",\n          \"key_202\": \"string\",\n          \"key_203\": \"string\",\n          \"key_204\": \"string\",\n          \"key_205\": \"string\",\n          \"key_206\": \"string\",\n          \"key_207\": \"string\",\n          \"key_208\": \"string\",\n          \"key_209\": \"string\",\n          \"key_210\": \"string\",\n          \"key_211\": \"string\",\n          \"key_212\": \"string\",\n          \"key_213\": \"string\",\n          \"key_214\": \"string\",\n          \"key_215\": \"string\",\n          \"key_216\": \"string\",\n          \"key_217\": \"string\",\n          \"key_218\": \"string\",\n          \"key_219\": \"string\",\n          \"key_220\": \"string\",\n          \"key_221\": \"string\",\n          \"key_222\": \"string\",\n          \"key_223\": \"string\",\n          \"key_224\": \"string\",\n          \"key_225\": \"string\",\n          \"key_226\": \"string\",\n          \"key_227\": \"string\",\n          \"key_228\": \"string\",\n          \"key_229\": \"string\",\n          \"key_230\": \"string\",\n          \"key_231\": \"string\",\n          \"key_232\": \"string\",\n          \"key_233\": \"string\",\n          \"key_234\": \"string\",\n          \"key_235\": \"string\",\n          \"key_236\": \"string\",\n          \"key_237\": \"string\",\n          \"key_238\": \"string\",\n          \"key_239\": \"string\",\n          \"key_240\": \"string\",\n          \"key_241\": \"string\",\n          \"key_242\": \"string\",\n          \"key_243\": \"string\",\n          \"key_244\": \"string\",\n          \"key_245\": \"string\",\n          \"key_246\": \"string\",\n          \"key_247\": \"string\",\n          \"key_248\": \"string\",\n          \"key_249\": \"string\",\n          \"key_250\": \"string\",\n          \"key_251\": \"string\",\n          \"key_252\": \"string\",\n          \"key_253\": \"string\",\n          \"key_254\": \"string\",\n          \"key_255\": \"string\",\n          \"key_256\": \"string\",\n          \"key_257\": \"string\",\n          \"key_258\": \"string\",\n          \"key_259\": \"string\",\n          \"key_260\": \"string\",\n          \"key_261\": \"string\",\n          \"key_262\": \"string\",\n          \"key_263\": \"string\",\n          \"key_264\": \"string\",\n          \"key_265\": \"string\",\n          \"key_266\": \"string\",\n          \"key_267\": \"string\",\n          \"key_268\": \"string\",\n          \"key_269\": \"string\",\n          \"key_270\": \"string\",\n          \"key_271\": \"string\",\n          \"key_272\": \"string\",\n          \"key_273\": \"string\",\n          \"key_274\": \"string\",\n          \"key_275\": \"string\",\n          \"key_276\": \"string\",\n          \"key_277\": \"string\",\n          \"key_278\": \"string\",\n          \"key_279\": \"string\",\n          \"key_280\": \"string\",\n          \"key_281\": \"string\",\n          \"key_282\": \"string\",\n          \"key_283\": \"string\",\n          \"key_284\": \"string\",\n          \"key_285\": \"string\",\n          \"key_286\": \"string\",\n          \"key_287\": \"string\",\n          \"key_288\": \"string\",\n          \"key_289\": \"string\",\n          \"key_290\": \"string\",\n          \"key_291\": \"string\",\n          \"key_292\": \"string\",\n          \"key_293\": \"string\",\n          \"key_294\": \"string\",\n          \"key_295\": \"string\",\n          \"key_296\": \"string\",\n          \"key_297\": \"string\",\n          \"key_298\": \"string\",\n          \"key_299\": \"string\",\n          \"key_300\": \"string\",\n          \"key_301\": \"string\",\n          \"key_302\": \"string\",\n          \"key_303\": \"string\",\n          \"key_304\": \"string\",\n          \"key_305\": \"string\",\n          \"key_306\": \"string\",\n          \"key_307\": \"string\",\n          \"key_308\": \"string\",\n          \"key_309\": \"string\",\n          \"key_310\": \"string\",\n          \"key_311\": \"string\",\n          \"key_312\": \"string\",\n          \"key_313\": \"string\",\n          \"key_314\": \"string\",\n          \"key_315\": \"string\",\n          \"key_316\": \"string\",\n          \"key_317\": \"string\",\n          \"key_318\": \"string\",\n          \"key_319\": \"string\",\n          \"key_320\": \"string\",\n          \"key_321\": \"string\",\n          \"key_322\": \"string\",\n          \"key_323\": \"string\",\n          \"key_324\": \"string\",\n          \"key_325\": \"string\",\n          \"key_326\": \"string\",\n          \"key_327\": \"string\",\n          \"key_328\": \"string\",\n          \"key_329\": \"string\",\n          \"key_330\": \"string\",\n          \"key_331\": \"string\",\n          \"key_332\": \"string\",\n          \"key_333\": \"string\",\n          \"key_334\": \"string\",\n          \"key_335\": \"string\",\n          \"key_336\": \"string\",\n          \"key_337\": \"string\",\n          \"key_338\": \"string\",\n          \"key_339\": \"string\",\n          \"key_340\": \"string\",\n          \"key_341\": \"string\",\n          \"key_342\": \"string\",\n          \"key_343\": \"string\",\n          \"key_344\": \"string\",\n          \"key_345\": \"string\",\n          \"key_346\": \"string\",\n          \"key_347\": \"string\",\n          \"key_348\": \"string\",\n          \"key_349\": \"string\",\n          \"key_350\": \"string\",\n          \"key_351\": \"string\",\n          \"key_352\": \"string\",\n          \"key_353\": \"string\",\n          \"key_354\": \"string\",\n          \"key_355\": \"string\",\n          \"key_356\": \"string\",\n          \"key_357\": \"string\",\n          \"key_358\": \"string\",\n          \"key_359\": \"string\",\n          \"key_360\": \"string\",\n          \"key_361\": \"string\",\n          \"key_362\": \"string\",\n          \"key_363\": \"string\",\n          \"key_364\": \"string\",\n          \"key_365\": \"string\",\n          \"key_366\": \"string\",\n          \"key_367\": \"string\",\n          \"key_368\": \"string\",\n          \"key_369\": \"string\",\n          \"key_370\": \"string\",\n          \"key_371\": \"string\",\n          \"key_372\": \"string\",\n          \"key_373\": \"string\",\n          \"key_374\": \"string\",\n          \"key_375\": \"string\",\n          \"key_376\": \"string\",\n          \"key_377\": \"string\",\n          \"key_378\": \"string\",\n          \"key_379\": \"string\",\n          \"key_380\": \"string\",\n          \"key_381\": \"string\",\n          \"key_382\": \"string\",\n          \"key_383\": \"string\",\n          \"key_384\": \"string\",\n          \"key_385\": \"string\",\n          \"key_386\": \"string\",\n          \"key_387\": \"string\"\n        },\n        \"communityURL\": \"https://support.sumologic.com/hc/en-us/community/topics/200263058-Applications-and-Integrations\",\n        \"accountTypes\": [\n          \"free\"\n        ],\n        \"requiresInstallationInstructions\": false,\n        \"installationInstructions\": \"\",\n        \"parameters\": [\n          {\n            \"type\": \"string\",\n            \"description\": \"Example.\",\n            \"example\": \"\"\n          },\n          {\n            \"type\": \"string\",\n            \"description\": \"Example.\",\n            \"example\": \"\"\n          }\n        ],\n        \"author\": \"Sumo Logic\",\n        \"authorWebsite\": \"https://www.sumologic.com\"\n      }\n    },\n    {\n      \"appDefinition\": {\n        \"appVersion\": \"1.0\",\n        \"contentId\": \"00000000000011AE\",\n        \"name\": \"Sumo Config\",\n        \"uuid\": \"1c57fbc3-3141-4b12-aab3-5f40152bc3d9\",\n        \"preview\": true,\n        \"manifestVersion\": \"0.1\"\n      },\n      \"appManifest\": {\n        \"description\": \"A description for Sumo Logic Config App.\",\n        \"hoverText\": \"Sumo Config App\",\n        \"iconURL\": \"https://sumologic-app-data.sumologic.com/icons/sumoconfig.png\",\n        \"family\": \"IIS\",\n        \"categories\": [\n          \"Sumo Logic\",\n          \"Configuration\"\n        ],\n        \"screenshotURLs\": [\n          \"https://sumologic-app-data.sumologic.com/icons/sumoconfig/overview.png\",\n          \"https://sumologic-app-data.sumologic.com/screenshots/sumoconfig/details.png\"\n        ],\n        \"helpURL\": \"https://help.sumologic.com/\",\n        \"helpDocIdMap\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\",\n          \"key_4\": \"string\",\n          \"key_5\": \"string\",\n          \"key_6\": \"string\",\n          \"key_7\": \"string\",\n          \"key_8\": \"string\",\n          \"key_9\": \"string\",\n          \"key_10\": \"string\",\n          \"key_11\": \"string\",\n          \"key_12\": \"string\",\n          \"key_13\": \"string\",\n          \"key_14\": \"string\",\n          \"key_15\": \"string\",\n          \"key_16\": \"string\",\n          \"key_17\": \"string\",\n          \"key_18\": \"string\",\n          \"key_19\": \"string\",\n          \"key_20\": \"string\",\n          \"key_21\": \"string\",\n          \"key_22\": \"string\",\n          \"key_23\": \"string\",\n          \"key_24\": \"string\",\n          \"key_25\": \"string\",\n          \"key_26\": \"string\",\n          \"key_27\": \"string\",\n          \"key_28\": \"string\",\n          \"key_29\": \"string\",\n          \"key_30\": \"string\",\n          \"key_31\": \"string\",\n          \"key_32\": \"string\",\n          \"key_33\": \"string\",\n          \"key_34\": \"string\",\n          \"key_35\": \"string\",\n          \"key_36\": \"string\",\n          \"key_37\": \"string\",\n          \"key_38\": \"string\",\n          \"key_39\": \"string\",\n          \"key_40\": \"string\",\n          \"key_41\": \"string\",\n          \"key_42\": \"string\",\n          \"key_43\": \"string\",\n          \"key_44\": \"string\",\n          \"key_45\": \"string\",\n          \"key_46\": \"string\",\n          \"key_47\": \"string\",\n          \"key_48\": \"string\",\n          \"key_49\": \"string\"\n        },\n        \"communityURL\": \"https://support.sumologic.com/hc/en-us/community/topics/200263058-Applications-and-Integrations\",\n        \"accountTypes\": [\n          \"free\"\n        ],\n        \"requiresInstallationInstructions\": false,\n        \"installationInstructions\": \"\",\n        \"parameters\": [\n          {\n            \"type\": \"string\",\n            \"description\": \"Example.\",\n            \"example\": \"\"\n          },\n          {\n            \"type\": \"string\",\n            \"description\": \"Example.\",\n            \"example\": \"\"\n          }\n        ],\n        \"author\": \"Sumo Logic\",\n        \"authorWebsite\": \"https://www.sumologic.com\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec2d3eed-179c-454a-9f26-65eea086b861",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ce7caeb-dfdc-401f-bb57-95e0cdfc9604",
+          "name": "Get An App By UUID.",
+          "request": {
+            "name": "Get An App By UUID.",
+            "description": {
+              "content": "Gets the app with the given universally unique identifier (UUID).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "apps",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) The identifier of the app to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90586963-dcd4-4e17-9c4a-414e11704cb0",
+              "name": "The retrieved app.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) The identifier of the app to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appDefinition\": {\n    \"appVersion\": \"1.0\",\n    \"contentId\": \"00000000000011AE\",\n    \"name\": \"Sumo Config\",\n    \"uuid\": \"1c57fbc3-3141-4b12-aab3-5f40152bc3d9\",\n    \"preview\": true,\n    \"manifestVersion\": \"0.1\"\n  },\n  \"appManifest\": {\n    \"description\": \"A description for Sumo Logic Config App.\",\n    \"hoverText\": \"Sumo Config App\",\n    \"iconURL\": \"https://sumologic-app-data.sumologic.com/icons/sumoconfig.png\",\n    \"family\": \"IIS\",\n    \"categories\": [\n      \"Sumo Logic\",\n      \"Configuration\"\n    ],\n    \"screenshotURLs\": [\n      \"https://sumologic-app-data.sumologic.com/icons/sumoconfig/overview.png\",\n      \"https://sumologic-app-data.sumologic.com/screenshots/sumoconfig/details.png\"\n    ],\n    \"helpURL\": \"https://help.sumologic.com/\",\n    \"helpDocIdMap\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\",\n      \"key_4\": \"string\",\n      \"key_5\": \"string\",\n      \"key_6\": \"string\",\n      \"key_7\": \"string\",\n      \"key_8\": \"string\",\n      \"key_9\": \"string\",\n      \"key_10\": \"string\",\n      \"key_11\": \"string\",\n      \"key_12\": \"string\",\n      \"key_13\": \"string\",\n      \"key_14\": \"string\",\n      \"key_15\": \"string\",\n      \"key_16\": \"string\",\n      \"key_17\": \"string\",\n      \"key_18\": \"string\",\n      \"key_19\": \"string\",\n      \"key_20\": \"string\",\n      \"key_21\": \"string\",\n      \"key_22\": \"string\",\n      \"key_23\": \"string\",\n      \"key_24\": \"string\",\n      \"key_25\": \"string\",\n      \"key_26\": \"string\",\n      \"key_27\": \"string\",\n      \"key_28\": \"string\",\n      \"key_29\": \"string\",\n      \"key_30\": \"string\",\n      \"key_31\": \"string\",\n      \"key_32\": \"string\",\n      \"key_33\": \"string\",\n      \"key_34\": \"string\",\n      \"key_35\": \"string\",\n      \"key_36\": \"string\",\n      \"key_37\": \"string\",\n      \"key_38\": \"string\",\n      \"key_39\": \"string\",\n      \"key_40\": \"string\",\n      \"key_41\": \"string\",\n      \"key_42\": \"string\",\n      \"key_43\": \"string\",\n      \"key_44\": \"string\",\n      \"key_45\": \"string\",\n      \"key_46\": \"string\",\n      \"key_47\": \"string\",\n      \"key_48\": \"string\",\n      \"key_49\": \"string\",\n      \"key_50\": \"string\",\n      \"key_51\": \"string\",\n      \"key_52\": \"string\",\n      \"key_53\": \"string\",\n      \"key_54\": \"string\",\n      \"key_55\": \"string\",\n      \"key_56\": \"string\",\n      \"key_57\": \"string\",\n      \"key_58\": \"string\",\n      \"key_59\": \"string\",\n      \"key_60\": \"string\",\n      \"key_61\": \"string\",\n      \"key_62\": \"string\",\n      \"key_63\": \"string\",\n      \"key_64\": \"string\",\n      \"key_65\": \"string\",\n      \"key_66\": \"string\",\n      \"key_67\": \"string\",\n      \"key_68\": \"string\",\n      \"key_69\": \"string\",\n      \"key_70\": \"string\",\n      \"key_71\": \"string\",\n      \"key_72\": \"string\",\n      \"key_73\": \"string\",\n      \"key_74\": \"string\",\n      \"key_75\": \"string\",\n      \"key_76\": \"string\",\n      \"key_77\": \"string\",\n      \"key_78\": \"string\",\n      \"key_79\": \"string\",\n      \"key_80\": \"string\",\n      \"key_81\": \"string\",\n      \"key_82\": \"string\",\n      \"key_83\": \"string\",\n      \"key_84\": \"string\",\n      \"key_85\": \"string\",\n      \"key_86\": \"string\",\n      \"key_87\": \"string\",\n      \"key_88\": \"string\",\n      \"key_89\": \"string\",\n      \"key_90\": \"string\",\n      \"key_91\": \"string\",\n      \"key_92\": \"string\",\n      \"key_93\": \"string\",\n      \"key_94\": \"string\",\n      \"key_95\": \"string\",\n      \"key_96\": \"string\",\n      \"key_97\": \"string\",\n      \"key_98\": \"string\",\n      \"key_99\": \"string\",\n      \"key_100\": \"string\",\n      \"key_101\": \"string\",\n      \"key_102\": \"string\",\n      \"key_103\": \"string\",\n      \"key_104\": \"string\",\n      \"key_105\": \"string\",\n      \"key_106\": \"string\",\n      \"key_107\": \"string\",\n      \"key_108\": \"string\",\n      \"key_109\": \"string\",\n      \"key_110\": \"string\",\n      \"key_111\": \"string\",\n      \"key_112\": \"string\",\n      \"key_113\": \"string\",\n      \"key_114\": \"string\",\n      \"key_115\": \"string\",\n      \"key_116\": \"string\",\n      \"key_117\": \"string\",\n      \"key_118\": \"string\",\n      \"key_119\": \"string\",\n      \"key_120\": \"string\",\n      \"key_121\": \"string\",\n      \"key_122\": \"string\",\n      \"key_123\": \"string\",\n      \"key_124\": \"string\",\n      \"key_125\": \"string\",\n      \"key_126\": \"string\",\n      \"key_127\": \"string\",\n      \"key_128\": \"string\",\n      \"key_129\": \"string\",\n      \"key_130\": \"string\",\n      \"key_131\": \"string\",\n      \"key_132\": \"string\",\n      \"key_133\": \"string\",\n      \"key_134\": \"string\",\n      \"key_135\": \"string\",\n      \"key_136\": \"string\",\n      \"key_137\": \"string\",\n      \"key_138\": \"string\",\n      \"key_139\": \"string\",\n      \"key_140\": \"string\",\n      \"key_141\": \"string\",\n      \"key_142\": \"string\",\n      \"key_143\": \"string\",\n      \"key_144\": \"string\",\n      \"key_145\": \"string\",\n      \"key_146\": \"string\",\n      \"key_147\": \"string\",\n      \"key_148\": \"string\",\n      \"key_149\": \"string\",\n      \"key_150\": \"string\",\n      \"key_151\": \"string\",\n      \"key_152\": \"string\",\n      \"key_153\": \"string\",\n      \"key_154\": \"string\",\n      \"key_155\": \"string\",\n      \"key_156\": \"string\",\n      \"key_157\": \"string\",\n      \"key_158\": \"string\",\n      \"key_159\": \"string\",\n      \"key_160\": \"string\",\n      \"key_161\": \"string\",\n      \"key_162\": \"string\",\n      \"key_163\": \"string\",\n      \"key_164\": \"string\",\n      \"key_165\": \"string\",\n      \"key_166\": \"string\",\n      \"key_167\": \"string\",\n      \"key_168\": \"string\",\n      \"key_169\": \"string\",\n      \"key_170\": \"string\",\n      \"key_171\": \"string\",\n      \"key_172\": \"string\",\n      \"key_173\": \"string\",\n      \"key_174\": \"string\",\n      \"key_175\": \"string\",\n      \"key_176\": \"string\",\n      \"key_177\": \"string\",\n      \"key_178\": \"string\",\n      \"key_179\": \"string\",\n      \"key_180\": \"string\",\n      \"key_181\": \"string\",\n      \"key_182\": \"string\",\n      \"key_183\": \"string\",\n      \"key_184\": \"string\",\n      \"key_185\": \"string\",\n      \"key_186\": \"string\",\n      \"key_187\": \"string\",\n      \"key_188\": \"string\",\n      \"key_189\": \"string\",\n      \"key_190\": \"string\",\n      \"key_191\": \"string\",\n      \"key_192\": \"string\",\n      \"key_193\": \"string\",\n      \"key_194\": \"string\",\n      \"key_195\": \"string\",\n      \"key_196\": \"string\",\n      \"key_197\": \"string\",\n      \"key_198\": \"string\",\n      \"key_199\": \"string\",\n      \"key_200\": \"string\",\n      \"key_201\": \"string\",\n      \"key_202\": \"string\",\n      \"key_203\": \"string\",\n      \"key_204\": \"string\",\n      \"key_205\": \"string\",\n      \"key_206\": \"string\",\n      \"key_207\": \"string\",\n      \"key_208\": \"string\",\n      \"key_209\": \"string\",\n      \"key_210\": \"string\",\n      \"key_211\": \"string\",\n      \"key_212\": \"string\",\n      \"key_213\": \"string\",\n      \"key_214\": \"string\",\n      \"key_215\": \"string\",\n      \"key_216\": \"string\",\n      \"key_217\": \"string\",\n      \"key_218\": \"string\",\n      \"key_219\": \"string\",\n      \"key_220\": \"string\",\n      \"key_221\": \"string\",\n      \"key_222\": \"string\",\n      \"key_223\": \"string\",\n      \"key_224\": \"string\",\n      \"key_225\": \"string\",\n      \"key_226\": \"string\",\n      \"key_227\": \"string\",\n      \"key_228\": \"string\",\n      \"key_229\": \"string\",\n      \"key_230\": \"string\",\n      \"key_231\": \"string\",\n      \"key_232\": \"string\",\n      \"key_233\": \"string\",\n      \"key_234\": \"string\",\n      \"key_235\": \"string\",\n      \"key_236\": \"string\",\n      \"key_237\": \"string\",\n      \"key_238\": \"string\",\n      \"key_239\": \"string\",\n      \"key_240\": \"string\",\n      \"key_241\": \"string\",\n      \"key_242\": \"string\",\n      \"key_243\": \"string\",\n      \"key_244\": \"string\",\n      \"key_245\": \"string\",\n      \"key_246\": \"string\",\n      \"key_247\": \"string\",\n      \"key_248\": \"string\",\n      \"key_249\": \"string\",\n      \"key_250\": \"string\",\n      \"key_251\": \"string\",\n      \"key_252\": \"string\",\n      \"key_253\": \"string\",\n      \"key_254\": \"string\",\n      \"key_255\": \"string\",\n      \"key_256\": \"string\",\n      \"key_257\": \"string\",\n      \"key_258\": \"string\",\n      \"key_259\": \"string\",\n      \"key_260\": \"string\",\n      \"key_261\": \"string\",\n      \"key_262\": \"string\",\n      \"key_263\": \"string\",\n      \"key_264\": \"string\",\n      \"key_265\": \"string\",\n      \"key_266\": \"string\",\n      \"key_267\": \"string\",\n      \"key_268\": \"string\",\n      \"key_269\": \"string\",\n      \"key_270\": \"string\",\n      \"key_271\": \"string\",\n      \"key_272\": \"string\",\n      \"key_273\": \"string\",\n      \"key_274\": \"string\",\n      \"key_275\": \"string\",\n      \"key_276\": \"string\",\n      \"key_277\": \"string\",\n      \"key_278\": \"string\",\n      \"key_279\": \"string\",\n      \"key_280\": \"string\",\n      \"key_281\": \"string\",\n      \"key_282\": \"string\",\n      \"key_283\": \"string\",\n      \"key_284\": \"string\",\n      \"key_285\": \"string\",\n      \"key_286\": \"string\",\n      \"key_287\": \"string\",\n      \"key_288\": \"string\",\n      \"key_289\": \"string\",\n      \"key_290\": \"string\",\n      \"key_291\": \"string\",\n      \"key_292\": \"string\",\n      \"key_293\": \"string\",\n      \"key_294\": \"string\",\n      \"key_295\": \"string\",\n      \"key_296\": \"string\",\n      \"key_297\": \"string\",\n      \"key_298\": \"string\",\n      \"key_299\": \"string\",\n      \"key_300\": \"string\",\n      \"key_301\": \"string\",\n      \"key_302\": \"string\",\n      \"key_303\": \"string\",\n      \"key_304\": \"string\",\n      \"key_305\": \"string\",\n      \"key_306\": \"string\",\n      \"key_307\": \"string\",\n      \"key_308\": \"string\",\n      \"key_309\": \"string\",\n      \"key_310\": \"string\",\n      \"key_311\": \"string\",\n      \"key_312\": \"string\",\n      \"key_313\": \"string\",\n      \"key_314\": \"string\",\n      \"key_315\": \"string\",\n      \"key_316\": \"string\",\n      \"key_317\": \"string\",\n      \"key_318\": \"string\",\n      \"key_319\": \"string\",\n      \"key_320\": \"string\",\n      \"key_321\": \"string\",\n      \"key_322\": \"string\",\n      \"key_323\": \"string\",\n      \"key_324\": \"string\",\n      \"key_325\": \"string\",\n      \"key_326\": \"string\",\n      \"key_327\": \"string\",\n      \"key_328\": \"string\",\n      \"key_329\": \"string\",\n      \"key_330\": \"string\",\n      \"key_331\": \"string\",\n      \"key_332\": \"string\",\n      \"key_333\": \"string\",\n      \"key_334\": \"string\",\n      \"key_335\": \"string\",\n      \"key_336\": \"string\",\n      \"key_337\": \"string\",\n      \"key_338\": \"string\",\n      \"key_339\": \"string\",\n      \"key_340\": \"string\",\n      \"key_341\": \"string\",\n      \"key_342\": \"string\",\n      \"key_343\": \"string\",\n      \"key_344\": \"string\",\n      \"key_345\": \"string\",\n      \"key_346\": \"string\",\n      \"key_347\": \"string\",\n      \"key_348\": \"string\",\n      \"key_349\": \"string\",\n      \"key_350\": \"string\",\n      \"key_351\": \"string\",\n      \"key_352\": \"string\",\n      \"key_353\": \"string\",\n      \"key_354\": \"string\",\n      \"key_355\": \"string\",\n      \"key_356\": \"string\",\n      \"key_357\": \"string\",\n      \"key_358\": \"string\",\n      \"key_359\": \"string\",\n      \"key_360\": \"string\",\n      \"key_361\": \"string\",\n      \"key_362\": \"string\",\n      \"key_363\": \"string\",\n      \"key_364\": \"string\",\n      \"key_365\": \"string\",\n      \"key_366\": \"string\",\n      \"key_367\": \"string\",\n      \"key_368\": \"string\",\n      \"key_369\": \"string\",\n      \"key_370\": \"string\",\n      \"key_371\": \"string\",\n      \"key_372\": \"string\",\n      \"key_373\": \"string\",\n      \"key_374\": \"string\",\n      \"key_375\": \"string\",\n      \"key_376\": \"string\",\n      \"key_377\": \"string\",\n      \"key_378\": \"string\",\n      \"key_379\": \"string\",\n      \"key_380\": \"string\",\n      \"key_381\": \"string\",\n      \"key_382\": \"string\",\n      \"key_383\": \"string\",\n      \"key_384\": \"string\",\n      \"key_385\": \"string\",\n      \"key_386\": \"string\",\n      \"key_387\": \"string\",\n      \"key_388\": \"string\",\n      \"key_389\": \"string\",\n      \"key_390\": \"string\",\n      \"key_391\": \"string\",\n      \"key_392\": \"string\",\n      \"key_393\": \"string\",\n      \"key_394\": \"string\",\n      \"key_395\": \"string\",\n      \"key_396\": \"string\",\n      \"key_397\": \"string\",\n      \"key_398\": \"string\",\n      \"key_399\": \"string\",\n      \"key_400\": \"string\",\n      \"key_401\": \"string\",\n      \"key_402\": \"string\",\n      \"key_403\": \"string\",\n      \"key_404\": \"string\",\n      \"key_405\": \"string\",\n      \"key_406\": \"string\",\n      \"key_407\": \"string\",\n      \"key_408\": \"string\",\n      \"key_409\": \"string\",\n      \"key_410\": \"string\",\n      \"key_411\": \"string\",\n      \"key_412\": \"string\",\n      \"key_413\": \"string\",\n      \"key_414\": \"string\",\n      \"key_415\": \"string\",\n      \"key_416\": \"string\",\n      \"key_417\": \"string\",\n      \"key_418\": \"string\",\n      \"key_419\": \"string\",\n      \"key_420\": \"string\",\n      \"key_421\": \"string\",\n      \"key_422\": \"string\",\n      \"key_423\": \"string\",\n      \"key_424\": \"string\",\n      \"key_425\": \"string\",\n      \"key_426\": \"string\",\n      \"key_427\": \"string\",\n      \"key_428\": \"string\",\n      \"key_429\": \"string\",\n      \"key_430\": \"string\",\n      \"key_431\": \"string\",\n      \"key_432\": \"string\",\n      \"key_433\": \"string\",\n      \"key_434\": \"string\",\n      \"key_435\": \"string\",\n      \"key_436\": \"string\",\n      \"key_437\": \"string\",\n      \"key_438\": \"string\",\n      \"key_439\": \"string\",\n      \"key_440\": \"string\",\n      \"key_441\": \"string\",\n      \"key_442\": \"string\",\n      \"key_443\": \"string\",\n      \"key_444\": \"string\",\n      \"key_445\": \"string\",\n      \"key_446\": \"string\",\n      \"key_447\": \"string\",\n      \"key_448\": \"string\",\n      \"key_449\": \"string\",\n      \"key_450\": \"string\",\n      \"key_451\": \"string\",\n      \"key_452\": \"string\",\n      \"key_453\": \"string\",\n      \"key_454\": \"string\",\n      \"key_455\": \"string\",\n      \"key_456\": \"string\",\n      \"key_457\": \"string\",\n      \"key_458\": \"string\",\n      \"key_459\": \"string\",\n      \"key_460\": \"string\",\n      \"key_461\": \"string\",\n      \"key_462\": \"string\",\n      \"key_463\": \"string\",\n      \"key_464\": \"string\",\n      \"key_465\": \"string\",\n      \"key_466\": \"string\",\n      \"key_467\": \"string\",\n      \"key_468\": \"string\",\n      \"key_469\": \"string\",\n      \"key_470\": \"string\",\n      \"key_471\": \"string\",\n      \"key_472\": \"string\",\n      \"key_473\": \"string\",\n      \"key_474\": \"string\",\n      \"key_475\": \"string\",\n      \"key_476\": \"string\",\n      \"key_477\": \"string\",\n      \"key_478\": \"string\",\n      \"key_479\": \"string\",\n      \"key_480\": \"string\",\n      \"key_481\": \"string\",\n      \"key_482\": \"string\",\n      \"key_483\": \"string\",\n      \"key_484\": \"string\",\n      \"key_485\": \"string\",\n      \"key_486\": \"string\",\n      \"key_487\": \"string\",\n      \"key_488\": \"string\",\n      \"key_489\": \"string\",\n      \"key_490\": \"string\",\n      \"key_491\": \"string\",\n      \"key_492\": \"string\",\n      \"key_493\": \"string\",\n      \"key_494\": \"string\",\n      \"key_495\": \"string\",\n      \"key_496\": \"string\",\n      \"key_497\": \"string\",\n      \"key_498\": \"string\",\n      \"key_499\": \"string\",\n      \"key_500\": \"string\",\n      \"key_501\": \"string\",\n      \"key_502\": \"string\",\n      \"key_503\": \"string\",\n      \"key_504\": \"string\",\n      \"key_505\": \"string\",\n      \"key_506\": \"string\",\n      \"key_507\": \"string\",\n      \"key_508\": \"string\",\n      \"key_509\": \"string\",\n      \"key_510\": \"string\",\n      \"key_511\": \"string\",\n      \"key_512\": \"string\",\n      \"key_513\": \"string\",\n      \"key_514\": \"string\",\n      \"key_515\": \"string\",\n      \"key_516\": \"string\",\n      \"key_517\": \"string\",\n      \"key_518\": \"string\",\n      \"key_519\": \"string\",\n      \"key_520\": \"string\",\n      \"key_521\": \"string\",\n      \"key_522\": \"string\",\n      \"key_523\": \"string\",\n      \"key_524\": \"string\",\n      \"key_525\": \"string\",\n      \"key_526\": \"string\",\n      \"key_527\": \"string\",\n      \"key_528\": \"string\",\n      \"key_529\": \"string\",\n      \"key_530\": \"string\",\n      \"key_531\": \"string\",\n      \"key_532\": \"string\",\n      \"key_533\": \"string\",\n      \"key_534\": \"string\",\n      \"key_535\": \"string\",\n      \"key_536\": \"string\",\n      \"key_537\": \"string\",\n      \"key_538\": \"string\",\n      \"key_539\": \"string\",\n      \"key_540\": \"string\",\n      \"key_541\": \"string\",\n      \"key_542\": \"string\",\n      \"key_543\": \"string\",\n      \"key_544\": \"string\",\n      \"key_545\": \"string\",\n      \"key_546\": \"string\",\n      \"key_547\": \"string\",\n      \"key_548\": \"string\",\n      \"key_549\": \"string\",\n      \"key_550\": \"string\",\n      \"key_551\": \"string\",\n      \"key_552\": \"string\",\n      \"key_553\": \"string\",\n      \"key_554\": \"string\",\n      \"key_555\": \"string\",\n      \"key_556\": \"string\",\n      \"key_557\": \"string\",\n      \"key_558\": \"string\",\n      \"key_559\": \"string\",\n      \"key_560\": \"string\",\n      \"key_561\": \"string\",\n      \"key_562\": \"string\",\n      \"key_563\": \"string\",\n      \"key_564\": \"string\",\n      \"key_565\": \"string\",\n      \"key_566\": \"string\",\n      \"key_567\": \"string\",\n      \"key_568\": \"string\",\n      \"key_569\": \"string\",\n      \"key_570\": \"string\",\n      \"key_571\": \"string\",\n      \"key_572\": \"string\",\n      \"key_573\": \"string\",\n      \"key_574\": \"string\",\n      \"key_575\": \"string\",\n      \"key_576\": \"string\",\n      \"key_577\": \"string\",\n      \"key_578\": \"string\",\n      \"key_579\": \"string\",\n      \"key_580\": \"string\",\n      \"key_581\": \"string\",\n      \"key_582\": \"string\",\n      \"key_583\": \"string\",\n      \"key_584\": \"string\",\n      \"key_585\": \"string\",\n      \"key_586\": \"string\",\n      \"key_587\": \"string\",\n      \"key_588\": \"string\",\n      \"key_589\": \"string\",\n      \"key_590\": \"string\",\n      \"key_591\": \"string\",\n      \"key_592\": \"string\",\n      \"key_593\": \"string\",\n      \"key_594\": \"string\",\n      \"key_595\": \"string\",\n      \"key_596\": \"string\",\n      \"key_597\": \"string\",\n      \"key_598\": \"string\",\n      \"key_599\": \"string\",\n      \"key_600\": \"string\",\n      \"key_601\": \"string\",\n      \"key_602\": \"string\",\n      \"key_603\": \"string\",\n      \"key_604\": \"string\",\n      \"key_605\": \"string\",\n      \"key_606\": \"string\",\n      \"key_607\": \"string\",\n      \"key_608\": \"string\",\n      \"key_609\": \"string\",\n      \"key_610\": \"string\",\n      \"key_611\": \"string\",\n      \"key_612\": \"string\",\n      \"key_613\": \"string\",\n      \"key_614\": \"string\",\n      \"key_615\": \"string\",\n      \"key_616\": \"string\",\n      \"key_617\": \"string\",\n      \"key_618\": \"string\",\n      \"key_619\": \"string\",\n      \"key_620\": \"string\",\n      \"key_621\": \"string\",\n      \"key_622\": \"string\",\n      \"key_623\": \"string\",\n      \"key_624\": \"string\",\n      \"key_625\": \"string\",\n      \"key_626\": \"string\",\n      \"key_627\": \"string\",\n      \"key_628\": \"string\",\n      \"key_629\": \"string\",\n      \"key_630\": \"string\",\n      \"key_631\": \"string\",\n      \"key_632\": \"string\",\n      \"key_633\": \"string\",\n      \"key_634\": \"string\",\n      \"key_635\": \"string\",\n      \"key_636\": \"string\",\n      \"key_637\": \"string\",\n      \"key_638\": \"string\",\n      \"key_639\": \"string\",\n      \"key_640\": \"string\",\n      \"key_641\": \"string\",\n      \"key_642\": \"string\",\n      \"key_643\": \"string\",\n      \"key_644\": \"string\",\n      \"key_645\": \"string\",\n      \"key_646\": \"string\",\n      \"key_647\": \"string\",\n      \"key_648\": \"string\",\n      \"key_649\": \"string\",\n      \"key_650\": \"string\",\n      \"key_651\": \"string\",\n      \"key_652\": \"string\",\n      \"key_653\": \"string\",\n      \"key_654\": \"string\",\n      \"key_655\": \"string\",\n      \"key_656\": \"string\",\n      \"key_657\": \"string\",\n      \"key_658\": \"string\",\n      \"key_659\": \"string\",\n      \"key_660\": \"string\",\n      \"key_661\": \"string\",\n      \"key_662\": \"string\",\n      \"key_663\": \"string\",\n      \"key_664\": \"string\",\n      \"key_665\": \"string\",\n      \"key_666\": \"string\",\n      \"key_667\": \"string\",\n      \"key_668\": \"string\",\n      \"key_669\": \"string\",\n      \"key_670\": \"string\",\n      \"key_671\": \"string\",\n      \"key_672\": \"string\",\n      \"key_673\": \"string\",\n      \"key_674\": \"string\",\n      \"key_675\": \"string\",\n      \"key_676\": \"string\",\n      \"key_677\": \"string\",\n      \"key_678\": \"string\",\n      \"key_679\": \"string\",\n      \"key_680\": \"string\"\n    },\n    \"communityURL\": \"https://support.sumologic.com/hc/en-us/community/topics/200263058-Applications-and-Integrations\",\n    \"accountTypes\": [\n      \"free\"\n    ],\n    \"requiresInstallationInstructions\": false,\n    \"installationInstructions\": \"\",\n    \"parameters\": [\n      {\n        \"type\": \"string\",\n        \"description\": \"Example.\",\n        \"example\": \"\"\n      },\n      {\n        \"type\": \"string\",\n        \"description\": \"Example.\",\n        \"example\": \"\"\n      }\n    ],\n    \"author\": \"Sumo Logic\",\n    \"authorWebsite\": \"https://www.sumologic.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bfcafbd-ecab-4bbc-99fe-e0ed32bb9ce3",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) The identifier of the app to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a1a2c0a-875e-4762-b5df-53d0da7b533a",
+          "name": "Install An App By UUID.",
+          "request": {
+            "name": "Install An App By UUID.",
+            "description": {
+              "content": "Installs the app with given UUID in the folder specified using destinationFolderId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "apps",
+                ":uuid",
+                "install"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) UUID of the app to install."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"destinationFolderId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dataSourceValues\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\",\n    \"key_4\": \"<string>\",\n    \"key_5\": \"<string>\",\n    \"key_6\": \"<string>\",\n    \"key_7\": \"<string>\",\n    \"key_8\": \"<string>\",\n    \"key_9\": \"<string>\",\n    \"key_10\": \"<string>\",\n    \"key_11\": \"<string>\",\n    \"key_12\": \"<string>\",\n    \"key_13\": \"<string>\",\n    \"key_14\": \"<string>\",\n    \"key_15\": \"<string>\",\n    \"key_16\": \"<string>\",\n    \"key_17\": \"<string>\",\n    \"key_18\": \"<string>\",\n    \"key_19\": \"<string>\",\n    \"key_20\": \"<string>\",\n    \"key_21\": \"<string>\",\n    \"key_22\": \"<string>\",\n    \"key_23\": \"<string>\",\n    \"key_24\": \"<string>\",\n    \"key_25\": \"<string>\",\n    \"key_26\": \"<string>\",\n    \"key_27\": \"<string>\",\n    \"key_28\": \"<string>\",\n    \"key_29\": \"<string>\",\n    \"key_30\": \"<string>\",\n    \"key_31\": \"<string>\",\n    \"key_32\": \"<string>\",\n    \"key_33\": \"<string>\",\n    \"key_34\": \"<string>\",\n    \"key_35\": \"<string>\",\n    \"key_36\": \"<string>\",\n    \"key_37\": \"<string>\",\n    \"key_38\": \"<string>\",\n    \"key_39\": \"<string>\",\n    \"key_40\": \"<string>\",\n    \"key_41\": \"<string>\",\n    \"key_42\": \"<string>\",\n    \"key_43\": \"<string>\",\n    \"key_44\": \"<string>\",\n    \"key_45\": \"<string>\",\n    \"key_46\": \"<string>\",\n    \"key_47\": \"<string>\",\n    \"key_48\": \"<string>\",\n    \"key_49\": \"<string>\",\n    \"key_50\": \"<string>\",\n    \"key_51\": \"<string>\",\n    \"key_52\": \"<string>\",\n    \"key_53\": \"<string>\",\n    \"key_54\": \"<string>\",\n    \"key_55\": \"<string>\",\n    \"key_56\": \"<string>\",\n    \"key_57\": \"<string>\",\n    \"key_58\": \"<string>\",\n    \"key_59\": \"<string>\",\n    \"key_60\": \"<string>\",\n    \"key_61\": \"<string>\",\n    \"key_62\": \"<string>\",\n    \"key_63\": \"<string>\",\n    \"key_64\": \"<string>\",\n    \"key_65\": \"<string>\",\n    \"key_66\": \"<string>\",\n    \"key_67\": \"<string>\",\n    \"key_68\": \"<string>\",\n    \"key_69\": \"<string>\",\n    \"key_70\": \"<string>\",\n    \"key_71\": \"<string>\",\n    \"key_72\": \"<string>\",\n    \"key_73\": \"<string>\",\n    \"key_74\": \"<string>\",\n    \"key_75\": \"<string>\",\n    \"key_76\": \"<string>\",\n    \"key_77\": \"<string>\",\n    \"key_78\": \"<string>\",\n    \"key_79\": \"<string>\",\n    \"key_80\": \"<string>\",\n    \"key_81\": \"<string>\",\n    \"key_82\": \"<string>\",\n    \"key_83\": \"<string>\",\n    \"key_84\": \"<string>\",\n    \"key_85\": \"<string>\",\n    \"key_86\": \"<string>\",\n    \"key_87\": \"<string>\",\n    \"key_88\": \"<string>\",\n    \"key_89\": \"<string>\",\n    \"key_90\": \"<string>\",\n    \"key_91\": \"<string>\",\n    \"key_92\": \"<string>\",\n    \"key_93\": \"<string>\",\n    \"key_94\": \"<string>\",\n    \"key_95\": \"<string>\",\n    \"key_96\": \"<string>\",\n    \"key_97\": \"<string>\",\n    \"key_98\": \"<string>\",\n    \"key_99\": \"<string>\",\n    \"key_100\": \"<string>\",\n    \"key_101\": \"<string>\",\n    \"key_102\": \"<string>\",\n    \"key_103\": \"<string>\",\n    \"key_104\": \"<string>\",\n    \"key_105\": \"<string>\",\n    \"key_106\": \"<string>\",\n    \"key_107\": \"<string>\",\n    \"key_108\": \"<string>\",\n    \"key_109\": \"<string>\",\n    \"key_110\": \"<string>\",\n    \"key_111\": \"<string>\",\n    \"key_112\": \"<string>\",\n    \"key_113\": \"<string>\",\n    \"key_114\": \"<string>\",\n    \"key_115\": \"<string>\",\n    \"key_116\": \"<string>\",\n    \"key_117\": \"<string>\",\n    \"key_118\": \"<string>\",\n    \"key_119\": \"<string>\",\n    \"key_120\": \"<string>\",\n    \"key_121\": \"<string>\",\n    \"key_122\": \"<string>\",\n    \"key_123\": \"<string>\",\n    \"key_124\": \"<string>\",\n    \"key_125\": \"<string>\",\n    \"key_126\": \"<string>\",\n    \"key_127\": \"<string>\",\n    \"key_128\": \"<string>\",\n    \"key_129\": \"<string>\",\n    \"key_130\": \"<string>\",\n    \"key_131\": \"<string>\",\n    \"key_132\": \"<string>\",\n    \"key_133\": \"<string>\",\n    \"key_134\": \"<string>\",\n    \"key_135\": \"<string>\",\n    \"key_136\": \"<string>\",\n    \"key_137\": \"<string>\",\n    \"key_138\": \"<string>\",\n    \"key_139\": \"<string>\",\n    \"key_140\": \"<string>\",\n    \"key_141\": \"<string>\",\n    \"key_142\": \"<string>\",\n    \"key_143\": \"<string>\",\n    \"key_144\": \"<string>\",\n    \"key_145\": \"<string>\",\n    \"key_146\": \"<string>\",\n    \"key_147\": \"<string>\",\n    \"key_148\": \"<string>\",\n    \"key_149\": \"<string>\",\n    \"key_150\": \"<string>\",\n    \"key_151\": \"<string>\",\n    \"key_152\": \"<string>\",\n    \"key_153\": \"<string>\",\n    \"key_154\": \"<string>\",\n    \"key_155\": \"<string>\",\n    \"key_156\": \"<string>\",\n    \"key_157\": \"<string>\",\n    \"key_158\": \"<string>\",\n    \"key_159\": \"<string>\",\n    \"key_160\": \"<string>\",\n    \"key_161\": \"<string>\",\n    \"key_162\": \"<string>\",\n    \"key_163\": \"<string>\",\n    \"key_164\": \"<string>\",\n    \"key_165\": \"<string>\",\n    \"key_166\": \"<string>\",\n    \"key_167\": \"<string>\",\n    \"key_168\": \"<string>\",\n    \"key_169\": \"<string>\",\n    \"key_170\": \"<string>\",\n    \"key_171\": \"<string>\",\n    \"key_172\": \"<string>\",\n    \"key_173\": \"<string>\",\n    \"key_174\": \"<string>\",\n    \"key_175\": \"<string>\",\n    \"key_176\": \"<string>\",\n    \"key_177\": \"<string>\",\n    \"key_178\": \"<string>\",\n    \"key_179\": \"<string>\",\n    \"key_180\": \"<string>\",\n    \"key_181\": \"<string>\",\n    \"key_182\": \"<string>\",\n    \"key_183\": \"<string>\",\n    \"key_184\": \"<string>\",\n    \"key_185\": \"<string>\",\n    \"key_186\": \"<string>\",\n    \"key_187\": \"<string>\",\n    \"key_188\": \"<string>\",\n    \"key_189\": \"<string>\",\n    \"key_190\": \"<string>\",\n    \"key_191\": \"<string>\",\n    \"key_192\": \"<string>\",\n    \"key_193\": \"<string>\",\n    \"key_194\": \"<string>\",\n    \"key_195\": \"<string>\",\n    \"key_196\": \"<string>\",\n    \"key_197\": \"<string>\",\n    \"key_198\": \"<string>\",\n    \"key_199\": \"<string>\",\n    \"key_200\": \"<string>\",\n    \"key_201\": \"<string>\",\n    \"key_202\": \"<string>\",\n    \"key_203\": \"<string>\",\n    \"key_204\": \"<string>\",\n    \"key_205\": \"<string>\",\n    \"key_206\": \"<string>\",\n    \"key_207\": \"<string>\",\n    \"key_208\": \"<string>\",\n    \"key_209\": \"<string>\",\n    \"key_210\": \"<string>\",\n    \"key_211\": \"<string>\",\n    \"key_212\": \"<string>\",\n    \"key_213\": \"<string>\",\n    \"key_214\": \"<string>\",\n    \"key_215\": \"<string>\",\n    \"key_216\": \"<string>\",\n    \"key_217\": \"<string>\",\n    \"key_218\": \"<string>\",\n    \"key_219\": \"<string>\",\n    \"key_220\": \"<string>\",\n    \"key_221\": \"<string>\",\n    \"key_222\": \"<string>\",\n    \"key_223\": \"<string>\",\n    \"key_224\": \"<string>\",\n    \"key_225\": \"<string>\",\n    \"key_226\": \"<string>\",\n    \"key_227\": \"<string>\",\n    \"key_228\": \"<string>\",\n    \"key_229\": \"<string>\",\n    \"key_230\": \"<string>\",\n    \"key_231\": \"<string>\",\n    \"key_232\": \"<string>\",\n    \"key_233\": \"<string>\",\n    \"key_234\": \"<string>\",\n    \"key_235\": \"<string>\",\n    \"key_236\": \"<string>\",\n    \"key_237\": \"<string>\",\n    \"key_238\": \"<string>\",\n    \"key_239\": \"<string>\",\n    \"key_240\": \"<string>\",\n    \"key_241\": \"<string>\",\n    \"key_242\": \"<string>\",\n    \"key_243\": \"<string>\",\n    \"key_244\": \"<string>\",\n    \"key_245\": \"<string>\",\n    \"key_246\": \"<string>\",\n    \"key_247\": \"<string>\",\n    \"key_248\": \"<string>\",\n    \"key_249\": \"<string>\",\n    \"key_250\": \"<string>\",\n    \"key_251\": \"<string>\",\n    \"key_252\": \"<string>\",\n    \"key_253\": \"<string>\",\n    \"key_254\": \"<string>\",\n    \"key_255\": \"<string>\",\n    \"key_256\": \"<string>\",\n    \"key_257\": \"<string>\",\n    \"key_258\": \"<string>\",\n    \"key_259\": \"<string>\",\n    \"key_260\": \"<string>\",\n    \"key_261\": \"<string>\",\n    \"key_262\": \"<string>\",\n    \"key_263\": \"<string>\",\n    \"key_264\": \"<string>\",\n    \"key_265\": \"<string>\",\n    \"key_266\": \"<string>\",\n    \"key_267\": \"<string>\",\n    \"key_268\": \"<string>\",\n    \"key_269\": \"<string>\",\n    \"key_270\": \"<string>\",\n    \"key_271\": \"<string>\",\n    \"key_272\": \"<string>\",\n    \"key_273\": \"<string>\",\n    \"key_274\": \"<string>\",\n    \"key_275\": \"<string>\",\n    \"key_276\": \"<string>\",\n    \"key_277\": \"<string>\",\n    \"key_278\": \"<string>\",\n    \"key_279\": \"<string>\",\n    \"key_280\": \"<string>\",\n    \"key_281\": \"<string>\",\n    \"key_282\": \"<string>\",\n    \"key_283\": \"<string>\",\n    \"key_284\": \"<string>\",\n    \"key_285\": \"<string>\",\n    \"key_286\": \"<string>\",\n    \"key_287\": \"<string>\",\n    \"key_288\": \"<string>\",\n    \"key_289\": \"<string>\",\n    \"key_290\": \"<string>\",\n    \"key_291\": \"<string>\",\n    \"key_292\": \"<string>\",\n    \"key_293\": \"<string>\",\n    \"key_294\": \"<string>\",\n    \"key_295\": \"<string>\",\n    \"key_296\": \"<string>\",\n    \"key_297\": \"<string>\",\n    \"key_298\": \"<string>\",\n    \"key_299\": \"<string>\",\n    \"key_300\": \"<string>\",\n    \"key_301\": \"<string>\",\n    \"key_302\": \"<string>\",\n    \"key_303\": \"<string>\",\n    \"key_304\": \"<string>\",\n    \"key_305\": \"<string>\",\n    \"key_306\": \"<string>\",\n    \"key_307\": \"<string>\",\n    \"key_308\": \"<string>\",\n    \"key_309\": \"<string>\",\n    \"key_310\": \"<string>\",\n    \"key_311\": \"<string>\",\n    \"key_312\": \"<string>\",\n    \"key_313\": \"<string>\",\n    \"key_314\": \"<string>\",\n    \"key_315\": \"<string>\",\n    \"key_316\": \"<string>\",\n    \"key_317\": \"<string>\",\n    \"key_318\": \"<string>\",\n    \"key_319\": \"<string>\",\n    \"key_320\": \"<string>\",\n    \"key_321\": \"<string>\",\n    \"key_322\": \"<string>\",\n    \"key_323\": \"<string>\",\n    \"key_324\": \"<string>\",\n    \"key_325\": \"<string>\",\n    \"key_326\": \"<string>\",\n    \"key_327\": \"<string>\",\n    \"key_328\": \"<string>\",\n    \"key_329\": \"<string>\",\n    \"key_330\": \"<string>\",\n    \"key_331\": \"<string>\",\n    \"key_332\": \"<string>\",\n    \"key_333\": \"<string>\",\n    \"key_334\": \"<string>\",\n    \"key_335\": \"<string>\",\n    \"key_336\": \"<string>\",\n    \"key_337\": \"<string>\",\n    \"key_338\": \"<string>\",\n    \"key_339\": \"<string>\",\n    \"key_340\": \"<string>\",\n    \"key_341\": \"<string>\",\n    \"key_342\": \"<string>\",\n    \"key_343\": \"<string>\",\n    \"key_344\": \"<string>\",\n    \"key_345\": \"<string>\",\n    \"key_346\": \"<string>\",\n    \"key_347\": \"<string>\",\n    \"key_348\": \"<string>\",\n    \"key_349\": \"<string>\",\n    \"key_350\": \"<string>\",\n    \"key_351\": \"<string>\",\n    \"key_352\": \"<string>\",\n    \"key_353\": \"<string>\",\n    \"key_354\": \"<string>\",\n    \"key_355\": \"<string>\",\n    \"key_356\": \"<string>\",\n    \"key_357\": \"<string>\",\n    \"key_358\": \"<string>\",\n    \"key_359\": \"<string>\",\n    \"key_360\": \"<string>\",\n    \"key_361\": \"<string>\",\n    \"key_362\": \"<string>\",\n    \"key_363\": \"<string>\",\n    \"key_364\": \"<string>\",\n    \"key_365\": \"<string>\",\n    \"key_366\": \"<string>\",\n    \"key_367\": \"<string>\",\n    \"key_368\": \"<string>\",\n    \"key_369\": \"<string>\",\n    \"key_370\": \"<string>\",\n    \"key_371\": \"<string>\",\n    \"key_372\": \"<string>\",\n    \"key_373\": \"<string>\",\n    \"key_374\": \"<string>\",\n    \"key_375\": \"<string>\",\n    \"key_376\": \"<string>\",\n    \"key_377\": \"<string>\",\n    \"key_378\": \"<string>\",\n    \"key_379\": \"<string>\",\n    \"key_380\": \"<string>\",\n    \"key_381\": \"<string>\",\n    \"key_382\": \"<string>\",\n    \"key_383\": \"<string>\",\n    \"key_384\": \"<string>\",\n    \"key_385\": \"<string>\",\n    \"key_386\": \"<string>\",\n    \"key_387\": \"<string>\",\n    \"key_388\": \"<string>\",\n    \"key_389\": \"<string>\",\n    \"key_390\": \"<string>\",\n    \"key_391\": \"<string>\",\n    \"key_392\": \"<string>\",\n    \"key_393\": \"<string>\",\n    \"key_394\": \"<string>\",\n    \"key_395\": \"<string>\",\n    \"key_396\": \"<string>\",\n    \"key_397\": \"<string>\",\n    \"key_398\": \"<string>\",\n    \"key_399\": \"<string>\",\n    \"key_400\": \"<string>\",\n    \"key_401\": \"<string>\",\n    \"key_402\": \"<string>\",\n    \"key_403\": \"<string>\",\n    \"key_404\": \"<string>\",\n    \"key_405\": \"<string>\",\n    \"key_406\": \"<string>\",\n    \"key_407\": \"<string>\",\n    \"key_408\": \"<string>\",\n    \"key_409\": \"<string>\",\n    \"key_410\": \"<string>\",\n    \"key_411\": \"<string>\",\n    \"key_412\": \"<string>\",\n    \"key_413\": \"<string>\",\n    \"key_414\": \"<string>\",\n    \"key_415\": \"<string>\",\n    \"key_416\": \"<string>\",\n    \"key_417\": \"<string>\",\n    \"key_418\": \"<string>\",\n    \"key_419\": \"<string>\",\n    \"key_420\": \"<string>\",\n    \"key_421\": \"<string>\",\n    \"key_422\": \"<string>\",\n    \"key_423\": \"<string>\",\n    \"key_424\": \"<string>\",\n    \"key_425\": \"<string>\",\n    \"key_426\": \"<string>\",\n    \"key_427\": \"<string>\",\n    \"key_428\": \"<string>\",\n    \"key_429\": \"<string>\",\n    \"key_430\": \"<string>\",\n    \"key_431\": \"<string>\",\n    \"key_432\": \"<string>\",\n    \"key_433\": \"<string>\",\n    \"key_434\": \"<string>\",\n    \"key_435\": \"<string>\",\n    \"key_436\": \"<string>\",\n    \"key_437\": \"<string>\",\n    \"key_438\": \"<string>\",\n    \"key_439\": \"<string>\",\n    \"key_440\": \"<string>\",\n    \"key_441\": \"<string>\",\n    \"key_442\": \"<string>\",\n    \"key_443\": \"<string>\",\n    \"key_444\": \"<string>\",\n    \"key_445\": \"<string>\",\n    \"key_446\": \"<string>\",\n    \"key_447\": \"<string>\",\n    \"key_448\": \"<string>\",\n    \"key_449\": \"<string>\",\n    \"key_450\": \"<string>\",\n    \"key_451\": \"<string>\",\n    \"key_452\": \"<string>\",\n    \"key_453\": \"<string>\",\n    \"key_454\": \"<string>\",\n    \"key_455\": \"<string>\",\n    \"key_456\": \"<string>\",\n    \"key_457\": \"<string>\",\n    \"key_458\": \"<string>\",\n    \"key_459\": \"<string>\",\n    \"key_460\": \"<string>\",\n    \"key_461\": \"<string>\",\n    \"key_462\": \"<string>\",\n    \"key_463\": \"<string>\",\n    \"key_464\": \"<string>\",\n    \"key_465\": \"<string>\",\n    \"key_466\": \"<string>\",\n    \"key_467\": \"<string>\",\n    \"key_468\": \"<string>\",\n    \"key_469\": \"<string>\",\n    \"key_470\": \"<string>\",\n    \"key_471\": \"<string>\",\n    \"key_472\": \"<string>\",\n    \"key_473\": \"<string>\",\n    \"key_474\": \"<string>\",\n    \"key_475\": \"<string>\",\n    \"key_476\": \"<string>\",\n    \"key_477\": \"<string>\",\n    \"key_478\": \"<string>\",\n    \"key_479\": \"<string>\",\n    \"key_480\": \"<string>\",\n    \"key_481\": \"<string>\",\n    \"key_482\": \"<string>\",\n    \"key_483\": \"<string>\",\n    \"key_484\": \"<string>\",\n    \"key_485\": \"<string>\",\n    \"key_486\": \"<string>\",\n    \"key_487\": \"<string>\",\n    \"key_488\": \"<string>\",\n    \"key_489\": \"<string>\",\n    \"key_490\": \"<string>\",\n    \"key_491\": \"<string>\",\n    \"key_492\": \"<string>\",\n    \"key_493\": \"<string>\",\n    \"key_494\": \"<string>\",\n    \"key_495\": \"<string>\",\n    \"key_496\": \"<string>\",\n    \"key_497\": \"<string>\",\n    \"key_498\": \"<string>\",\n    \"key_499\": \"<string>\",\n    \"key_500\": \"<string>\",\n    \"key_501\": \"<string>\",\n    \"key_502\": \"<string>\",\n    \"key_503\": \"<string>\",\n    \"key_504\": \"<string>\",\n    \"key_505\": \"<string>\",\n    \"key_506\": \"<string>\",\n    \"key_507\": \"<string>\",\n    \"key_508\": \"<string>\",\n    \"key_509\": \"<string>\",\n    \"key_510\": \"<string>\",\n    \"key_511\": \"<string>\",\n    \"key_512\": \"<string>\",\n    \"key_513\": \"<string>\",\n    \"key_514\": \"<string>\",\n    \"key_515\": \"<string>\",\n    \"key_516\": \"<string>\",\n    \"key_517\": \"<string>\",\n    \"key_518\": \"<string>\",\n    \"key_519\": \"<string>\",\n    \"key_520\": \"<string>\",\n    \"key_521\": \"<string>\",\n    \"key_522\": \"<string>\",\n    \"key_523\": \"<string>\",\n    \"key_524\": \"<string>\",\n    \"key_525\": \"<string>\",\n    \"key_526\": \"<string>\",\n    \"key_527\": \"<string>\",\n    \"key_528\": \"<string>\",\n    \"key_529\": \"<string>\",\n    \"key_530\": \"<string>\",\n    \"key_531\": \"<string>\",\n    \"key_532\": \"<string>\",\n    \"key_533\": \"<string>\",\n    \"key_534\": \"<string>\",\n    \"key_535\": \"<string>\",\n    \"key_536\": \"<string>\",\n    \"key_537\": \"<string>\",\n    \"key_538\": \"<string>\",\n    \"key_539\": \"<string>\",\n    \"key_540\": \"<string>\",\n    \"key_541\": \"<string>\",\n    \"key_542\": \"<string>\",\n    \"key_543\": \"<string>\",\n    \"key_544\": \"<string>\",\n    \"key_545\": \"<string>\",\n    \"key_546\": \"<string>\",\n    \"key_547\": \"<string>\",\n    \"key_548\": \"<string>\",\n    \"key_549\": \"<string>\",\n    \"key_550\": \"<string>\",\n    \"key_551\": \"<string>\",\n    \"key_552\": \"<string>\",\n    \"key_553\": \"<string>\",\n    \"key_554\": \"<string>\",\n    \"key_555\": \"<string>\",\n    \"key_556\": \"<string>\",\n    \"key_557\": \"<string>\",\n    \"key_558\": \"<string>\",\n    \"key_559\": \"<string>\",\n    \"key_560\": \"<string>\",\n    \"key_561\": \"<string>\",\n    \"key_562\": \"<string>\",\n    \"key_563\": \"<string>\",\n    \"key_564\": \"<string>\",\n    \"key_565\": \"<string>\",\n    \"key_566\": \"<string>\",\n    \"key_567\": \"<string>\",\n    \"key_568\": \"<string>\",\n    \"key_569\": \"<string>\",\n    \"key_570\": \"<string>\",\n    \"key_571\": \"<string>\",\n    \"key_572\": \"<string>\",\n    \"key_573\": \"<string>\",\n    \"key_574\": \"<string>\",\n    \"key_575\": \"<string>\",\n    \"key_576\": \"<string>\",\n    \"key_577\": \"<string>\",\n    \"key_578\": \"<string>\",\n    \"key_579\": \"<string>\",\n    \"key_580\": \"<string>\",\n    \"key_581\": \"<string>\",\n    \"key_582\": \"<string>\",\n    \"key_583\": \"<string>\",\n    \"key_584\": \"<string>\",\n    \"key_585\": \"<string>\",\n    \"key_586\": \"<string>\",\n    \"key_587\": \"<string>\",\n    \"key_588\": \"<string>\",\n    \"key_589\": \"<string>\",\n    \"key_590\": \"<string>\",\n    \"key_591\": \"<string>\",\n    \"key_592\": \"<string>\",\n    \"key_593\": \"<string>\",\n    \"key_594\": \"<string>\",\n    \"key_595\": \"<string>\",\n    \"key_596\": \"<string>\",\n    \"key_597\": \"<string>\",\n    \"key_598\": \"<string>\",\n    \"key_599\": \"<string>\",\n    \"key_600\": \"<string>\",\n    \"key_601\": \"<string>\",\n    \"key_602\": \"<string>\",\n    \"key_603\": \"<string>\",\n    \"key_604\": \"<string>\",\n    \"key_605\": \"<string>\",\n    \"key_606\": \"<string>\",\n    \"key_607\": \"<string>\",\n    \"key_608\": \"<string>\",\n    \"key_609\": \"<string>\",\n    \"key_610\": \"<string>\",\n    \"key_611\": \"<string>\",\n    \"key_612\": \"<string>\",\n    \"key_613\": \"<string>\",\n    \"key_614\": \"<string>\",\n    \"key_615\": \"<string>\",\n    \"key_616\": \"<string>\",\n    \"key_617\": \"<string>\",\n    \"key_618\": \"<string>\",\n    \"key_619\": \"<string>\",\n    \"key_620\": \"<string>\",\n    \"key_621\": \"<string>\",\n    \"key_622\": \"<string>\",\n    \"key_623\": \"<string>\",\n    \"key_624\": \"<string>\",\n    \"key_625\": \"<string>\",\n    \"key_626\": \"<string>\",\n    \"key_627\": \"<string>\",\n    \"key_628\": \"<string>\",\n    \"key_629\": \"<string>\",\n    \"key_630\": \"<string>\",\n    \"key_631\": \"<string>\",\n    \"key_632\": \"<string>\",\n    \"key_633\": \"<string>\",\n    \"key_634\": \"<string>\",\n    \"key_635\": \"<string>\",\n    \"key_636\": \"<string>\",\n    \"key_637\": \"<string>\",\n    \"key_638\": \"<string>\",\n    \"key_639\": \"<string>\",\n    \"key_640\": \"<string>\",\n    \"key_641\": \"<string>\",\n    \"key_642\": \"<string>\",\n    \"key_643\": \"<string>\",\n    \"key_644\": \"<string>\",\n    \"key_645\": \"<string>\",\n    \"key_646\": \"<string>\",\n    \"key_647\": \"<string>\",\n    \"key_648\": \"<string>\",\n    \"key_649\": \"<string>\",\n    \"key_650\": \"<string>\",\n    \"key_651\": \"<string>\",\n    \"key_652\": \"<string>\",\n    \"key_653\": \"<string>\",\n    \"key_654\": \"<string>\",\n    \"key_655\": \"<string>\",\n    \"key_656\": \"<string>\",\n    \"key_657\": \"<string>\",\n    \"key_658\": \"<string>\",\n    \"key_659\": \"<string>\",\n    \"key_660\": \"<string>\",\n    \"key_661\": \"<string>\",\n    \"key_662\": \"<string>\",\n    \"key_663\": \"<string>\",\n    \"key_664\": \"<string>\",\n    \"key_665\": \"<string>\",\n    \"key_666\": \"<string>\",\n    \"key_667\": \"<string>\",\n    \"key_668\": \"<string>\",\n    \"key_669\": \"<string>\",\n    \"key_670\": \"<string>\",\n    \"key_671\": \"<string>\",\n    \"key_672\": \"<string>\",\n    \"key_673\": \"<string>\",\n    \"key_674\": \"<string>\",\n    \"key_675\": \"<string>\",\n    \"key_676\": \"<string>\",\n    \"key_677\": \"<string>\",\n    \"key_678\": \"<string>\",\n    \"key_679\": \"<string>\",\n    \"key_680\": \"<string>\",\n    \"key_681\": \"<string>\",\n    \"key_682\": \"<string>\",\n    \"key_683\": \"<string>\",\n    \"key_684\": \"<string>\",\n    \"key_685\": \"<string>\",\n    \"key_686\": \"<string>\",\n    \"key_687\": \"<string>\",\n    \"key_688\": \"<string>\",\n    \"key_689\": \"<string>\",\n    \"key_690\": \"<string>\",\n    \"key_691\": \"<string>\",\n    \"key_692\": \"<string>\",\n    \"key_693\": \"<string>\",\n    \"key_694\": \"<string>\",\n    \"key_695\": \"<string>\",\n    \"key_696\": \"<string>\",\n    \"key_697\": \"<string>\",\n    \"key_698\": \"<string>\",\n    \"key_699\": \"<string>\",\n    \"key_700\": \"<string>\",\n    \"key_701\": \"<string>\",\n    \"key_702\": \"<string>\",\n    \"key_703\": \"<string>\",\n    \"key_704\": \"<string>\",\n    \"key_705\": \"<string>\",\n    \"key_706\": \"<string>\",\n    \"key_707\": \"<string>\",\n    \"key_708\": \"<string>\",\n    \"key_709\": \"<string>\",\n    \"key_710\": \"<string>\",\n    \"key_711\": \"<string>\",\n    \"key_712\": \"<string>\",\n    \"key_713\": \"<string>\",\n    \"key_714\": \"<string>\",\n    \"key_715\": \"<string>\",\n    \"key_716\": \"<string>\",\n    \"key_717\": \"<string>\",\n    \"key_718\": \"<string>\",\n    \"key_719\": \"<string>\",\n    \"key_720\": \"<string>\",\n    \"key_721\": \"<string>\",\n    \"key_722\": \"<string>\",\n    \"key_723\": \"<string>\",\n    \"key_724\": \"<string>\",\n    \"key_725\": \"<string>\",\n    \"key_726\": \"<string>\",\n    \"key_727\": \"<string>\",\n    \"key_728\": \"<string>\",\n    \"key_729\": \"<string>\",\n    \"key_730\": \"<string>\",\n    \"key_731\": \"<string>\",\n    \"key_732\": \"<string>\",\n    \"key_733\": \"<string>\",\n    \"key_734\": \"<string>\",\n    \"key_735\": \"<string>\",\n    \"key_736\": \"<string>\",\n    \"key_737\": \"<string>\",\n    \"key_738\": \"<string>\",\n    \"key_739\": \"<string>\",\n    \"key_740\": \"<string>\",\n    \"key_741\": \"<string>\",\n    \"key_742\": \"<string>\",\n    \"key_743\": \"<string>\",\n    \"key_744\": \"<string>\",\n    \"key_745\": \"<string>\",\n    \"key_746\": \"<string>\",\n    \"key_747\": \"<string>\",\n    \"key_748\": \"<string>\",\n    \"key_749\": \"<string>\",\n    \"key_750\": \"<string>\",\n    \"key_751\": \"<string>\",\n    \"key_752\": \"<string>\",\n    \"key_753\": \"<string>\",\n    \"key_754\": \"<string>\",\n    \"key_755\": \"<string>\",\n    \"key_756\": \"<string>\",\n    \"key_757\": \"<string>\",\n    \"key_758\": \"<string>\",\n    \"key_759\": \"<string>\",\n    \"key_760\": \"<string>\",\n    \"key_761\": \"<string>\",\n    \"key_762\": \"<string>\",\n    \"key_763\": \"<string>\",\n    \"key_764\": \"<string>\",\n    \"key_765\": \"<string>\",\n    \"key_766\": \"<string>\",\n    \"key_767\": \"<string>\",\n    \"key_768\": \"<string>\",\n    \"key_769\": \"<string>\",\n    \"key_770\": \"<string>\",\n    \"key_771\": \"<string>\",\n    \"key_772\": \"<string>\",\n    \"key_773\": \"<string>\",\n    \"key_774\": \"<string>\",\n    \"key_775\": \"<string>\",\n    \"key_776\": \"<string>\",\n    \"key_777\": \"<string>\",\n    \"key_778\": \"<string>\",\n    \"key_779\": \"<string>\",\n    \"key_780\": \"<string>\",\n    \"key_781\": \"<string>\",\n    \"key_782\": \"<string>\",\n    \"key_783\": \"<string>\",\n    \"key_784\": \"<string>\",\n    \"key_785\": \"<string>\",\n    \"key_786\": \"<string>\",\n    \"key_787\": \"<string>\",\n    \"key_788\": \"<string>\",\n    \"key_789\": \"<string>\",\n    \"key_790\": \"<string>\",\n    \"key_791\": \"<string>\",\n    \"key_792\": \"<string>\",\n    \"key_793\": \"<string>\",\n    \"key_794\": \"<string>\",\n    \"key_795\": \"<string>\",\n    \"key_796\": \"<string>\",\n    \"key_797\": \"<string>\",\n    \"key_798\": \"<string>\",\n    \"key_799\": \"<string>\",\n    \"key_800\": \"<string>\",\n    \"key_801\": \"<string>\",\n    \"key_802\": \"<string>\",\n    \"key_803\": \"<string>\",\n    \"key_804\": \"<string>\",\n    \"key_805\": \"<string>\",\n    \"key_806\": \"<string>\",\n    \"key_807\": \"<string>\",\n    \"key_808\": \"<string>\",\n    \"key_809\": \"<string>\",\n    \"key_810\": \"<string>\",\n    \"key_811\": \"<string>\",\n    \"key_812\": \"<string>\",\n    \"key_813\": \"<string>\",\n    \"key_814\": \"<string>\",\n    \"key_815\": \"<string>\",\n    \"key_816\": \"<string>\",\n    \"key_817\": \"<string>\",\n    \"key_818\": \"<string>\",\n    \"key_819\": \"<string>\",\n    \"key_820\": \"<string>\",\n    \"key_821\": \"<string>\",\n    \"key_822\": \"<string>\",\n    \"key_823\": \"<string>\",\n    \"key_824\": \"<string>\",\n    \"key_825\": \"<string>\",\n    \"key_826\": \"<string>\",\n    \"key_827\": \"<string>\",\n    \"key_828\": \"<string>\",\n    \"key_829\": \"<string>\",\n    \"key_830\": \"<string>\",\n    \"key_831\": \"<string>\",\n    \"key_832\": \"<string>\",\n    \"key_833\": \"<string>\",\n    \"key_834\": \"<string>\",\n    \"key_835\": \"<string>\",\n    \"key_836\": \"<string>\",\n    \"key_837\": \"<string>\",\n    \"key_838\": \"<string>\",\n    \"key_839\": \"<string>\",\n    \"key_840\": \"<string>\",\n    \"key_841\": \"<string>\",\n    \"key_842\": \"<string>\",\n    \"key_843\": \"<string>\",\n    \"key_844\": \"<string>\",\n    \"key_845\": \"<string>\",\n    \"key_846\": \"<string>\",\n    \"key_847\": \"<string>\",\n    \"key_848\": \"<string>\",\n    \"key_849\": \"<string>\",\n    \"key_850\": \"<string>\",\n    \"key_851\": \"<string>\",\n    \"key_852\": \"<string>\",\n    \"key_853\": \"<string>\",\n    \"key_854\": \"<string>\",\n    \"key_855\": \"<string>\",\n    \"key_856\": \"<string>\",\n    \"key_857\": \"<string>\",\n    \"key_858\": \"<string>\",\n    \"key_859\": \"<string>\",\n    \"key_860\": \"<string>\",\n    \"key_861\": \"<string>\",\n    \"key_862\": \"<string>\",\n    \"key_863\": \"<string>\",\n    \"key_864\": \"<string>\",\n    \"key_865\": \"<string>\",\n    \"key_866\": \"<string>\",\n    \"key_867\": \"<string>\",\n    \"key_868\": \"<string>\",\n    \"key_869\": \"<string>\",\n    \"key_870\": \"<string>\",\n    \"key_871\": \"<string>\",\n    \"key_872\": \"<string>\",\n    \"key_873\": \"<string>\",\n    \"key_874\": \"<string>\",\n    \"key_875\": \"<string>\",\n    \"key_876\": \"<string>\",\n    \"key_877\": \"<string>\",\n    \"key_878\": \"<string>\",\n    \"key_879\": \"<string>\",\n    \"key_880\": \"<string>\",\n    \"key_881\": \"<string>\",\n    \"key_882\": \"<string>\",\n    \"key_883\": \"<string>\",\n    \"key_884\": \"<string>\",\n    \"key_885\": \"<string>\",\n    \"key_886\": \"<string>\",\n    \"key_887\": \"<string>\",\n    \"key_888\": \"<string>\",\n    \"key_889\": \"<string>\",\n    \"key_890\": \"<string>\",\n    \"key_891\": \"<string>\",\n    \"key_892\": \"<string>\",\n    \"key_893\": \"<string>\",\n    \"key_894\": \"<string>\",\n    \"key_895\": \"<string>\",\n    \"key_896\": \"<string>\",\n    \"key_897\": \"<string>\",\n    \"key_898\": \"<string>\",\n    \"key_899\": \"<string>\",\n    \"key_900\": \"<string>\",\n    \"key_901\": \"<string>\",\n    \"key_902\": \"<string>\",\n    \"key_903\": \"<string>\",\n    \"key_904\": \"<string>\",\n    \"key_905\": \"<string>\",\n    \"key_906\": \"<string>\",\n    \"key_907\": \"<string>\",\n    \"key_908\": \"<string>\",\n    \"key_909\": \"<string>\",\n    \"key_910\": \"<string>\",\n    \"key_911\": \"<string>\",\n    \"key_912\": \"<string>\",\n    \"key_913\": \"<string>\",\n    \"key_914\": \"<string>\",\n    \"key_915\": \"<string>\",\n    \"key_916\": \"<string>\",\n    \"key_917\": \"<string>\",\n    \"key_918\": \"<string>\",\n    \"key_919\": \"<string>\",\n    \"key_920\": \"<string>\",\n    \"key_921\": \"<string>\",\n    \"key_922\": \"<string>\",\n    \"key_923\": \"<string>\",\n    \"key_924\": \"<string>\",\n    \"key_925\": \"<string>\",\n    \"key_926\": \"<string>\",\n    \"key_927\": \"<string>\",\n    \"key_928\": \"<string>\",\n    \"key_929\": \"<string>\",\n    \"key_930\": \"<string>\",\n    \"key_931\": \"<string>\",\n    \"key_932\": \"<string>\",\n    \"key_933\": \"<string>\",\n    \"key_934\": \"<string>\",\n    \"key_935\": \"<string>\",\n    \"key_936\": \"<string>\",\n    \"key_937\": \"<string>\",\n    \"key_938\": \"<string>\",\n    \"key_939\": \"<string>\",\n    \"key_940\": \"<string>\",\n    \"key_941\": \"<string>\",\n    \"key_942\": \"<string>\",\n    \"key_943\": \"<string>\",\n    \"key_944\": \"<string>\",\n    \"key_945\": \"<string>\",\n    \"key_946\": \"<string>\",\n    \"key_947\": \"<string>\",\n    \"key_948\": \"<string>\",\n    \"key_949\": \"<string>\",\n    \"key_950\": \"<string>\",\n    \"key_951\": \"<string>\",\n    \"key_952\": \"<string>\",\n    \"key_953\": \"<string>\",\n    \"key_954\": \"<string>\",\n    \"key_955\": \"<string>\",\n    \"key_956\": \"<string>\",\n    \"key_957\": \"<string>\",\n    \"key_958\": \"<string>\",\n    \"key_959\": \"<string>\",\n    \"key_960\": \"<string>\",\n    \"key_961\": \"<string>\",\n    \"key_962\": \"<string>\",\n    \"key_963\": \"<string>\",\n    \"key_964\": \"<string>\",\n    \"key_965\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7007aba2-c311-48c9-aefb-d35fc3887bf7",
+              "name": "App install job has been scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    ":uuid",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) UUID of the app to install."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Sumo Logic Configuration App to configure collectors and data sources\",\n  \"destinationFolderId\": \"00000000000001C8\",\n  \"name\": \"Sumo Logic Configuration App\",\n  \"dataSourceValues\": {\n    \"logsrc\": \"_sourceCategory = api\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"C03E086C137F38B4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf6af6c2-7049-43f4-918e-f7d70b5bf46d",
+              "name": "App installation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    ":uuid",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) UUID of the app to install."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Sumo Logic Configuration App to configure collectors and data sources\",\n  \"destinationFolderId\": \"00000000000001C8\",\n  \"name\": \"Sumo Logic Configuration App\",\n  \"dataSourceValues\": {\n    \"logsrc\": \"_sourceCategory = api\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ebd4fcb-75da-47c8-be47-f9c31f1ea934",
+          "name": "App Install Job Status.",
+          "request": {
+            "name": "App Install Job Status.",
+            "description": {
+              "content": "Get the status of an asynchronous app install request for the given job identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "apps",
+                "install",
+                ":jobId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the asynchronous install job."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0794b26-ee5d-48dd-a22e-661c9a676e48",
+              "name": "The status of the app install job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    "install",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous install job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"Success\",\n  \"statusMessage\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be006da8-e892-4593-a973-5d4a6e2bc3db",
+              "name": "App installation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "apps",
+                    "install",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous install job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.au.sumologic.com/api/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4abd6488-428a-4db1-b343-6d79bed5f38d",
+    "name": "Sumo Logic accessKeyManagement appManagement API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n",
+      "type": "text/plain"
+    }
+  }
+}

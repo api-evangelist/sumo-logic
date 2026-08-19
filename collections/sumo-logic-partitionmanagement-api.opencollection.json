@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement partitionManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "partitionManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Partitions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/partitions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of partitions returned in the response. The number of partitions returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "viewTypes",
+                "value": "AuditIndex,Partition",
+                "type": "query",
+                "description": "The type of partitions to retrieve. Valid values are:\n  1. `DefaultView`: To get General Index partition.\n  2. `Partition`: To get user defined views/partitions.\n  3. `AuditIndex`: To get the internal audit indexes. Eg. sumologic_audit_events.\n\nMore than one type of partitions can be retrieved in same request."
+              }
+            ]
+          },
+          "docs": "Get a list of all partitions in the organization. The response is paginated with a default limit of 100 partitions per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Partition.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/partitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new partition."
+        },
+        {
+          "info": {
+            "name": "Get A Partition.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/partitions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of partition to return."
+              }
+            ]
+          },
+          "docs": "Get a partition with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Update A Partition.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/partitions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the partition to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing partition in the organization."
+        },
+        {
+          "info": {
+            "name": "Decommission A Partition.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/partitions/:id/decommission",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the partition to decommission."
+              }
+            ]
+          },
+          "docs": "Decommission a partition with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Cancel A Retention Update For A Partition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/partitions/:id/cancelRetentionUpdate",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the partition to cancel the retention update for."
+              }
+            ]
+          },
+          "docs": "Cancel update to retention of a partition for which retention was updated previously using `reduceRetentionPeriodImmediately` parameter as false"
+        },
+        {
+          "info": {
+            "name": "Provides Information About Partitions Quota.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/partitions/quota"
+          },
+          "docs": "Every customer can use a limited number of partitions. This endpoint allows learning about these limitations and remaining quota."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

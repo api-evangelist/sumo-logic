@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement extractionRuleManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "extractionRuleManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Field Extraction Rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/extractionRules",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of field extraction rules returned in the response. The number of field extraction rules returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get a list of all field extraction rules. The response is paginated with a default limit of 100 field extraction rules per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Field Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/extractionRules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new field extraction rule."
+        },
+        {
+          "info": {
+            "name": "Get A Field Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/extractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of field extraction rule to return."
+              }
+            ]
+          },
+          "docs": "Get a field extraction rule with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update A Field Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/extractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the field extraction rule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing field extraction rule. All properties specified in the request are replaced. Missing properties are set to their default values."
+        },
+        {
+          "info": {
+            "name": "Delete A Field Extraction Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/extractionRules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the field extraction rule to delete."
+              }
+            ]
+          },
+          "docs": "Delete a field extraction rule with the given identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

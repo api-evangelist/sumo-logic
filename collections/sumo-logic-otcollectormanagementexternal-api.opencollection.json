@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement otCollectorManagementExternal API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "otCollectorManagementExternal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Paginated List Of OT Collectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given different filter, search and sort conditions, get list of otCollectors."
+        },
+        {
+          "info": {
+            "name": "Get OT Collector By ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the OT Collector to get."
+              }
+            ]
+          },
+          "docs": "Get OT Collector by ID."
+        },
+        {
+          "info": {
+            "name": "Delete An OT Collector.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the OT Collector to delete."
+              }
+            ]
+          },
+          "docs": "Delete an OT Collector with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Get A Count Of OT Collectors.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors/totalCount"
+          },
+          "docs": "Get total count of OT Collectors for a customer."
+        },
+        {
+          "info": {
+            "name": "Get OT Collectors By Name.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors/otCollectorsByName",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "A required parameter that accepts a list of names for which we need to collect all metadata."
+              }
+            ]
+          },
+          "docs": "provided list of names, get all OT Collectors with metadata."
+        },
+        {
+          "info": {
+            "name": "Delete All Offline OT Collectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/otCollectors/offline"
+          },
+          "docs": "Delete all offline OT Collectors for a given customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

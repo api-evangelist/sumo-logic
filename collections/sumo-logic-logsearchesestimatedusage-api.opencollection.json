@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement logSearchesEstimatedUsage API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "logSearchesEstimatedUsage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gets Estimated Usage Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/estimatedUsage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets the estimated volume of data that would be scanned for a given log search in the Infrequent data tier.\n"
+        },
+        {
+          "info": {
+            "name": "Gets Tier Wise Estimated Usage Details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/estimatedUsageByTier",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets the estimated volume of data that would be scanned for a given log search per data tier.\n"
+        },
+        {
+          "info": {
+            "name": "Gets Estimated Usage Details Per Metering Type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/estimatedUsageByMeteringType",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets the estimated volume of data, per metering type,  that would be scanned for running a given log search for a given timerange.\n"
+        },
+        {
+          "info": {
+            "name": "Gets Estimated Usage Details Per View.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/estimatedUsageByView",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets the estimated volume of data, per view,  that would be scanned for running a given log search for a given timerange.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

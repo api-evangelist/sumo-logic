@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement ingestBudgetManagementV2 API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ingestBudgetManagementV2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Ingest Budgets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of budgets returned in the response. The number of budgets returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results."
+              }
+            ]
+          },
+          "docs": "Get a list of all ingest budgets. The response is paginated with a default limit of 100 budgets per page."
+        },
+        {
+          "info": {
+            "name": "Create A New Ingest Budget.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new ingest budget."
+        },
+        {
+          "info": {
+            "name": "Get An Ingest Budget.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of ingest budget to return."
+              }
+            ]
+          },
+          "docs": "Get an ingest budget by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update An Ingest Budget.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the ingest budget to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing ingest budget. All properties specified in the request are required."
+        },
+        {
+          "info": {
+            "name": "Delete An Ingest Budget.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the ingest budget to delete."
+              }
+            ]
+          },
+          "docs": "Delete an ingest budget with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Reset Usage.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/ingestBudgets/:id/usage/reset",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the ingest budget to reset usage."
+              }
+            ]
+          },
+          "docs": "Reset ingest budget's current usage to 0 before the scheduled reset time. This is only applicable to `dailyVolume` budgetType."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

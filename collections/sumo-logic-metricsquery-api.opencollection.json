@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement metricsQuery API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metricsQuery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Metrics Queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/metricsQueries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute multiple metrics queries. Limits of this API are described in [Metrics Query Error Messages](https://help.sumologic.com/docs/metrics/metrics-queries/metric-query-error-messages/). For general information about Metrics Queries see [Metrics Queries](https://help.sumologic.com/docs/metrics/metrics-queries/)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

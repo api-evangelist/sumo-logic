@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement logSearchesManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "logSearchesManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Saved Log Searches.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches",
+            "params": [
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Limit the number of log searches returned in the response. The number of log searches returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "List all saved log searches viewable by the user."
+        },
+        {
+          "info": {
+            "name": "Save A Log Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save the log search in the content library."
+        },
+        {
+          "info": {
+            "name": "Get The Saved Log Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the saved log search."
+              }
+            ]
+          },
+          "docs": "Get a saved log search from the content library by identifier."
+        },
+        {
+          "info": {
+            "name": "Update The Saved Log Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the saved log search."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the saved log search with the specified identifier. Partial update is not supported, you must provide values for all fields."
+        },
+        {
+          "info": {
+            "name": "Delete The Saved Log Search.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/logSearches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the saved log search."
+              }
+            ]
+          },
+          "docs": "Delete the saved log search from the content library."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

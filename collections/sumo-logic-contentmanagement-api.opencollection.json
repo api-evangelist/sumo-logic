@@ -1,0 +1,396 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement contentManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "contentManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Content Item By Path.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/path",
+            "params": [
+              {
+                "name": "path",
+                "value": "/Library/Users/user@sumo.com/SampleFolder",
+                "type": "query",
+                "description": "Path of the content item to retrieve."
+              }
+            ]
+          },
+          "docs": "Get a content item corresponding to the given path.\n\n_Path is specified in the required query parameter `path`. The path should be URL encoded._ For example, to get \"Acme Corp\" folder of a user \"user@sumo.com\" you can use the following curl command:\n  ```bash\n  curl https://api.sumologic.com/api/v2/content/path?path=/Library/Users/user%40sumo.com/Acme%20Corp\n  ```\n\n\nThe absolute path to a content item should be specified to get the item. The content library has \"Library\" folder at the root level"
+        },
+        {
+          "info": {
+            "name": "Get Path Of An Item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:contentId/path",
+            "params": [
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the content item to get the path."
+              }
+            ]
+          },
+          "docs": "Get full path of a content item with the given identifier.\n"
+        },
+        {
+          "info": {
+            "name": "Start A Content Export Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/export",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content item to export. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+              }
+            ]
+          },
+          "docs": "Schedule an _asynchronous_ export of content with the given identifier. You will get back an asynchronous job identifier on success. Use the [getAsyncExportStatus](#operation/getAsyncExportStatus) endpoint and the job identifier you got back in the response to track the status of an asynchronous export job.\nIf the content item is a folder, everything under the folder is exported recursively. Keep in mind when exporting large folders that there is a limit of 1000 content objects that can be expor"
+        },
+        {
+          "info": {
+            "name": "Content Export Job Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:contentId/export/:jobId/status",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the exported content item."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous export job."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous content export request for the given job identifier. On success, use the [getExportResult](#operation/getAsyncExportResult) endpoint to get the result of the export job."
+        },
+        {
+          "info": {
+            "name": "Content Export Job Result.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:contentId/export/:jobId/result",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the exported content item."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous job."
+              }
+            ]
+          },
+          "docs": "Get results from content export job for the given job identifier. The results from this export are incompatible with the Library import feature in the Sumo user interface."
+        },
+        {
+          "info": {
+            "name": "Start A Content Import Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/content/folders/:folderId/import",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the folder to import into. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+              },
+              {
+                "name": "overwrite",
+                "value": "",
+                "type": "query",
+                "description": "Set this to \"true\" to overwrite a content item if the name already exists."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule an asynchronous import of content inside an existing folder with the given identifier. Import requests can be used to create or update content within a folder. Content items need to have a unique name within their folder. If there is already a content item with the same name in the folder, you can set the `overwrite` parameter to `true` to overwrite existing content items. By default, the `overwrite` parameter is set to `false`, where the import will fail if a content item with the same"
+        },
+        {
+          "info": {
+            "name": "Content Import Job Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/folders/:folderId/import/:jobId/status",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the folder to import into."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the import request."
+              }
+            ]
+          },
+          "docs": "Get the status of a content import job for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Content Import Job Result.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/folders/:folderId/import/:jobId/result",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the folder to import into."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the import request."
+              }
+            ]
+          },
+          "docs": "Get the complete summary of content import job for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Start A Content Deletion Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/delete",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the content to delete. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+              }
+            ]
+          },
+          "docs": "Start an asynchronous content deletion job with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Content Deletion Job Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/delete/:jobId/status",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the content to delete."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous job."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous content deletion job request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Start A Content Copy Job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/copy",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content item to copy. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+              },
+              {
+                "name": "destinationFolder",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the destination folder."
+              }
+            ]
+          },
+          "docs": "Start an asynchronous content copy job with the given identifier to the destination folder. If the content item is a folder, everything under the folder is copied recursively."
+        },
+        {
+          "info": {
+            "name": "Content Copy Job Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/copy/:jobId/status",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the content which was copied."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asynchronous copy request job."
+              }
+            ]
+          },
+          "docs": "Get the status of the copy request with the given job identifier. On success, field `statusMessage` will contain identifier of the newly copied content in format: `id: {hexIdentifier}`.\n"
+        },
+        {
+          "info": {
+            "name": "Move An Item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/content/:id/move",
+            "headers": [
+              {
+                "name": "isAdminMode",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "destinationFolderId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the destination folder."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the item the user wants to move."
+              }
+            ]
+          },
+          "docs": "Moves an item from its current location to another folder.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

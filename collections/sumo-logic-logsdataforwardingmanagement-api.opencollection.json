@@ -1,0 +1,227 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement logsDataForwardingManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "logsDataForwardingManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Amazon S3 Data Forwarding Destinations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/destinations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of data forwarding destinations returned in the response. The number of data forwarding destinations returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of all Amazon S3 data forwarding destinations."
+        },
+        {
+          "info": {
+            "name": "Create An S3 Data Forwarding Destination.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/destinations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Amazon S3 data forwarding destination."
+        },
+        {
+          "info": {
+            "name": "Get An S3 Data Forwarding Destination.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/destinations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the S3 data forwarding destination to return."
+              }
+            ]
+          },
+          "docs": "Get an S3 data forwarding destination by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Update An S3 Data Forwarding Destination.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/destinations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the data forwarding destination to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an S3 data forwarding destination by the given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete An S3 Data Forwarding Destination.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/destinations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the data forwarding destination to delete."
+              }
+            ]
+          },
+          "docs": "Delete an existing Amazon S3 data forwarding destination with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Get All S3 Data Forwarding Rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/rules",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of data forwarding rules returned in the response. The number of data forwarding rules returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              }
+            ]
+          },
+          "docs": "Get a list of all S3 data forwarding rules."
+        },
+        {
+          "info": {
+            "name": "Create An S3 Data Forwarding Rule.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a data forwarding rule to send data from a Partition or Scheduled View to an S3 bucket."
+        },
+        {
+          "info": {
+            "name": "Get An S3 Data Forwarding Rule By Its Index.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/rules/:indexId",
+            "params": [
+              {
+                "name": "indexId",
+                "value": "1",
+                "type": "path",
+                "description": "The `id` of the Partition or Scheduled View."
+              }
+            ]
+          },
+          "docs": "Get the details of an S3 data forwarding rule by its Partition or Scheduled View identifier."
+        },
+        {
+          "info": {
+            "name": "Update An S3 Data Forwarding Rule By Its Index.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/rules/:indexId",
+            "params": [
+              {
+                "name": "indexId",
+                "value": "1",
+                "type": "path",
+                "description": "The `id` of the Partition or Scheduled View with the data forwarding rule to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an S3 data forwarding rule by its Partition or Scheduled View identifier."
+        },
+        {
+          "info": {
+            "name": "Delete An S3 Data Forwarding Rule By Its Index.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/logsDataForwarding/rules/:indexId",
+            "params": [
+              {
+                "name": "indexId",
+                "value": "1",
+                "type": "path",
+                "description": "The `id` of the Partition or Scheduled View with the data forwarding rule to delete."
+              }
+            ]
+          },
+          "docs": "Delete an S3 data forwarding rule by its Partition or Scheduled View identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

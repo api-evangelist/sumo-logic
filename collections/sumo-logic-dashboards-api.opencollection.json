@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic REST Collectors Dashboards API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dashboards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List dashboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v2/dashboards"
+          },
+          "docs": "List dashboards"
+        },
+        {
+          "info": {
+            "name": "Create a dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumologic.com/api/v2/dashboards"
+          },
+          "docs": "Create a dashboard"
+        },
+        {
+          "info": {
+            "name": "Get a dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a dashboard"
+        },
+        {
+          "info": {
+            "name": "Update a dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a dashboard"
+        },
+        {
+          "info": {
+            "name": "Delete a dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumologic.com/api/v2/dashboards/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a dashboard"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

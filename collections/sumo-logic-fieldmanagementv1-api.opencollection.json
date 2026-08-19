@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement fieldManagementV1 API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "fieldManagementV1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of All Custom Fields.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields"
+          },
+          "docs": "Request a list of all the custom fields configured in your account."
+        },
+        {
+          "info": {
+            "name": "Create A New Field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adding a field will define it in the Fields schema allowing it to be assigned as metadata to your logs."
+        },
+        {
+          "info": {
+            "name": "Get A Custom Field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000031D02DA",
+                "type": "path",
+                "description": "Identifier of a field."
+              }
+            ]
+          },
+          "docs": "Get the details of a custom field."
+        },
+        {
+          "info": {
+            "name": "Delete A Custom Field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/fields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000031D02DA",
+                "type": "path",
+                "description": "Identifier of a field to delete."
+              }
+            ]
+          },
+          "docs": "Deleting a field does not delete historical data assigned with that field. If you  delete a field by mistake and one or more of those dependencies break, you can  re-add the field to get things working properly again. You should always disable  a field and ensure things are behaving as expected before deleting a field."
+        },
+        {
+          "info": {
+            "name": "Enable Custom Field With A Specified Identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/fields/:id/enable",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000031D02DA",
+                "type": "path",
+                "description": "Identifier of a field to enable."
+              }
+            ]
+          },
+          "docs": "Fields have to be enabled to be assigned to your data. This operation ensures that a specified field is enabled and Sumo Logic will treat it as safe to process. All manually created custom fields are  enabled by default."
+        },
+        {
+          "info": {
+            "name": "Disable A Custom Field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/fields/:id/disable",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000031D02DA",
+                "type": "path",
+                "description": "Identifier of a field to disable."
+              }
+            ]
+          },
+          "docs": "After disabling a field Sumo Logic will start dropping its incoming values at ingest. As a result, they won't be searchable or usable. Historical values are not removed and remain searchable."
+        },
+        {
+          "info": {
+            "name": "Get A List Of Dropped Fields.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields/dropped"
+          },
+          "docs": "Dropped fields are fields sent to Sumo Logic, but are ignored since they are not defined in your Fields schema. In order to save these values a field must both exist and be enabled."
+        },
+        {
+          "info": {
+            "name": "Get A List Of Built-in Fields.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields/builtin"
+          },
+          "docs": "Built-in fields are created automatically by Sumo Logic for standard configuration purposes. They include `_sourceHost` and `_sourceCategory`. Built-in fields can't be deleted or disabled."
+        },
+        {
+          "info": {
+            "name": "Get A Built-in Field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields/builtin/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "000000000000000A",
+                "type": "path",
+                "description": "Identifier of a built-in field."
+              }
+            ]
+          },
+          "docs": "Get the details of a built-in field."
+        },
+        {
+          "info": {
+            "name": "Get Capacity Information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/fields/quota"
+          },
+          "docs": "Every account has a limited number of fields available. This endpoint returns your account limitations and remaining quota."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

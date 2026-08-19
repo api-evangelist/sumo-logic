@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic REST Collectors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List collectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/collectors"
+          },
+          "docs": "List collectors"
+        },
+        {
+          "info": {
+            "name": "Create a collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sumologic.com/api/v1/collectors"
+          },
+          "docs": "Create a collector"
+        },
+        {
+          "info": {
+            "name": "Get a collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sumologic.com/api/v1/collectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a collector"
+        },
+        {
+          "info": {
+            "name": "Update a collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sumologic.com/api/v1/collectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a collector"
+        },
+        {
+          "info": {
+            "name": "Delete a collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sumologic.com/api/v1/collectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a collector"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

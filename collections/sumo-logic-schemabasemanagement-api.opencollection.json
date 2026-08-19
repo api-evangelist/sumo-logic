@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement schemaBaseManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "schemaBaseManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Schema Base Identities Grouped By Type And Sorted By Version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/schemaIdentitiesGrouped"
+          },
+          "docs": "Get a summary of all available schema bases grouped by type and their versions sorted by latest."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

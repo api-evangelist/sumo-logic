@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement appManagementV2 API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "appManagementV2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start App Install Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/install",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app to install."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule an asynchronous job to install the app with the given UUID and version from the App Catalog. The app will be installed in 'Installed Apps' folder in the Content Library.\n\n_You get back an identifier of asynchronous job in response to this endpoint. You can then use the [app install status API](#operation/getAsyncInstallAppStatus) to get the status of the installation request. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to wor"
+        },
+        {
+          "info": {
+            "name": "App Install Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps/install/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "C03E086C137F38B4",
+                "type": "path",
+                "description": "Identifier of the asynchronous job for installing the app."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous app install request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Start App Uninstall Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/uninstall",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app to uninstall."
+              }
+            ]
+          },
+          "docs": "Schedule an asynchronous job to uninstall app with the given UUID.\n\n_You get back an identifier of asynchronous job in response to this endpoint. You can then use the [app uninstall status API](#operation/getAsyncUninstallAppStatus) to get the status of the uninstallation request. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to work with asynchronous request._"
+        },
+        {
+          "info": {
+            "name": "App Uninstall Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps/uninstall/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "C03E086C137F38B4",
+                "type": "path",
+                "description": "Identifier of the asynchronous job for uninstalling the app."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous app uninstall request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "Start App Upgrade Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/upgrade",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app to upgrade."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule an asynchronous job to upgrade the app with the given UUID and version from the App Catalog. The app will be installed in 'Installed Apps' folder in the Content Library.\n\n_You get back an identifier of asynchronous job in response to this endpoint. You can then use the [app upgrade status API](#operation/getAsyncUpgradeAppStatus) to get the status of the upgrade request. See [Asynchronous-Request](#section/Getting-Started/Asynchronous-Request) section for more details on how to work wit"
+        },
+        {
+          "info": {
+            "name": "App Upgrade Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps/upgrade/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "C03E086C137F38B4",
+                "type": "path",
+                "description": "Identifier of the asynchronous job for upgrading the app."
+              }
+            ]
+          },
+          "docs": "Get the status of an asynchronous app upgrade request for the given job identifier."
+        },
+        {
+          "info": {
+            "name": "List Apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps",
+            "params": [
+              {
+                "name": "name",
+                "value": "AWS%20CloudTrail",
+                "type": "query",
+                "description": "Name of the app."
+              },
+              {
+                "name": "author",
+                "value": "Sumo%20Logic",
+                "type": "query",
+                "description": "Author of the app."
+              }
+            ]
+          },
+          "docs": "List all apps from the App Catalog."
+        },
+        {
+          "info": {
+            "name": "Get Details Of An App Version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/details",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app."
+              },
+              {
+                "name": "version",
+                "value": "1.0.0",
+                "type": "query",
+                "description": "Version of the app. The latest version is used if this is omitted or specified as \"latest\"."
+              }
+            ]
+          },
+          "docs": "Get details about an app with the given UUID and version. The details include:\n\n  1. The base URL for all the resource for the app.\n  2. The app manifest"
+        },
+        {
+          "info": {
+            "name": "Get Subscription Status For The User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/subscription",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app."
+              }
+            ]
+          },
+          "docs": "Get Subscription status for the user for a specific app.  This will indicate whether the user has subscribed to the app or not."
+        },
+        {
+          "info": {
+            "name": "Subscribe To An App Upgrade Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/subscription",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app to subscribe to."
+              }
+            ]
+          },
+          "docs": "Subscribe to an app upgrade notification. This will allow the user to receive notifications for the app updates."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe From An App Upgrade Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v2/apps/:uuid/subscription",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "ceb7fac5-1127-4a04-a5b8-2e49190be3d5",
+                "type": "path",
+                "description": "UUID of the app to unsubscribe from."
+              }
+            ]
+          },
+          "docs": "Unsubscribe from an app. This will remove the user's subscription to notifications for the app."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

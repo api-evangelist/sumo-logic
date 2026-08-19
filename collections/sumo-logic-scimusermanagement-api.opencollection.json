@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement scimUserManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "scimUserManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SCIM Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first result to return. Defaults to 1 if not specified, a value less than 1 SHALL be interpreted as 1"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to return. Defaults to 100"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Find user with the given email address"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query",
+                "description": "The sort order. Use \"ascending\" or \"descending\""
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sort the list of users by the `givenName`, `familyName`, or `emails` field"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of users in the SCIM system, with optional pagination"
+        },
+        {
+          "info": {
+            "name": "Create SCIM User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the SCIM system"
+        },
+        {
+          "info": {
+            "name": "Get A SCIM User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SCIM user"
+              }
+            ]
+          },
+          "docs": "Fetches the details of a SCIM user by their unique identifier"
+        },
+        {
+          "info": {
+            "name": "Update SCIM User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SCIM user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing user's attributes in the SCIM system"
+        },
+        {
+          "info": {
+            "name": "Update SCIM User Attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SCIM user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates specific attributes of an existing user in the SCIM system"
+        },
+        {
+          "info": {
+            "name": "Delete SCIM User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/scim/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SCIM user to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a SCIM user by their unique identifier"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

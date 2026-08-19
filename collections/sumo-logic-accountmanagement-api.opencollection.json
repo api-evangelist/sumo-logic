@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement accountManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "accountManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get The Owner Of An Account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/account/accountOwner"
+          },
+          "docs": "Returns the user identifier of the account owner."
+        },
+        {
+          "info": {
+            "name": "Get Overview Of The Account Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/account/status"
+          },
+          "docs": "Get information related to the account's plan, pricing model, expiration and payment status."
+        },
+        {
+          "info": {
+            "name": "Get The Configured Subdomain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/account/subdomain"
+          },
+          "docs": "Get the configured subdomain."
+        },
+        {
+          "info": {
+            "name": "Create Account Subdomain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/account/subdomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a subdomain. Only the Account Owner can create a subdomain."
+        },
+        {
+          "info": {
+            "name": "Update Account Subdomain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/account/subdomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a subdomain. Only the Account Owner can update the subdomain."
+        },
+        {
+          "info": {
+            "name": "Delete The Configured Subdomain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/account/subdomain"
+          },
+          "docs": "Delete the configured subdomain."
+        },
+        {
+          "info": {
+            "name": "Recover Subdomains For A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/account/subdomain/recover",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address of the user to get subdomain information."
+              }
+            ]
+          },
+          "docs": "Send an email with the subdomain information for a user with the given email address."
+        },
+        {
+          "info": {
+            "name": "Export Credits Usage Details As CSV.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/account/usage/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export the credit usage details as csv for the specific period of time given as input in the form of a start and end date with a specific grouping according to `day`, `week`, `month`, Note that this API will work only for credits plan customers."
+        },
+        {
+          "info": {
+            "name": "Get Report Generation Status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/account/usage/report/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job Id for the report to be exported."
+              }
+            ]
+          },
+          "docs": "Get the report download URL and status using Job Id."
+        },
+        {
+          "info": {
+            "name": "Get Usage Forecast With Respect To Last Number Of Days Specified.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/account/usageForecast",
+            "params": [
+              {
+                "name": "numberOfDays",
+                "value": "",
+                "type": "query",
+                "description": "Number of days to use for calculating average usage and forecast."
+              }
+            ]
+          },
+          "docs": "Get usage forecast with respect to last number of days specified. If nothing is provided for  last number of days, the average of term period will be taken to do the forecast."
+        },
+        {
+          "info": {
+            "name": "Get The Pending Plan Update Request, If Any.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/plan/pendingUpdateRequest"
+          },
+          "docs": "Get the pending plan update request which will be applicable from next billing cycle."
+        },
+        {
+          "info": {
+            "name": "Delete The Pending Plan Update Request, If Any.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/plan/pendingUpdateRequest"
+          },
+          "docs": "Delete the pending plan update request which would be applicable from next billing cycle."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

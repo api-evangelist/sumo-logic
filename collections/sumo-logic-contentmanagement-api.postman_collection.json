@@ -1,0 +1,2482 @@
+{
+  "item": [
+    {
+      "id": "09fc9e79-368b-4c63-94c5-53a52e9dd622",
+      "name": "contentManagement",
+      "description": {
+        "content": "Content management API.\n\nYou can export, import, delete and copy content in your organization’s Library. For more information, see [Library](https://help.sumologic.com/?cid=5173). You can perform the request as a Content Administrator by using the `isAdminMode` parameter. For more information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).\n<br/> <br/>\n### Example\nThe following example uses API endpoints in the US1 deployment. Sumo Logic has several deployments that are assigned depending on the geographic location and the date an account is created. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\nThe [Content Import API](#operation/beginAsyncImport) can be used to create or update a Search, Scheduled Search, or Dashboard. Here is an example creating a Scheduled Search:\n1. Get the identifier of your `Personal` folder.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.sumologic.com/api/v2/content/folders/personal\n  ```\n\n  Find the identifier of your `Personal` folder in the response.\n  ```json\n  {\n      ...\n      \"id\": \"0000000006A2E86F\", <----\n      \"name\": \"Personal\",\n      \"itemType\": \"Folder\",\n      ...\n  }\n  ```\n\n  You can use [getFolder](#operation/getFolder), [getAdminRecommededFolder](#operation/getAdminRecommendedFolderAsync),\n  or [getGlobalFolder](#operation/getGlobalFolderAsync) endpoints to traverse the content tree and find the identifier of any\n  folder you want to manage.\n\n2. Use the [Content Import API](#operation/beginAsyncImport) to create a new Scheduled Search inside your\n  `Personal` folder.\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" -H \"Content-Type: application/json\" -d @search.json https://api.sumologic.com/api/v2/content/folders/0000000006A2E86F/import\n  ```\n\n  The data file `search.json` in the above command has the following `SavedSearchWithScheduleSyncDefinition` object.\n  ```json\n  // file: search.json\n  {\n      \"type\": \"SavedSearchWithScheduleSyncDefinition\",\n      \"name\": \"demo-scheduled-search\",\n      \"description\": \"Runs every hour with timerange of 15m and sends email notifications\",\n      \"search\": {\n          \"queryText\": \"\\\"error\\\" and \\\"warn\\\"\",\n          \"defaultTimeRange\": \"-15m\",\n          \"byReceiptTime\": false,\n          \"viewName\": \"\",\n          \"viewStartTime\": null,\n          \"queryParameters\": []\n      },\n      \"searchSchedule\": {\n          \"cronExpression\": \"0 0/15 * * * ? *\",\n          \"displayableTimeRange\": \"-15m\",\n          \"parseableTimeRange\": {\n              \"from\": {\n                  \"relativeTime\": \"-15m\",\n                  \"type\": \"RelativeTimeRangeBoundary\"\n              },\n              \"to\": null,\n              \"type\": \"BeginBoundedTimeRange\"\n          },\n          \"timeZone\": \"America/Los_Angeles\",\n          \"threshold\": null,\n          \"notification\": {\n              \"taskType\": \"EmailSearchNotificationSyncDefinition\",\n              \"toList\": [\n                  \"ops@acme.org\"\n              ],\n              \"subjectTemplate\": \"Search Results: {{SearchName}}\",\n              \"includeQuery\": true,\n              \"includeResultSet\": true,\n              \"includeHistogram\": true,\n              \"includeCsvAttachment\": false\n          },\n          \"muteErrorEmails\": false,\n          \"scheduleType\": \"1Hour\",\n          \"parameters\": []\n      }\n  }\n  ```\n\n  The response of above request will have the job identifier that you can use to track the status of the import job.\n  ```json\n  {\n      \"id\": \"74DC17FA765C7443\"\n  }\n  ```\n\n3. Use the job identifier from the import request to get the [status](#operation/getAsyncImportStatus) of the\n  import job.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.sumologic.com/api/v2/content/folders/0000000006A2E86F/import/74DC17FA765C7443/status\n  ```\n\n  If you are importing a large item, you might have to wait for the import job to finish. The following is an\n  example response from a completed job.\n  ```json\n  {\n      \"status\": \"Success\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dcd0d922-6e61-4db4-ba0a-351de9a9d860",
+          "name": "Get Content Item By Path.",
+          "request": {
+            "name": "Get Content Item By Path.",
+            "description": {
+              "content": "Get a content item corresponding to the given path.\n\n_Path is specified in the required query parameter `path`. The path should be URL encoded._ For example, to get \"Acme Corp\" folder of a user \"user@sumo.com\" you can use the following curl command:\n  ```bash\n  curl https://api.sumologic.com/api/v2/content/path?path=/Library/Users/user%40sumo.com/Acme%20Corp\n  ```\n\n\nThe absolute path to a content item should be specified to get the item. The content library has \"Library\" folder at the root level. For items in \"Personal\" folder, the base path is \"/Library/Users/user@sumo.com\" where \"user@sumo.com\" is the email address of the user. For example if a user with email address `wile@acme.com` has `Rockets` folder inside Personal folder, the path of Rockets folder will be `/Library/Users/wile@acme.com/Rockets`.\n\nFor items in \"Admin Recommended\" folder, the base path is \"/Library/Admin Recommended\". For example, given a folder `Acme` in Admin Recommended folder, the path will be `/Library/Admin Recommended/Acme`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                "path"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "(Required) Path of the content item to retrieve."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe9e176e-22ea-4ca5-b169-b5b6c0b7f805",
+              "name": "Content item corresponding to the given path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "/Library/Users/user@sumo.com/SampleFolder"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2018-10-16 09:10:00+00:00\",\n  \"createdBy\": \"0000000006743FDD\",\n  \"id\": \"000000000C1C17C6\",\n  \"itemType\": \"Folder\",\n  \"modifiedAt\": \"2018-10-16 09:10:00+00:00\",\n  \"modifiedBy\": \"0000000006743FE8\",\n  \"name\": \"Personal\",\n  \"parentId\": \"0000000001C41EF2\",\n  \"permissions\": [\n    \"View\",\n    \"GrantView\",\n    \"Edit\"\n  ],\n  \"description\": \"Personal folder for John Doe\",\n  \"isScheduled\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65d3c145-745e-4525-a5be-4722a98aab8a",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "/Library/Users/user@sumo.com/SampleFolder"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6a3e7ce-4e16-4474-b574-dfc20844fbc1",
+          "name": "Get Path Of An Item.",
+          "request": {
+            "name": "Get Path Of An Item.",
+            "description": {
+              "content": "Get full path of a content item with the given identifier.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":contentId",
+                "path"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentId",
+                  "description": "(Required) Identifier of the content item to get the path."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "de060cf7-a977-41b5-abc2-820ad51ccd8a",
+              "name": "Full path of the content item.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) Identifier of the content item to get the path."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"path\": \"/Library/Users/user@test.com/SampleFolder\",\n  \"pathItems\": [\n    {\n      \"id\": \"0000000013D98A2A\",\n      \"name\": \"Test Folder\",\n      \"description\": \"This is a test folder\"\n    },\n    {\n      \"id\": \"0000000013D98A2A\",\n      \"name\": \"Test Folder\",\n      \"description\": \"This is a test folder\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4486f428-5dce-4382-9dfe-dca055774454",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) Identifier of the content item to get the path."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb2a9030-a196-4bd3-8ad3-a34b1f9fad60",
+          "name": "Start A Content Export Job.",
+          "request": {
+            "name": "Start A Content Export Job.",
+            "description": {
+              "content": "Schedule an _asynchronous_ export of content with the given identifier. You will get back an asynchronous job identifier on success. Use the [getAsyncExportStatus](#operation/getAsyncExportStatus) endpoint and the job identifier you got back in the response to track the status of an asynchronous export job.\nIf the content item is a folder, everything under the folder is exported recursively. Keep in mind when exporting large folders that there is a limit of 1000 content objects that can be exported at once. If you want to import more than 1000 content objects, then be sure to split the import into batches of 1000 objects or less.\nThe results from the export are compatible with the Library import feature in the Sumo Logic user interface as well as the API content import job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the content item to export. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "028531f1-782f-491e-b19f-1ead0f631a45",
+              "name": "Export job has been scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content item to export. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"C03E086C137F38B4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5882ad82-95d3-43c0-93a4-23db89ef4c6b",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content item to export. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c19cb64c-3e7a-4ead-b28a-7ce023b5a2b1",
+          "name": "Content Export Job Status.",
+          "request": {
+            "name": "Content Export Job Status.",
+            "description": {
+              "content": "Get the status of an asynchronous content export request for the given job identifier. On success, use the [getExportResult](#operation/getAsyncExportResult) endpoint to get the result of the export job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":contentId",
+                "export",
+                ":jobId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentId",
+                  "description": "(Required) The identifier of the exported content item."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the asynchronous export job."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ff374c5-ee1b-413e-ad7a-1384e37212df",
+              "name": "The status of the export job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "export",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) The identifier of the exported content item."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous export job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"Success\",\n  \"statusMessage\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69a75936-cd2f-4e6c-b878-ce20915b0354",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "export",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) The identifier of the exported content item."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous export job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d091a17b-93df-4cf1-9696-91c0883ee05b",
+          "name": "Content Export Job Result.",
+          "request": {
+            "name": "Content Export Job Result.",
+            "description": {
+              "content": "Get results from content export job for the given job identifier. The results from this export are incompatible with the Library import feature in the Sumo user interface.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":contentId",
+                "export",
+                ":jobId",
+                "result"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentId",
+                  "description": "(Required) The identifier of the exported content item."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the asynchronous job."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e747370f-652e-40b8-be40-7e7fa42b2c7e",
+              "name": "The result of export job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "export",
+                    ":jobId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) The identifier of the exported content item."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5c75027-934e-48f2-8f77-7ddc927c16de",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":contentId",
+                    "export",
+                    ":jobId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentId",
+                      "description": "(Required) The identifier of the exported content item."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97c2e4b9-926b-4fee-a607-4c39bbfd738a",
+          "name": "Start A Content Import Job.",
+          "request": {
+            "name": "Start A Content Import Job.",
+            "description": {
+              "content": "Schedule an asynchronous import of content inside an existing folder with the given identifier. Import requests can be used to create or update content within a folder. Content items need to have a unique name within their folder. If there is already a content item with the same name in the folder, you can set the `overwrite` parameter to `true` to overwrite existing content items. By default, the `overwrite` parameter is set to `false`, where the import will fail if a content item with the same name already exist. Keep in mind when importing large folders that there is a limit of 1000 content objects that can be imported at once. If you want to import more than 1000 content objects, then be sure to split the import into batches of 1000 objects or less.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                "folders",
+                ":folderId",
+                "import"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "overwrite",
+                  "value": "false",
+                  "description": "Set this to \"true\" to overwrite a content item if the name already exists."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "folderId",
+                  "description": "(Required) The identifier of the folder to import into. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c65f71fb-1695-4fcf-aef0-6a27d89cbf86",
+              "name": "Import job has been scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overwrite",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"C03E086C137F38B4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d46b1fe-d833-4aab-8def-f4ae13843a6c",
+              "name": "The operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overwrite",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39527e94-ed0b-44be-8cbf-63792d39b99d",
+          "name": "Content Import Job Status.",
+          "request": {
+            "name": "Content Import Job Status.",
+            "description": {
+              "content": "Get the status of a content import job for the given job identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                "folders",
+                ":folderId",
+                "import",
+                ":jobId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "folderId",
+                  "description": "(Required) The identifier of the folder to import into."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the import request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16ba8037-97cf-4bce-bb5f-a632e5d37c1f",
+              "name": "The status of the import job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the import request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"Success\",\n  \"statusMessage\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe35dd83-2281-41f5-8894-0ccddcf3b39d",
+              "name": "The operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the import request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "316e7cb1-126b-402f-bc79-f869a937d974",
+          "name": "Content Import Job Result.",
+          "request": {
+            "name": "Content Import Job Result.",
+            "description": {
+              "content": "Get the complete summary of content import job for the given job identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                "folders",
+                ":folderId",
+                "import",
+                ":jobId",
+                "result"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "folderId",
+                  "description": "(Required) The identifier of the folder to import into."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the import request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7ed1ea7-ebb3-4f2b-b809-bde66fe83562",
+              "name": "The result of the import job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import",
+                    ":jobId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the import request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"summary\": {\n    \"totalItems\": 15,\n    \"successCount\": 12,\n    \"failureCount\": 3\n  },\n  \"failures\": [\n    {\n      \"path\": \"/Marketing/Website Analytics/Daily Traffic Report\",\n      \"type\": \"Dashboard\",\n      \"error\": \"Invalid JSON format in widget configuration.\"\n    },\n    {\n      \"path\": \"/Marketing/Website Analytics/Daily Traffic Report\",\n      \"type\": \"Dashboard\",\n      \"error\": \"Invalid JSON format in widget configuration.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "438be307-3d28-4493-b59f-d06899fd73b2",
+              "name": "The operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    "folders",
+                    ":folderId",
+                    "import",
+                    ":jobId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "folderId",
+                      "description": "(Required) The identifier of the folder to import into."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the import request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "062f5cb4-c35f-4978-ae02-40b59e0d401c",
+          "name": "Start A Content Deletion Job.",
+          "request": {
+            "name": "Start A Content Deletion Job.",
+            "description": {
+              "content": "Start an asynchronous content deletion job with the given identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the content to delete. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30686879-e0af-44c6-a45b-ac05d9def200",
+              "name": "Deletion job has been scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the content to delete. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"C03E086C137F38B4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31671445-8372-4103-bbc0-fc1ba87920e1",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the content to delete. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b99889c0-21a9-4243-aba3-46d3cf2edc0d",
+          "name": "Content Deletion Job Status.",
+          "request": {
+            "name": "Content Deletion Job Status.",
+            "description": {
+              "content": "Get the status of an asynchronous content deletion job request for the given job identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "delete",
+                ":jobId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the content to delete."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the asynchronous job."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ad8c772-5709-4d25-b5b2-8c44c28e94b3",
+              "name": "The status of the content deletion job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "delete",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the content to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"Success\",\n  \"statusMessage\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "098a5815-f581-4c6b-871b-5db4b617de3f",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "delete",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the content to delete."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50e1dd52-cf10-43cd-a2fa-28891bce015c",
+          "name": "Start A Content Copy Job.",
+          "request": {
+            "name": "Start A Content Copy Job.",
+            "description": {
+              "content": "Start an asynchronous content copy job with the given identifier to the destination folder. If the content item is a folder, everything under the folder is copied recursively.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "copy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "destinationFolder",
+                  "value": "<string>",
+                  "description": "(Required) The identifier of the destination folder."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the content item to copy. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "927b8806-1129-4175-ba8e-4463d0c50f5a",
+              "name": "Content copy job has been scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destinationFolder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content item to copy. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"C03E086C137F38B4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93f33451-18bb-47d5-b0c0-16b1feb6abb7",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destinationFolder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content item to copy. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6950470-9bf9-4c61-92e1-4a0186328b15",
+          "name": "Content Copy Job Status.",
+          "request": {
+            "name": "Content Copy Job Status.",
+            "description": {
+              "content": "Get the status of the copy request with the given job identifier. On success, field `statusMessage` will contain identifier of the newly copied content in format: `id: {hexIdentifier}`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "copy",
+                ":jobId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the content which was copied."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The identifier of the asynchronous copy request job."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "213e19d8-5eb8-4490-b6ea-97027371e3e2",
+              "name": "The status of the content copy job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "copy",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content which was copied."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous copy request job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"Success\",\n  \"statusMessage\": \"id: 0000000000000197\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e046d869-0d19-422e-88f1-444c9f0f8628",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "copy",
+                    ":jobId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the content which was copied."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The identifier of the asynchronous copy request job."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a4bab5a-2d13-45ce-8c4e-54eaae9b4963",
+          "name": "Move An Item.",
+          "request": {
+            "name": "Move An Item.",
+            "description": {
+              "content": "Moves an item from its current location to another folder.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "content",
+                ":id",
+                "move"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "destinationFolderId",
+                  "value": "<string>",
+                  "description": "(Required) Identifier of the destination folder."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the item the user wants to move."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                "key": "isAdminMode",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e355547-f9aa-4af0-8a96-f90a42bdcd49",
+              "name": "Content was moved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destinationFolderId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the item the user wants to move."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "644a24c4-9dbb-4e91-8f95-38dff808b546",
+              "name": "Operation failed with an error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "content",
+                    ":id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destinationFolderId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the item the user wants to move."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                    "key": "isAdminMode",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"auth:password_too_short\",\n      \"message\": \"Your password was too short.\"\n    },\n    {\n      \"code\": \"auth:password_character_classes\",\n      \"message\": \"Your password did not contain any non-alphanumeric characters\"\n    }\n  ],\n  \"id\": \"IUUQI-DGH5I-TJ045\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.au.sumologic.com/api/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "66a28242-aeb4-4041-9e32-0e7ae4fced92",
+    "name": "Sumo Logic accessKeyManagement contentManagement API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n",
+      "type": "text/plain"
+    }
+  }
+}

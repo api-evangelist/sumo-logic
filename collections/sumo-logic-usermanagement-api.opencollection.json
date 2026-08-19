@@ -1,0 +1,259 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sumo Logic accessKeyManagement userManagement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "userManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get A List Of Users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/users",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of users returned in the response. The number of users returned may be less than the `limit`."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left."
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sort the list of users by the `firstName`, `lastName`, or `email` field."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Find user with the given email address."
+              },
+              {
+                "name": "includeServiceAccounts",
+                "value": "",
+                "type": "query",
+                "description": "Include service accounts while listing users within the organization."
+              }
+            ]
+          },
+          "docs": "Get a list of all users in the organization. The response is paginated with a default limit of 100 users per page."
+        },
+        {
+          "info": {
+            "name": "Create A New User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user in the organization."
+        },
+        {
+          "info": {
+            "name": "Get A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of user to return."
+              }
+            ]
+          },
+          "docs": "Get a user with the given identifier from the organization."
+        },
+        {
+          "info": {
+            "name": "Update A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing user in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to delete."
+              },
+              {
+                "name": "transferTo",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the user to receive the transfer of content from the deleted user. <br> **Note:** If `deleteContent` is not set to `true`, and no user identifier is specified in `transferTo`, content from the deleted user is transferred to the executing user."
+              },
+              {
+                "name": "deleteContent",
+                "value": "",
+                "type": "query",
+                "description": "Whether to delete content from the deleted user or not. <br> **Warning:** If `deleteContent` is set to `true`, all of the content for the user being deleted is permanently deleted and cannot be recovered."
+              }
+            ]
+          },
+          "docs": "Delete a user with the given identifier from the organization and transfer their content to the user with the identifier specified in \"transferTo\"."
+        },
+        {
+          "info": {
+            "name": "Change Email Address.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id/email/requestChange",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to change email address."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An email with an activation link is sent to the user’s new email address. The user must click the link in the email within seven days to complete the email address change, or the link will expire."
+        },
+        {
+          "info": {
+            "name": "Reset Password.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id/password/reset",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to reset password."
+              }
+            ]
+          },
+          "docs": "Reset a user's password."
+        },
+        {
+          "info": {
+            "name": "Unlock A User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id/unlock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user that needs to be unlocked."
+              }
+            ]
+          },
+          "docs": "Unlock another user's account."
+        },
+        {
+          "info": {
+            "name": "Disable MFA For User.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id/mfa/disable",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to disable MFA for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disable multi-factor authentication for given user."
+        },
+        {
+          "info": {
+            "name": "Resend Verification Email.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.au.sumologic.com/api/v1/users/:id/resendWelcomeEmail",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the user to resend the welcome email."
+              }
+            ]
+          },
+          "docs": "Resend the welcome email to a user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
