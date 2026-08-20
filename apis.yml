@@ -42,7 +42,8 @@ apis:
     see [Access Keys](https://help.sumologic.com/?cid=6690).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - accessKeyManagement
   properties:
   - type: OpenAPI
@@ -65,6 +66,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Account Management
+  tags_raw:
   - accountManagement
   properties:
   - type: OpenAPI
@@ -87,6 +90,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - App Management
+  tags_raw:
   - appManagement
   properties:
   - type: OpenAPI
@@ -131,7 +136,8 @@ apis:
     role capability to manage or view ingestion jobs. For more information, see [Archive](https://help.sumologic.com/?cid=10011).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - archiveManagement
   properties:
   - type: OpenAPI
@@ -149,7 +155,8 @@ apis:
   description: Budget Management API.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - budgetManagement
   properties:
   - type: OpenAPI
@@ -171,6 +178,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Connection Management
+  tags_raw:
   - connectionManagement
   properties:
   - type: OpenAPI
@@ -229,6 +238,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Content Management
+  tags_raw:
   - contentManagement
   properties:
   - type: OpenAPI
@@ -252,6 +263,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Content Permissions
+  tags_raw:
   - contentPermissions
   properties:
   - type: OpenAPI
@@ -275,7 +288,8 @@ apis:
     For more information, see [Dashboard (New)](https://help.sumologic.com/?cid=5500).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - dashboardManagement
   properties:
   - type: OpenAPI
@@ -296,7 +310,8 @@ apis:
     ( query, timerange, etc...). For more information,  see [Deletion Requests](https://help.sumologic.com/docs/manage/deletion-requests/)'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - dataDeletionRules
   properties:
   - type: OpenAPI
@@ -318,7 +333,8 @@ apis:
     query time.'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - dataMaskingManagement
   properties:
   - type: OpenAPI
@@ -341,7 +357,8 @@ apis:
     see [Dynamic Parsing](https://help.sumologic.com/?cid=20011).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - dynamicParsingRuleManagement
   properties:
   - type: OpenAPI
@@ -363,6 +380,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Event Analytics
+  tags_raw:
   - eventAnalytics
   properties:
   - type: OpenAPI
@@ -385,7 +404,8 @@ apis:
     Extraction](https://help.sumologic.com/?cid=5313).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - extractionRuleManagement
   properties:
   - type: OpenAPI
@@ -433,7 +453,8 @@ apis:
     information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - folderManagement
   properties:
   - type: OpenAPI
@@ -456,7 +477,8 @@ apis:
     more information, see [Health Events](https://help.sumologic.com/?cid=0020).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - healthEvents
   properties:
   - type: OpenAPI
@@ -500,7 +522,8 @@ apis:
     For more information, see [Forwarding Data to S3](https://help.sumologic.com/docs/manage/data-forwarding/amazon-s3-bucket).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - logsDataForwardingManagement
   properties:
   - type: OpenAPI
@@ -525,7 +548,8 @@ apis:
     see [Infrequent data tier](https://help.sumologic.com/?cid=11987).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - logSearchesEstimatedUsage
   properties:
   - type: OpenAPI
@@ -550,7 +574,8 @@ apis:
     The saved search will also include any charts you have created in the Aggregates tab.'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - logSearchesManagement
   properties:
   - type: OpenAPI
@@ -573,7 +598,8 @@ apis:
     more information, see [Lookup Tables](https://help.sumologic.com/?cid=10109).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - lookupManagement
   properties:
   - type: OpenAPI
@@ -598,7 +624,8 @@ apis:
     For more information, see [Macros](https://www.sumologic.com/help/docs/manage/macro/).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - macroManagement
   properties:
   - type: OpenAPI
@@ -620,7 +647,8 @@ apis:
     (data-points) over time range(s). For more information, see [Metrics - Classic](https://help.sumologic.com/?cid=1079).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - metricsQuery
   properties:
   - type: OpenAPI
@@ -642,7 +670,8 @@ apis:
     queries with users in your organization. For more information, see [Sharing Metric Charts](https://help.sumologic.com/docs/metrics/metric-charts/interacting-metric-charts).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - metricsSearchesManagement
   properties:
   - type: OpenAPI
@@ -687,7 +716,8 @@ apis:
     For more information see [Monitors](https://help.sumologic.com/?cid=10020).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - monitorsLibraryManagement
   properties:
   - type: OpenAPI
@@ -714,7 +744,8 @@ apis:
     For more information see [Muting Schedules](https://help.sumologic.com/docs/alerts/monitors/muting-schedules).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - mutingSchedulesLibraryManagement
   properties:
   - type: OpenAPI
@@ -736,7 +767,8 @@ apis:
     APIs to manage OAuth Clients'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - oauthManagement
   properties:
   - type: OpenAPI
@@ -754,7 +786,8 @@ apis:
   description: Organizations Management API.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - orgsManagement
   properties:
   - type: OpenAPI
@@ -794,7 +827,8 @@ apis:
     field for  collector, FER or query. For more information on customizing parsers, see  [Parser Editor](https://help.sumologic.com/docs/cse/schema/parser-editor/).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - parsersLibraryManagement
   properties:
   - type: OpenAPI
@@ -816,7 +850,8 @@ apis:
     messages. For more information, see [Manage Partitions](https://help.sumologic.com/?cid=5231).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - partitionManagement
   properties:
   - type: OpenAPI
@@ -839,6 +874,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Password Policy
+  tags_raw:
   - passwordPolicy
   properties:
   - type: OpenAPI
@@ -859,7 +896,8 @@ apis:
     Policies control the security and share settings of your organization. For more information, see [Security](https://help.sumologic.com/?cid=4041).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - policiesManagement
   properties:
   - type: OpenAPI
@@ -883,6 +921,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Role Management
+  tags_raw:
   - roleManagement
   properties:
   - type: OpenAPI
@@ -926,7 +966,8 @@ apis:
     to enable Single Sign-On (SSO) for user access to Sumo Logic. For more information, see [SAML Configuration](https://help.sumologic.com/?cid=4016).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - samlConfigurationManagement
   properties:
   - type: OpenAPI
@@ -948,7 +989,8 @@ apis:
     as a pre-aggregated index. For more information, see [Manage Scheduled Views](https://help.sumologic.com/?cid=5128).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - scheduledViewManagement
   properties:
   - type: OpenAPI
@@ -966,7 +1008,8 @@ apis:
   description: Schema Base Management APIs.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - schemaBaseManagement
   properties:
   - type: OpenAPI
@@ -984,7 +1027,8 @@ apis:
   description: APIs to manage scim based users.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - scimUserManagement
   properties:
   - type: OpenAPI
@@ -1002,7 +1046,8 @@ apis:
   description: APIs to manage service accounts
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - serviceAccountManagement
   properties:
   - type: OpenAPI
@@ -1024,7 +1069,8 @@ apis:
     notations for logins, APIs, and dashboard access. For more information, see [Service Allowlist Settings](https://help.sumologic.com/?cid=5454).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - serviceAllowlistManagement
   properties:
   - type: OpenAPI
@@ -1047,7 +1093,8 @@ apis:
     see [Services Map](https://help.sumologic.com/docs/apm/traces/services-list-map/#services-map-view).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - serviceMap
   properties:
   - type: OpenAPI
@@ -1068,7 +1115,8 @@ apis:
     SLOs are used to monitor and alert on KPIs for your most important services or user experience.'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - slosLibraryManagement
   properties:
   - type: OpenAPI
@@ -1086,7 +1134,8 @@ apis:
   description: Source Template Management APIs.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - sourceTemplateManagementExternal
   properties:
   - type: OpenAPI
@@ -1109,7 +1158,8 @@ apis:
     and retrieve their results. For more information, see [Spans](https://help.sumologic.com/docs/apm/traces/spans).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - spanAnalytics
   properties:
   - type: OpenAPI
@@ -1139,7 +1189,8 @@ apis:
     For more information, see [Threat Intel Ingest Management](https://help.sumologic.com/Manage/Threat-Intel-Ingest)'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - threatIntelIngest
   properties:
   - type: OpenAPI
@@ -1167,7 +1218,8 @@ apis:
     For more information, see [Threat Intel Ingest Management](https://help.sumologic.com/Manage/Threat-Intel-Ingest).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - threatIntelIngestProducer
   properties:
   - type: OpenAPI
@@ -1190,7 +1242,8 @@ apis:
     requires the Manage Tokens role capability. For more information, see [Installation Tokens](https://help.sumologic.com/?cid=0100).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - tokensLibraryManagement
   properties:
   - type: OpenAPI
@@ -1214,6 +1267,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Traces
+  tags_raw:
   - traces
   properties:
   - type: OpenAPI
@@ -1235,7 +1290,8 @@ apis:
     more information, see [Metrics Transformation Rules](https://help.sumologic.com/?cid=10117).'
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
+  tags: []
+  tags_raw:
   - transformationRuleManagement
   properties:
   - type: OpenAPI
@@ -1258,6 +1314,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - User Management
+  tags_raw:
   - userManagement
   properties:
   - type: OpenAPI
