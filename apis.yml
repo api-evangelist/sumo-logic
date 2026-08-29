@@ -4,6 +4,18 @@ description: Sumo Logic is a cloud-native, machine data analytics platform deliv
   intelligence for operations, security, and business insights. It provides a comprehensive REST API with
   289 endpoints spanning log analytics, dashboards, monitors, roles, users, metrics, traces, and more.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -1522,6 +1534,9 @@ apis:
   - type: OpenAPI
     url: openapi/sumo-logic-users-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/sumo-logic-capability-edges.yml
+  name: Sumo Logic Business Capability Map
 - type: AgenticAccess
   url: agentic-access/sumo-logic-agentic-access.yml
 - type: TrustCenter
