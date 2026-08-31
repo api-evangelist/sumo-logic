@@ -79,8 +79,7 @@ apis:
     see [Manage Organization](https://help.sumologic.com/docs/manage/manage-subscription/manage-org-settings).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Account Management
+  tags: []
   tags_raw:
   - accountManagement
   properties:
@@ -104,8 +103,7 @@ apis:
     field extraction for popular data sources. For more information, see [Sumo Logic Apps](https://help.sumologic.com/docs/integrations).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - App Management
+  tags: []
   tags_raw:
   - appManagement
   properties:
@@ -195,8 +193,7 @@ apis:
     Set up connections to send alerts to other tools. For more information, see [Connections and Integrations](https://help.sumologic.com/?cid=1044).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Connection Management
+  tags: []
   tags_raw:
   - connectionManagement
   properties:
@@ -333,8 +330,7 @@ apis:
       ```
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Content Management
+  tags: []
   tags_raw:
   - contentManagement
   properties:
@@ -359,8 +355,7 @@ apis:
     Administrator by using the `isAdminMode` parameter. For more information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Content Permissions
+  tags: []
   tags_raw:
   - contentPermissions
   properties:
@@ -481,8 +476,7 @@ apis:
     APIs for interacting with events in Sumo Logic.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Event Analytics
+  tags: []
   tags_raw:
   - eventAnalytics
   properties:
@@ -993,8 +987,7 @@ apis:
     is required to update the password policy. For more information, see [how to set a password policy](https://help.sumologic.com/?cid=8595).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Password Policy
+  tags: []
   tags_raw:
   - passwordPolicy
   properties:
@@ -1042,8 +1035,7 @@ apis:
     For more information, see [Manage Roles](https://help.sumologic.com/?cid=5234).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - Role Management
+  tags: []
   tags_raw:
   - roleManagement
   properties:
@@ -1400,7 +1392,7 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
-  - Traces
+  - traces
   tags_raw:
   - traces
   properties:
@@ -1448,8 +1440,7 @@ apis:
     users and roles capability. For more information, see [Manage Users](https://help.sumologic.com/?cid=1006).
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
-  tags:
-  - User Management
+  tags: []
   tags_raw:
   - userManagement
   properties:
@@ -1529,6 +1520,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
