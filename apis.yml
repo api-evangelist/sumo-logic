@@ -70,56 +70,6 @@ apis:
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
   - type: GraphQL
     url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-accountmanagement-api
-  name: Sumo Logic accountManagement API
-  description: >-
-    Account Management API.
-
-
-    Manage the custom subdomain for the URL used to access your Sumo Logic account. For more information,
-    see [Manage Organization](https://help.sumologic.com/docs/manage/manage-subscription/manage-org-settings).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Account Management
-  tags_raw:
-  - accountManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-accountmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-appmanagement-api
-  name: Sumo Logic appManagement API
-  description: >-
-    App installation API.
-
-
-    View and install Sumo Logic Applications that deliver out-of-the-box dashboards, saved searches, and
-    field extraction for popular data sources. For more information, see [Sumo Logic Apps](https://help.sumologic.com/docs/integrations).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - App Management
-  tags_raw:
-  - appManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-appmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-appmanagementv2-api
   name: Sumo Logic appManagementV2 API
   description: >-
@@ -160,213 +110,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-archivemanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-budgetmanagement-api
-  name: Sumo Logic budgetManagement API
-  description: Budget Management API.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags: []
-  tags_raw:
-  - budgetManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-budgetmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-connectionmanagement-api
-  name: Sumo Logic connectionManagement API
-  description: >-
-    Connection management API.
-
-
-    Set up connections to send alerts to other tools. For more information, see [Connections and Integrations](https://help.sumologic.com/?cid=1044).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Connection Management
-  tags_raw:
-  - connectionManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-connectionmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-contentmanagement-api
-  name: Sumo Logic contentManagement API
-  description: >-
-    Content management API.
-
-
-    You can export, import, delete and copy content in your organization’s Library. For more information,
-    see [Library](https://help.sumologic.com/?cid=5173). You can perform the request as a Content Administrator
-    by using the `isAdminMode` parameter. For more information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).
-
-    <br/> <br/>
-
-    ### Example
-
-    The following example uses API endpoints in the US1 deployment. Sumo Logic has several deployments
-    that are assigned depending on the geographic location and the date an account is created. For details
-    determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).
-
-    The [Content Import API](#operation/beginAsyncImport) can be used to create or update a Search, Scheduled
-    Search, or Dashboard. Here is an example creating a Scheduled Search:
-
-    1. Get the identifier of your `Personal` folder.
-      ```bash
-      curl -X GET -u "<accessId>:<accessKey>" https://api.sumologic.com/api/v2/content/folders/personal
-      ```
-
-      Find the identifier of your `Personal` folder in the response.
-      ```json
-      {
-          ...
-          "id": "0000000006A2E86F", <----
-          "name": "Personal",
-          "itemType": "Folder",
-          ...
-      }
-      ```
-
-      You can use [getFolder](#operation/getFolder), [getAdminRecommededFolder](#operation/getAdminRecommendedFolderAsync),
-      or [getGlobalFolder](#operation/getGlobalFolderAsync) endpoints to traverse the content tree and
-    find the identifier of any
-      folder you want to manage.
-
-    2. Use the [Content Import API](#operation/beginAsyncImport) to create a new Scheduled Search inside
-    your
-      `Personal` folder.
-      ```bash
-      curl -X POST -u "<accessId>:<accessKey>" -H "Content-Type: application/json" -d @search.json https://api.sumologic.com/api/v2/content/folders/0000000006A2E86F/import
-      ```
-
-      The data file `search.json` in the above command has the following `SavedSearchWithScheduleSyncDefinition`
-    object.
-      ```json
-      // file: search.json
-      {
-          "type": "SavedSearchWithScheduleSyncDefinition",
-          "name": "demo-scheduled-search",
-          "description": "Runs every hour with timerange of 15m and sends email notifications",
-          "search": {
-              "queryText": "\"error\" and \"warn\"",
-              "defaultTimeRange": "-15m",
-              "byReceiptTime": false,
-              "viewName": "",
-              "viewStartTime": null,
-              "queryParameters": []
-          },
-          "searchSchedule": {
-              "cronExpression": "0 0/15 * * * ? *",
-              "displayableTimeRange": "-15m",
-              "parseableTimeRange": {
-                  "from": {
-                      "relativeTime": "-15m",
-                      "type": "RelativeTimeRangeBoundary"
-                  },
-                  "to": null,
-                  "type": "BeginBoundedTimeRange"
-              },
-              "timeZone": "America/Los_Angeles",
-              "threshold": null,
-              "notification": {
-                  "taskType": "EmailSearchNotificationSyncDefinition",
-                  "toList": [
-                      "ops@acme.org"
-                  ],
-                  "subjectTemplate": "Search Results: {{SearchName}}",
-                  "includeQuery": true,
-                  "includeResultSet": true,
-                  "includeHistogram": true,
-                  "includeCsvAttachment": false
-              },
-              "muteErrorEmails": false,
-              "scheduleType": "1Hour",
-              "parameters": []
-          }
-      }
-      ```
-
-      The response of above request will have the job identifier that you can use to track the status
-    of the import job.
-      ```json
-      {
-          "id": "74DC17FA765C7443"
-      }
-      ```
-
-    3. Use the job identifier from the import request to get the [status](#operation/getAsyncImportStatus)
-    of the
-      import job.
-      ```bash
-      curl -X GET -u "<accessId>:<accessKey>" https://api.sumologic.com/api/v2/content/folders/0000000006A2E86F/import/74DC17FA765C7443/status
-      ```
-
-      If you are importing a large item, you might have to wait for the import job to finish. The following
-    is an
-      example response from a completed job.
-      ```json
-      {
-          "status": "Success",
-          "statusMessage": null,
-          "error": null
-      }
-      ```
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Content Management
-  tags_raw:
-  - contentManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-contentmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-contentpermissions-api
-  name: Sumo Logic contentPermissions API
-  description: >-
-    Content permissions API.
-
-
-    You can share your folders, searches, and dashboards with specific users or roles. For more information,
-    see [Share Content](https://help.sumologic.com/?cid=8675309). You can perform the request as a Content
-    Administrator by using the `isAdminMode` parameter. For more information, see [Admin Mode](https://help.sumologic.com/docs/manage/content-sharing/admin-mode).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Content Permissions
-  tags_raw:
-  - contentPermissions
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-contentpermissions-api-openapi.yml
   - type: Documentation
     url: https://help.sumologic.com/docs/api/
   - type: Reference
@@ -465,30 +208,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-dynamicparsingrulemanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-eventanalytics-api
-  name: Sumo Logic eventAnalytics API
-  description: >-
-    Event Analytics (Beta) API.
-
-
-    APIs for interacting with events in Sumo Logic.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Event Analytics
-  tags_raw:
-  - eventAnalytics
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-eventanalytics-api-openapi.yml
   - type: Documentation
     url: https://help.sumologic.com/docs/api/
   - type: Reference
@@ -984,31 +703,6 @@ apis:
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
   - type: GraphQL
     url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-passwordpolicy-api
-  name: Sumo Logic passwordPolicy API
-  description: >-
-    Password Policy Management API
-
-
-    The password policy controls how user passwords are managed. The "Manage Password Policy" role capability
-    is required to update the password policy. For more information, see [how to set a password policy](https://help.sumologic.com/?cid=8595).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Password Policy
-  tags_raw:
-  - passwordPolicy
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-passwordpolicy-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-policiesmanagement-api
   name: Sumo Logic policiesManagement API
   description: >-
@@ -1024,32 +718,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-policiesmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-rolemanagement-api
-  name: Sumo Logic roleManagement API
-  description: >-
-    Role management API.
-
-
-    Roles determine the functions that users are able to perform in Sumo Logic. To manage roles, you must
-    have an administrator role or your role must have been assigned the manage users and roles capability.
-    For more information, see [Manage Roles](https://help.sumologic.com/?cid=5234).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Role Management
-  tags_raw:
-  - roleManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-rolemanagement-api-openapi.yml
   - type: Documentation
     url: https://help.sumologic.com/docs/api/
   - type: Reference
@@ -1140,25 +808,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-schemabasemanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-scimusermanagement-api
-  name: Sumo Logic scimUserManagement API
-  description: APIs to manage scim based users.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags: []
-  tags_raw:
-  - scimUserManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-scimusermanagement-api-openapi.yml
   - type: Documentation
     url: https://help.sumologic.com/docs/api/
   - type: Reference
@@ -1439,31 +1088,6 @@ apis:
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
   - type: GraphQL
     url: graphql/sumo-logic-graphql.md
-- aid: sumo-logic:sumo-logic-usermanagement-api
-  name: Sumo Logic userManagement API
-  description: >-
-    User management API.
-
-
-    To manage users, you must have the administrator role or your role must have been assigned the manage
-    users and roles capability. For more information, see [Manage Users](https://help.sumologic.com/?cid=1006).
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - User Management
-  tags_raw:
-  - userManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-usermanagement-api-openapi.yml
-  - type: Documentation
-    url: https://help.sumologic.com/docs/api/
-  - type: Reference
-    url: https://api.sumologic.com/docs/
-  - type: GettingStarted
-    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-collectors-api
   name: Sumo Logic Collectors API
   description: The Collectors API from Sumo Logic — 2 operation(s) for collectors.
@@ -1484,36 +1108,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-content-api-openapi.yml
-- aid: sumo-logic:sumo-logic-dashboards-api
-  name: Sumo Logic Dashboards API
-  description: The Dashboards API from Sumo Logic — 2 operation(s) for dashboards.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Dashboards
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-dashboards-api-openapi.yml
-- aid: sumo-logic:sumo-logic-monitors-api
-  name: Sumo Logic Monitors API
-  description: The Monitors API from Sumo Logic — 1 operation(s) for monitors.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Monitors
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-monitors-api-openapi.yml
-- aid: sumo-logic:sumo-logic-roles-api
-  name: Sumo Logic Roles API
-  description: The Roles API from Sumo Logic — 1 operation(s) for roles.
-  humanURL: https://help.sumologic.com/docs/api/
-  baseURL: https://api.sumologic.com/api
-  tags:
-  - Roles
-  properties:
-  - type: OpenAPI
-    url: openapi/sumo-logic-roles-api-openapi.yml
 - aid: sumo-logic:sumo-logic-search-jobs-api
   name: Sumo Logic Search Jobs API
   description: The Search Jobs API from Sumo Logic — 4 operation(s) for search jobs.
@@ -1524,18 +1118,244 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sumo-logic-search-jobs-api-openapi.yml
-- aid: sumo-logic:sumo-logic-users-api
-  name: Sumo Logic Users API
-  description: The Users API from Sumo Logic — 2 operation(s) for users.
+- aid: sumo-logic:sumo-logic-account-management-api
+  name: Sumo Logic Account Management API
+  description: >-
+    Account Management API.
+
+
+    Manage the custom subdomain for the URL used to access your Sumo Logic account. For more information,
+    see Manage Organization.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
-  - User
-  tags_raw:
-  - Users
+  - Account Management
   properties:
   - type: OpenAPI
-    url: openapi/sumo-logic-users-api-openapi.yml
+    url: openapi/sumo-logic-account-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-app-management-api
+  name: Sumo Logic App Management API
+  description: >-
+    App installation API.
+
+
+    View and install Sumo Logic Applications that deliver out-of-the-box dashboards, saved searches, and
+    field extraction for popular data sources. For more information, see Sumo Logic Apps.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - App Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-app-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-budget-management-api
+  name: Sumo Logic budget management API
+  description: Budget Management API.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - budget management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-budget-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-connection-management-api
+  name: Sumo Logic Connection Management API
+  description: >-
+    Connection management API.
+
+
+    Set up connections to send alerts to other tools. For more information, see Connections and Integrations.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Connection Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-connection-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-content-management-api
+  name: Sumo Logic Content Management API
+  description: Content management API.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Content Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-content-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-content-permissions-api
+  name: Sumo Logic Content Permissions API
+  description: >-
+    Content permissions API.
+
+
+    You can share your folders, searches, and dashboards with specific users or roles. For more information,
+    see Share Content. You can perform the request as a Content Administrator by using the `isAdminMode`
+    parameter. For more information, see Admin Mode.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Content Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-content-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-event-analytics-api
+  name: Sumo Logic event analytics API
+  description: >-
+    Event Analytics (Beta) API.
+
+
+    APIs for interacting with events in Sumo Logic.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - event analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-event-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-password-policy-api
+  name: Sumo Logic Password Policy API
+  description: >-
+    Password Policy Management API
+
+
+    The password policy controls how user passwords are managed. The "Manage Password Policy" role capability
+    is required to update the password policy. For more information, see how to set a password policy.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Password Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-password-policy-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-role-management-api
+  name: Sumo Logic Role Management API
+  description: >-
+    Role management API.
+
+
+    Roles determine the functions that users are able to perform in Sumo Logic. To manage roles, you must
+    have an administrator role or your role must have been assigned the manage users and roles capability.
+    For more information, see Manage Roles.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - Role Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-role-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-scim-user-management-api
+  name: Sumo Logic SCIM User Management API
+  description: APIs to manage scim based users.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - SCIM User Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-scim-user-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
+- aid: sumo-logic:sumo-logic-user-management-api
+  name: Sumo Logic User Management API
+  description: >-
+    User management API.
+
+
+    To manage users, you must have the administrator role or your role must have been assigned the manage
+    users and roles capability. For more information, see Manage Users.
+  humanURL: https://help.sumologic.com/docs/api/
+  baseURL: https://api.sumologic.com/api
+  tags:
+  - User Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sumo-logic-user-management-api-openapi.yml
+  - type: Documentation
+    url: https://help.sumologic.com/docs/api/
+  - type: Reference
+    url: https://api.sumologic.com/docs/
+  - type: GettingStarted
+    url: https://help.sumologic.com/docs/api/about-apis/getting-started/
+  - type: GraphQL
+    url: graphql/sumo-logic-graphql.md
 common:
 - type: CapabilityMap
   url: capabilities/sumo-logic-capability-edges.yml
