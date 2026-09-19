@@ -1256,6 +1256,8 @@ apis:
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
   tags:
+  - Event Analytics
+  tags_raw:
   - event analytics
   properties:
   - type: OpenAPI
