@@ -14,7 +14,8 @@ capability_model:
 edge_count: 21
 edges:
 - tag: roleManagement
-  spec_file: sumo-logic-rolemanagement-api-openapi.yml
+  spec_file: sumo-logic-role-management-api-openapi.yml
+  reanchored_from: sumo-logic-rolemanagement-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
@@ -88,7 +89,8 @@ edges:
   reason: Ingestion of STIX threat indicators and kill-chain metadata for security monitoring — threat
     detection and response.
 - tag: userManagement
-  spec_file: sumo-logic-usermanagement-api-openapi.yml
+  spec_file: sumo-logic-user-management-api-openapi.yml
+  reanchored_from: sumo-logic-usermanagement-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
@@ -118,7 +120,8 @@ edges:
     and alert detection on a SaaS platform. Sits between Observability Management and Incident Response
     detection, so only the L1 is asserted.
 - tag: scimUserManagement
-  spec_file: sumo-logic-scimusermanagement-api-openapi.yml
+  spec_file: sumo-logic-scim-user-management-api-openapi.yml
+  reanchored_from: sumo-logic-scimusermanagement-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
@@ -138,7 +141,8 @@ edges:
   reason: Manages the threat-intelligence indicator datastore used for security detection — threat detection
     and response tooling.
 - tag: passwordPolicy
-  spec_file: sumo-logic-passwordpolicy-api-openapi.yml
+  spec_file: sumo-logic-password-policy-api-openapi.yml
+  reanchored_from: sumo-logic-passwordpolicy-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
