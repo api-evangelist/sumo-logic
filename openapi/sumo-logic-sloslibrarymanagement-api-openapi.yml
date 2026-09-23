@@ -1,7 +1,9 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sumo Logic accessKeyManagement slosLibraryManagement API
-  description: "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n"
+  title: Sumo Logic Slos Library Management API
+  description: '# Getting Started
+
+    Welcome to the Sumo Logic API reference.'
   version: 1.0.0
   x-logo:
     url: ./sumologic_logo.png
@@ -33,16 +35,14 @@ tags:
   description: 'SLO Management API.
 
 
-    SLOs are used to monitor and alert on KPIs for your most important services or user experience.
-
-    '
+    SLOs are used to monitor and alert on KPIs for your most important services or user experience.'
   x-displayName: SLOs
 paths:
   /v1/slos/sli:
     get:
       tags:
       - slosLibraryManagement
-      summary: Bulk Fetch SLI Values, Error Budget Remaining And SLI Computation Status For The Current Compliance Period.
+      summary: Bulk Fetch SLI Values, Error Budget Remaining And SLI Computation Status For…
       description: Bulk fetch SLI values, error budget remaining and SLI computation status for the current compliance period.
       operationId: sli
       parameters:
@@ -72,7 +72,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Usage Info Of SLOs.
+      summary: Usage Info Of SLOs
       description: Get the current number and the allowed number of log and metrics SLOs.
       operationId: getSloUsageInfo
       responses:
@@ -92,7 +92,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Bulk Read A Slo Or Folder.
+      summary: Bulk Read A Slo Or Folder
       description: Bulk read a slo or folder by the given identifiers from the slos library.
       operationId: slosReadByIds
       parameters:
@@ -127,7 +127,7 @@ paths:
     post:
       tags:
       - slosLibraryManagement
-      summary: Create A Slo Or Folder.
+      summary: Create A Slo Or Folder
       description: Create a slo or folder in the slos library.
       operationId: slosCreate
       parameters:
@@ -160,7 +160,7 @@ paths:
     delete:
       tags:
       - slosLibraryManagement
-      summary: Bulk Delete A Slo Or Folder.
+      summary: Bulk Delete A Slo Or Folder
       description: Bulk delete a slo or folder by the given identifiers in the slos library.
       operationId: slosDeleteByIds
       parameters:
@@ -190,7 +190,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Get The Root Slos Folder.
+      summary: Get The Root Slos Folder
       description: Get the root folder in the slos library.
       operationId: getSlosLibraryRoot
       responses:
@@ -210,7 +210,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Read A Slo Or Folder By Its Path.
+      summary: Read A Slo Or Folder By Its Path
       description: Read a slo or folder by its path in the slos library structure.
       operationId: slosGetByPath
       parameters:
@@ -237,7 +237,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Search For A Slo Or Folder.
+      summary: Search For A Slo Or Folder
       description: Search for a slo or folder in the slos library structure.
       operationId: slosSearch
       parameters:
@@ -290,7 +290,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Get A Slo Or Folder.
+      summary: Get A Slo Or Folder
       description: Get a slo or folder from the slos library.
       operationId: slosReadById
       parameters:
@@ -316,7 +316,7 @@ paths:
     put:
       tags:
       - slosLibraryManagement
-      summary: Update A Slo Or Folder.
+      summary: Update A Slo Or Folder
       description: Update a slo or folder in the slos library.
       operationId: slosUpdateById
       parameters:
@@ -349,7 +349,7 @@ paths:
     delete:
       tags:
       - slosLibraryManagement
-      summary: Delete A Slo Or Folder.
+      summary: Delete A Slo Or Folder
       description: Delete a slo or folder from the slos library.
       operationId: slosDeleteById
       parameters:
@@ -372,7 +372,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Get The Path Of A Slo Or Folder.
+      summary: Get The Path Of A Slo Or Folder
       description: Get the full path of the slo or folder in the slos library.
       operationId: getSlosFullPath
       parameters:
@@ -399,7 +399,7 @@ paths:
     post:
       tags:
       - slosLibraryManagement
-      summary: Move A Slo Or Folder.
+      summary: Move A Slo Or Folder
       description: Move a slo or folder to a different location in the slos library.
       operationId: slosMove
       parameters:
@@ -432,7 +432,7 @@ paths:
     post:
       tags:
       - slosLibraryManagement
-      summary: Copy A Slo Or Folder.
+      summary: Copy A Slo Or Folder
       description: Copy a slo or folder in the slos library.
       operationId: slosCopy
       parameters:
@@ -466,7 +466,7 @@ paths:
     get:
       tags:
       - slosLibraryManagement
-      summary: Export A Slo Or Folder.
+      summary: Export A Slo Or Folder
       description: Export a slo or folder. If the given identifier is a folder, everything under the folder is exported recursively with folder as the root.
       operationId: slosExportItem
       parameters:
@@ -493,7 +493,7 @@ paths:
     post:
       tags:
       - slosLibraryManagement
-      summary: Import A Slo Or Folder.
+      summary: Import A Slo Or Folder
       description: Import a slo or folder.
       operationId: slosImportItem
       parameters:
@@ -525,104 +525,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Path:
-      required:
-      - path
-      - pathItems
-      type: object
-      properties:
-        pathItems:
-          type: array
-          description: Elements of the path.
-          items:
-            $ref: '#/components/schemas/PathItem'
-        path:
-          type: string
-          description: String representation of the path.
-    SloUsage:
-      properties:
-        sliType:
-          pattern: ^(Logs|Metrics|Monitors)$
-          type: string
-          description: The type of SLO usage info (Logs/Metrics/Monitor based).
-          example: Logs
-          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
-        usage:
-          type: integer
-          description: Current number of active Logs/Metrics/Monitors SLOs.
-          example: 100
-        limit:
-          type: integer
-          description: The limit of active Logs/Metrics/Monitors SLOs.
-          example: 100
-      description: The usage info of SLOs.
-    SlosLibraryBase:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the slo or folder.
-        description:
-          type: string
-          description: Description of the slo or folder.
-          default: ''
-        type:
-          type: string
-          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
-      discriminator:
-        propertyName: type
-    IdToSlosLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    PathItem:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of the path element.
-        name:
-          type: string
-          description: Name of the path element.
-        description:
-          type: string
-          description: Description of the path element.
-    SlosLibraryBaseUpdate:
-      required:
-      - name
-      - type
-      - version
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the slo or folder.
-        description:
-          type: string
-          description: The description of the slo or folder.
-          default: ''
-        version:
-          type: integer
-          description: The version of the slo or folder.
-          format: int64
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
-    IdToSliStatusMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/SliStatus'
-      description: Map of SLO identifier to SliStatus object.
     SlosLibraryFolderResponse:
       allOf:
       - $ref: '#/components/schemas/SlosLibraryBaseResponse'
@@ -644,24 +546,7 @@ components:
             description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
             items:
               $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    SlosLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/SlosLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the slo or folder.
-          example: /Slos/SampleFolder/TestSlo
-    ListSlosLibraryItemWithPath:
-      type: array
-      description: Multi-type list of types slo or folder.
-      items:
-        $ref: '#/components/schemas/SlosLibraryItemWithPath'
-    SlosLibraryBaseExport:
+    SlosLibraryBase:
       required:
       - name
       - type
@@ -673,102 +558,17 @@ components:
         description:
           type: string
           description: Description of the slo or folder.
+          default: ''
         type:
           type: string
-          description: Type of the object model.
+          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
       discriminator:
         propertyName: type
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ContentCopyParams:
-      required:
-      - parentId
-      type: object
-      properties:
-        parentId:
-          type: string
-          description: Identifier of the parent folder to copy to.
-        name:
-          type: string
-          description: Optionally provide a new name.
-        description:
-          type: string
-          description: Optionally provide a new description.
-    SloUsageInfo:
+    ListSlosLibraryItemWithPath:
       type: array
-      description: The usage info of logs and metrics SLOs.
+      description: Multi-type list of types slo or folder.
       items:
-        $ref: '#/components/schemas/SloUsage'
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    SliStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          pattern: ^(Success|Error|InProgress)$
-          type: string
-          description: Whether the SLI computation is complete / had an error / is in progress.
-          example: Success
-        sliPercentage:
-          type: number
-          description: SLI percentage for the compliance period. Available if `status` is `Success`.
-          format: double
-          example: 95.14
-        errorBudgetRemainingPercentage:
-          type: number
-          description: Percentage of error budget remaining for the compliance period. Available if `status` is `Success`.
-          format: double
-        absoluteErrorBudgetRemaining:
-          type: string
-          description: Formatted string for the absolute error budget remaining (time duration for window-based SLIs, request count for request-based SLIs). Available if `status` is `Success`.
-          example: 1h56m, -3h45m, -241.3k req, 1.5k req
-        progressPercentage:
-          type: number
-          description: SLI computation progress.
-          format: double
-      description: Status of the SLI computation. If the status is successful, also contains the SLI value and error budget remaining for the current compliance period.
+        $ref: '#/components/schemas/SlosLibraryItemWithPath'
     SlosLibraryBaseResponse:
       required:
       - contentType
@@ -838,6 +638,206 @@ components:
             type: string
       discriminator:
         propertyName: type
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    SlosLibraryBaseUpdate:
+      required:
+      - name
+      - type
+      - version
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the slo or folder.
+        description:
+          type: string
+          description: The description of the slo or folder.
+          default: ''
+        version:
+          type: integer
+          description: The version of the slo or folder.
+          format: int64
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    IdToSliStatusMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SliStatus'
+      description: Map of SLO identifier to SliStatus object.
+    SlosLibraryBaseExport:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the slo or folder.
+        description:
+          type: string
+          description: Description of the slo or folder.
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    IdToSlosLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SlosLibraryBaseResponse'
+    Path:
+      required:
+      - path
+      - pathItems
+      type: object
+      properties:
+        pathItems:
+          type: array
+          description: Elements of the path.
+          items:
+            $ref: '#/components/schemas/PathItem'
+        path:
+          type: string
+          description: String representation of the path.
+    SloUsageInfo:
+      type: array
+      description: The usage info of logs and metrics SLOs.
+      items:
+        $ref: '#/components/schemas/SloUsage'
+    SloUsage:
+      properties:
+        sliType:
+          pattern: ^(Logs|Metrics|Monitors)$
+          type: string
+          description: The type of SLO usage info (Logs/Metrics/Monitor based).
+          example: Logs
+          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
+        usage:
+          type: integer
+          description: Current number of active Logs/Metrics/Monitors SLOs.
+          example: 100
+        limit:
+          type: integer
+          description: The limit of active Logs/Metrics/Monitors SLOs.
+          example: 100
+      description: The usage info of SLOs.
+    ContentCopyParams:
+      required:
+      - parentId
+      type: object
+      properties:
+        parentId:
+          type: string
+          description: Identifier of the parent folder to copy to.
+        name:
+          type: string
+          description: Optionally provide a new name.
+        description:
+          type: string
+          description: Optionally provide a new description.
+    PathItem:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the path element.
+        name:
+          type: string
+          description: Name of the path element.
+        description:
+          type: string
+          description: Description of the path element.
+    SlosLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/SlosLibraryBaseResponse'
+        path:
+          type: string
+          description: Path of the slo or folder.
+          example: /Slos/SampleFolder/TestSlo
+    SliStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          pattern: ^(Success|Error|InProgress)$
+          type: string
+          description: Whether the SLI computation is complete / had an error / is in progress.
+          example: Success
+        sliPercentage:
+          type: number
+          description: SLI percentage for the compliance period. Available if `status` is `Success`.
+          format: double
+          example: 95.14
+        errorBudgetRemainingPercentage:
+          type: number
+          description: Percentage of error budget remaining for the compliance period. Available if `status` is `Success`.
+          format: double
+        absoluteErrorBudgetRemaining:
+          type: string
+          description: Formatted string for the absolute error budget remaining (time duration for window-based SLIs, request count for request-based SLIs). Available if `status` is `Success`.
+          example: 1h56m, -3h45m, -241.3k req, 1.5k req
+        progressPercentage:
+          type: number
+          description: SLI computation progress.
+          format: double
+      description: Status of the SLI computation. If the status is successful, also contains the SLI value and error budget remaining for the current compliance period.
   securitySchemes:
     basicAuth:
       type: http

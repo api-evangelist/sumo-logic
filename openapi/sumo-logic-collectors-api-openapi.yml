@@ -1,24 +1,9 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Sumo Logic REST Collectors API
   description: 'Sumo Logic is a cloud-native log analytics, observability, and security
 
-    platform. The REST API exposes search jobs, dashboards, metrics, monitors and
-
-    alerts, content management, roles, users, collectors, connections, partitions,
-
-    lookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.
-
-
-    Sumo Logic operates multiple regional deployments. Each deployment exposes a
-
-    deployment-specific API endpoint; the `servers` section below enumerates them.
-
-    Authentication uses HTTP Basic with the Access ID as username and Access Key as
-
-    password, or service-account credentials.
-
-    '
+    platform.'
   version: 1.0.0
   contact:
     name: Sumo Logic Help

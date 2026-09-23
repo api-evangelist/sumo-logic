@@ -1,7 +1,9 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sumo Logic accessKeyManagement spanAnalytics API
-  description: "# Getting Started\nWelcome to the Sumo Logic API reference. You can use these APIs to interact with the Sumo Logic platform. For information on Collector and Search Job APIs, see our [API home page](https://help.sumologic.com/docs/api).\n## API Endpoints\nSumo Logic has several deployments in different geographic locations. You'll need to use the Sumo Logic API endpoint corresponding to your geographic location. See the table below for the different API endpoints by deployment. For details determining your account's deployment, see [API endpoints](https://help.sumologic.com/?cid=3011).\n\n  <table>\n    <tr>\n      <td> <strong>Deployment</strong> </td>\n      <td> <strong>Endpoint</strong> </td>\n    </tr>\n    <tr>\n      <td> AU </td>\n      <td> https://api.au.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> CA </td>\n      <td> https://api.ca.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> DE </td>\n      <td> https://api.de.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> EU </td>\n      <td> https://api.eu.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> FED </td>\n      <td> https://api.fed.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> IN </td>\n      <td> https://api.in.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> JP </td>\n      <td> https://api.jp.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> KR </td>\n      <td> https://api.kr.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US1 </td>\n      <td> https://api.sumologic.com/api/ </td>\n    </tr>\n    <tr>\n      <td> US2 </td>\n      <td> https://api.us2.sumologic.com/api/ </td>\n    </tr>\n  </table>\n\n## Authentication\nSumo Logic supports the following options for API authentication:\n- Access ID and Access Key\n- Base64 encoded Access ID and Access Key\n\nSee [Access Keys](https://help.sumologic.com/docs/manage/security/access-keys) to generate an Access Key. Make sure to copy the key you create, because it is displayed only once.\nWhen you have an Access ID and Access Key you can execute requests such as the following:\n  ```bash\n  curl -u \"<accessId>:<accessKey>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\nWhere `deployment` is either `au`, `ca`, `de`, `eu`, `fed`, `in`, `jp`, `us1`, or `us2`. See [API endpoints](#section/API-Endpoints) for details.\n\nIf you prefer to use basic access authentication, you can do a Base64 encoding of your `<accessId>:<accessKey>` to authenticate your HTTPS request. The following is an example request, replace the placeholder `<encoded>` with your encoded Access ID and Access Key string:\n  ```bash\n  curl -H \"Authorization: Basic <encoded>\" -X GET https://api.<deployment>.sumologic.com/api/v1/users\n  ```\n\n\nRefer to [API Authentication](https://help.sumologic.com/?cid=3012) for a Base64 example.\n\n## Status Codes\nGeneric status codes that apply to all our APIs. See the [HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) for reference.\n  <table>\n    <tr>\n      <td> <strong>HTTP Status Code</strong> </td>\n      <td> <strong>Error Code</strong> </td>\n      <td> <strong>Description</strong> </td>\n    </tr>\n    <tr>\n      <td> 301 </td>\n      <td> moved </td>\n      <td> The requested resource SHOULD be accessed through returned URI in Location Header. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---301-error---moved) for details.</td>\n    </tr>\n    <tr>\n      <td> 401 </td>\n      <td> unauthorized </td>\n      <td> Credential could not be verified.</td>\n    </tr>\n    <tr>\n      <td> 403 </td>\n      <td> forbidden </td>\n      <td> This operation is not allowed for your account type or the user doesn't have the role capability to perform this action. See [troubleshooting](https://help.sumologic.com/docs/api/troubleshooting/#api---401-error---credential-could-not-be-verified) for details.</td>\n    </tr>\n    <tr>\n      <td> 404 </td>\n      <td> notfound </td>\n      <td> Requested resource could not be found. </td>\n    </tr>\n    <tr>\n      <td> 405 </td>\n      <td> method.unsupported </td>\n      <td> Unsupported method for URL. </td>\n    </tr>\n    <tr>\n      <td> 415 </td>\n      <td> contenttype.invalid </td>\n      <td> Invalid content type. </td>\n    </tr>\n    <tr>\n      <td> 429 </td>\n      <td> rate.limit.exceeded </td>\n      <td> The API request rate is higher than 4 request per second or inflight API requests are higher than 10 request per second. </td>\n    </tr>\n    <tr>\n      <td> 500 </td>\n      <td> internal.error </td>\n      <td> Internal server error. </td>\n    </tr>\n    <tr>\n      <td> 503 </td>\n      <td> service.unavailable </td>\n      <td> Service is currently unavailable. </td>\n    </tr>\n  </table>\n\n## Filtering\nSome API endpoints support filtering results on a specified set of fields. Each endpoint that supports filtering will list the fields that can be filtered. Multiple fields can be combined by using an ampersand `&` character.\n\nExample: To get user with email `john@demo.com`:\n  ```bash\n  api.sumologic.com/v1/users?email=john@demo.com\n  ```\n\n## Sorting\nSome API endpoints support sorting fields by using the `sortBy` query parameter. The default sort order is ascending. Prefix the field with a minus sign `-` to sort in descending order.\n\nFor example, to get 20 users sorted by their `email` in descending order:\n  ```bash\n  api.sumologic.com/v1/users?limit=20&sort=-email\n  ```\n\n## Asynchronous Request\nAsynchronous requests do not wait for results, instead they immediately respond back with a job identifier while the job runs in the background. You can use the job identifier to track the status of the asynchronous job request. Here is a typical flow for an asynchronous request.\n1. Start an asynchronous job. On success, a job identifier is returned. The job identifier uniquely identifies\n  your asynchronous job.\n\n2. Once started, use the job identifier from step 1 to track the status of your asynchronous job. An asynchronous\n  request will typically provide an endpoint to poll for the status of asynchronous job. A successful response\n  from the status endpoint will have the following structure:\n  ```json\n  {\n      \"status\": \"Status of asynchronous request\",\n      \"statusMessage\": \"Optional message with additional information in case request succeeds\",\n      \"error\": \"Error object in case request fails\"\n  }\n  ```\n  The `status` field can have one of the following values:\n    1. `Success`: The job succeeded. The `statusMessage` field might have additional information.\n    2. `InProgress`: The job is still running.\n    3. `Failed`: The job failed. The `error` field in the response will have more information about the failure.\n\n3. Some asynchronous APIs may provide a third endpoint (like [export result](#operation/getAsyncExportResult))\n  to fetch the result of an asynchronous job.\n\n\n### Example\nLet's say we want to export a folder with the identifier `0000000006A2E86F`. We will use the [async export](#operation/beginAsyncExport) API to export all the content under the folder with `id=0000000006A2E86F`.\n1. Start an export job for the folder\n  ```bash\n  curl -X POST -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export\n  ```\n  See [authentication section](#section/Authentication) for more details about `accessId`, `accessKey`, and\n  `deployment`.\n  On success, you will get back a job identifier. In the response below, `C03E086C137F38B4` is the job identifier.\n  ```bash\n  {\n      \"id\": \"C03E086C137F38B4\"\n  }\n  ```\n\n2. Now poll for the status of the asynchronous job with the [status](#operation/getAsyncExportStatus) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/status\n  ```\n  You may get a response like\n  ```json\n  {\n      \"status\": \"InProgress\",\n      \"statusMessage\": null,\n      \"error\": null\n  }\n  ```\n  It implies the job is still in progress. Keep polling till the status is either `Success` or `Failed`.\n\n3. When the asynchronous job completes (`status != \"InProgress\"`), you can fetch the results with the\n  [export result](#operation/getAsyncExportResult) endpoint.\n  ```bash\n  curl -X GET -u \"<accessId>:<accessKey>\" https://api.<deployment>.sumologic.com/api/v2/content/0000000006A2E86F/export/C03E086C137F38B4/result\n  ```\n\n  The asynchronous job may fail (`status == \"Failed\"`). You can look at the `error` field for more details.\n  ```json\n  {\n      \"status\": \"Failed\",\n      \"errors\": {\n          \"code\": \"content1:too_many_items\",\n          \"message\": \"Too many objects: object count(1100) was greater than limit 1000\"\n      }\n  }\n  ```\n\n\n## Rate Limiting\n* A rate limit of four API requests per second (240 requests per minute) applies to all API calls from a user.\n* A rate limit of 10 concurrent requests to any API endpoint applies to an access key.\n\nIf a rate is exceeded, a rate limit exceeded 429 status code is returned.\n\n## Generating Clients\nYou can use [OpenAPI Generator](https://openapi-generator.tech) to generate clients from the YAML file to access the API.\n\n### Using [NPM](https://www.npmjs.com/get-npm)\n1. Install [NPM package wrapper](https://github.com/openapitools/openapi-generator-cli) globally, exposing the CLI\n  on the command line:\n  ```bash\n  npm install @openapitools/openapi-generator-cli -g\n  ```\n  You can see detailed instructions [here](https://openapi-generator.tech/docs/installation#npm).\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n\n\n### Using [Homebrew](https://brew.sh/)\n1. Install OpenAPI Generator\n  ```bash\n  brew install openapi-generator\n  ```\n\n2. Download the [YAML file](/docs/sumologic-api.yaml) and save it locally. Let's say the file is saved as `sumologic-api.yaml`.\n3. Use the following command to generate `python` client side code inside the `sumo/client/python` directory:\n  ```bash\n  openapi-generator generate -i sumologic-api.yaml -g python -o sumo/client/python\n  ```\n"
+  title: Sumo Logic Span Analytics API
+  description: '# Getting Started
+
+    Welcome to the Sumo Logic API reference.'
   version: 1.0.0
   x-logo:
     url: ./sumologic_logo.png
@@ -33,17 +35,15 @@ tags:
   description: 'Span Analytics API
 
 
-    The Span Analytics API allows you to browse spans collected in the system. You can execute queries to find individual spans matching provided search criteria as well as run aggregated span queries and retrieve their results. For more information, see [Spans](https://help.sumologic.com/docs/apm/traces/spans).
-
-    '
+    The Span Analytics API allows you to browse spans collected in the system. You can execute queries to find individual spans matching provided search criteria as well as run aggregated span queries and retrieve their results. For more information, see Spans.'
   x-displayName: Span Analytics
 paths:
   /v1/tracing/spanquery:
     post:
       tags:
       - spanAnalytics
-      summary: Run A Span Analytics Query Asynchronously.
-      description: Execute a span analytics query and get the id to fetch its status and results. Use the [Span Query Status](#operation/getSpanQueryStatus) endpoint to check a query status. When the query has been completed, use the [Span Query Result](#operation/getSpanQueryResult) endpoint to get the result of the asynchronous query.
+      summary: Run A Span Analytics Query Asynchronously
+      description: Execute a span analytics query and get the id to fetch its status and results. Use the Span Query Status endpoint to check a query status. When the query has been completed, use the Span Query Result endpoint to get the result of the asynchronous query.
       operationId: createSpanQuery
       parameters: []
       requestBody:
@@ -70,7 +70,7 @@ paths:
     delete:
       tags:
       - spanAnalytics
-      summary: Cancel A Span Analytics Query.
+      summary: Cancel A Span Analytics Query
       description: Cancel a currently processed span search query with the given id.
       operationId: cancelSpanQuery
       parameters:
@@ -94,8 +94,8 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get A Span Analytics Query Status.
-      description: Get a status of a span analytics query with the given id. When the query has been completed, use the [Span Query Result](#operation/getSpanQueryResult) endpoint to get the result of the asynchronous query.
+      summary: Get A Span Analytics Query Status
+      description: Get a status of a span analytics query with the given id. When the query has been completed, use the Span Query Result endpoint to get the result of the asynchronous query.
       operationId: getSpanQueryStatus
       parameters:
       - name: queryId
@@ -122,7 +122,7 @@ paths:
     put:
       tags:
       - spanAnalytics
-      summary: Pause A Span Analytics Query.
+      summary: Pause A Span Analytics Query
       description: Pause a currently processed span search query with the given id.
       operationId: pauseSpanQuery
       parameters:
@@ -146,7 +146,7 @@ paths:
     put:
       tags:
       - spanAnalytics
-      summary: Resume A Span Analytics Query.
+      summary: Resume A Span Analytics Query
       description: Resume a previously paused span search query with the given id.
       operationId: resumeSpanQuery
       parameters:
@@ -170,7 +170,7 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get Results Of A Span Analytics Query.
+      summary: Get Results Of A Span Analytics Query
       description: Get a list of spans matching a query with the specified id. The response is paginated with a default limit of 100 spans per page.
       operationId: getSpanQueryResult
       parameters:
@@ -223,7 +223,7 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get A List Of Facets Of A Span Analytics Query.
+      summary: Get A List Of Facets Of A Span Analytics Query
       description: Get a list of facets of a span analytics query with the specified id.
       operationId: getSpanQueryFacets
       parameters:
@@ -258,7 +258,7 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get Span Analytics Query Aggregated Results.
+      summary: Get Span Analytics Query Aggregated Results
       description: Get span aggregation results for an aggregated span analytics query with the specified id. Only aggregated rows being part of the executed query will have matching results in the response of this endpoint.
       operationId: getSpanQueryAggregates
       parameters:
@@ -286,7 +286,7 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get Filter Fields For Span Analytics Queries.
+      summary: Get Filter Fields For Span Analytics Queries
       description: Get a list of available fields which can be used in span analytics queries.
       operationId: getSpanQueryFields
       parameters: []
@@ -307,7 +307,7 @@ paths:
     get:
       tags:
       - spanAnalytics
-      summary: Get Span Analytics Query Filter Field Values.
+      summary: Get Span Analytics Query Filter Field Values
       description: Get a list of available values for the given span analytics query filter field. Not all fields support value listing. The response is paginated with a default limit of 10 field values per page.
       operationId: getSpanQueryFieldValues
       parameters:
@@ -354,27 +354,73 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SpanQueryAggregateResult:
+    ErrorResponse:
       required:
-      - series
-      - status
+      - errors
+      - id
       type: object
       properties:
-        status:
-          pattern: ^(Processing|Finished|Error|Paused)$
+        id:
           type: string
-          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
-          example: Processing
-          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
-        statusMessage:
-          type: string
-          description: Descriptive message of the status
-          example: Finished successfully
-        series:
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
           type: array
-          description: The series returned from a search.
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
           items:
-            $ref: '#/components/schemas/SpanQueryAggregateDataSeries'
+            $ref: '#/components/schemas/ErrorDescription'
+    SpanQueryResultSpansResponse:
+      required:
+      - spanPage
+      type: object
+      properties:
+        spanPage:
+          type: array
+          description: List of trace spans.
+          items:
+            $ref: '#/components/schemas/SpanQuerySpanData'
+        next:
+          type: string
+          description: Next continuation token.
+          example: Mi93V0ZqTTBzaW89
+    TraceFieldValuesResponse:
+      required:
+      - fieldValues
+      - totalCount
+      type: object
+      properties:
+        fieldValues:
+          type: array
+          description: List of filter field values.
+          items:
+            type: string
+        totalCount:
+          type: integer
+          description: Total number of values for a field matching the query. Can be approximated when it's above 3000.
+          format: int64
+          example: 1234
+        next:
+          type: string
+          description: Next continuation token.
+          example: Mi93V0ZqTTBzaW89
+    TraceSpanStatus:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'Status code of the span. Possible values: `OK`, `ERROR`, `UNKNOWN`.'
+          example: OK
+        message:
+          type: string
+          description: Optional descriptive message about the status, could be an http status code or the kind of an error, e.g. OSError.
+          example: '404'
     SpanQueryRow:
       required:
       - queryString
@@ -389,30 +435,51 @@ components:
           type: string
           description: An identifier used to reference this particular row of the query request. Within a query, row ids must have distinct values.
           example: A
-    SpanQueryAggregatePointData:
+    TimeRangeBoundary:
       required:
-      - y
+      - type
       type: object
       properties:
-        x:
-          type: number
-          description: Value that represents a point on the x axis.
-          format: double
-          example: 1.0
-        y:
+        type:
           type: string
-          description: Value that represents a point on the y axis.
-          example: '12.3'
-        xAxisValues:
+          description: 'Type of the time range boundary. Value must be from list: - `RelativeTimeRangeBoundary`, - `EpochTimeRangeBoundary`, - `Iso8601TimeRangeBoundary`, - `LiteralTimeRangeBoundary`.'
+          example: RelativeTimeRangeBoundary
+      discriminator:
+        propertyName: type
+    SpanQueryAggregateMetaData:
+      required:
+      - data
+      type: object
+      properties:
+        data:
           maxProperties: 1000
           type: object
           additionalProperties:
             type: string
-          description: Values that represents a point on the x axis.
+          description: The value of the metadata.
           example:
-            operation: /get/accounts
-            service: accountService
+            deployment: dev
+            cluster: frontend
+            instance: frontend-12
           default: {}
+    SpanQueryRowError:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: The error code.
+          example: spanquery:query_validation_error
+        message:
+          type: string
+          description: Short description of the occured error.
+          example: Query A was invalid
+        details:
+          type: string
+          description: Details about the occured error.
+          example: '[1.78] failure: ''('' expected but '')'' found.'
     SpanQuerySpanData:
       required:
       - duration
@@ -473,192 +540,6 @@ components:
           description: Metadata attached to the span.
           example:
             _sourceCategory: account-backend
-    TraceFieldDetail:
-      required:
-      - field
-      - fieldType
-      - type
-      type: object
-      properties:
-        field:
-          type: string
-          description: Filter field name.
-          example: operation
-        fieldType:
-          pattern: ^(SpanAttribute|SpanEventAttribute)$
-          type: string
-          description: 'Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`.'
-          example: SpanEventAttribute
-          default: SpanAttribute
-          x-pattern-message: 'Should be one of: `SpanAttribute`, `SpanEventAttribute`.'
-        valueListing:
-          type: boolean
-          description: Indicates whether values for this field can be listed.
-          example: false
-        description:
-          type: string
-          description: Short description of the field.
-          example: A piece of the workflow represented by a span
-        type:
-          type: string
-          description: 'The type the values of this field will have. Possible values: `DoubleTracingValue`, `IntegerTracingValue`, `StringTracingValue`, `DateTimeTracingValue`.'
-          example: StringTracingValue
-        noValuesReason:
-          $ref: '#/components/schemas/NoTraceFieldValuesReason'
-    SpanQueryRequest:
-      required:
-      - queryRows
-      - timeRange
-      type: object
-      properties:
-        queryRows:
-          type: array
-          description: A list of span analytics queries.
-          items:
-            $ref: '#/components/schemas/SpanQueryRow'
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-        timeZone:
-          type: string
-          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
-          default: UTC
-    TraceFieldValuesResponse:
-      required:
-      - fieldValues
-      - totalCount
-      type: object
-      properties:
-        fieldValues:
-          type: array
-          description: List of filter field values.
-          items:
-            type: string
-        totalCount:
-          type: integer
-          description: Total number of values for a field matching the query. Can be approximated when it's above 3000.
-          format: int64
-          example: 1234
-        next:
-          type: string
-          description: Next continuation token.
-          example: Mi93V0ZqTTBzaW89
-    SpanQueryAggregateMetaData:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: The value of the metadata.
-          example:
-            deployment: dev
-            cluster: frontend
-            instance: frontend-12
-          default: {}
-    SpanQueryStatusResponse:
-      required:
-      - queryRows
-      - status
-      type: object
-      properties:
-        queryRows:
-          type: array
-          description: A list of span analytics queries.
-          items:
-            $ref: '#/components/schemas/SpanQueryRowStatus'
-        status:
-          pattern: ^(Processing|Finished|Error|Paused)$
-          type: string
-          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`'
-          example: Processing
-          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
-    SpanQueryRowFacet:
-      required:
-      - cardinality
-      - dataType
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the field facet.
-          example: _sourceHost
-        cardinality:
-          type: integer
-          description: The number of unique values this field occured.
-          format: int32
-          example: 3
-        dataType:
-          pattern: ^(String|Int|Long|Double|Boolean)$
-          type: string
-          description: Data type of the field.
-          example: String
-          x-pattern-message: Should be either `String`, `Int`, `Long`, `Double` or `Boolean`.
-        inSchema:
-          type: boolean
-          description: Indicates whether the field is available in the span schema.
-          example: false
-        valueFrequency:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-          description: Map of field value frequencies.
-          example:
-            _sourceHost: 34099
-    SpanQueryResultSpansResponse:
-      required:
-      - spanPage
-      type: object
-      properties:
-        spanPage:
-          type: array
-          description: List of trace spans.
-          items:
-            $ref: '#/components/schemas/SpanQuerySpanData'
-        next:
-          type: string
-          description: Next continuation token.
-          example: Mi93V0ZqTTBzaW89
-    SpanQueryFieldDetail:
-      allOf:
-      - $ref: '#/components/schemas/TraceFieldDetail'
-      - required:
-        - inSchema
-        type: object
-        properties:
-          inSchema:
-            type: boolean
-            description: Indicates whether the field is available in the schema.
-            example: false
-    SpanQueryResultFacetsResponse:
-      required:
-      - facets
-      type: object
-      properties:
-        facets:
-          type: array
-          description: List of facets.
-          items:
-            $ref: '#/components/schemas/SpanQueryRowFacet'
-    TraceSpanStatus:
-      required:
-      - code
-      type: object
-      properties:
-        code:
-          type: string
-          description: 'Status code of the span. Possible values: `OK`, `ERROR`, `UNKNOWN`.'
-          example: OK
-        message:
-          type: string
-          description: Optional descriptive message about the status, could be an http status code or the kind of an error, e.g. OSError.
-          example: '404'
     SpanQueryAggregateAggregateData:
       required:
       - avg
@@ -698,24 +579,41 @@ components:
           description: The number of values in the series.
           format: double
           example: 600
-    SpanQueryAggregateResponse:
+    SpanQueryRowFacet:
       required:
-      - result
+      - cardinality
+      - dataType
+      - name
       type: object
       properties:
-        result:
-          $ref: '#/components/schemas/SpanQueryAggregateResult'
-    TimeRangeBoundary:
-      required:
-      - type
-      type: object
-      properties:
-        type:
+        name:
           type: string
-          description: 'Type of the time range boundary. Value must be from list: - `RelativeTimeRangeBoundary`, - `EpochTimeRangeBoundary`, - `Iso8601TimeRangeBoundary`, - `LiteralTimeRangeBoundary`.'
-          example: RelativeTimeRangeBoundary
-      discriminator:
-        propertyName: type
+          description: Name of the field facet.
+          example: _sourceHost
+        cardinality:
+          type: integer
+          description: The number of unique values this field occured.
+          format: int32
+          example: 3
+        dataType:
+          pattern: ^(String|Int|Long|Double|Boolean)$
+          type: string
+          description: Data type of the field.
+          example: String
+          x-pattern-message: Should be either `String`, `Int`, `Long`, `Double` or `Boolean`.
+        inSchema:
+          type: boolean
+          description: Indicates whether the field is available in the span schema.
+          example: false
+        valueFrequency:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Map of field value frequencies.
+          example:
+            _sourceHost: 34099
     NoTraceFieldValuesReason:
       required:
       - code
@@ -732,41 +630,100 @@ components:
           type: string
           description: A short English-language description of the reason.
           example: Autocomplete has been disabled for this field due to high cardinality.
-    SpanQueryRowStatus:
+    SpanQueryResultFacetsResponse:
       required:
-      - count
+      - facets
+      type: object
+      properties:
+        facets:
+          type: array
+          description: List of facets.
+          items:
+            $ref: '#/components/schemas/SpanQueryRowFacet'
+    SpanQueryRowResponse:
+      required:
+      - isAggregation
       - rowId
-      - status
       type: object
       properties:
         rowId:
           type: string
           description: A unique identifier of the query.
           example: A
-        status:
-          pattern: ^(Processing|Finished|Error|Paused)$
-          type: string
-          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
-          example: Processing
-          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
-        statusMessage:
-          type: string
-          description: Descriptive message of the status.
-          example: Finished successfully
-        count:
-          minimum: 0
-          type: integer
-          description: Number of results matching the query
-          format: int64
-          example: 3215
-        approximatedFieldCounts:
+        errors:
+          type: array
+          description: List of errors which occured when executing the query
+          items:
+            $ref: '#/components/schemas/SpanQueryRowError'
+        isAggregation:
           type: boolean
-          description: Indicates whether facet field cardinality counts are approximated or not.
-          example: false
-        facetsCompleted:
+          description: Indicates whether this query is an aggregation
+          example: true
+          default: false
+        executedQuery:
+          type: string
+          description: The executed query after rewriting
+          example: _index=_trace_spans traceId=00000000002317A9
+    SpanQueryFieldsResponse:
+      required:
+      - fields
+      type: object
+      properties:
+        fields:
+          type: array
+          description: List of span fields.
+          items:
+            $ref: '#/components/schemas/SpanQueryFieldDetail'
+    SpanQueryRequest:
+      required:
+      - queryRows
+      - timeRange
+      type: object
+      properties:
+        queryRows:
+          type: array
+          description: A list of span analytics queries.
+          items:
+            $ref: '#/components/schemas/SpanQueryRow'
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+        timeZone:
+          type: string
+          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+          default: UTC
+    TraceFieldDetail:
+      required:
+      - field
+      - fieldType
+      - type
+      type: object
+      properties:
+        field:
+          type: string
+          description: Filter field name.
+          example: operation
+        fieldType:
+          pattern: ^(SpanAttribute|SpanEventAttribute)$
+          type: string
+          description: 'Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`.'
+          example: SpanEventAttribute
+          default: SpanAttribute
+          x-pattern-message: 'Should be one of: `SpanAttribute`, `SpanEventAttribute`.'
+        valueListing:
           type: boolean
-          description: Indicates whether facets calculation has completed.
+          description: Indicates whether values for this field can be listed.
           example: false
+        description:
+          type: string
+          description: Short description of the field.
+          example: A piece of the workflow represented by a span
+        type:
+          type: string
+          description: 'The type the values of this field will have. Possible values: `DoubleTracingValue`, `IntegerTracingValue`, `StringTracingValue`, `DateTimeTracingValue`.'
+          example: StringTracingValue
+        noValuesReason:
+          $ref: '#/components/schemas/NoTraceFieldValuesReason'
     ResolvableTimeRange:
       required:
       - type
@@ -806,6 +763,76 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    SpanQueryRowStatus:
+      required:
+      - count
+      - rowId
+      - status
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: A unique identifier of the query.
+          example: A
+        status:
+          pattern: ^(Processing|Finished|Error|Paused)$
+          type: string
+          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
+          example: Processing
+          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
+        statusMessage:
+          type: string
+          description: Descriptive message of the status.
+          example: Finished successfully
+        count:
+          minimum: 0
+          type: integer
+          description: Number of results matching the query
+          format: int64
+          example: 3215
+        approximatedFieldCounts:
+          type: boolean
+          description: Indicates whether facet field cardinality counts are approximated or not.
+          example: false
+        facetsCompleted:
+          type: boolean
+          description: Indicates whether facets calculation has completed.
+          example: false
+    SpanQueryAggregatePointData:
+      required:
+      - y
+      type: object
+      properties:
+        x:
+          type: number
+          description: Value that represents a point on the x axis.
+          format: double
+          example: 1.0
+        y:
+          type: string
+          description: Value that represents a point on the y axis.
+          example: '12.3'
+        xAxisValues:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Values that represents a point on the x axis.
+          example:
+            operation: /get/accounts
+            service: accountService
+          default: {}
+    BeginBoundedTimeRange:
+      allOf:
+      - $ref: '#/components/schemas/ResolvableTimeRange'
+      - required:
+        - from
+        type: object
+        properties:
+          from:
+            $ref: '#/components/schemas/TimeRangeBoundary'
+          to:
+            $ref: '#/components/schemas/TimeRangeBoundary'
     SpanQueryResponse:
       required:
       - queryId
@@ -827,54 +854,45 @@ components:
           default: false
         timeRange:
           $ref: '#/components/schemas/BeginBoundedTimeRange'
-    ErrorResponse:
+    SpanQueryAggregateResult:
       required:
-      - errors
-      - id
+      - series
+      - status
       type: object
       properties:
-        id:
+        status:
+          pattern: ^(Processing|Finished|Error|Paused)$
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
+          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
+          example: Processing
+          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
+        statusMessage:
+          type: string
+          description: Descriptive message of the status
+          example: Finished successfully
+        series:
           type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
+          description: The series returned from a search.
           items:
-            $ref: '#/components/schemas/ErrorDescription'
-    SpanQueryRowError:
+            $ref: '#/components/schemas/SpanQueryAggregateDataSeries'
+    SpanQueryAggregateResponse:
       required:
-      - code
-      - message
+      - result
       type: object
       properties:
-        code:
-          type: string
-          description: The error code.
-          example: spanquery:query_validation_error
-        message:
-          type: string
-          description: Short description of the occured error.
-          example: Query A was invalid
-        details:
-          type: string
-          description: Details about the occured error.
-          example: '[1.78] failure: ''('' expected but '')'' found.'
-    SpanQueryFieldsResponse:
-      required:
-      - fields
-      type: object
-      properties:
-        fields:
-          type: array
-          description: List of span fields.
-          items:
-            $ref: '#/components/schemas/SpanQueryFieldDetail'
+        result:
+          $ref: '#/components/schemas/SpanQueryAggregateResult'
+    SpanQueryFieldDetail:
+      allOf:
+      - $ref: '#/components/schemas/TraceFieldDetail'
+      - required:
+        - inSchema
+        type: object
+        properties:
+          inSchema:
+            type: boolean
+            description: Indicates whether the field is available in the schema.
+            example: false
     SpanQueryAggregateDataSeries:
       required:
       - dataPoints
@@ -919,41 +937,23 @@ components:
           description: Type of the values in the series.
           example: DOUBLE
           x-pattern-message: Should be either `STRING`, `DOUBLE`.
-    BeginBoundedTimeRange:
-      allOf:
-      - $ref: '#/components/schemas/ResolvableTimeRange'
-      - required:
-        - from
-        type: object
-        properties:
-          from:
-            $ref: '#/components/schemas/TimeRangeBoundary'
-          to:
-            $ref: '#/components/schemas/TimeRangeBoundary'
-    SpanQueryRowResponse:
+    SpanQueryStatusResponse:
       required:
-      - isAggregation
-      - rowId
+      - queryRows
+      - status
       type: object
       properties:
-        rowId:
-          type: string
-          description: A unique identifier of the query.
-          example: A
-        errors:
+        queryRows:
           type: array
-          description: List of errors which occured when executing the query
+          description: A list of span analytics queries.
           items:
-            $ref: '#/components/schemas/SpanQueryRowError'
-        isAggregation:
-          type: boolean
-          description: Indicates whether this query is an aggregation
-          example: true
-          default: false
-        executedQuery:
+            $ref: '#/components/schemas/SpanQueryRowStatus'
+        status:
+          pattern: ^(Processing|Finished|Error|Paused)$
           type: string
-          description: The executed query after rewriting
-          example: _index=_trace_spans traceId=00000000002317A9
+          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`'
+          example: Processing
+          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
   securitySchemes:
     basicAuth:
       type: http

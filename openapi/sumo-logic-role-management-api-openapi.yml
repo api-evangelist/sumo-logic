@@ -1,0 +1,560 @@
+openapi: 3.2.0
+info:
+  title: Sumo Logic Role Management API
+  description: '# Getting Started
+
+    Welcome to the Sumo Logic API reference.'
+  version: 1.0.0
+  x-logo:
+    url: ./sumologic_logo.png
+servers:
+- url: https://api.au.sumologic.com/api/
+  description: AU deployment API server
+- url: https://api.ca.sumologic.com/api/
+  description: CA deployment API server
+- url: https://api.de.sumologic.com/api/
+  description: DE deployment API server
+- url: https://api.eu.sumologic.com/api/
+  description: EU deployment API server
+- url: https://api.fed.sumologic.com/api/
+  description: FED deployment API server
+- url: https://api.jp.sumologic.com/api/
+  description: JP deployment API server
+- url: https://api.kr.sumologic.com/api/
+  description: KR deployment API server
+- url: https://api.in.sumologic.com/api/
+  description: IN deployment API server
+- url: https://api.sumologic.com/api/
+  description: US1 deployment API server
+- url: https://api.us2.sumologic.com/api/
+  description: US2 deployment API server
+security:
+- basicAuth: []
+tags:
+- name: Role Management
+  description: 'Role management API.
+
+
+    Roles determine the functions that users are able to perform in Sumo Logic. To manage roles, you must have an administrator role or your role must have been assigned the manage users and roles capability. For more information, see Manage Roles.'
+  x-displayName: Roles
+paths:
+  /v1/roles:
+    get:
+      tags:
+      - Role Management
+      summary: Get A List Of Roles
+      description: Get a list of all the roles in the organization. The response is paginated with a default limit of 100 roles per page.
+      operationId: listRoles
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of roles returned in the response. The number of roles returned may be less than the `limit`.
+        required: false
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+          default: 100
+      - name: token
+        in: query
+        description: Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.
+        required: false
+        schema:
+          type: string
+      - name: sortBy
+        in: query
+        description: Sort the list of roles by the `name` field.
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Only return roles matching the given name.
+        required: false
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        '200':
+          description: A paginated list of roles in the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRoleModelsResponse'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Role Management
+      summary: Create A New Role
+      description: Create a new role in the organization.
+      operationId: createRole
+      parameters: []
+      requestBody:
+        description: Information about the new role.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleDefinition'
+        required: true
+      responses:
+        '200':
+          description: The role has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleModel'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-tf-create: createRole
+  /v1/roles/{id}:
+    get:
+      tags:
+      - Role Management
+      summary: Get A Role
+      description: Get a role with the given identifier in the organization.
+      operationId: getRole
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the role to fetch.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Role object that was requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleModel'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-tf-read: getRole
+    put:
+      tags:
+      - Role Management
+      summary: Update A Role
+      description: Update an existing role in the organization.
+      operationId: updateRole
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the role to update.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information to update about the role.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleDefinition'
+        required: true
+      responses:
+        '200':
+          description: The user was successfully modified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleModel'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-tf-update: updateRole
+    delete:
+      tags:
+      - Role Management
+      summary: Delete A Role
+      description: Delete a role with the given identifier from the organization.
+      operationId: deleteRole
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the role to delete.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Role was deleted successfully.
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-tf-delete: deleteRole
+  /v1/roles/{roleId}/users/{userId}:
+    put:
+      tags:
+      - Role Management
+      summary: Assign A Role To A User
+      description: Assign a role to a user in the organization.
+      operationId: assignRoleToUser
+      parameters:
+      - name: roleId
+        in: path
+        description: Identifier of the role to assign.
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: Identifier of the user to assign the role to.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Role was successfully assigned to the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleModel'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Role Management
+      summary: Remove Role From A User
+      description: Remove a role from a user in the organization.
+      operationId: removeRoleFromUser
+      parameters:
+      - name: roleId
+        in: path
+        description: Identifier of the role to delete.
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: Identifier of the user to remove the role from.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Role was successfully removed from the user.
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    UpdateRoleDefinition:
+      required:
+      - capabilities
+      - description
+      - filterPredicate
+      - name
+      - users
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Name of the role.
+          example: DataAdmin
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Description of the role.
+          example: Manage data of the org.
+        filterPredicate:
+          type: string
+          description: A search filter to restrict access to specific logs. The filter is silently added to the beginning of each query a user runs. For example, using '!_sourceCategory=billing' as a filter predicate will prevent users assigned to the role from viewing logs from the source category named 'billing'.
+          example: '!_sourceCategory=billing'
+        users:
+          type: array
+          description: List of user identifiers to assign the role to.
+          example:
+          - 0000000006743FE0
+          - 0000000005FCE0EE
+          items:
+            type: string
+        capabilities:
+          type: array
+          description: "List of [capabilities](https://help.sumologic.com/Manage/Users-and-Roles/Manage-Roles/Role-Capabilities) associated with this role. Valid values are\n### Data Management\n  - viewCollectors\n  - manageCollectors\n  - manageBudgets\n  - manageDataVolumeFeed\n  - viewFieldExtraction\n  - manageFieldExtractionRules\n  - manageS3DataForwarding\n  - manageContent\n  - manageApps\n  - dataVolumeIndex\n  - manageConnections\n  - viewScheduledViews\n  - manageScheduledViews\n  - viewPartitions\n  - managePartitions\n  - viewFields\n  - manageFields\n  - viewAccountOverview\n  - manageTokens\n  - downloadSearchResults\n\n### Entity management\n  - manageEntityTypeConfig\n\n### Metrics\n  - metricsTransformation\n  - metricsExtraction\n  - metricsRules\n\n### Security\n  - managePasswordPolicy\n  - ipAllowlisting\n  - createAccessKeys\n  - manageAccessKeys\n  - manageSupportAccountAccess\n  - manageAuditDataFeed\n  - manageSaml\n  - shareDashboardOutsideOrg\n  - manageOrgSettings\n  - changeDataAccessLevel\n\n### Dashboards\n  - shareDashboardWorld\n  - shareDashboardAllowlist\n\n### UserManagement\n  - manageUsersAndRoles\n\n### Observability\n  - searchAuditIndex\n  - auditEventIndex\n\n### Cloud SIEM Enterprise\n  - viewCse\n\n### Alerting\n  - viewMonitorsV2\n  - manageMonitorsV2\n  - viewAlerts"
+          example:
+          - manageContent
+          - manageDataVolumeFeed
+          - manageFieldExtractionRules
+          - manageS3DataForwarding
+          items:
+            type: string
+        autofillDependencies:
+          type: boolean
+          description: Set this to true if you want to automatically append all missing capability requirements. If set to false an error will be thrown if any capabilities are missing their dependencies.
+          default: true
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    RoleModel:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateRoleDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the role.
+            example: 0000000000E20FE3
+          systemDefined:
+            type: boolean
+            description: Role is system or user defined.
+            example: false
+      x-tf-generated-properties: id,name,description,filterPredicate,capabilities
+      x-tf-resource-name: Role
+    ListRoleModelsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of roles.
+          items:
+            $ref: '#/components/schemas/RoleModel'
+        next:
+          type: string
+          description: Next continuation token.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    CreateRoleDefinition:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Name of the role.
+          example: DataAdmin
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Description of the role.
+          example: Manage data of the org.
+        filterPredicate:
+          type: string
+          description: A search filter to restrict access to specific logs. The filter is silently added to the beginning of each query a user runs. For example, using '!_sourceCategory=billing' as a filter predicate will prevent users assigned to the role from viewing logs from the source category named 'billing'.
+          example: '!_sourceCategory=billing'
+        users:
+          type: array
+          description: List of user identifiers to assign the role to.
+          example:
+          - 0000000006743FE0
+          - 0000000005FCE0EE
+          items:
+            type: string
+        capabilities:
+          type: array
+          description: "List of [capabilities](https://help.sumologic.com/docs/manage/users-roles/roles/role-capabilities/) associated with this role. Valid values are\n### Data Management\n  - viewCollectors\n  - manageCollectors\n  - manageBudgets\n  - manageDataVolumeFeed\n  - viewFieldExtraction\n  - manageFieldExtractionRules\n  - manageS3DataForwarding\n  - manageContent\n  - manageApps\n  - dataVolumeIndex\n  - manageConnections\n  - viewScheduledViews\n  - manageScheduledViews\n  - viewPartitions\n  - managePartitions\n  - viewFields\n  - manageFields\n  - viewAccountOverview\n  - manageTokens\n  - downloadSearchResults\n  - manageIndexes\n  - manageDataStreams\n  - viewParsers\n  - viewDataStreams\n\n### Entity management\n  - manageEntityTypeConfig\n\n### Metrics\n  - metricsTransformation\n  - metricsExtraction\n  - metricsRules\n\n### Security\n  - managePasswordPolicy\n  - ipAllowlisting\n  - ipWhitelisting\n  - createAccessKeys\n  - manageAccessKeys\n  - manageSupportAccountAccess\n  - manageAuditDataFeed\n  - manageSaml\n  - shareDashboardOutsideOrg\n  - manageOrgSettings\n  - changeDataAccessLevel\n\n### Dashboards\n  - shareDashboardWorld\n  - shareDashboardAllowlist\n  - shareDashboardWhitelist\n\n### UserManagement\n  - manageUsersAndRoles\n\n### Observability\n  - searchAuditIndex\n  - auditEventIndex\n\n### Cloud SIEM Enterprise\n  - viewCse\n  - cseViewAutomations\n  - cseManageContextActions\n  - cseViewNetworkBlocks\n  - cseManageInsightTags\n  - cseViewRules\n  - cseViewThreatIntelligence\n  - cseCommentOnInsights\n  - cseViewEntityGroups\n  - cseManageEntityConfiguration\n  - cseManageNetworkBlocks\n  - cseManageMatchLists\n  - cseViewCustomInsights\n  - cseManageActions\n  - cseManageAutomations\n  - cseManageMappings\n  - cseManageThreatIntelligence\n  - cseViewActions\n  - cseCreateInsights\n  - cseManageTagSchemas\n  - cseInvokeInsights\n  - cseManageCustomEntityType\n  - cseViewTagSchemas\n  - cseDeleteInsights\n  - cseManageCustomInsights\n  - cseViewFileAnalysis\n  - cseManageFileAnalysis\n  - cseManageEntityCriticality\n  - cseViewEntityCriticality\n  - cseViewEntity\n  - cseManageCustomInsightStatuses\n  - cseViewContextActions\n  - cseViewMappings\n  - cseViewCustomEntityType\n  - cseManageEntityGroups\n  - cseViewCustomInsightStatuses\n  - cseViewEnrichments\n  - cseManageInsightSignals\n  - cseManageRules\n  - cseManageArtifacts\n  - cseViewMatchLists\n  - cseManageInsightPolicy\n  - cseManageEnrichments\n  - cseViewEntityConfiguration\n  - cseManageEntity\n  - cseExecuteAutomations\n  - cseManageSuppressedEntities\n  - cseManageInsightStatus  \n  - cseManageInsightAssignee\n  - cseManageFavoriteFields\n  - cseViewSuppressedEntities\n\n### Alerting\n  - viewMonitorsV2\n  - manageMonitorsV2\n  - viewAlerts\n  - viewMutingSchedules\n  - manageMutingSchedules\n  - adminMonitorsV2\n\n### SLO\n  - viewSlos\n  - manageSlos\n\n### CloudSoar\n  - cloudSoarPlaybooksAccess\n  - cloudSoarNotificationConfigure\n  - cloudSoarReportAll\n  - cloudSoarIncidentTriageAccess\n  - cloudSoarIncidentTaskView\n  - cloudSoarIncidentChangeOwnership\n  - cloudSoarIncidentNotesEdit\n  - cloudSoarAPIEmailEdit\n  - cloudSoarIncidentTemplatesAccess\n  - cloudSoarIncidentPlaybooksManage\n  - cloudSoarGeneralConfigure\n  - cloudSoarEntitiesAccess\n  - cloudSoarEntitiesBulkPhysicalDelete\n  - cloudSoarIncidentAttachmentsAccess\n  - cloudSoarAppCentralAccess\n  - cloudSoarBridgeMonitoringAccess\n  - viewCloudSoar\n  - cloudSoarIncidentView\n  - cloudSoarObservabilityAccess\n  - cloudSoarAPIEmailRead\n  - cloudSoarAppCentralExport\n  - cloudSoarWidgetsAll\n  - cloudSoarIncidentTaskReassign\n  - cloudSoarIntegrationsAccess\n  - cloudSoarCustomizationIncidentLabels\n  - cloudSoarAutomationRulesConfigure\n  - cloudSoarIncidentTaskAccessAll\n  - cloudSoarAuditAndInformationConfigureAuditTrail\n  - cloudSoarIncidentTriageEdit\n  - cloudSoarIncidentEdit\n  - cloudSoarNotificationTriage\n  - cloudSoarIncidentTriageBulkPhysicalDelete\n  - cloudSoarIncidentNotesAccess\n  - cloudSoarAPIUse\n  - cloudSoarIncidentPlaybooksEdit\n  - cloudSoarDashboardAll\n  - cloudSoarEntitiesManage\n  - cloudSoarIncidentTemplatesConfigure\n  - cloudSoarIncidentTriageAccessAll\n  - cloudSoarPlaybooksConfigure\n  - cloudSoarIncidentAccessAll\n  - cloudSoarCustomizationLogo\n  - cloudSoarIncidentTaskAccess\n  - cloudSoarIncidentTriageView\n  - cloudSoarIntegrationsConfigure\n  - cloudSoarIncidentManageInvestigators\n  - cloudSoarIncidentAccess\n  - cloudSoarAuditAndInformationLicenseInformation\n  - cloudSoarIncidentBulkOperations\n  - cloudSoarCustomizationFields\n  - cloudSoarIncidentTaskEdit\n  - cloudSoarDashboardAccess\n  - cloudSoarIncidentAttachmentsEdit\n  - cloudSoarIncidentFoldersEdit\n  - cloudSoarUserManagementGroups\n  - cloudSoarIncidentPlaybooksAccess\n  - cloudSoarIncidentWarRoomUse\n  - cloudSoarReportAccess\n  - cloudSoarAuditAndInformationAuditTrail\n  - cloudSoarAutomationRulesAccess\n  - cloudSoarIncidentTriageChangeOwnership\n  - cloudSoarObservabilityManagement"
+          example:
+          - manageContent
+          - manageDataVolumeFeed
+          - manageFieldExtractionRules
+          - manageS3DataForwarding
+          items:
+            type: string
+        autofillDependencies:
+          type: boolean
+          description: Set this to true if you want to automatically append all missing capability requirements. If set to false an error will be thrown if any capabilities are missing their dependencies.
+          default: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-tagGroups:
+- name: Archive Management
+  tags:
+  - archiveManagement
+- name: Health Events
+  tags:
+  - healthEvents
+- name: Infrequent Data Tier
+  tags:
+  - logSearchesEstimatedUsage
+- name: Ingest Budgets Management V2
+  tags:
+  - ingestBudgetManagementV2
+- name: Library Management
+  tags:
+  - appManagement
+  - appManagementV2
+  - contentManagement
+  - dashboardManagement
+  - folderManagement
+  - lookupManagement
+  - contentPermissions
+  - logSearchesManagement
+  - parsersLibraryManagement
+- name: Metrics
+  tags:
+  - metricsSearchesManagement
+  - transformationRuleManagement
+  - metricsQuery
+  - metricsSearchesManagementV2
+- name: Security Management
+  tags:
+  - accessKeyManagement
+  - oauthManagement
+  - accountManagement
+  - passwordPolicy
+  - policiesManagement
+  - samlConfigurationManagement
+  - serviceAllowlistManagement
+  - serviceAccountManagement
+  - scimUserManagement
+- name: Organizations Management
+  tags:
+  - orgsManagement
+- name: Settings Management
+  tags:
+  - connectionManagement
+  - dynamicParsingRuleManagement
+  - extractionRuleManagement
+  - fieldManagementV1
+  - partitionManagement
+  - scheduledViewManagement
+  - logsDataForwardingManagement
+  - dataDeletionRules
+- name: Tokens Management
+  tags:
+  - tokensLibraryManagement
+- name: Tracing
+  tags:
+  - traces
+  - spanAnalytics
+  - serviceMap
+- name: Users and Roles Management
+  tags:
+  - roleManagement
+  - roleManagementV2
+  - userManagement
+- name: Threat Intel Ingest Management
+  tags:
+  - threatIntelIngest
+  - threatIntelIngestProducer
+- name: OpenTelemetry Collector Management
+  tags:
+  - otCollectorManagementExternal
+- name: Source Template Management
+  tags:
+  - sourceTemplateManagementExternal
+- name: Schema Base Management
+  tags:
+  - schemaBaseManagement
+- name: Event Analytics Management
+  tags:
+  - eventAnalytics
+- name: Budget Management
+  tags:
+  - budgetManagement
+- name: Macro Management
+  tags:
+  - macroManagement
+- name: Muting Schedules Management
+  tags:
+  - mutingSchedulesLibraryManagement
+- name: SLO Management
+  tags:
+  - slosLibraryManagement
+- name: Monitor Management
+  tags:
+  - monitorsLibraryManagement

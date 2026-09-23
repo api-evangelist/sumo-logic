@@ -1,0 +1,569 @@
+openapi: 3.2.0
+info:
+  title: Sumo Logic Connection Management API
+  description: '# Getting Started
+
+    Welcome to the Sumo Logic API reference.'
+  version: 1.0.0
+  x-logo:
+    url: ./sumologic_logo.png
+servers:
+- url: https://api.au.sumologic.com/api/
+  description: AU deployment API server
+- url: https://api.ca.sumologic.com/api/
+  description: CA deployment API server
+- url: https://api.de.sumologic.com/api/
+  description: DE deployment API server
+- url: https://api.eu.sumologic.com/api/
+  description: EU deployment API server
+- url: https://api.fed.sumologic.com/api/
+  description: FED deployment API server
+- url: https://api.jp.sumologic.com/api/
+  description: JP deployment API server
+- url: https://api.kr.sumologic.com/api/
+  description: KR deployment API server
+- url: https://api.in.sumologic.com/api/
+  description: IN deployment API server
+- url: https://api.sumologic.com/api/
+  description: US1 deployment API server
+- url: https://api.us2.sumologic.com/api/
+  description: US2 deployment API server
+security:
+- basicAuth: []
+tags:
+- name: Connection Management
+  description: 'Connection management API.
+
+
+    Set up connections to send alerts to other tools. For more information, see Connections and Integrations.'
+  x-displayName: Connections
+paths:
+  /v1/connections:
+    get:
+      tags:
+      - Connection Management
+      summary: Get A List Of Connections
+      description: Get a list of all connections in the organization. The response is paginated with a default limit of 100 connections per page.
+      operationId: listConnections
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of connections returned in the response. The number of connections returned may be less than the `limit`.
+        required: false
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+          default: 100
+      - name: token
+        in: query
+        description: Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated list of connections in the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListConnectionsResponse'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Connection Management
+      summary: Create A New Connection
+      description: Create a new connection in the organization.
+      operationId: createConnection
+      parameters: []
+      requestBody:
+        description: Information about the new connection.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectionDefinition'
+        required: true
+      responses:
+        '200':
+          description: The connection has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/connections/test:
+    post:
+      tags:
+      - Connection Management
+      summary: Test A New Connection Url
+      description: Test a new connection url is valid and can connect.
+      operationId: testConnection
+      parameters:
+      - name: functionalities
+        in: query
+        description: 'A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`.'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+          default:
+          - alert
+        example: alert,resolution
+      - name: connectionId
+        in: query
+        description: Unique identifier of an existing connection to test. It should be provided when the request body of an existing connection contains masked authorization headers. If not provided, the authorization headers will not be correctly unmasked, and the test may fail due to unauthorized access.
+        required: false
+        schema:
+          type: string
+        example: 0000000000123ABC
+      requestBody:
+        description: Information about the new connection.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectionDefinition'
+        required: true
+      responses:
+        '200':
+          description: The connection url has been tested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestConnectionResponse'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/connections/incidentTemplates:
+    post:
+      tags:
+      - Connection Management
+      summary: Get Incident Templates For CloudSOAR Connections
+      description: Get incident templates for CloudSOAR connections.
+      operationId: getIncidentTemplates
+      parameters: []
+      requestBody:
+        description: Information about the new connection.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetIncidentTemplatesRequest'
+        required: false
+      responses:
+        '200':
+          description: A list of the incident templates for the given CloudSOAR account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIncidentTemplatesResponse'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/connections/{id}:
+    get:
+      tags:
+      - Connection Management
+      summary: Get A Connection
+      description: Get a connection with the given identifier.
+      operationId: getConnection
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of connection to return.
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+        schema:
+          type: string
+          default: WebhookConnection
+      responses:
+        '200':
+          description: Connection object that was requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Connection Management
+      summary: Update A Connection
+      description: Update an existing connection.
+      operationId: updateConnection
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the connection to update.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information to update about the connection.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectionDefinition'
+        required: true
+      responses:
+        '200':
+          description: The connection was successfully modified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Connection Management
+      summary: Delete A Connection
+      description: Delete a connection with the given identifier.
+      operationId: deleteConnection
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the connection to delete.
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+        required: true
+        schema:
+          pattern: ^(WebhookConnection|ServiceNowConnection)$
+          type: string
+          x-pattern-message: must be either `WebhookConnection` or `ServiceNowConnection`
+      responses:
+        '204':
+          description: Connection was deleted successfully.
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    Connection:
+      required:
+      - createdAt
+      - createdBy
+      - description
+      - id
+      - modifiedAt
+      - modifiedBy
+      - name
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of connection. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+        id:
+          type: string
+          description: Unique identifier for the connection.
+        name:
+          type: string
+          description: Name of the connection.
+        description:
+          type: string
+          description: Description of the connection.
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+      discriminator:
+        propertyName: type
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ConnectionDefinition:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        type:
+          pattern: ^(WebhookDefinition|ServiceNowDefinition)$
+          type: string
+          description: Type of connection. Valid values are `WebhookDefinition`, `ServiceNowDefinition`.
+          x-pattern-message: must be either `WebhookDefinition` or `ServiceNowDefinition`
+        name:
+          maxLength: 127
+          minLength: 1
+          type: string
+          description: Name of the connection.
+        description:
+          maxLength: 1024
+          type: string
+          description: Description of the connection.
+          default: ''
+      discriminator:
+        propertyName: type
+        mapping:
+          ServiceNowDefinition: '#/components/schemas/ServiceNowDefinition'
+          WebhookDefinition: '#/components/schemas/WebhookDefinition'
+    IncidentTemplate:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the incident template.
+        name:
+          type: string
+          description: Name of the incident template.
+    GetIncidentTemplatesRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Optional CloudSOAR domain URL to use for the API call to get incident templates.
+          example: https://staging.soar.sumologic.com/
+        authHeader:
+          type: string
+          description: Optional CloudSOAR authorization header to use for the API call to get incident templates.
+          example: SOMEAUTHHEADERSTRING
+        connectionId:
+          type: string
+          description: Optional connectionId to get incident templates for an existing CloudSOAR connection. If provided, the authHeader and url will be taken from the existing connection object.
+          example: 0000000000123ABC
+    TestConnectionResponse:
+      required:
+      - responseContent
+      - statusCode
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Status code of the response of the connection test.
+        responseContent:
+          type: string
+          description: Content of the response of the connection test.
+        alertStatusCode:
+          type: integer
+          description: Status code of the response of alert payload test.
+          format: int32
+          example: 200
+        alertResponseContent:
+          type: string
+          description: Content of the response of alert payload test.
+          example: ok
+        resolutionStatusCode:
+          type: integer
+          description: Status code of the response of resolution payload test.
+          format: int32
+          example: 200
+        resolutionResponseContent:
+          type: string
+          description: Content of the response of resolution payload test.
+          example: ok
+    GetIncidentTemplatesResponse:
+      required:
+      - templates
+      type: object
+      properties:
+        templates:
+          type: array
+          description: List of incident templates.
+          items:
+            $ref: '#/components/schemas/IncidentTemplate'
+    ListConnectionsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of connections.
+          items:
+            $ref: '#/components/schemas/Connection'
+        next:
+          type: string
+          description: Next continuation token.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-tagGroups:
+- name: Archive Management
+  tags:
+  - archiveManagement
+- name: Health Events
+  tags:
+  - healthEvents
+- name: Infrequent Data Tier
+  tags:
+  - logSearchesEstimatedUsage
+- name: Ingest Budgets Management V2
+  tags:
+  - ingestBudgetManagementV2
+- name: Library Management
+  tags:
+  - appManagement
+  - appManagementV2
+  - contentManagement
+  - dashboardManagement
+  - folderManagement
+  - lookupManagement
+  - contentPermissions
+  - logSearchesManagement
+  - parsersLibraryManagement
+- name: Metrics
+  tags:
+  - metricsSearchesManagement
+  - transformationRuleManagement
+  - metricsQuery
+  - metricsSearchesManagementV2
+- name: Security Management
+  tags:
+  - accessKeyManagement
+  - oauthManagement
+  - accountManagement
+  - passwordPolicy
+  - policiesManagement
+  - samlConfigurationManagement
+  - serviceAllowlistManagement
+  - serviceAccountManagement
+  - scimUserManagement
+- name: Organizations Management
+  tags:
+  - orgsManagement
+- name: Settings Management
+  tags:
+  - connectionManagement
+  - dynamicParsingRuleManagement
+  - extractionRuleManagement
+  - fieldManagementV1
+  - partitionManagement
+  - scheduledViewManagement
+  - logsDataForwardingManagement
+  - dataDeletionRules
+- name: Tokens Management
+  tags:
+  - tokensLibraryManagement
+- name: Tracing
+  tags:
+  - traces
+  - spanAnalytics
+  - serviceMap
+- name: Users and Roles Management
+  tags:
+  - roleManagement
+  - roleManagementV2
+  - userManagement
+- name: Threat Intel Ingest Management
+  tags:
+  - threatIntelIngest
+  - threatIntelIngestProducer
+- name: OpenTelemetry Collector Management
+  tags:
+  - otCollectorManagementExternal
+- name: Source Template Management
+  tags:
+  - sourceTemplateManagementExternal
+- name: Schema Base Management
+  tags:
+  - schemaBaseManagement
+- name: Event Analytics Management
+  tags:
+  - eventAnalytics
+- name: Budget Management
+  tags:
+  - budgetManagement
+- name: Macro Management
+  tags:
+  - macroManagement
+- name: Muting Schedules Management
+  tags:
+  - mutingSchedulesLibraryManagement
+- name: SLO Management
+  tags:
+  - slosLibraryManagement
+- name: Monitor Management
+  tags:
+  - monitorsLibraryManagement

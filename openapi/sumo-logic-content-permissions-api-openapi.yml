@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Sumo Logic Threat Intel Ingest API
+  title: Sumo Logic Content Permissions API
   description: '# Getting Started
 
     Welcome to the Sumo Logic API reference.'
@@ -31,130 +31,128 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: threatIntelIngest
-  description: 'Threat Intel Datastore Management API
+- name: Content Permissions
+  description: 'Content permissions API.
 
 
-    The Threat Intel Datastore Management API allows you to:
-
-    * Get information about the threat indicator datastore and sources.
-
-    * Delete the threat indicator database.
-
-    * View and set the retention period for threat intel indicators.
-
-
-    For more information, see Threat Intel Ingest Management'
-  x-displayName: Threat Intel Datastore Management
+    You can share your folders, searches, and dashboards with specific users or roles. For more information, see Share Content. You can perform the request as a Content Administrator by using the `isAdminMode` parameter. For more information, see Admin Mode.'
+  x-displayName: Permissions
 paths:
-  /v1/threatIntel/datastore/db:
+  /v2/content/{id}/permissions:
     get:
       tags:
-      - threatIntelIngest
-      summary: Get Threat Intel Indicators DB Information
-      description: Get threat intel indicators DB information, such as storage utilization and indicator counts
-      operationId: datastoreGet
-      responses:
-        '200':
-          description: Threat intel ingest DB information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatastoreStatusResponse'
-        default:
-          description: Operation failed with an error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      tags:
-      - threatIntelIngest
-      summary: Remove The Threat Intel Indicators DB
-      description: Removes the entire database and all indicators associated with this tenant
-      operationId: removeDatastore
-      responses:
-        '204':
-          description: Removing the indicator database succeeded
-        default:
-          description: Operation failed with an error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v1/threatIntel/datastore/retentionPeriod:
-    get:
-      tags:
-      - threatIntelIngest
-      summary: Get Threat Intel Indicators Store Retention Period In Terms Of Days
-      description: Get the threat intel indicators store retention period in terms of days.
-      operationId: retentionPeriod
-      responses:
-        '200':
-          description: Threat intel indicators store retention period.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatastoreRetentionPeriod'
-        default:
-          description: Operation failed with an error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    post:
-      tags:
-      - threatIntelIngest
-      summary: Set The Threat Intel Indicators Store Retention Period In Terms Of Days
-      description: Sets the threat intel indicators store retention period in terms of days.
-      operationId: setRetentionPeriod
-      parameters: []
-      requestBody:
-        description: The threat intel indicators store retention period in terms of days.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatastoreRetentionPeriod'
-        required: true
-      responses:
-        '200':
-          description: Threat intel indicators store retention period.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatastoreRetentionPeriod'
-        default:
-          description: Operation failed with an error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v1/threatIntel/datastore/dataSource/{dataSourceName}:
-    put:
-      tags:
-      - threatIntelIngest
-      summary: Updates Source Properties
-      description: Updates source properties
-      operationId: dataSourcePropertiesUpdate
+      - Content Permissions
+      summary: Get Permissions Of A Content Item
+      description: Returns content permissions of a content item with the given identifier.
+      operationId: getContentPermissions
       parameters:
-      - name: dataSourceName
+      - name: id
         in: path
-        description: Source name
+        description: The identifier of the content item.
         required: true
         schema:
           type: string
+      - name: explicitOnly
+        in: query
+        description: 'There are two permission types: explicit and implicit. Permissions specifically assigned to the content item are explicit. Permissions derived from a parent content item, like a folder are implicit. To return only explicit permissions set this to true.'
+        schema:
+          type: boolean
+          default: false
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of permissions for the requested content item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentPermissionResult'
+        default:
+          description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/{id}/permissions/add:
+    put:
+      tags:
+      - Content Permissions
+      summary: Add Permissions To A Content Item
+      description: Add permissions to a content item with the given identifier.
+      operationId: addContentPermissions
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the content item.
+        required: true
+        schema:
+          type: string
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
       requestBody:
-        description: Source properties
+        description: New permissions to add to the content item with the given identifier.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DataSourceProperties'
+              $ref: '#/components/schemas/ContentPermissionUpdateRequest'
         required: true
       responses:
-        '204':
-          description: Data source properties successfuly updated.
+        '200':
+          description: Updated permission object for the requested content item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentPermissionResult'
         default:
           description: Operation failed with an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/content/{id}/permissions/remove:
+    put:
+      tags:
+      - Content Permissions
+      summary: Remove Permissions From A Content Item
+      description: Remove permissions from a content item with the given identifier.
+      operationId: removeContentPermissions
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the content item.
+        required: true
+        schema:
+          type: string
+      - name: isAdminMode
+        in: header
+        description: Set this to "true" if you want to perform the request as a Content Administrator.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Permissions to remove from a content item with the given identifier.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentPermissionUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Updated permissions for the requested content item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentPermissionResult'
+        default:
+          description: Operation failed with an error. Check that your request is valid.
           content:
             application/json:
               schema:
@@ -181,34 +179,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    DatastoreStatusResponse:
-      required:
-      - diskSize
-      - indicatorCount
-      - indicatorLimit
-      - sourceStatus
-      type: object
-      properties:
-        diskSize:
-          type: integer
-          description: Total DB size in terms of disk bytes
-          format: int64
-          example: 1024
-        indicatorCount:
-          type: integer
-          description: Total number of indicators in the DB
-          format: int64
-          example: 100
-        indicatorLimit:
-          type: integer
-          description: Limit number of indicators supported in the DB
-          format: int64
-          example: 10000000
-        sourceStatus:
-          type: array
-          description: A list of sources and their individual DB sizes and indicator counts
-          items:
-            $ref: '#/components/schemas/DatastoreSourceStatusResponse'
     ErrorDescription:
       required:
       - code
@@ -233,63 +203,64 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    DatastoreRetentionPeriod:
+    ContentPermissionUpdateRequest:
       required:
-      - retentionPeriod
+      - contentPermissionAssignments
+      - notificationMessage
+      - notifyRecipients
       type: object
       properties:
-        retentionPeriod:
-          type: integer
-          description: Retention period in days.
-          format: int64
-          example: 120
-    DataSourceProperties:
-      type: object
-      properties:
-        enabled:
+        contentPermissionAssignments:
+          type: array
+          description: Content permissions to be updated.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+        notifyRecipients:
           type: boolean
-          description: True if enabled.
-          example: true
-        description:
+          description: Set this to "true" to notify the users who had a permission update.
+        notificationMessage:
           type: string
-          description: The data source description.
-          example: This is a stix1.2 data source.
-    DatastoreSourceStatusResponse:
+          description: The notification message sent to the users who had a permission update.
+    ContentPermissionResult:
       required:
-      - source
+      - explicitPermissions
       type: object
       properties:
-        source:
+        explicitPermissions:
+          type: array
+          description: Explicitly assigned content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+        implicitPermissions:
+          type: array
+          description: Implicitly inherited content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+    ContentPermissionAssignment:
+      required:
+      - contentId
+      - permissionName
+      - sourceId
+      - sourceType
+      type: object
+      properties:
+        permissionName:
+          pattern: ^(View|GrantView|Edit|GrantEdit|Manage|GrantManage)$
           type: string
-          description: The source name
-          example: unit42_source
-        description:
+          description: 'Content permission name. Valid values are: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, and `GrantManage`.'
+          x-pattern-message: 'must be one of the following: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, `GrantManage`'
+        sourceType:
+          pattern: ^(user|role|org)$
           type: string
-          description: The source description
-          example: This is a stix1.2 indicators source
-        diskSize:
-          type: integer
-          description: Disk utilization in bytes estimate for the indicator source
-          format: int64
-          example: 1024
-        indicatorCount:
-          type: integer
-          description: Number of indicators for the indicator source
-          format: int64
-          example: 1024
-        sumoProvided:
-          type: boolean
-          description: True if sumo provided source
-          example: false
-        supportsCat:
-          type: boolean
-          description: True if can be used in cat operator
-          example: false
-        enabled:
-          type: boolean
-          description: True if enabled
-          example: true
-      description: DB sizes and indicator counts for an individual source
+          description: 'Type of source for the permission. Valid values are: `user`, `role`, and `org`.'
+          example: role
+          x-pattern-message: 'must be one of the following: `user`, `role`, `org`'
+        sourceId:
+          type: string
+          description: An identifier that belongs to the source type chosen above. For e.g. if the sourceType is set to "user", sourceId should be identifier of a user (same goes for `role` and `org` sourceType)
+        contentId:
+          type: string
+          description: Unique identifier for the content item.
   securitySchemes:
     basicAuth:
       type: http
