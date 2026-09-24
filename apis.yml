@@ -47,7 +47,7 @@ modified: '2026-08-08'
 specificationVersion: '0.23'
 apis:
 - aid: sumo-logic:sumo-logic-accesskeymanagement-api
-  name: Sumo Logic accessKeyManagement API
+  name: Sumo Logic Access Key Management API
   description: >-
     Access Key management API.
 
@@ -68,10 +68,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-appmanagementv2-api
-  name: Sumo Logic appManagementV2 API
+  name: Sumo Logic App Management V2 API
   description: >-
     App installation API (V2).
 
@@ -91,10 +89,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-archivemanagement-api
-  name: Sumo Logic archiveManagement API
+  name: Sumo Logic Archive Management API
   description: >-
     Archive Ingestion Management API.
 
@@ -116,10 +112,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-dashboardmanagement-api
-  name: Sumo Logic dashboardManagement API
+  name: Sumo Logic Dashboard Management API
   description: >-
     Dashboard (New) management API.
 
@@ -142,10 +136,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-datadeletionrules-api
-  name: Sumo Logic dataDeletionRules API
+  name: Sumo Logic Data Deletion Rules API
   description: >-
     Data Deletion Rules (Beta) API.
 
@@ -165,10 +157,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-datamaskingmanagement-api
-  name: Sumo Logic dataMaskingManagement API
+  name: Sumo Logic Data Masking Management API
   description: >-
     Data Masking Rules management API.
 
@@ -189,10 +179,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-dynamicparsingrulemanagement-api
-  name: Sumo Logic dynamicParsingRuleManagement API
+  name: Sumo Logic Dynamic Parsing Rule Management API
   description: >-
     Dynamic Parsing management API.
 
@@ -214,10 +202,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-extractionrulemanagement-api
-  name: Sumo Logic extractionRuleManagement API
+  name: Sumo Logic Extraction Rule Management API
   description: >-
     Field Extraction Rule management API.
 
@@ -239,10 +225,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-fieldmanagementv1-api
-  name: Sumo Logic fieldManagementV1 API
+  name: Sumo Logic Field Management V1 API
   description: >-
     Field management API.
 
@@ -264,10 +248,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-foldermanagement-api
-  name: Sumo Logic folderManagement API
+  name: Sumo Logic Folder Management API
   description: >-
     Folder management API.
 
@@ -290,10 +272,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-healthevents-api
-  name: Sumo Logic healthEvents API
+  name: Sumo Logic Health Events API
   description: >-
     Health Events management API.
 
@@ -315,10 +295,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-ingestbudgetmanagementv2-api
-  name: Sumo Logic ingestBudgetManagementV2 API
+  name: Sumo Logic Ingest Budget Management V2 API
   description: >-
     Ingest Budget management API V2.
 
@@ -338,10 +316,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-logsdataforwardingmanagement-api
-  name: Sumo Logic logsDataForwardingManagement API
+  name: Sumo Logic Logs Data Forwarding Management API
   description: >-
     Logs Data Forwarding management API.
 
@@ -362,10 +338,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-logsearchesestimatedusage-api
-  name: Sumo Logic logSearchesEstimatedUsage API
+  name: Sumo Logic Log Searches Estimated Usage API
   description: >-
     Log Search Estimated Usage API.
 
@@ -389,10 +363,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-logsearchesmanagement-api
-  name: Sumo Logic logSearchesManagement API
+  name: Sumo Logic Log Searches Management API
   description: >-
     Log Searches Management API.
 
@@ -416,10 +388,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-lookupmanagement-api
-  name: Sumo Logic lookupManagement API
+  name: Sumo Logic Lookup Management API
   description: >-
     Lookup Table management API.
 
@@ -441,10 +411,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-macromanagement-api
-  name: Sumo Logic macroManagement API
+  name: Sumo Logic Macro Management API
   description: >-
     Macro Management APIs. Macros allow you to reference a predefined set of query language syntax across
     multiple queries. This enables reuse of commonly used logic, improves consistency, and reduces duplication.
@@ -467,10 +435,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-metricsquery-api
-  name: Sumo Logic metricsQuery API
+  name: Sumo Logic Metrics Query API
   description: >-
     Metrics Query API.
 
@@ -491,10 +457,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-metricssearchesmanagement-api
-  name: Sumo Logic metricsSearchesManagement API
+  name: Sumo Logic Metrics Searches Management API
   description: >-
     Metrics Search management API.
 
@@ -515,10 +479,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-metricssearchesmanagementv2-api
-  name: Sumo Logic metricsSearchesManagementV2 API
+  name: Sumo Logic Metrics Searches Management V2 API
   description: >-
     New Metrics Searches Management API.
 
@@ -537,10 +499,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-monitorslibrarymanagement-api
-  name: Sumo Logic monitorsLibraryManagement API
+  name: Sumo Logic Monitors Library Management API
   description: >-
     Monitor Management API.
 
@@ -563,10 +523,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-mutingscheduleslibrarymanagement-api
-  name: Sumo Logic mutingSchedulesLibraryManagement API
+  name: Sumo Logic Muting Schedules Library Management API
   description: >-
     Muting Schedules Management API.
 
@@ -592,10 +550,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-oauthmanagement-api
-  name: Sumo Logic oauthManagement API
+  name: Sumo Logic OAUTH Management API
   description: >-
     ** Only available to Beta customers. During Beta endpoints are subject to backwards incompatible changes.
     **
@@ -616,10 +572,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-orgsmanagement-api
-  name: Sumo Logic orgsManagement API
+  name: Sumo Logic Orgs Management API
   description: Organizations Management API.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
@@ -635,8 +589,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-otcollectormanagementexternal-api
   name: Sumo Logic otCollectorManagementExternal API
   description: OT Collector Management API External.
@@ -653,10 +605,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-parserslibrarymanagement-api
-  name: Sumo Logic parsersLibraryManagement API
+  name: Sumo Logic Parsers Library Management API
   description: >-
     Parsers Library Management API
 
@@ -677,10 +627,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-partitionmanagement-api
-  name: Sumo Logic partitionManagement API
+  name: Sumo Logic Partition Management API
   description: >-
     Partition management API.
 
@@ -701,10 +649,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-policiesmanagement-api
-  name: Sumo Logic policiesManagement API
+  name: Sumo Logic Policies Management API
   description: >-
     Policies management API.
 
@@ -724,10 +670,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-rolemanagementv2-api
-  name: Sumo Logic roleManagementV2 API
+  name: Sumo Logic Role Management V2 API
   description: >-
     Role management API (V2).
 
@@ -747,10 +691,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-samlconfigurationmanagement-api
-  name: Sumo Logic samlConfigurationManagement API
+  name: Sumo Logic Saml Configuration Management API
   description: >-
     SAML configuration management API
 
@@ -771,10 +713,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-scheduledviewmanagement-api
-  name: Sumo Logic scheduledViewManagement API
+  name: Sumo Logic Scheduled View Management API
   description: >-
     Scheduled View management API.
 
@@ -795,10 +735,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-schemabasemanagement-api
-  name: Sumo Logic schemaBaseManagement API
+  name: Sumo Logic Schema Base Management API
   description: Schema Base Management APIs.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
@@ -814,10 +752,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-serviceaccountmanagement-api
-  name: Sumo Logic serviceAccountManagement API
+  name: Sumo Logic Service Account Management API
   description: APIs to manage service accounts
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
@@ -833,10 +769,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-serviceallowlistmanagement-api
-  name: Sumo Logic serviceAllowlistManagement API
+  name: Sumo Logic Service Allowlist Management API
   description: >-
     Service Allowlist management API
 
@@ -857,10 +791,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-servicemap-api
-  name: Sumo Logic serviceMap API
+  name: Sumo Logic Service Map API
   description: >-
     Service Map API
 
@@ -882,10 +814,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-sloslibrarymanagement-api
-  name: Sumo Logic slosLibraryManagement API
+  name: Sumo Logic Slos Library Management API
   description: >-
     SLO Management API.
 
@@ -905,10 +835,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-sourcetemplatemanagementexternal-api
-  name: Sumo Logic sourceTemplateManagementExternal API
+  name: Sumo Logic Source Template Management External API
   description: Source Template Management APIs.
   humanURL: https://help.sumologic.com/docs/api/
   baseURL: https://api.sumologic.com/api
@@ -924,10 +852,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-spananalytics-api
-  name: Sumo Logic spanAnalytics API
+  name: Sumo Logic Span Analytics API
   description: >-
     Span Analytics API
 
@@ -949,10 +875,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-threatintelingest-api
-  name: Sumo Logic threatIntelIngest API
+  name: Sumo Logic Threat Intel Ingest API
   description: >-
     Threat Intel Datastore Management API
 
@@ -981,10 +905,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-threatintelingestproducer-api
-  name: Sumo Logic threatIntelIngestProducer API
+  name: Sumo Logic Threat Intel Ingest Producer API
   description: >-
     Threat Intel Ingestion API
 
@@ -1011,10 +933,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-tokenslibrarymanagement-api
-  name: Sumo Logic tokensLibraryManagement API
+  name: Sumo Logic Tokens Library Management API
   description: >-
     Tokens management API.
 
@@ -1036,10 +956,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-traces-api
-  name: Sumo Logic traces API
+  name: Sumo Logic Traces API
   description: >-
     Traces API
 
@@ -1062,10 +980,8 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-transformationrulemanagement-api
-  name: Sumo Logic transformationRuleManagement API
+  name: Sumo Logic Transformation Rule Management API
   description: >-
     Transformation Rule management API.
 
@@ -1086,8 +1002,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-collectors-api
   name: Sumo Logic Collectors API
   description: The Collectors API from Sumo Logic — 2 operation(s) for collectors.
@@ -1139,8 +1053,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-app-management-api
   name: Sumo Logic App Management API
   description: >-
@@ -1162,8 +1074,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-budget-management-api
   name: Sumo Logic budget management API
   description: Budget Management API.
@@ -1180,8 +1090,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-connection-management-api
   name: Sumo Logic Connection Management API
   description: >-
@@ -1202,8 +1110,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-content-management-api
   name: Sumo Logic Content Management API
   description: Content management API.
@@ -1220,8 +1126,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-content-permissions-api
   name: Sumo Logic Content Permissions API
   description: >-
@@ -1244,8 +1148,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-event-analytics-api
   name: Sumo Logic event analytics API
   description: >-
@@ -1268,8 +1170,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-password-policy-api
   name: Sumo Logic Password Policy API
   description: >-
@@ -1291,8 +1191,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-role-management-api
   name: Sumo Logic Role Management API
   description: >-
@@ -1315,8 +1213,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-scim-user-management-api
   name: Sumo Logic SCIM User Management API
   description: APIs to manage scim based users.
@@ -1333,8 +1229,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 - aid: sumo-logic:sumo-logic-user-management-api
   name: Sumo Logic User Management API
   description: >-
@@ -1356,8 +1250,6 @@ apis:
     url: https://api.sumologic.com/docs/
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
-  - type: GraphQL
-    url: graphql/sumo-logic-graphql.md
 common:
 - type: Pricing
   url: https://www.sumologic.com/pricing
