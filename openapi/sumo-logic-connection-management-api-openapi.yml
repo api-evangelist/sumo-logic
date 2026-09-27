@@ -275,26 +275,56 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
+    GetIncidentTemplatesResponse:
       required:
-      - errors
+      - templates
+      type: object
+      properties:
+        templates:
+          type: array
+          description: List of incident templates.
+          items:
+            $ref: '#/components/schemas/IncidentTemplate'
+    GetIncidentTemplatesRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Optional CloudSOAR domain URL to use for the API call to get incident templates.
+          example: https://staging.soar.sumologic.com/
+        authHeader:
+          type: string
+          description: Optional CloudSOAR authorization header to use for the API call to get incident templates.
+          example: SOMEAUTHHEADERSTRING
+        connectionId:
+          type: string
+          description: Optional connectionId to get incident templates for an existing CloudSOAR connection. If provided, the authHeader and url will be taken from the existing connection object.
+          example: 0000000000123ABC
+    ListConnectionsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of connections.
+          items:
+            $ref: '#/components/schemas/Connection'
+        next:
+          type: string
+          description: Next continuation token.
+    IncidentTemplate:
+      required:
       - id
+      - name
       type: object
       properties:
         id:
+          type: integer
+          description: Unique identifier of the incident template.
+        name:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
+          description: Name of the incident template.
     Connection:
       required:
       - createdAt
@@ -335,6 +365,56 @@ components:
           description: Identifier of the user who last modified the resource.
       discriminator:
         propertyName: type
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    TestConnectionResponse:
+      required:
+      - responseContent
+      - statusCode
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Status code of the response of the connection test.
+        responseContent:
+          type: string
+          description: Content of the response of the connection test.
+        alertStatusCode:
+          type: integer
+          description: Status code of the response of alert payload test.
+          format: int32
+          example: 200
+        alertResponseContent:
+          type: string
+          description: Content of the response of alert payload test.
+          example: ok
+        resolutionStatusCode:
+          type: integer
+          description: Status code of the response of resolution payload test.
+          format: int32
+          example: 200
+        resolutionResponseContent:
+          type: string
+          description: Content of the response of resolution payload test.
+          example: ok
     ErrorDescription:
       required:
       - code
@@ -385,86 +465,6 @@ components:
         mapping:
           ServiceNowDefinition: '#/components/schemas/ServiceNowDefinition'
           WebhookDefinition: '#/components/schemas/WebhookDefinition'
-    IncidentTemplate:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier of the incident template.
-        name:
-          type: string
-          description: Name of the incident template.
-    GetIncidentTemplatesRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Optional CloudSOAR domain URL to use for the API call to get incident templates.
-          example: https://staging.soar.sumologic.com/
-        authHeader:
-          type: string
-          description: Optional CloudSOAR authorization header to use for the API call to get incident templates.
-          example: SOMEAUTHHEADERSTRING
-        connectionId:
-          type: string
-          description: Optional connectionId to get incident templates for an existing CloudSOAR connection. If provided, the authHeader and url will be taken from the existing connection object.
-          example: 0000000000123ABC
-    TestConnectionResponse:
-      required:
-      - responseContent
-      - statusCode
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          description: Status code of the response of the connection test.
-        responseContent:
-          type: string
-          description: Content of the response of the connection test.
-        alertStatusCode:
-          type: integer
-          description: Status code of the response of alert payload test.
-          format: int32
-          example: 200
-        alertResponseContent:
-          type: string
-          description: Content of the response of alert payload test.
-          example: ok
-        resolutionStatusCode:
-          type: integer
-          description: Status code of the response of resolution payload test.
-          format: int32
-          example: 200
-        resolutionResponseContent:
-          type: string
-          description: Content of the response of resolution payload test.
-          example: ok
-    GetIncidentTemplatesResponse:
-      required:
-      - templates
-      type: object
-      properties:
-        templates:
-          type: array
-          description: List of incident templates.
-          items:
-            $ref: '#/components/schemas/IncidentTemplate'
-    ListConnectionsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of connections.
-          items:
-            $ref: '#/components/schemas/Connection'
-        next:
-          type: string
-          description: Next continuation token.
   securitySchemes:
     basicAuth:
       type: http

@@ -61,50 +61,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+    ServiceType:
+      pattern: ^(Db|HTTP|MQ|Web|Mixed|Unknown|Cpp|DotNET|Erlang|Go|Java|NodeJS|Php|Python|Ruby|WebJS|Swift|MSSQL|MySQL|Oracle|Db2|PostgreSQL|Redshift|Hive|Cloudscape|HSQLDB|Progress|MaxDB|HANADB|Ingres|FirstSQL|EnterpriseDB|Cache|Adabas|Firebird|ApacheDerby|FileMaker|Informix|InstantDB|InterBase|MariaDB|Netezza|PervasivePSQL|PointBase|SQLite|Sybase|Teradata|Vertica|H2|ColdFusion|Cassandra|HBase|MongoDB|Redis|Couchbase|CouchDB|CosmosDB|DynamoDB|Neo4j|Geode|Elasticsearch|Memcached|CockroachDB|RPC|gRPC|JavaRMI|DotNETWCF|ApacheDubbo)$
+      type: string
+      description: Defines type of service.
+      example: HTTP
+      x-pattern-message: Should be either `Db`, `HTTP`, `MQ`, `Web`, `Mixed`, `Unknown`, `Cpp`, `DotNET`, `Erlang`, `Go`, `Java`, `NodeJS`, `Php`, `Python`, `Ruby`, `WebJS`, `Swift`, `MSSQL`, `MySQL`, `Oracle`, `Db2`, `PostgreSQL`, `Redshift`, `Hive`, `Cloudscape`, `HSQLDB`, `Progress`, `MaxDB`, `HANADB`, `Ingres`, `FirstSQL`, `EnterpriseDB`, `Cache`, `Adabas`, `Firebird`, `ApacheDerby`, `FileMaker`, `Informix`, `InstantDB`, `InterBase`, `MariaDB`, `Netezza`, `PervasivePSQL`, `PointBase`, `SQLite`, `Sybase`, `Teradata`, `Vertica`, `H2`, `ColdFusion`, `Cassandra`, `HBase`, `MongoDB`, `Redis`, `Couchbase`, `CouchDB`, `CosmosDB`, `DynamoDB`, `Neo4j`, `Geode`, `Elasticsearch`, `Memcached`, `CockroachDB`, `RPC`, `gRPC`, `JavaRMI`, `DotNETWCF` or `ApacheDubbo`
     ServiceMapEdge:
       required:
       - lastSeenAt
@@ -125,22 +87,6 @@ components:
           description: The last time in UTC an edge has been seen. Formatted as defined by date-time - RFC3339.
           format: date-time
           example: 2019-11-22 09:00:00+00:00
-    ServiceMapResponse:
-      required:
-      - edges
-      - nodes
-      type: object
-      properties:
-        nodes:
-          type: array
-          description: List of service map nodes.
-          items:
-            $ref: '#/components/schemas/ServiceMapNode'
-        edges:
-          type: array
-          description: List of service map edges.
-          items:
-            $ref: '#/components/schemas/ServiceMapEdge'
     ServiceMapNode:
       required:
       - isRemote
@@ -168,12 +114,66 @@ components:
           example: true
         serviceType:
           $ref: '#/components/schemas/ServiceType'
-    ServiceType:
-      pattern: ^(Db|HTTP|MQ|Web|Mixed|Unknown|Cpp|DotNET|Erlang|Go|Java|NodeJS|Php|Python|Ruby|WebJS|Swift|MSSQL|MySQL|Oracle|Db2|PostgreSQL|Redshift|Hive|Cloudscape|HSQLDB|Progress|MaxDB|HANADB|Ingres|FirstSQL|EnterpriseDB|Cache|Adabas|Firebird|ApacheDerby|FileMaker|Informix|InstantDB|InterBase|MariaDB|Netezza|PervasivePSQL|PointBase|SQLite|Sybase|Teradata|Vertica|H2|ColdFusion|Cassandra|HBase|MongoDB|Redis|Couchbase|CouchDB|CosmosDB|DynamoDB|Neo4j|Geode|Elasticsearch|Memcached|CockroachDB|RPC|gRPC|JavaRMI|DotNETWCF|ApacheDubbo)$
-      type: string
-      description: Defines type of service.
-      example: HTTP
-      x-pattern-message: Should be either `Db`, `HTTP`, `MQ`, `Web`, `Mixed`, `Unknown`, `Cpp`, `DotNET`, `Erlang`, `Go`, `Java`, `NodeJS`, `Php`, `Python`, `Ruby`, `WebJS`, `Swift`, `MSSQL`, `MySQL`, `Oracle`, `Db2`, `PostgreSQL`, `Redshift`, `Hive`, `Cloudscape`, `HSQLDB`, `Progress`, `MaxDB`, `HANADB`, `Ingres`, `FirstSQL`, `EnterpriseDB`, `Cache`, `Adabas`, `Firebird`, `ApacheDerby`, `FileMaker`, `Informix`, `InstantDB`, `InterBase`, `MariaDB`, `Netezza`, `PervasivePSQL`, `PointBase`, `SQLite`, `Sybase`, `Teradata`, `Vertica`, `H2`, `ColdFusion`, `Cassandra`, `HBase`, `MongoDB`, `Redis`, `Couchbase`, `CouchDB`, `CosmosDB`, `DynamoDB`, `Neo4j`, `Geode`, `Elasticsearch`, `Memcached`, `CockroachDB`, `RPC`, `gRPC`, `JavaRMI`, `DotNETWCF` or `ApacheDubbo`
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ServiceMapResponse:
+      required:
+      - edges
+      - nodes
+      type: object
+      properties:
+        nodes:
+          type: array
+          description: List of service map nodes.
+          items:
+            $ref: '#/components/schemas/ServiceMapNode'
+        edges:
+          type: array
+          description: List of service map edges.
+          items:
+            $ref: '#/components/schemas/ServiceMapEdge'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

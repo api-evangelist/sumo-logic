@@ -338,52 +338,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
+    UpdateDataForwardingRule:
       type: object
       properties:
-        createdAt:
+        destinationId:
           type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
+          description: Data forwarding destination id.
+          example: '1'
+        enabled:
+          type: boolean
+          description: True when the data forwarding rule is enabled.
+          example: true
+        fileFormat:
           type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
+          description: Specify the path prefix to a directory in the S3 bucket and how to format the file name.
+          example: '{index}_{day}_{hour}_{minute}_{second}'
+        payloadSchema:
+          pattern: ^(builtInFields|allFields|raw)$
           type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
+          description: Schema for the payload. Default value of the payload schema is "allFields" for scheduled view, and "builtInFields" for partition. "raw" payloadSchema should be used in conjunction with "text" format and vice-versa.
+          example: builtInFields
+          x-pattern-message: 'should be one of the following: ''builtInFields'', ''allFields'' or ''raw'''
+        format:
+          pattern: ^(csv|json|text)$
           type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    RuleAndBucketDetail:
-      allOf:
-      - $ref: '#/components/schemas/DataForwardingRule'
-      - type: object
-        properties:
-          bucket:
-            $ref: '#/components/schemas/logs-data-forwarding-rule-management'
-    CreateBucketDefinitionItems:
-      required:
-      - authenticationMode
-      - bucketName
-      - destinationName
-      type: object
-      properties:
-        bucketName:
-          pattern: (?!(^xn--|-s3alias$))^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
-          type: string
-          description: The name of the Amazon S3 bucket.
-          example: df-bucket
-          x-pattern-message: Must be a valid AWS S3 Bucket name.
+          description: Format of the payload. Default format will be "csv". "text" format should be used in conjunction with "raw" payloadSchema and vice-versa.
+          example: csv
+          x-pattern-message: 'should be one of the following: ''csv'', ''json'' or ''text'''
     CreateDataForwardingRule:
       required:
       - destinationId
@@ -418,6 +399,44 @@ components:
           description: Format of the payload. Default format will be "csv". "text" format should be used in conjunction with "raw" payloadSchema and vice-versa.
           example: csv
           x-pattern-message: 'should be one of the following: ''csv'', ''json'' or ''text'''
+    logs-data-forwarding-rule-management:
+      type: object
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    DataForwardingRule:
+      allOf:
+      - $ref: '#/components/schemas/CreateDataForwardingRule'
+      - $ref: '#/components/schemas/MetadataModel'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier of the data forwarding rule.
+            example: '1'
     ErrorResponse:
       required:
       - errors
@@ -438,30 +457,13 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+    RuleAndBucketDetail:
+      allOf:
+      - $ref: '#/components/schemas/DataForwardingRule'
+      - type: object
+        properties:
+          bucket:
+            $ref: '#/components/schemas/logs-data-forwarding-rule-management'
     BucketDefinition:
       type: object
       allOf:
@@ -479,8 +481,6 @@ components:
           invalidatedBySystem:
             type: boolean
             description: True if invalidated by the system.
-    logs-data-forwarding-rule-management:
-      type: object
     UpdateBucketDefinition:
       required:
       - authenticationMode
@@ -520,60 +520,11 @@ components:
           type: boolean
           description: True if the destination is Active.
           example: true
-    GetRulesAndBucketsResult:
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of S3 data forwarding rules.
-          items:
-            $ref: '#/components/schemas/RuleAndBucketDetail'
-        nextToken:
-          type: string
-          description: Next continuation token.
-          example: VEZuRU4veXF2UWFCUURYSDNQUzJxWlpRRUsvTlBieXA
-    DataForwardingRule:
-      allOf:
-      - $ref: '#/components/schemas/CreateDataForwardingRule'
-      - $ref: '#/components/schemas/MetadataModel'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: The unique identifier of the data forwarding rule.
-            example: '1'
     CreateBucketDefinition:
       type: object
       allOf:
       - $ref: '#/components/schemas/UpdateBucketDefinition'
       - $ref: '#/components/schemas/CreateBucketDefinitionItems'
-    UpdateDataForwardingRule:
-      type: object
-      properties:
-        destinationId:
-          type: string
-          description: Data forwarding destination id.
-          example: '1'
-        enabled:
-          type: boolean
-          description: True when the data forwarding rule is enabled.
-          example: true
-        fileFormat:
-          type: string
-          description: Specify the path prefix to a directory in the S3 bucket and how to format the file name.
-          example: '{index}_{day}_{hour}_{minute}_{second}'
-        payloadSchema:
-          pattern: ^(builtInFields|allFields|raw)$
-          type: string
-          description: Schema for the payload. Default value of the payload schema is "allFields" for scheduled view, and "builtInFields" for partition. "raw" payloadSchema should be used in conjunction with "text" format and vice-versa.
-          example: builtInFields
-          x-pattern-message: 'should be one of the following: ''builtInFields'', ''allFields'' or ''raw'''
-        format:
-          pattern: ^(csv|json|text)$
-          type: string
-          description: Format of the payload. Default format will be "csv". "text" format should be used in conjunction with "raw" payloadSchema and vice-versa.
-          example: csv
-          x-pattern-message: 'should be one of the following: ''csv'', ''json'' or ''text'''
     GetDataForwardingDestinations:
       type: object
       properties:
@@ -586,6 +537,55 @@ components:
           description: List of data forwarding destinations.
           items:
             $ref: '#/components/schemas/BucketDefinition'
+    GetRulesAndBucketsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of S3 data forwarding rules.
+          items:
+            $ref: '#/components/schemas/RuleAndBucketDetail'
+        nextToken:
+          type: string
+          description: Next continuation token.
+          example: VEZuRU4veXF2UWFCUURYSDNQUzJxWlpRRUsvTlBieXA
+    CreateBucketDefinitionItems:
+      required:
+      - authenticationMode
+      - bucketName
+      - destinationName
+      type: object
+      properties:
+        bucketName:
+          pattern: (?!(^xn--|-s3alias$))^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
+          type: string
+          description: The name of the Amazon S3 bucket.
+          example: df-bucket
+          x-pattern-message: Must be a valid AWS S3 Bucket name.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

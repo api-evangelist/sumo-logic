@@ -121,6 +121,26 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    TrackerIdentity:
+      required:
+      - description
+      - error
+      - trackerId
+      type: object
+      properties:
+        trackerId:
+          type: string
+          description: Name that uniquely identifies the health event. It focuses on what happened rather than why.
+        error:
+          type: string
+          description: Description of the underlying reason for the event change.
+          example: Access denied to Amazon S3 bucket
+        description:
+          type: string
+          description: A more elaborate description of why the event occurred.
+          example: S3 collection is not working as expected because of access issues.
+      discriminator:
+        propertyName: description
     ErrorResponse:
       required:
       - errors
@@ -141,6 +161,19 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    ListHealthEventResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of health events.
+          items:
+            $ref: '#/components/schemas/HealthEvent'
+        next:
+          type: string
+          description: Next continuation token.
     ResourceIdentity:
       required:
       - id
@@ -169,6 +202,16 @@ components:
           Organisation: '#/components/schemas/OrgIdentity'
           LogsToMetricsRule: '#/components/schemas/LogsToMetricsRuleIdentity'
           ScheduledView: '#/components/schemas/ScheduledViewResourceIdentity'
+    ResourceIdentities:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of the resources.
+          items:
+            $ref: '#/components/schemas/ResourceIdentity'
     ErrorDescription:
       required:
       - code
@@ -227,49 +270,6 @@ components:
         severityLevel:
           type: string
           description: The criticality of the event. It is either `Error` or `Warning`
-    TrackerIdentity:
-      required:
-      - description
-      - error
-      - trackerId
-      type: object
-      properties:
-        trackerId:
-          type: string
-          description: Name that uniquely identifies the health event. It focuses on what happened rather than why.
-        error:
-          type: string
-          description: Description of the underlying reason for the event change.
-          example: Access denied to Amazon S3 bucket
-        description:
-          type: string
-          description: A more elaborate description of why the event occurred.
-          example: S3 collection is not working as expected because of access issues.
-      discriminator:
-        propertyName: description
-    ResourceIdentities:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: A list of the resources.
-          items:
-            $ref: '#/components/schemas/ResourceIdentity'
-    ListHealthEventResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of health events.
-          items:
-            $ref: '#/components/schemas/HealthEvent'
-        next:
-          type: string
-          description: Next continuation token.
   securitySchemes:
     basicAuth:
       type: http

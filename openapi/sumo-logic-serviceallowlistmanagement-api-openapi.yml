@@ -210,30 +210,18 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
+    CidrList:
       required:
-      - code
-      - message
+      - data
       type: object
       properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+        data:
+          maxItems: 50
+          type: array
+          description: An array of CIDR notations and/or IP addresses.
+          items:
+            $ref: '#/components/schemas/Cidr'
+      description: A list of CIDR notations and/or IP addresses.
     AllowlistingStatus:
       required:
       - contentEnabled
@@ -263,18 +251,30 @@ components:
           description: Description of the CIDR notation or IP address.
           example: Accountant
       description: A CIDR notation or IP address along with its description.
-    CidrList:
+    ErrorDescription:
       required:
-      - data
+      - code
+      - message
       type: object
       properties:
-        data:
-          maxItems: 50
-          type: array
-          description: An array of CIDR notations and/or IP addresses.
-          items:
-            $ref: '#/components/schemas/Cidr'
-      description: A list of CIDR notations and/or IP addresses.
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

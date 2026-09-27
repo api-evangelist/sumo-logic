@@ -301,6 +301,42 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    AuthnCertificateResult:
+      required:
+      - certificate
+      type: object
+      properties:
+        certificate:
+          type: string
+          description: Authentication Request Signing Certificate for the user.
+    SamlIdentityProvider:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SamlIdentityProviderRequest'
+      - $ref: '#/components/schemas/AuthnCertificateResult'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier of the SAML Identity Provider.
+            example: 00000000361130F7
+          assertionConsumerUrl:
+            type: string
+            description: The URL on Sumo Logic where the IdP will redirect to with its authentication response.
+            example: https://service.sumologic.com/sumo/saml/consume/9483922
+            default: ''
+          entityId:
+            type: string
+            description: A unique identifier that is the intended audience of the SAML assertion.
+            example: https://service.sumologic.com/sumo/saml/9483922
+            default: ''
+          metadataUrl:
+            type: string
+            description: The URL to fetch SAML metadata XML.
+            example: https://api.sumologic.com/api/v1/saml/identityProviders/00000000361130F7/metadata
+            default: ''
     ErrorResponse:
       required:
       - errors
@@ -321,30 +357,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     AllowlistedUserResult:
       required:
       - canManageSaml
@@ -379,36 +391,6 @@ components:
           type: string
           description: Timestamp of the last login of the user.
           format: date-time
-    AuthnCertificateResult:
-      required:
-      - certificate
-      type: object
-      properties:
-        certificate:
-          type: string
-          description: Authentication Request Signing Certificate for the user.
-    OnDemandProvisioningInfo:
-      required:
-      - onDemandProvisioningRoles
-      type: object
-      properties:
-        firstNameAttribute:
-          type: string
-          description: First name attribute of the new user account.
-          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/givenname
-          default: ''
-        lastNameAttribute:
-          type: string
-          description: Last name attribute of the new user account.
-          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/surname
-          default: ''
-        onDemandProvisioningRoles:
-          type: array
-          description: Sumo Logic RBAC roles to be assigned when user accounts are provisioned.
-          example: '["Analyst", "Administrator"]'
-          items:
-            type: string
-          default: []
     SamlIdentityProviderRequest:
       required:
       - configurationName
@@ -487,34 +469,52 @@ components:
           type: boolean
           description: True if the SAML binding is of HTTP Redirect type.
           default: false
-    SamlIdentityProvider:
+    OnDemandProvisioningInfo:
+      required:
+      - onDemandProvisioningRoles
       type: object
-      allOf:
-      - $ref: '#/components/schemas/SamlIdentityProviderRequest'
-      - $ref: '#/components/schemas/AuthnCertificateResult'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
+      properties:
+        firstNameAttribute:
+          type: string
+          description: First name attribute of the new user account.
+          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/givenname
+          default: ''
+        lastNameAttribute:
+          type: string
+          description: Last name attribute of the new user account.
+          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/surname
+          default: ''
+        onDemandProvisioningRoles:
+          type: array
+          description: Sumo Logic RBAC roles to be assigned when user accounts are provisioned.
+          example: '["Analyst", "Administrator"]'
+          items:
             type: string
-            description: Unique identifier of the SAML Identity Provider.
-            example: 00000000361130F7
-          assertionConsumerUrl:
-            type: string
-            description: The URL on Sumo Logic where the IdP will redirect to with its authentication response.
-            example: https://service.sumologic.com/sumo/saml/consume/9483922
-            default: ''
-          entityId:
-            type: string
-            description: A unique identifier that is the intended audience of the SAML assertion.
-            example: https://service.sumologic.com/sumo/saml/9483922
-            default: ''
-          metadataUrl:
-            type: string
-            description: The URL to fetch SAML metadata XML.
-            example: https://api.sumologic.com/api/v1/saml/identityProviders/00000000361130F7/metadata
-            default: ''
+          default: []
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

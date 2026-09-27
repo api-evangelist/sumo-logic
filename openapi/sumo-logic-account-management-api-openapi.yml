@@ -307,46 +307,68 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Quantity:
+    PendingUpdateRequest:
       required:
-      - unit
-      - value
+      - createdOn
+      - plan
       type: object
       properties:
-        value:
+        createdOn:
+          type: string
+          description: The date on which the update request was created.
+          format: date
+        plan:
+          $ref: '#/components/schemas/CurrentPlan'
+      description: The pending plan update request for the account
+    UsageForecastResponse:
+      type: object
+      properties:
+        averageUsage:
+          type: number
+          description: Average credit usage per day till now.
+          format: double
+          example: 4.0
+        usagePercentage:
+          type: number
+          description: Percentage of total credits used till date.
+          format: double
+          example: 7.0
+        forecastedUsage:
+          type: number
+          description: Total expected usage by the end of contract period.
+          format: double
+          example: 10.0
+        forecastedUsagePercentage:
+          type: number
+          description: Percentage of allocated credits that will be used in the contract period.
+          format: double
+          example: 5.0
+        remainingDays:
+          type: number
+          description: Days remaining till all the credits are consumed.
+          format: double
+          example: 10.0
+      description: Usage forecast for the organization.
+    ProrationDetails:
+      required:
+      - proratedCost
+      - proratedCredits
+      - remainingDays
+      type: object
+      properties:
+        remainingDays:
           type: integer
-          description: The value of the consumable in units.
-          format: int64
-          example: 61425
-        unit:
-          pattern: ^(GB|DPM|Credits|Days)$
-          type: string
-          description: 'The unit of the consumable. Units are provided in: 1. `GB` 2. `DPM`(Data Points Per Minute) 3. `Credits` 4. `Days`
-
-            '
-          example: GB
-          x-pattern-message: 'must be one of the following: `GB`, `DPM`, `Credits`, `Days`'
-      description: Details of unit of consumption and its value.
-    UsageReportResponse:
-      type: object
-      properties:
-        jobId:
-          type: string
-          description: Job Id for export
-          example: '12345678'
-      description: Export Usage response containing the jobId
-    ConfigureSubdomainRequest:
-      required:
-      - subdomain
-      type: object
-      properties:
-        subdomain:
-          maxLength: 63
-          minLength: 4
-          pattern: ^(?!xn--)[a-z0-9]([a-z0-9-]*[a-z0-9])?$
-          type: string
-          description: The new subdomain.
-          example: my-company
+          description: Remaining days in the billing cycle for which the new plan is prorated.
+          format: int32
+        proratedCredits:
+          type: integer
+          description: Total prorated credits that get added to the bucket based on the remaining billing period.
+          format: int32
+        proratedCost:
+          type: number
+          description: Cost of the total prorated credits.
+          format: double
+      description: Details about the prorated credits and prorated cost in case of immediate monthly to monthly cycle upgrades.
     ErrorResponse:
       required:
       - errors
@@ -367,64 +389,90 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
+    Quantity:
       required:
-      - code
-      - message
+      - unit
+      - value
       type: object
       properties:
-        code:
+        value:
+          type: integer
+          description: The value of the consumable in units.
+          format: int64
+          example: 61425
+        unit:
+          pattern: ^(GB|DPM|Credits|Days)$
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    SubdomainDefinitionResponse:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      - subdomain
-      - url
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: 'Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          description: 'The unit of the consumable. Units are provided in: 1. `GB` 2. `DPM`(Data Points Per Minute) 3. `Credits` 4. `Days`
 
             '
-          format: date-time
-        createdBy:
+          example: GB
+          x-pattern-message: 'must be one of the following: `GB`, `DPM`, `Credits`, `Days`'
+      description: Details of unit of consumption and its value.
+    UsageReportStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/ErrorDescription'
+      - type: object
+        properties:
+          status:
+            pattern: ^(Success|InProgress|Failed)$
+            type: string
+            description: Status export
+            example: Success
+          statusMessage:
+            type: string
+            description: Status message export
+            example: Successful request
+          reportDownloadURL:
+            type: string
+            description: S3 presigned download URL for the report. It is valid for 10 minutes.
+            example: www.example.com
+        description: Status response containing status and downloadURL if successful
+    AccountStatusResponse:
+      required:
+      - applicationUse
+      - canUpdatePlan
+      - planType
+      - pricingModel
+      type: object
+      properties:
+        pricingModel:
+          pattern: ^(credits|cloudflex)$
           type: string
-          description: Identifier of the user who created the resource.
-        modifiedAt:
+          description: Whether the account is `cloudflex` or `credits`
+          example: credits
+        canUpdatePlan:
+          type: boolean
+          description: If the plan can be updated by the given user
+          example: true
+        planType:
+          pattern: ^(Free|Trial|Paid)$
           type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-        modifiedBy:
+          description: Whether the account is `Free`/`Trial`/`Paid`
+          example: Free
+        planExpirationDays:
+          type: integer
+          description: The number of days in which the plan will expire
+          example: 20
+        applicationUse:
+          pattern: ^(ALLOWED|ALLOWED_WITH_WARNING|THROTTLED|RESTRICTED)$
           type: string
-          description: Identifier of the user who last modified the resource.
-        subdomain:
+          description: The current usage of the application.
+          example: ALLOWED
+        accountActivated:
+          type: boolean
+          description: If the account is activated or not
+          example: true
+        totalCredits:
+          type: integer
+          description: Total amount of credits assigned to the account
+          example: 400
+        logModel:
+          pattern: ^(Flex|Tiered|FlexPlusTiered)$
           type: string
-          description: The new subdomain.
-          example: my-company
-        url:
-          type: string
-          description: Login URL corresponding to the subdomain.
-          example: https://your-company.sumologic.com
+          description: The log model of the account
+          example: Flex
+      description: Information about the account's plan and payment.
     CurrentBillingPeriod:
       required:
       - endDate
@@ -441,20 +489,23 @@ components:
           description: End date of the current billing period.
           format: date
           example: 2012-02-02
-    ContractPeriod:
+    Consumable:
       required:
-      - endDate
-      - startDate
+      - consumableId
+      - quantity
       type: object
       properties:
-        startDate:
+        consumableId:
+          pattern: ^(Storage|Metrics|Continuous|Credits)$
           type: string
-          description: Start date of the contract.
-          format: date
-        endDate:
-          type: string
-          description: End date of the contract.
-          format: date
+          description: 'Unique identifier of the consumable. Valid values are: 1. `Storage` 2. `Metrics` 3. `Continuous` 4. `Credits`
+
+            '
+          example: Metrics
+          x-pattern-message: 'must be one of the following: `Storage`, `Metrics`, `Continuous`, `Credits`'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+      description: Details of consumable and its quantity.
     UsageReportRequest:
       type: object
       properties:
@@ -484,19 +535,68 @@ components:
           example: false
           default: false
       description: Usage Export Report Request
-    PendingUpdateRequest:
+    CurrentPlan:
       required:
-      - createdOn
-      - plan
+      - billingFrequency
+      - planCost
+      - productId
       type: object
       properties:
-        createdOn:
+        productId:
+          pattern: ^(Essentials|Trial|Free|EnterpriseOps|EnterpriseSec|EnterpriseSuite)$
           type: string
-          description: The date on which the update request was created.
-          format: date
-        plan:
-          $ref: '#/components/schemas/CurrentPlan'
-      description: The pending plan update request for the account
+          description: 'Unique identifier of the product in current plan. Valid values are: 1. `Free` 2. `Trial` 3. `Essentials` 4. `EnterpriseOps` 5. `EnterpriseSec` 6. `EnterpriseSuite`
+
+            '
+          example: Essentials
+          x-pattern-message: 'must be one of the following: `Essentials`, `Trial`, `Free`, `EnterpriseOps`, `EnterpriseSec`, `EnterpriseSuite`'
+        planCost:
+          type: number
+          description: Cost incurred for the current plan.
+          format: double
+          example: 725.46
+        billingFrequency:
+          pattern: ^(Monthly|Annually)$
+          type: string
+          description: 'Billing frequency for the current plan. Valid values are: 1. `Monthly` 2. `Annually`
+
+            '
+          example: Monthly
+          x-pattern-message: 'must be one of the following: `Monthly` or `Annually`'
+        consumables:
+          type: array
+          description: Consumables in the current plan.
+          items:
+            $ref: '#/components/schemas/Consumable'
+        planType:
+          pattern: ^(Free|Trial|Paid)$
+          type: string
+          description: Whether the account is `Free`/`Trial`/`Paid`
+          example: Free
+          x-pattern-message: 'must be one of the following: `Free`, `Trial` or `Paid`'
+        planName:
+          type: string
+          description: The plan name for the product being used.
+        discountAmount:
+          type: integer
+          description: The discount offered for the given contract period.
+        contractPeriod:
+          $ref: '#/components/schemas/ContractPeriod'
+        currentBillingPeriod:
+          $ref: '#/components/schemas/CurrentBillingPeriod'
+        credits:
+          type: integer
+          description: Numerical value of the amount of credits
+          format: int64
+          example: 300
+        baselines:
+          $ref: '#/components/schemas/Baselines'
+        pendingUpdateRequest:
+          type: boolean
+          description: True if there is a pending update request
+        prorationDetails:
+          $ref: '#/components/schemas/ProrationDetails'
+      description: Current plan of the account.
     Baselines:
       type: object
       properties:
@@ -621,198 +721,98 @@ components:
           example: 5
           default: 0
       description: Details of consumable and its quantity.
-    UsageReportStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/ErrorDescription'
-      - type: object
-        properties:
-          status:
-            pattern: ^(Success|InProgress|Failed)$
-            type: string
-            description: Status export
-            example: Success
-          statusMessage:
-            type: string
-            description: Status message export
-            example: Successful request
-          reportDownloadURL:
-            type: string
-            description: S3 presigned download URL for the report. It is valid for 10 minutes.
-            example: www.example.com
-        description: Status response containing status and downloadURL if successful
-    Consumable:
+    SubdomainDefinitionResponse:
       required:
-      - consumableId
-      - quantity
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      - subdomain
+      - url
       type: object
       properties:
-        consumableId:
-          pattern: ^(Storage|Metrics|Continuous|Credits)$
+        createdAt:
           type: string
-          description: 'Unique identifier of the consumable. Valid values are: 1. `Storage` 2. `Metrics` 3. `Continuous` 4. `Credits`
+          description: 'Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
 
             '
-          example: Metrics
-          x-pattern-message: 'must be one of the following: `Storage`, `Metrics`, `Continuous`, `Credits`'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-      description: Details of consumable and its quantity.
-    AccountStatusResponse:
+          format: date-time
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+        subdomain:
+          type: string
+          description: The new subdomain.
+          example: my-company
+        url:
+          type: string
+          description: Login URL corresponding to the subdomain.
+          example: https://your-company.sumologic.com
+    ContractPeriod:
       required:
-      - applicationUse
-      - canUpdatePlan
-      - planType
-      - pricingModel
+      - endDate
+      - startDate
       type: object
       properties:
-        pricingModel:
-          pattern: ^(credits|cloudflex)$
+        startDate:
           type: string
-          description: Whether the account is `cloudflex` or `credits`
-          example: credits
-        canUpdatePlan:
-          type: boolean
-          description: If the plan can be updated by the given user
-          example: true
-        planType:
-          pattern: ^(Free|Trial|Paid)$
+          description: Start date of the contract.
+          format: date
+        endDate:
           type: string
-          description: Whether the account is `Free`/`Trial`/`Paid`
-          example: Free
-        planExpirationDays:
-          type: integer
-          description: The number of days in which the plan will expire
-          example: 20
-        applicationUse:
-          pattern: ^(ALLOWED|ALLOWED_WITH_WARNING|THROTTLED|RESTRICTED)$
-          type: string
-          description: The current usage of the application.
-          example: ALLOWED
-        accountActivated:
-          type: boolean
-          description: If the account is activated or not
-          example: true
-        totalCredits:
-          type: integer
-          description: Total amount of credits assigned to the account
-          example: 400
-        logModel:
-          pattern: ^(Flex|Tiered|FlexPlusTiered)$
-          type: string
-          description: The log model of the account
-          example: Flex
-      description: Information about the account's plan and payment.
-    CurrentPlan:
+          description: End date of the contract.
+          format: date
+    ConfigureSubdomainRequest:
       required:
-      - billingFrequency
-      - planCost
-      - productId
+      - subdomain
       type: object
       properties:
-        productId:
-          pattern: ^(Essentials|Trial|Free|EnterpriseOps|EnterpriseSec|EnterpriseSuite)$
+        subdomain:
+          maxLength: 63
+          minLength: 4
+          pattern: ^(?!xn--)[a-z0-9]([a-z0-9-]*[a-z0-9])?$
           type: string
-          description: 'Unique identifier of the product in current plan. Valid values are: 1. `Free` 2. `Trial` 3. `Essentials` 4. `EnterpriseOps` 5. `EnterpriseSec` 6. `EnterpriseSuite`
-
-            '
-          example: Essentials
-          x-pattern-message: 'must be one of the following: `Essentials`, `Trial`, `Free`, `EnterpriseOps`, `EnterpriseSec`, `EnterpriseSuite`'
-        planCost:
-          type: number
-          description: Cost incurred for the current plan.
-          format: double
-          example: 725.46
-        billingFrequency:
-          pattern: ^(Monthly|Annually)$
-          type: string
-          description: 'Billing frequency for the current plan. Valid values are: 1. `Monthly` 2. `Annually`
-
-            '
-          example: Monthly
-          x-pattern-message: 'must be one of the following: `Monthly` or `Annually`'
-        consumables:
-          type: array
-          description: Consumables in the current plan.
-          items:
-            $ref: '#/components/schemas/Consumable'
-        planType:
-          pattern: ^(Free|Trial|Paid)$
-          type: string
-          description: Whether the account is `Free`/`Trial`/`Paid`
-          example: Free
-          x-pattern-message: 'must be one of the following: `Free`, `Trial` or `Paid`'
-        planName:
-          type: string
-          description: The plan name for the product being used.
-        discountAmount:
-          type: integer
-          description: The discount offered for the given contract period.
-        contractPeriod:
-          $ref: '#/components/schemas/ContractPeriod'
-        currentBillingPeriod:
-          $ref: '#/components/schemas/CurrentBillingPeriod'
-        credits:
-          type: integer
-          description: Numerical value of the amount of credits
-          format: int64
-          example: 300
-        baselines:
-          $ref: '#/components/schemas/Baselines'
-        pendingUpdateRequest:
-          type: boolean
-          description: True if there is a pending update request
-        prorationDetails:
-          $ref: '#/components/schemas/ProrationDetails'
-      description: Current plan of the account.
-    ProrationDetails:
+          description: The new subdomain.
+          example: my-company
+    ErrorDescription:
       required:
-      - proratedCost
-      - proratedCredits
-      - remainingDays
+      - code
+      - message
       type: object
       properties:
-        remainingDays:
-          type: integer
-          description: Remaining days in the billing cycle for which the new plan is prorated.
-          format: int32
-        proratedCredits:
-          type: integer
-          description: Total prorated credits that get added to the bucket based on the remaining billing period.
-          format: int32
-        proratedCost:
-          type: number
-          description: Cost of the total prorated credits.
-          format: double
-      description: Details about the prorated credits and prorated cost in case of immediate monthly to monthly cycle upgrades.
-    UsageForecastResponse:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    UsageReportResponse:
       type: object
       properties:
-        averageUsage:
-          type: number
-          description: Average credit usage per day till now.
-          format: double
-          example: 4.0
-        usagePercentage:
-          type: number
-          description: Percentage of total credits used till date.
-          format: double
-          example: 7.0
-        forecastedUsage:
-          type: number
-          description: Total expected usage by the end of contract period.
-          format: double
-          example: 10.0
-        forecastedUsagePercentage:
-          type: number
-          description: Percentage of allocated credits that will be used in the contract period.
-          format: double
-          example: 5.0
-        remainingDays:
-          type: number
-          description: Days remaining till all the credits are consumed.
-          format: double
-          example: 10.0
-      description: Usage forecast for the organization.
+        jobId:
+          type: string
+          description: Job Id for export
+          example: '12345678'
+      description: Export Usage response containing the jobId
   securitySchemes:
     basicAuth:
       type: http

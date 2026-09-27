@@ -181,54 +181,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CreateDeletionRuleRequest:
-      required:
-      - endMillis
-      - query
-      - ruleName
-      - ruleReason
-      - startMillis
-      type: object
-      properties:
-        ruleName:
-          maxLength: 127
-          minLength: 1
-          type: string
-          description: Name of the deletion rule.
-        ruleReason:
-          maxLength: 255
-          minLength: 1
-          type: string
-          description: Reason mentioning what data is being deleted and why.
-        query:
-          maxLength: 15000
-          minLength: 0
-          type: string
-          description: query to filter out the logs that need to be deleted.
-        startMillis:
-          type: integer
-          description: Start time of the search as a number of milliseconds.
-          format: int64
-          example: 1704976268773
-        endMillis:
-          type: integer
-          description: End time of the search as a number of milliseconds.
-          format: int64
-          example: 1704977168773
-        byReceiptTime:
-          type: boolean
-          description: Flag to order the search results in the order collector received it. This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
-          default: false
-        timezone:
-          type: string
-          description: Timezone for the resolving timerange from startMillis,endMillis
-          default: UTC
-        parsingMode:
-          pattern: ^(AutoParse|Manual)$
-          type: string
-          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
-          example: AutoParse
-          default: Manual
     ErrorResponse:
       required:
       - errors
@@ -249,30 +201,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     DeletedRange:
       required:
       - endTime
@@ -336,6 +264,78 @@ components:
             description: List of the different units of deleted ranges since the deletion rule has been created.
             items:
               $ref: '#/components/schemas/DeletedRange'
+    CreateDeletionRuleRequest:
+      required:
+      - endMillis
+      - query
+      - ruleName
+      - ruleReason
+      - startMillis
+      type: object
+      properties:
+        ruleName:
+          maxLength: 127
+          minLength: 1
+          type: string
+          description: Name of the deletion rule.
+        ruleReason:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: Reason mentioning what data is being deleted and why.
+        query:
+          maxLength: 15000
+          minLength: 0
+          type: string
+          description: query to filter out the logs that need to be deleted.
+        startMillis:
+          type: integer
+          description: Start time of the search as a number of milliseconds.
+          format: int64
+          example: 1704976268773
+        endMillis:
+          type: integer
+          description: End time of the search as a number of milliseconds.
+          format: int64
+          example: 1704977168773
+        byReceiptTime:
+          type: boolean
+          description: Flag to order the search results in the order collector received it. This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
+          default: false
+        timezone:
+          type: string
+          description: Timezone for the resolving timerange from startMillis,endMillis
+          default: UTC
+        parsingMode:
+          pattern: ^(AutoParse|Manual)$
+          type: string
+          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
+          example: AutoParse
+          default: Manual
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

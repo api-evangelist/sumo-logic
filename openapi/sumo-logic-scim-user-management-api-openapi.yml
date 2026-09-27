@@ -331,24 +331,6 @@ components:
             - value: role2
               primary: true
           items: {}
-    ResourceData:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          description: The name of the resource type of the resource
-          example: User
-        created:
-          type: string
-          description: Creation timestamp in date-time format
-          format: date-time
-          example: 2024-01-01 12:00:00+00:00
-        lastModified:
-          type: string
-          description: Last modification timestamp in date-time format
-          format: date-time
-          example: 2024-01-01 12:00:00+00:00
-      description: Resource meta data of a user
     SCIMCreateUserDefinition:
       required:
       - emails
@@ -400,20 +382,6 @@ components:
             - value: role2
               primary: true
           items: {}
-    NameInfo:
-      required:
-      - familyName
-      - givenName
-      type: object
-      properties:
-        givenName:
-          type: string
-          description: Given name of the user (firstName)
-          example: John
-        familyName:
-          type: string
-          description: Family name of the user (lastName)
-          example: Doe
     ListSCIMUserModelsResponse:
       type: object
       properties:
@@ -437,6 +405,38 @@ components:
           description: List of SCIM user resources
           items:
             $ref: '#/components/schemas/SCIMUserModel'
+    ResourceData:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The name of the resource type of the resource
+          example: User
+        created:
+          type: string
+          description: Creation timestamp in date-time format
+          format: date-time
+          example: 2024-01-01 12:00:00+00:00
+        lastModified:
+          type: string
+          description: Last modification timestamp in date-time format
+          format: date-time
+          example: 2024-01-01 12:00:00+00:00
+      description: Resource meta data of a user
+    NameInfo:
+      required:
+      - familyName
+      - givenName
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: Given name of the user (firstName)
+          example: John
+        familyName:
+          type: string
+          description: Family name of the user (lastName)
+          example: Doe
     SCIMUserModel:
       type: object
       allOf:

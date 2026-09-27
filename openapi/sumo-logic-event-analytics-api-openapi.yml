@@ -191,92 +191,6 @@ paths:
           description: The event extraction rule was successfully deleted.
 components:
   schemas:
-    FieldMapping:
-      required:
-      - valueSource
-      type: object
-      properties:
-        valueSource:
-          maxLength: 256
-          type: string
-          description: The actual value or field reference for the mapping.
-          example: Knobs Changes
-        mappingType:
-          pattern: ^(HardCoded)$
-          type: string
-          description: Specifies valueSource is hardcoded.
-          example: HardCoded
-          x-pattern-message: Must be `HardCoded`
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    EventExtractionRulesQuotaUsage:
-      required:
-      - quota
-      - remaining
-      type: object
-      properties:
-        quota:
-          type: integer
-          description: Maximum number of EventExtractionRules allowed.
-          format: int32
-          example: 200
-        remaining:
-          type: integer
-          description: Remaining number of EventExtractionRules allowed.
-          format: int32
-          example: 121
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ListEventExtractionRulesResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of event extraction rules.
-          items:
-            $ref: '#/components/schemas/EventExtractionRuleWithDetails'
     EventExtractionRule:
       required:
       - configuration
@@ -347,6 +261,68 @@ components:
             eventDescription:
               valueSource: 2 containers in monitor-manager were upgraded.
               mappingType: HardCoded
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    FieldMapping:
+      required:
+      - valueSource
+      type: object
+      properties:
+        valueSource:
+          maxLength: 256
+          type: string
+          description: The actual value or field reference for the mapping.
+          example: Knobs Changes
+        mappingType:
+          pattern: ^(HardCoded)$
+          type: string
+          description: Specifies valueSource is hardcoded.
+          example: HardCoded
+          x-pattern-message: Must be `HardCoded`
+    ListEventExtractionRulesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of event extraction rules.
+          items:
+            $ref: '#/components/schemas/EventExtractionRuleWithDetails'
+    EventExtractionRulesQuotaUsage:
+      required:
+      - quota
+      - remaining
+      type: object
+      properties:
+        quota:
+          type: integer
+          description: Maximum number of EventExtractionRules allowed.
+          format: int32
+          example: 200
+        remaining:
+          type: integer
+          description: Remaining number of EventExtractionRules allowed.
+          format: int32
+          example: 121
     EventExtractionRuleWithDetails:
       type: object
       description: Event extraction rule object.
@@ -382,6 +358,30 @@ components:
             type: string
             description: Reason for disabling the event extraction rule, if applicable.
             example: Event Extraction Rule output exceeded maximum allowed rate of 1000 events per hour in last 24 hours.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

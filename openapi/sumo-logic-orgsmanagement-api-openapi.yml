@@ -83,6 +83,46 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    ChildUsageDetailsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: Usage details of the child orgs.
+          items:
+            $ref: '#/components/schemas/ChildUsageDetail'
+    ChildUsageDetail:
+      required:
+      - orgId
+      - status
+      - usages
+      type: object
+      properties:
+        status:
+          pattern: ^(Active|Delinked|Deactivated)$
+          type: string
+          description: Status of the child org.
+          example: Active
+          x-pattern-message: Valid values are `Active`, `Delinked`, and `Deactivated`
+        orgName:
+          type: string
+          description: Name of the child org.
+          example: DSW Corp - Prod/Main
+        orgId:
+          maxLength: 23
+          minLength: 19
+          type: string
+          description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
+          example: us2-00000000FF42A0C3
+        allocatedCredits:
+          type: number
+          description: Denotes the total number of credits provisioned for the child organization to use.
+          format: double
+          example: 10000.0
+        usages:
+          $ref: '#/components/schemas/ChildUsage'
     ChildUsage:
       required:
       - totalCreditsUsed
@@ -137,46 +177,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    ChildUsageDetailsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: Usage details of the child orgs.
-          items:
-            $ref: '#/components/schemas/ChildUsageDetail'
-    ChildUsageDetail:
-      required:
-      - orgId
-      - status
-      - usages
-      type: object
-      properties:
-        status:
-          pattern: ^(Active|Delinked|Deactivated)$
-          type: string
-          description: Status of the child org.
-          example: Active
-          x-pattern-message: Valid values are `Active`, `Delinked`, and `Deactivated`
-        orgName:
-          type: string
-          description: Name of the child org.
-          example: DSW Corp - Prod/Main
-        orgId:
-          maxLength: 23
-          minLength: 19
-          type: string
-          description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
-          example: us2-00000000FF42A0C3
-        allocatedCredits:
-          type: number
-          description: Denotes the total number of credits provisioned for the child organization to use.
-          format: double
-          example: 10000.0
-        usages:
-          $ref: '#/components/schemas/ChildUsage'
     ChildUsageDetailsRequest:
       type: object
       properties:

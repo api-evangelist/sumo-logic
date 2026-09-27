@@ -546,76 +546,173 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
+    DashboardRequest:
       required:
-      - errors
+      - timeRange
+      - title
+      type: object
+      properties:
+        title:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: Title of the dashboard.
+          example: Kubernetes Dashboard
+        description:
+          type: string
+          description: Description of the dashboard.
+          example: A view of pods, namespaces and nodes of your cluster.
+        folderId:
+          type: string
+          description: 'The identifier of the folder to save the dashboard in. By default it is saved in your personal folder.
+
+            '
+          example: 000000000C1C17C6
+        topologyLabelMap:
+          $ref: '#/components/schemas/TopologyLabelMap'
+        domain:
+          type: string
+          description: If set denotes that the dashboard concerns a given domain (e.g. `aws`, `k8s`, `app`).
+          example: aws
+          default: ''
+        hierarchies:
+          maxItems: 20
+          type: array
+          description: If set to non-empty array denotes that the dashboard concerns given hierarchies.
+          example:
+          - Kubernetes Node View
+          items:
+            type: string
+          default: []
+        refreshInterval:
+          type: integer
+          description: 'Interval of time (in seconds) to automatically refresh the dashboard. A value of 0 means we never automatically refresh the dashboard. Allowed values are `0`, `30`, `60`, `120`, `300`, `900`, `1800`, `3600`, `7200`, `86400`.
+
+            '
+          format: int32
+          example: 30
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+        panels:
+          type: array
+          description: Panels in the dashboard.
+          items:
+            $ref: '#/components/schemas/Panel'
+        layout:
+          $ref: '#/components/schemas/Layout'
+        variables:
+          type: array
+          description: Variables to apply to the panels.
+          items:
+            $ref: '#/components/schemas/Variable'
+        theme:
+          pattern: ^(light|dark|Light|Dark)$
+          type: string
+          description: Theme for the dashboard. Either `Light` or `Dark`.
+          example: light
+          default: Light
+          x-pattern-message: Must be `Light`, or `Dark`
+        isPublic:
+          type: boolean
+          description: Is the dashboard public
+          default: false
+        highlightViolations:
+          type: boolean
+          description: Whether to highlight threshold violations.
+          default: false
+        organizations:
+          $ref: '#/components/schemas/Organizations'
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    BeginAsyncJobResponse:
+      required:
       - id
       type: object
       properties:
         id:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    TopologyLabelValuesList:
-      type: array
-      description: List of values corresponding to a key of a label.
-      example:
-      - kube-scheduler
-      items:
-        type: string
-        description: Value of the label.
-    VariableValuesData:
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
+    DashboardMigrationResult:
       required:
-      - variableValues
+      - data
+      - status
       type: object
       properties:
-        variableValues:
-          type: array
-          description: Values for the variable.
-          example:
-          - myCluster
-          items:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
             type: string
-        status:
-          $ref: '#/components/schemas/DashboardSearchStatus'
-        variableType:
-          pattern: ^(LogQueryVariableSourceDefinition|MetadataVariableSourceDefinition|CsvVariableSourceDefinition|FilterSourceDefinition)$
-          type: string
-          description: The type of the variable.
-          example: LogQueryVariableSourceDefinition
-          x-pattern-message: Must be `LogQueryVariableSourceDefinition`, `MetadataVariableSourceDefinition` `CsvVariableSourceDefinition` or `FilterSourceDefinition`.
-        valueType:
-          type: string
-          description: 'The type of value of the variable. Allowed values are `String`, Any`, `Numeric`, `Integer`, `Long`, `Double`, `Boolean`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
+          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) Content Ids. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
 
             '
-          example: Any
-          default: Any
-        allowMultiSelect:
-          type: boolean
-          description: Allow multiple selections in the values dropdown.
-          example: false
-          default: false
-        variableKey:
-          type: string
-          description: The key of the variable.
-          example: _source
+          example:
+            '1': 64
+        richData:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MigratedDashboardInfo'
+          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) info. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
+
+            '
+        status:
+          $ref: '#/components/schemas/DashboardMigrationStatus'
         errors:
-          type: array
-          description: Generic errors returned by backend from downstream assemblies. More specific errors will be thrown in the future.
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-      description: Variable values, status, type and errors for the variable values search.
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ErrorDescription'
+          description: A mapping of Legacy Dashboards Content Identifiers that failed validation to the failure reason(s).
+        warnings:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ErrorDescription'
+          description: A mapping of Legacy Dashboards Content Identifiers to warnings.
+    VariableSourceDefinition:
+      required:
+      - variableSourceType
+      type: object
+      properties:
+        variableSourceType:
+          type: string
+          description: Source type of the variable values.
+          example: MetadataVariableSourceDefinition
+      discriminator:
+        propertyName: variableSourceType
+    DashboardSearchStatus:
+      required:
+      - state
+      type: object
+      properties:
+        state:
+          type: string
+          description: Current state of the search.
+        percentCompleted:
+          maximum: 100
+          minimum: 0
+          type: integer
+          description: Percentage of search completed.
+          format: int32
     ReportScheduleRequest:
       required:
       - dashboardId
@@ -695,319 +792,6 @@ components:
           description: Count of dashboards to be migrated.
           example: 5
       description: Preview of the dashboard migration.
-    Dashboard:
-      allOf:
-      - $ref: '#/components/schemas/DashboardRequest'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: 'Unique identifier for the dashboard. This id is used to get detailed information about the dashboard, such as panels, variables and the layout.
-
-              '
-            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
-          contentId:
-            type: string
-            description: 'Content identifier for the dashboard. This id is used to connect to the Sumo Content Library and get general metadata about the dashboard. Use this id if you want to search for dashboards in Sumo folders.
-
-              '
-            example: '1'
-          scheduleId:
-            type: string
-            description: 'Scheduled report identifier for the dashboard. Only most recently modified report schedule is rerun per dashboard. This id is used to manage the schedule details through the scheduled report API.
-
-              '
-            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
-          scheduleCount:
-            type: integer
-            description: Count of report schedules for the dashboard.
-            format: int32
-            example: 10
-    Layout:
-      required:
-      - layoutStructures
-      - layoutType
-      type: object
-      properties:
-        layoutType:
-          type: string
-          description: The type of panel layout on the Dashboard. For example, Grid, Tabs, or Hierarchical. Currently supports `Grid` only.
-          example: Grid
-        layoutStructures:
-          type: array
-          description: Layout structures for the panel childen.
-          items:
-            $ref: '#/components/schemas/LayoutStructure'
-      discriminator:
-        propertyName: layoutType
-    TopologyLabelMap:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TopologyLabelValuesList'
-          description: Map from topology labels to `TopologyLabelValuesList`.
-      description: 'Map of the topology labels. Each label has a key and a list of values. If a value is `*`, it means the label will match content for all values of its key.
-
-        '
-      example:
-        data:
-          service:
-          - kube-scheduler
-          - kube-dns
-    ReportAction:
-      required:
-      - actionType
-      type: object
-      properties:
-        actionType:
-          pattern: ^DirectDownloadReportAction$
-          type: string
-          description: Type of action.
-          example: DirectDownloadReportAction
-          x-pattern-message: should be 'DirectDownloadReportAction'
-      description: The base class of all report action types. `DirectDownloadReportAction` downloads dashboard from browser. New action types may be supported in the future.
-      discriminator:
-        propertyName: actionType
-    Organizations:
-      type: object
-      properties:
-        defaultOrgIds:
-          type: array
-          description: The default list of organization IDs to run the dashboard by
-          items:
-            $ref: '#/components/schemas/OrgId'
-      description: The organization details to run the dashboard by
-    VariablesValuesData:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Data for variable values.
-          default: {}
-        richData:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/VariableValuesData'
-          description: A rich form of data for the variable search, including variable values, status and variable type. This field is different from `data` in that it includes an object instead of list as the value in the map. The `data` field is kept for backwards compatibility, please use `richData` for all usages going forward.
-    DashboardMigrationResult:
-      required:
-      - data
-      - status
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) Content Ids. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
-
-            '
-          example:
-            '1': 64
-        richData:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/MigratedDashboardInfo'
-          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) info. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
-
-            '
-        status:
-          $ref: '#/components/schemas/DashboardMigrationStatus'
-        errors:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/ErrorDescription'
-          description: A mapping of Legacy Dashboards Content Identifiers that failed validation to the failure reason(s).
-        warnings:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/ErrorDescription'
-          description: A mapping of Legacy Dashboards Content Identifiers to warnings.
-    GenerateReportRequest:
-      required:
-      - action
-      - exportFormat
-      - template
-      - timezone
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ReportAction'
-        exportFormat:
-          pattern: ^(Pdf|Png)$
-          type: string
-          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
-          example: Pdf
-          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
-        timezone:
-          type: string
-          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
-        template:
-          $ref: '#/components/schemas/Template'
-    ReportSchedule:
-      allOf:
-      - $ref: '#/components/schemas/ReportScheduleRequest'
-      - type: object
-        properties:
-          scheduleId:
-            type: string
-            description: Identifier of the dashboard report schedule.
-            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
-    DashboardSearchStatus:
-      required:
-      - state
-      type: object
-      properties:
-        state:
-          type: string
-          description: Current state of the search.
-        percentCompleted:
-          maximum: 100
-          minimum: 0
-          type: integer
-          description: Percentage of search completed.
-          format: int32
-    DashboardMigrationStatus:
-      required:
-      - failedCount
-      - successCount
-      - totalCount
-      type: object
-      properties:
-        successCount:
-          type: integer
-          description: A successful migration to Dashboard(New).
-          example: 3
-        failedCount:
-          type: integer
-          description: A failed migration to Dashboard(New).
-          example: 1
-        totalCount:
-          type: integer
-          description: The total number of Legacy Dashboards to migrate.
-          example: 10
-    MigratedDashboardInfo:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of the Dashboard(New)
-          example: jgiJLiFP9dX6YdNG0u9t0yqUVOF0iIlNcX0usw2Uy6g8BYTgBj0vYVeiRjRj
-        name:
-          type: string
-          description: The name of the Dashboard(New)
-          example: New Dashboard
-    Panel:
-      required:
-      - key
-      - panelType
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the panel.
-          example: 2F7D449E3D511066
-        key:
-          type: string
-          description: 'Key for the panel. Used to create searches for the queries in the panel and configure the layout of the panel in the dashboard.
-
-            '
-          example: panelca6280e4a75fca45
-        title:
-          type: string
-          description: Title of the panel.
-          example: This panel shows memory usage for your kubernetes pod.
-        visualSettings:
-          type: string
-          description: Visual settings of the panel.
-          example: '{\"general\":{\"type\":\"column\"}'
-        keepVisualSettingsConsistentWithParent:
-          type: boolean
-          description: Keeps the visual settings, like series colors, consistent with the settings of the parent panel.
-          default: true
-        panelType:
-          type: string
-          description: Type of panel.
-          example: SumoSearchPanel
-      discriminator:
-        propertyName: panelType
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
-    Template:
-      required:
-      - templateType
-      type: object
-      properties:
-        templateType:
-          pattern: ^(DashboardTemplate|DashboardReportModeTemplate)$
-          type: string
-          description: The type of template. `DashboardTemplate` provides a snapshot view of the exported dashboard. `DashboardReportModeTemplate` provides a printer-friendly view of the exported dashboard. New templates may be supported in the future.
-          example: DashboardTemplate
-          x-pattern-message: Must be `DashboardTemplate`, or `DashboardReportModeTemplate`
-      discriminator:
-        propertyName: templateType
     Variable:
       required:
       - name
@@ -1061,70 +845,15 @@ components:
             '
           example: Any
           default: Any
-    Action:
-      required:
-      - connectionType
-      type: object
-      properties:
-        connectionType:
-          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
-          type: string
-          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
-          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
-      description: The base class of all connection types.
-      discriminator:
-        propertyName: connectionType
-    PaginatedReportSchedules:
-      required:
-      - reportSchedules
-      type: object
-      properties:
-        reportSchedules:
-          type: array
-          description: List of dashboard report schedules.
-          items:
-            $ref: '#/components/schemas/ReportSchedule'
-        next:
-          type: string
-          description: Next continuation token. `token` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    LayoutStructure:
-      required:
-      - key
-      - structure
-      type: object
-      properties:
-        key:
-          type: string
-          description: The identifier of the panel that this structure applies to.
-          example: panelPANE-3DC454FD977E2A46
-        structure:
-          type: string
-          description: The structure of a panel.
-          example: '{\"height\":5,\"width\":9,\"x\":0,\"y\":0}'
-    PaginatedDashboards:
-      required:
-      - dashboards
-      type: object
-      properties:
-        dashboards:
-          type: array
-          description: List of dashboards.
-          items:
-            $ref: '#/components/schemas/Dashboard'
-        next:
-          type: string
-          description: Next continuation token. `next` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    BeginAsyncJobResponseV2:
-      required:
-      - jobId
-      type: object
-      properties:
-        jobId:
-          type: string
-          description: Identifier of the asynchronous job. Use it to get status of the job.
-          example: C03E086C137F38B4
+    ReportSchedule:
+      allOf:
+      - $ref: '#/components/schemas/ReportScheduleRequest'
+      - type: object
+        properties:
+          scheduleId:
+            type: string
+            description: Identifier of the dashboard report schedule.
+            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
     AsyncJobStatus:
       required:
       - status
@@ -1141,108 +870,308 @@ components:
       example:
         status: Success
         statusMessage: ''
-    DashboardRequest:
+    GenerateReportRequest:
       required:
-      - timeRange
-      - title
+      - action
+      - exportFormat
+      - template
+      - timezone
       type: object
       properties:
-        title:
-          maxLength: 255
-          minLength: 1
+        action:
+          $ref: '#/components/schemas/ReportAction'
+        exportFormat:
+          pattern: ^(Pdf|Png)$
           type: string
-          description: Title of the dashboard.
-          example: Kubernetes Dashboard
-        description:
+          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
+          example: Pdf
+          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
+        timezone:
           type: string
-          description: Description of the dashboard.
-          example: A view of pods, namespaces and nodes of your cluster.
-        folderId:
+          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+        template:
+          $ref: '#/components/schemas/Template'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
           type: string
-          description: 'The identifier of the folder to save the dashboard in. By default it is saved in your personal folder.
-
-            '
-          example: 000000000C1C17C6
-        topologyLabelMap:
-          $ref: '#/components/schemas/TopologyLabelMap'
-        domain:
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
           type: string
-          description: If set denotes that the dashboard concerns a given domain (e.g. `aws`, `k8s`, `app`).
-          example: aws
-          default: ''
-        hierarchies:
-          maxItems: 20
-          type: array
-          description: If set to non-empty array denotes that the dashboard concerns given hierarchies.
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
           example:
-          - Kubernetes Node View
-          items:
-            type: string
-          default: []
-        refreshInterval:
-          type: integer
-          description: 'Interval of time (in seconds) to automatically refresh the dashboard. A value of 0 means we never automatically refresh the dashboard. Allowed values are `0`, `30`, `60`, `120`, `300`, `900`, `1800`, `3600`, `7200`, `86400`.
-
-            '
-          format: int32
-          example: 30
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-        panels:
-          type: array
-          description: Panels in the dashboard.
-          items:
-            $ref: '#/components/schemas/Panel'
-        layout:
-          $ref: '#/components/schemas/Layout'
-        variables:
-          type: array
-          description: Variables to apply to the panels.
-          items:
-            $ref: '#/components/schemas/Variable'
-        theme:
-          pattern: ^(light|dark|Light|Dark)$
-          type: string
-          description: Theme for the dashboard. Either `Light` or `Dark`.
-          example: light
-          default: Light
-          x-pattern-message: Must be `Light`, or `Dark`
-        isPublic:
-          type: boolean
-          description: Is the dashboard public
-          default: false
-        highlightViolations:
-          type: boolean
-          description: Whether to highlight threshold violations.
-          default: false
-        organizations:
-          $ref: '#/components/schemas/Organizations'
-    OrgId:
-      maxLength: 23
-      minLength: 19
-      type: string
-      description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
-      example: us2-00000000FF42A0C3
-    VariableSourceDefinition:
+            minLength: 12
+            actualLength: 5
+    TopologyLabelMap:
       required:
-      - variableSourceType
+      - data
       type: object
       properties:
-        variableSourceType:
-          type: string
-          description: Source type of the variable values.
-          example: MetadataVariableSourceDefinition
-      discriminator:
-        propertyName: variableSourceType
-    BeginAsyncJobResponse:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TopologyLabelValuesList'
+          description: Map from topology labels to `TopologyLabelValuesList`.
+      description: 'Map of the topology labels. Each label has a key and a list of values. If a value is `*`, it means the label will match content for all values of its key.
+
+        '
+      example:
+        data:
+          service:
+          - kube-scheduler
+          - kube-dns
+    ErrorResponse:
       required:
+      - errors
       - id
       type: object
       properties:
         id:
           type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    VariablesValuesData:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Data for variable values.
+          default: {}
+        richData:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableValuesData'
+          description: A rich form of data for the variable search, including variable values, status and variable type. This field is different from `data` in that it includes an object instead of list as the value in the map. The `data` field is kept for backwards compatibility, please use `richData` for all usages going forward.
+    Organizations:
+      type: object
+      properties:
+        defaultOrgIds:
+          type: array
+          description: The default list of organization IDs to run the dashboard by
+          items:
+            $ref: '#/components/schemas/OrgId'
+      description: The organization details to run the dashboard by
+    Panel:
+      required:
+      - key
+      - panelType
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the panel.
+          example: 2F7D449E3D511066
+        key:
+          type: string
+          description: 'Key for the panel. Used to create searches for the queries in the panel and configure the layout of the panel in the dashboard.
+
+            '
+          example: panelca6280e4a75fca45
+        title:
+          type: string
+          description: Title of the panel.
+          example: This panel shows memory usage for your kubernetes pod.
+        visualSettings:
+          type: string
+          description: Visual settings of the panel.
+          example: '{\"general\":{\"type\":\"column\"}'
+        keepVisualSettingsConsistentWithParent:
+          type: boolean
+          description: Keeps the visual settings, like series colors, consistent with the settings of the parent panel.
+          default: true
+        panelType:
+          type: string
+          description: Type of panel.
+          example: SumoSearchPanel
+      discriminator:
+        propertyName: panelType
+    MigratedDashboardInfo:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the Dashboard(New)
+          example: jgiJLiFP9dX6YdNG0u9t0yqUVOF0iIlNcX0usw2Uy6g8BYTgBj0vYVeiRjRj
+        name:
+          type: string
+          description: The name of the Dashboard(New)
+          example: New Dashboard
+    PaginatedReportSchedules:
+      required:
+      - reportSchedules
+      type: object
+      properties:
+        reportSchedules:
+          type: array
+          description: List of dashboard report schedules.
+          items:
+            $ref: '#/components/schemas/ReportSchedule'
+        next:
+          type: string
+          description: Next continuation token. `token` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    TopologyLabelValuesList:
+      type: array
+      description: List of values corresponding to a key of a label.
+      example:
+      - kube-scheduler
+      items:
+        type: string
+        description: Value of the label.
+    VariableValuesData:
+      required:
+      - variableValues
+      type: object
+      properties:
+        variableValues:
+          type: array
+          description: Values for the variable.
+          example:
+          - myCluster
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/DashboardSearchStatus'
+        variableType:
+          pattern: ^(LogQueryVariableSourceDefinition|MetadataVariableSourceDefinition|CsvVariableSourceDefinition|FilterSourceDefinition)$
+          type: string
+          description: The type of the variable.
+          example: LogQueryVariableSourceDefinition
+          x-pattern-message: Must be `LogQueryVariableSourceDefinition`, `MetadataVariableSourceDefinition` `CsvVariableSourceDefinition` or `FilterSourceDefinition`.
+        valueType:
+          type: string
+          description: 'The type of value of the variable. Allowed values are `String`, Any`, `Numeric`, `Integer`, `Long`, `Double`, `Boolean`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
+
+            '
+          example: Any
+          default: Any
+        allowMultiSelect:
+          type: boolean
+          description: Allow multiple selections in the values dropdown.
+          example: false
+          default: false
+        variableKey:
+          type: string
+          description: The key of the variable.
+          example: _source
+        errors:
+          type: array
+          description: Generic errors returned by backend from downstream assemblies. More specific errors will be thrown in the future.
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+      description: Variable values, status, type and errors for the variable values search.
+    DashboardMigrationStatus:
+      required:
+      - failedCount
+      - successCount
+      - totalCount
+      type: object
+      properties:
+        successCount:
+          type: integer
+          description: A successful migration to Dashboard(New).
+          example: 3
+        failedCount:
+          type: integer
+          description: A failed migration to Dashboard(New).
+          example: 1
+        totalCount:
+          type: integer
+          description: The total number of Legacy Dashboards to migrate.
+          example: 10
+    PaginatedDashboards:
+      required:
+      - dashboards
+      type: object
+      properties:
+        dashboards:
+          type: array
+          description: List of dashboards.
+          items:
+            $ref: '#/components/schemas/Dashboard'
+        next:
+          type: string
+          description: Next continuation token. `next` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    Action:
+      required:
+      - connectionType
+      type: object
+      properties:
+        connectionType:
+          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
+          type: string
+          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
+          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
+      description: The base class of all connection types.
+      discriminator:
+        propertyName: connectionType
+    Template:
+      required:
+      - templateType
+      type: object
+      properties:
+        templateType:
+          pattern: ^(DashboardTemplate|DashboardReportModeTemplate)$
+          type: string
+          description: The type of template. `DashboardTemplate` provides a snapshot view of the exported dashboard. `DashboardReportModeTemplate` provides a printer-friendly view of the exported dashboard. New templates may be supported in the future.
+          example: DashboardTemplate
+          x-pattern-message: Must be `DashboardTemplate`, or `DashboardReportModeTemplate`
+      discriminator:
+        propertyName: templateType
+    Layout:
+      required:
+      - layoutStructures
+      - layoutType
+      type: object
+      properties:
+        layoutType:
+          type: string
+          description: The type of panel layout on the Dashboard. For example, Grid, Tabs, or Hierarchical. Currently supports `Grid` only.
+          example: Grid
+        layoutStructures:
+          type: array
+          description: Layout structures for the panel childen.
+          items:
+            $ref: '#/components/schemas/LayoutStructure'
+      discriminator:
+        propertyName: layoutType
     DashboardMigrationRequest:
       required:
       - contentIds
@@ -1256,6 +1185,77 @@ components:
             type: string
             description: Content identifier of the Legacy dashboard.
             example: 00000000000001C8
+    ReportAction:
+      required:
+      - actionType
+      type: object
+      properties:
+        actionType:
+          pattern: ^DirectDownloadReportAction$
+          type: string
+          description: Type of action.
+          example: DirectDownloadReportAction
+          x-pattern-message: should be 'DirectDownloadReportAction'
+      description: The base class of all report action types. `DirectDownloadReportAction` downloads dashboard from browser. New action types may be supported in the future.
+      discriminator:
+        propertyName: actionType
+    BeginAsyncJobResponseV2:
+      required:
+      - jobId
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: Identifier of the asynchronous job. Use it to get status of the job.
+          example: C03E086C137F38B4
+    LayoutStructure:
+      required:
+      - key
+      - structure
+      type: object
+      properties:
+        key:
+          type: string
+          description: The identifier of the panel that this structure applies to.
+          example: panelPANE-3DC454FD977E2A46
+        structure:
+          type: string
+          description: The structure of a panel.
+          example: '{\"height\":5,\"width\":9,\"x\":0,\"y\":0}'
+    OrgId:
+      maxLength: 23
+      minLength: 19
+      type: string
+      description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
+      example: us2-00000000FF42A0C3
+    Dashboard:
+      allOf:
+      - $ref: '#/components/schemas/DashboardRequest'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: 'Unique identifier for the dashboard. This id is used to get detailed information about the dashboard, such as panels, variables and the layout.
+
+              '
+            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
+          contentId:
+            type: string
+            description: 'Content identifier for the dashboard. This id is used to connect to the Sumo Content Library and get general metadata about the dashboard. Use this id if you want to search for dashboards in Sumo folders.
+
+              '
+            example: '1'
+          scheduleId:
+            type: string
+            description: 'Scheduled report identifier for the dashboard. Only most recently modified report schedule is rerun per dashboard. This id is used to manage the schedule details through the scheduled report API.
+
+              '
+            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
+          scheduleCount:
+            type: integer
+            description: Count of report schedules for the dashboard.
+            format: int32
+            example: 10
   securitySchemes:
     basicAuth:
       type: http

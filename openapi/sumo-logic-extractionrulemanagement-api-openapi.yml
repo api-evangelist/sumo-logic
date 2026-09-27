@@ -236,6 +236,24 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    ExtractionRule:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ExtractionRuleDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the field extraction rule.
+          fieldNames:
+            type: array
+            description: List of extracted fields from "parseExpression".
+            items:
+              type: string
+      x-tf-generated-properties: id,name,scope,parseExpression,enabled
+      x-tf-resource-name: ExtractionRule
     ExtractionRuleDefinition:
       allOf:
       - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
@@ -245,30 +263,16 @@ components:
             type: boolean
             description: Is the field extraction rule enabled.
             default: true
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+    UpdateExtractionRuleDefinition:
+      allOf:
+      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
+      - required:
+        - enabled
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Is the field extraction rule enabled.
     BaseExtractionRuleDefinition:
       required:
       - name
@@ -293,34 +297,6 @@ components:
           type: string
           description: Describes the fields to be parsed.
           example: csv _raw extract 1 as f1
-    UpdateExtractionRuleDefinition:
-      allOf:
-      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
-      - required:
-        - enabled
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            description: Is the field extraction rule enabled.
-    ExtractionRule:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ExtractionRuleDefinition'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the field extraction rule.
-          fieldNames:
-            type: array
-            description: List of extracted fields from "parseExpression".
-            items:
-              type: string
-      x-tf-generated-properties: id,name,scope,parseExpression,enabled
-      x-tf-resource-name: ExtractionRule
     ListExtractionRulesResponse:
       required:
       - data
@@ -334,6 +310,30 @@ components:
         next:
           type: string
           description: Next continuation token.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

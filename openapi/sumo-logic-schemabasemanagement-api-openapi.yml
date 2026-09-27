@@ -91,46 +91,16 @@ components:
       allOf:
       - $ref: '#/components/schemas/SchemaBaseIdentityWithMetadata'
       - $ref: '#/components/schemas/SchemaBaseTemplateYaml'
-    ErrorDescription:
+    ListSchemaBaseTypeToVersionsResponse:
       required:
-      - code
-      - message
+      - data
       type: object
       properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    SchemaBaseTypeToVersionsResponse:
-      required:
-      - type
-      - versions
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of the schema.
-          example: Okta
-        versions:
+        data:
           type: array
-          description: List of schema base identities sorted by latest version for a specific schema type.
+          description: List of maps containing the mappings schema type -> versions.
           items:
-            $ref: '#/components/schemas/SchemaBaseComplete'
-      description: Map of the schema base type to its list of schema base identities.
+            $ref: '#/components/schemas/SchemaBaseTypeToVersionsResponse'
     SchemaBaseIdentity:
       required:
       - family
@@ -174,16 +144,6 @@ components:
           description: The family to which schema belong.
           enum:
           - OTC_Source_Template
-    ListSchemaBaseTypeToVersionsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of maps containing the mappings schema type -> versions.
-          items:
-            $ref: '#/components/schemas/SchemaBaseTypeToVersionsResponse'
     SchemaBaseIdentityWithMetadata:
       type: object
       allOf:
@@ -206,6 +166,46 @@ components:
             description: Last modification timestamp in UTC.
             format: date-time
             example: 2018-10-16 09:10:00+00:00
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    SchemaBaseTypeToVersionsResponse:
+      required:
+      - type
+      - versions
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the schema.
+          example: Okta
+        versions:
+          type: array
+          description: List of schema base identities sorted by latest version for a specific schema type.
+          items:
+            $ref: '#/components/schemas/SchemaBaseComplete'
+      description: Map of the schema base type to its list of schema base identities.
   securitySchemes:
     basicAuth:
       type: http

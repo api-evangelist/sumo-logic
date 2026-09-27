@@ -400,18 +400,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MaxUserSessionTimeoutPolicy:
-      required:
-      - maxUserSessionTimeout
-      type: object
-      properties:
-        maxUserSessionTimeout:
-          pattern: ^(5m|15m|30m|1h|2h|6h|12h|1d|2d|3d|5d|7d)$
-          type: string
-          description: 'Maximum web session timeout users are able to configure within their user preferences. Valid values are: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
-          example: 1d
-          x-pattern-message: 'must be one of the following: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
-      description: Max User Session Timeout policy.
     ErrorResponse:
       required:
       - errors
@@ -432,6 +420,76 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    AuditPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Audit policy is enabled.
+          example: true
+      description: Audit policy.
+    UserConcurrentSessionsLimitPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the User Concurrent Sessions Limit policy is enabled.
+          example: true
+        maxConcurrentSessions:
+          maximum: 100
+          minimum: 1
+          type: integer
+          description: Maximum number of concurrent sessions a user may have.
+          format: int32
+          example: 50
+          default: 100
+      description: User Concurrent Sessions Limit policy.
+    DataAccessLevelPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Data Access Level policy is enabled.
+          example: true
+      description: Data Access Level policy.
+    SearchAuditPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Search Audit policy is enabled.
+          example: true
+      description: Search Audit policy.
+    DataDeletionPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Data Deletion policy is enabled.
+          example: true
+      description: Whether the Data Deletion policy is enabled.
+    MaxUserSessionTimeoutPolicy:
+      required:
+      - maxUserSessionTimeout
+      type: object
+      properties:
+        maxUserSessionTimeout:
+          pattern: ^(5m|15m|30m|1h|2h|6h|12h|1d|2d|3d|5d|7d)$
+          type: string
+          description: 'Maximum web session timeout users are able to configure within their user preferences. Valid values are: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
+          example: 1d
+          x-pattern-message: 'must be one of the following: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
+      description: Max User Session Timeout policy.
     ErrorDescription:
       required:
       - code
@@ -456,46 +514,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    SearchAuditPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Search Audit policy is enabled.
-          example: true
-      description: Search Audit policy.
-    DataAccessLevelPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Data Access Level policy is enabled.
-          example: true
-      description: Data Access Level policy.
-    AuditPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Audit policy is enabled.
-          example: true
-      description: Audit policy.
-    DataDeletionPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Data Deletion policy is enabled.
-          example: true
-      description: Whether the Data Deletion policy is enabled.
     ShareDashboardsOutsideOrganizationPolicy:
       required:
       - enabled
@@ -506,24 +524,6 @@ components:
           description: Whether the Share Dashboards Outside Organization policy is enabled.
           example: true
       description: Share Dashboards Outside Organization policy.
-    UserConcurrentSessionsLimitPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the User Concurrent Sessions Limit policy is enabled.
-          example: true
-        maxConcurrentSessions:
-          maximum: 100
-          minimum: 1
-          type: integer
-          description: Maximum number of concurrent sessions a user may have.
-          format: int32
-          example: 50
-          default: 100
-      description: User Concurrent Sessions Limit policy.
     AccessKeysLifetimePolicy:
       required:
       - accessKeysLifetimeInDays

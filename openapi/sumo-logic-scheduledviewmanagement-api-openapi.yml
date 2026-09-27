@@ -265,125 +265,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ScheduledView:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CreateScheduledViewDefinition'
-      - $ref: '#/components/schemas/ViewRetentionProperties'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Identifier for the scheduled view.
-          indexId:
-            type: string
-            description: The `id` of the Index where the output from Scheduled view is stored.
-            example: '1'
-          createdAt:
-            type: string
-            description: Creation timestamp in UTC.
-            format: date-time
-          modifiedAt:
-            type: string
-            description: Last modification timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-            format: date-time
-          createdByOptimizeIt:
-            type: boolean
-            description: If the scheduled view is created by OptimizeIt.
-          error:
-            type: string
-            description: Errors related to the scheduled view.
-          status:
-            type: string
-            description: "Status of the scheduled view. Possible values are:\n  1. `NOT_STARTED`\n  2. `FILLING`\n  3. `STOPPED`\n  4. `COMPLETE`\n  5. `FAILED`\n  6. `PAUSED`"
-          totalBytes:
-            type: integer
-            description: Total storage consumed by the scheduled view.
-            format: int64
-          totalMessageCount:
-            type: integer
-            description: Total number of messages for the scheduled view.
-            format: int64
-          createdBy:
-            type: string
-            description: Identifier of the user who created the scheduled view.
-            example: 0000000006743FE8
-          modifiedBy:
-            type: string
-            description: Identifier of the user who last modified the resource.
-            example: 0000000006743FE8
-          filledRanges:
-            type: array
-            description: List of the different units of filled ranges since the autoview has been created.
-            items:
-              $ref: '#/components/schemas/FilledRange'
-          lastAccessedAt:
-            type: string
-            description: Last accessed timestamp in UTC
-            format: date-time
-      x-tf-generated-properties: id,query,indexName,startTime,retentionPeriod,parsingMode
-      x-tf-resource-name: ScheduledView
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ScheduledViewsQuotaUsage:
-      required:
-      - quota
-      - remaining
-      type: object
-      properties:
-        quota:
-          type: integer
-          description: Maximum number of Scheduled Views allowed.
-          format: int32
-          example: 200
-        remaining:
-          type: integer
-          description: Remaining number of Scheduled Views allowed.
-          format: int32
-          example: 121
     ListScheduledViewsResponse:
       required:
       - data
@@ -397,26 +278,6 @@ components:
         next:
           type: string
           description: Next continuation token.
-    UpdateScheduledViewDefinition:
-      type: object
-      properties:
-        dataForwardingId:
-          type: string
-          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
-        retentionPeriod:
-          type: integer
-          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account.  Only relevant if your account has multi-retention. enabled.
-          format: int32
-          example: 365
-          default: -1
-        reduceRetentionPeriodImmediately:
-          type: boolean
-          description: This is required if the newly specified `retentionPeriod` is less than the existing retention period.  In such a situation, a value of `true` says that data between the existing retention period and the new retention period should be deleted immediately; if `false`, such data will be deleted after seven days. This property is optional and ignored if the specified `retentionPeriod` is greater than or equal to the current retention period.
-          default: false
-        timeZone:
-          type: string
-          description: Updates the time zone for ingesting data in scheduled view to the specified timezone ( does nothing if not specified ). Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
     FilledRange:
       required:
       - endTime
@@ -476,6 +337,46 @@ components:
           description: Time zone for ingesting data in scheduled view. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
           example: America/Los_Angeles
           default: UTC
+    UpdateScheduledViewDefinition:
+      type: object
+      properties:
+        dataForwardingId:
+          type: string
+          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
+        retentionPeriod:
+          type: integer
+          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account.  Only relevant if your account has multi-retention. enabled.
+          format: int32
+          example: 365
+          default: -1
+        reduceRetentionPeriodImmediately:
+          type: boolean
+          description: This is required if the newly specified `retentionPeriod` is less than the existing retention period.  In such a situation, a value of `true` says that data between the existing retention period and the new retention period should be deleted immediately; if `false`, such data will be deleted after seven days. This property is optional and ignored if the specified `retentionPeriod` is greater than or equal to the current retention period.
+          default: false
+        timeZone:
+          type: string
+          description: Updates the time zone for ingesting data in scheduled view to the specified timezone ( does nothing if not specified ). Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     ViewRetentionProperties:
       type: object
       properties:
@@ -488,6 +389,105 @@ components:
           type: string
           description: When the newRetentionPeriod will become effective in UTC format.
           format: date-time
+    ScheduledViewsQuotaUsage:
+      required:
+      - quota
+      - remaining
+      type: object
+      properties:
+        quota:
+          type: integer
+          description: Maximum number of Scheduled Views allowed.
+          format: int32
+          example: 200
+        remaining:
+          type: integer
+          description: Remaining number of Scheduled Views allowed.
+          format: int32
+          example: 121
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ScheduledView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateScheduledViewDefinition'
+      - $ref: '#/components/schemas/ViewRetentionProperties'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Identifier for the scheduled view.
+          indexId:
+            type: string
+            description: The `id` of the Index where the output from Scheduled view is stored.
+            example: '1'
+          createdAt:
+            type: string
+            description: Creation timestamp in UTC.
+            format: date-time
+          modifiedAt:
+            type: string
+            description: Last modification timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+            format: date-time
+          createdByOptimizeIt:
+            type: boolean
+            description: If the scheduled view is created by OptimizeIt.
+          error:
+            type: string
+            description: Errors related to the scheduled view.
+          status:
+            type: string
+            description: "Status of the scheduled view. Possible values are:\n  1. `NOT_STARTED`\n  2. `FILLING`\n  3. `STOPPED`\n  4. `COMPLETE`\n  5. `FAILED`\n  6. `PAUSED`"
+          totalBytes:
+            type: integer
+            description: Total storage consumed by the scheduled view.
+            format: int64
+          totalMessageCount:
+            type: integer
+            description: Total number of messages for the scheduled view.
+            format: int64
+          createdBy:
+            type: string
+            description: Identifier of the user who created the scheduled view.
+            example: 0000000006743FE8
+          modifiedBy:
+            type: string
+            description: Identifier of the user who last modified the resource.
+            example: 0000000006743FE8
+          filledRanges:
+            type: array
+            description: List of the different units of filled ranges since the autoview has been created.
+            items:
+              $ref: '#/components/schemas/FilledRange'
+          lastAccessedAt:
+            type: string
+            description: Last accessed timestamp in UTC
+            format: date-time
+      x-tf-generated-properties: id,query,indexName,startTime,retentionPeriod,parsingMode
+      x-tf-resource-name: ScheduledView
   securitySchemes:
     basicAuth:
       type: http

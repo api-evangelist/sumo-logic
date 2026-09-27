@@ -608,6 +608,47 @@ components:
           description: Type of the object model.
       discriminator:
         propertyName: type
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ParsersLibraryFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+      - required:
+        - children
+        type: object
+        properties:
+          children:
+            type: array
+            description: Children of the folder.
+            items:
+              $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+    ListParsersLibraryItemWithPath:
+      type: array
+      description: List of folders or parsers.
+      items:
+        $ref: '#/components/schemas/ParsersLibraryItemWithPath'
     ErrorResponse:
       required:
       - errors
@@ -628,31 +669,37 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ParsersLibraryBase:
+    IdToParsersLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+    ContentCopyParams:
       required:
-      - description
-      - name
-      - type
+      - parentId
       type: object
       properties:
+        parentId:
+          type: string
+          description: Identifier of the parent folder to copy to.
         name:
-          maxLength: 255
-          minLength: 1
           type: string
-          description: Name of the folder or parser.
+          description: Optionally provide a new name.
         description:
-          maxLength: 4096
           type: string
-          description: Description of the folder or parser.
-        type:
+          description: Optionally provide a new description.
+    ParsersLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+        path:
           type: string
-          description: Type of the object model.
-        isLocked:
-          type: boolean
-          description: Locking/Unlocking requires the `LockParsers` capability. Locked objects can only be `Localized`. Updating or moving requires unlocking the object. Locking/Unlocking recursively locks all of the objects children. All children of a locked object must be locked.
-          default: false
-      discriminator:
-        propertyName: type
+          description: Path of the folder or parser.
+          example: /Parsers/SampleFolder/TestParser
     ParsersLibraryBaseResponse:
       required:
       - contentType
@@ -720,42 +767,31 @@ components:
           description: Immutable objects are "READ-ONLY".
       discriminator:
         propertyName: type
-    ErrorDescription:
+    ParsersLibraryBase:
       required:
-      - code
-      - message
+      - description
+      - name
+      - type
       type: object
       properties:
-        code:
+        name:
+          maxLength: 255
+          minLength: 1
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
+          description: Name of the folder or parser.
+        description:
+          maxLength: 4096
           type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
+          description: Description of the folder or parser.
+        type:
           type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ParsersLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the folder or parser.
-          example: /Parsers/SampleFolder/TestParser
+          description: Type of the object model.
+        isLocked:
+          type: boolean
+          description: Locking/Unlocking requires the `LockParsers` capability. Locked objects can only be `Localized`. Updating or moving requires unlocking the object. Locking/Unlocking recursively locks all of the objects children. All children of a locked object must be locked.
+          default: false
+      discriminator:
+        propertyName: type
     Path:
       required:
       - path
@@ -770,18 +806,6 @@ components:
         path:
           type: string
           description: String representation of the path.
-    ParsersLibraryFolderResponse:
-      allOf:
-      - $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-      - required:
-        - children
-        type: object
-        properties:
-          children:
-            type: array
-            description: Children of the folder.
-            items:
-              $ref: '#/components/schemas/ParsersLibraryBaseResponse'
     ParsersLibraryExportBase:
       required:
       - description
@@ -803,20 +827,6 @@ components:
           description: Type of the object model.
       discriminator:
         propertyName: type
-    ContentCopyParams:
-      required:
-      - parentId
-      type: object
-      properties:
-        parentId:
-          type: string
-          description: Identifier of the parent folder to copy to.
-        name:
-          type: string
-          description: Optionally provide a new name.
-        description:
-          type: string
-          description: Optionally provide a new description.
     PathItem:
       required:
       - id
@@ -832,16 +842,6 @@ components:
         description:
           type: string
           description: Description of the path element.
-    ListParsersLibraryItemWithPath:
-      type: array
-      description: List of folders or parsers.
-      items:
-        $ref: '#/components/schemas/ParsersLibraryItemWithPath'
-    IdToParsersLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/ParsersLibraryBaseResponse'
   securitySchemes:
     basicAuth:
       type: http

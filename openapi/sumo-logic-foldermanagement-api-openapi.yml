@@ -423,6 +423,27 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    FolderDefinition:
+      required:
+      - name
+      - parentId
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
+        parentId:
+          type: string
+          description: The identifier of the parent folder.
     MetadataModel:
       required:
       - createdAt
@@ -449,6 +470,51 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    Folder:
+      allOf:
+      - $ref: '#/components/schemas/Content'
+      - type: object
+        properties:
+          description:
+            maxLength: 255
+            minLength: 0
+            type: string
+            description: The description of the folder.
+            example: This is a sample folder.
+          children:
+            type: array
+            description: A list of the content items.
+            items:
+              $ref: '#/components/schemas/Content'
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     Content:
       type: object
       allOf:
@@ -494,36 +560,39 @@ components:
             description: Indicates whether the content item refers to scheduled search. This field is only relevant to `Search` content type.
             example: false
             default: false
-    ErrorResponse:
+    AsyncJobStatus:
       required:
-      - errors
-      - id
+      - status
       type: object
       properties:
-        id:
+        status:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ContentList:
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
+    UpdateFolderRequest:
       required:
-      - data
+      - name
       type: object
       properties:
-        data:
-          type: array
-          description: A list of the content items.
-          items:
-            $ref: '#/components/schemas/Content'
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
     ErrorDescription:
       required:
       - code
@@ -548,85 +617,16 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    UpdateFolderRequest:
+    ContentList:
       required:
-      - name
+      - data
       type: object
       properties:
-        name:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: The name of the folder.
-          example: SampleFolder
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: The description of the folder.
-          example: This is a sample folder.
-    FolderDefinition:
-      required:
-      - name
-      - parentId
-      type: object
-      properties:
-        name:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: The name of the folder.
-          example: SampleFolder
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: The description of the folder.
-          example: This is a sample folder.
-        parentId:
-          type: string
-          description: The identifier of the parent folder.
-    BeginAsyncJobResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
-    Folder:
-      allOf:
-      - $ref: '#/components/schemas/Content'
-      - type: object
-        properties:
-          description:
-            maxLength: 255
-            minLength: 0
-            type: string
-            description: The description of the folder.
-            example: This is a sample folder.
-          children:
-            type: array
-            description: A list of the content items.
-            items:
-              $ref: '#/components/schemas/Content'
-    AsyncJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        statusMessage:
-          type: string
-          description: Additional status message generated if the status is not `Failed`.
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      example:
-        status: Success
-        statusMessage: ''
+        data:
+          type: array
+          description: A list of the content items.
+          items:
+            $ref: '#/components/schemas/Content'
   securitySchemes:
     basicAuth:
       type: http

@@ -186,6 +186,33 @@ paths:
           description: The transformation rule was successfully deleted.
 components:
   schemas:
+    TransformationRuleResponse:
+      type: object
+      description: A generic response for transformation rule.
+      allOf:
+      - $ref: '#/components/schemas/TransformationRuleRequest'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the transformation rule.
+    TransformationRulesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of transformation rules.
+          items:
+            $ref: '#/components/schemas/TransformationRuleResponse'
+        next:
+          type: string
+          description: Next continuation token.
+          example: aGNzTmZBN1ZZWFk9
+      description: A generic response for transformation rule.
     MetadataModel:
       required:
       - createdAt
@@ -273,6 +300,30 @@ components:
           example: 8
           default: 400
       description: The properties that define a transformation rule.
+    TransformationRuleRequest:
+      required:
+      - enabled
+      - ruleDefinition
+      type: object
+      properties:
+        ruleDefinition:
+          $ref: '#/components/schemas/TransformationRuleDefinition'
+        enabled:
+          type: boolean
+          description: True if the rule is enabled.
+          example: true
+      description: A request for creating or updating a transformation rule.
+    DimensionTransformation:
+      required:
+      - transformationType
+      type: object
+      properties:
+        transformationType:
+          type: string
+          description: This is the base type of all dimension transformations.
+      description: Base class of all transformation types.
+      discriminator:
+        propertyName: transformationType
     ErrorDescription:
       required:
       - code
@@ -297,57 +348,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    TransformationRuleResponse:
-      type: object
-      description: A generic response for transformation rule.
-      allOf:
-      - $ref: '#/components/schemas/TransformationRuleRequest'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the transformation rule.
-    DimensionTransformation:
-      required:
-      - transformationType
-      type: object
-      properties:
-        transformationType:
-          type: string
-          description: This is the base type of all dimension transformations.
-      description: Base class of all transformation types.
-      discriminator:
-        propertyName: transformationType
-    TransformationRulesResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of transformation rules.
-          items:
-            $ref: '#/components/schemas/TransformationRuleResponse'
-        next:
-          type: string
-          description: Next continuation token.
-          example: aGNzTmZBN1ZZWFk9
-      description: A generic response for transformation rule.
-    TransformationRuleRequest:
-      required:
-      - enabled
-      - ruleDefinition
-      type: object
-      properties:
-        ruleDefinition:
-          $ref: '#/components/schemas/TransformationRuleDefinition'
-        enabled:
-          type: boolean
-          description: True if the rule is enabled.
-          example: true
-      description: A request for creating or updating a transformation rule.
   securitySchemes:
     basicAuth:
       type: http

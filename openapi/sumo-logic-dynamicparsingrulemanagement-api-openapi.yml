@@ -210,30 +210,20 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
+    ListDynamicRulesResponse:
       required:
-      - code
-      - message
+      - data
       type: object
       properties:
-        code:
+        data:
+          type: array
+          description: List of dynamic parsing rules.
+          items:
+            $ref: '#/components/schemas/DynamicRule'
+        next:
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+          description: Next continuation token.
+          example: 0000000001C51FF7
     Metadata:
       required:
       - createdAt
@@ -273,20 +263,30 @@ components:
             type: boolean
             description: Whether the rule has been defined by the system, rather than by a user.
             example: false
-    ListDynamicRulesResponse:
+    ErrorDescription:
       required:
-      - data
+      - code
+      - message
       type: object
       properties:
-        data:
-          type: array
-          description: List of dynamic parsing rules.
-          items:
-            $ref: '#/components/schemas/DynamicRule'
-        next:
+        code:
           type: string
-          description: Next continuation token.
-          example: 0000000001C51FF7
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     DynamicRuleDefinition:
       required:
       - enabled

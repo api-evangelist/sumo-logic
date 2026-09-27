@@ -149,6 +149,63 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ServiceManifestDataSourceParameter:
+      required:
+      - parameterId
+      - parameterType
+      type: object
+      properties:
+        parameterType:
+          pattern: ^DATA_SOURCE$
+          type: string
+          description: Parameter type.
+          example: DATA_SOURCE
+          x-pattern-message: 'Supported parameter types include: DATA_SOURCE'
+        parameterId:
+          type: string
+          description: Parameter identifier.
+          example: paramId1
+        dataSourceType:
+          pattern: ^(LOG|METRICS)$
+          type: string
+          description: Data source type.
+          example: LOG
+          x-pattern-message: 'Supported data source types include: LOG, METRICS'
+        label:
+          type: string
+          description: Label.
+          example: Log label
+        description:
+          type: string
+          description: Description.
+          example: Log data source
+        example:
+          type: string
+          description: Example.
+          example: ''
+        hidden:
+          type: boolean
+          description: Should the UI display?
+          default: false
+    App:
+      required:
+      - appDefinition
+      - appManifest
+      type: object
+      properties:
+        appDefinition:
+          $ref: '#/components/schemas/AppDefinition'
+        appManifest:
+          $ref: '#/components/schemas/AppManifest'
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
     ErrorResponse:
       required:
       - errors
@@ -169,40 +226,17 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    App:
+    ListAppsResult:
       required:
-      - appDefinition
-      - appManifest
+      - apps
       type: object
       properties:
-        appDefinition:
-          $ref: '#/components/schemas/AppDefinition'
-        appManifest:
-          $ref: '#/components/schemas/AppManifest'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+        apps:
+          type: array
+          description: An array of Apps
+          items:
+            $ref: '#/components/schemas/App'
+      description: List of all available apps from the App Catalog.
     AppInstallRequest:
       required:
       - description
@@ -322,64 +356,6 @@ components:
           type: string
           description: App author website URL.
           example: https://www.sumologic.com
-    ListAppsResult:
-      required:
-      - apps
-      type: object
-      properties:
-        apps:
-          type: array
-          description: An array of Apps
-          items:
-            $ref: '#/components/schemas/App'
-      description: List of all available apps from the App Catalog.
-    BeginAsyncJobResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
-    ServiceManifestDataSourceParameter:
-      required:
-      - parameterId
-      - parameterType
-      type: object
-      properties:
-        parameterType:
-          pattern: ^DATA_SOURCE$
-          type: string
-          description: Parameter type.
-          example: DATA_SOURCE
-          x-pattern-message: 'Supported parameter types include: DATA_SOURCE'
-        parameterId:
-          type: string
-          description: Parameter identifier.
-          example: paramId1
-        dataSourceType:
-          pattern: ^(LOG|METRICS)$
-          type: string
-          description: Data source type.
-          example: LOG
-          x-pattern-message: 'Supported data source types include: LOG, METRICS'
-        label:
-          type: string
-          description: Label.
-          example: Log label
-        description:
-          type: string
-          description: Description.
-          example: Log data source
-        example:
-          type: string
-          description: Example.
-          example: ''
-        hidden:
-          type: boolean
-          description: Should the UI display?
-          default: false
     AppDefinition:
       required:
       - appVersion
@@ -429,6 +405,30 @@ components:
       example:
         status: Success
         statusMessage: ''
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

@@ -178,6 +178,102 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    PaginatedOTCollectorsRequest:
+      type: object
+      properties:
+        search:
+          type: string
+          description: search by collector id or free text search on collector properties.
+          example: testAgent
+        filters:
+          type: object
+          properties:
+            tags:
+              type: array
+              description: tags associated with the OT collector
+              example:
+              - - key: region
+                  values:
+                  - us2
+                  - mum
+              - - key: key2
+                  values:
+                  - value2
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OtTag'
+              default: []
+            os:
+              type:
+              - string
+              - 'null'
+              description: Name of the Operating System.
+              example: linux
+              x-visibility: private
+            collectorVersionRange:
+              $ref: '#/components/schemas/VersionRange'
+            alive:
+              type:
+              - boolean
+              - 'null'
+              description: alive Status of the OT Collector based on heartbeat.
+              example: true
+            isRemotelyManaged:
+              type:
+              - boolean
+              - 'null'
+              description: Management Status of the OT Collector based on if it is remotely or locally managed.
+              example: true
+            isUpgradeAvailable:
+              type:
+              - boolean
+              - 'null'
+              description: upgrade availability status of the OT Collector.
+              example: true
+            hasNoSourceTemplateLinked:
+              type:
+              - boolean
+              - 'null'
+              description: whether the remotely managed OT Collector has no source template linked.
+              example: true
+          description: parameter which is used for filtering.
+        sortBy:
+          type: string
+          description: parameter which is used for sorting.
+          example: name
+        next:
+          type: string
+          description: parameter which is used for fetching next set of results.
+          example: token
+        limit:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          description: parameter which is used for limiting number of otCollectors on a page.
+          format: int32
+          example: 30
+        includeCount:
+          type:
+          - boolean
+          - 'null'
+          description: count of filtered otCollectors.
+          example: false
+    VersionRange:
+      type: object
+      properties:
+        minVersion:
+          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+          type: string
+          description: Minimum version of otCollector.
+        maxVersion:
+          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+          type: string
+          description: Maximum version of the collector.
+        rangeType:
+          type: string
+          description: 'Specifies how filtering should be applied when `minVersion` and `maxVersion` are defined. - `Within`: Filtering includes the specified range. - `Outside`: Filtering excludes the specified range. By default, filtering includes the specified range.'
+      description: Version range for otCollector.
     ErrorResponse:
       required:
       - errors
@@ -198,21 +294,33 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    VersionRange:
+    OtTag:
+      required:
+      - key
+      - values
       type: object
       properties:
-        minVersion:
-          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+        key:
           type: string
-          description: Minimum version of otCollector.
-        maxVersion:
-          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
-          type: string
-          description: Maximum version of the collector.
-        rangeType:
-          type: string
-          description: 'Specifies how filtering should be applied when `minVersion` and `maxVersion` are defined. - `Within`: Filtering includes the specified range. - `Outside`: Filtering excludes the specified range. By default, filtering includes the specified range.'
-      description: Version range for otCollector.
+          description: key of the given tag.
+          example: key1
+        values:
+          type: array
+          description: values of the given tag.
+          items:
+            type: string
+            example: value1
+    OTCollectorCountResponse:
+      required:
+      - totalCount
+      type: object
+      properties:
+        totalCount:
+          type: integer
+          description: Total number of OT Collector for a customer.
+          format: int32
+          example: 100
+      description: response for total count of otCollectors.
     OTCollector:
       required:
       - createdAt
@@ -347,6 +455,33 @@ components:
           description: Count of the source templates linked to a collector
           example: 1
       description: An OT Collector definition.
+    PaginatedOTCollectorsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: paginated list of OT Collectors.
+          items:
+            $ref: '#/components/schemas/OTCollector'
+        next:
+          type: string
+          description: next page token.
+        count:
+          type: integer
+          description: count of otCollectors in response.
+          format: int32
+    OTCollectorListResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of OT Collectors.
+          items:
+            $ref: '#/components/schemas/OTCollector'
     ErrorDescription:
       required:
       - code
@@ -371,141 +506,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    PaginatedOTCollectorsRequest:
-      type: object
-      properties:
-        search:
-          type: string
-          description: search by collector id or free text search on collector properties.
-          example: testAgent
-        filters:
-          type: object
-          properties:
-            tags:
-              type: array
-              description: tags associated with the OT collector
-              example:
-              - - key: region
-                  values:
-                  - us2
-                  - mum
-              - - key: key2
-                  values:
-                  - value2
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OtTag'
-              default: []
-            os:
-              type:
-              - string
-              - 'null'
-              description: Name of the Operating System.
-              example: linux
-              x-visibility: private
-            collectorVersionRange:
-              $ref: '#/components/schemas/VersionRange'
-            alive:
-              type:
-              - boolean
-              - 'null'
-              description: alive Status of the OT Collector based on heartbeat.
-              example: true
-            isRemotelyManaged:
-              type:
-              - boolean
-              - 'null'
-              description: Management Status of the OT Collector based on if it is remotely or locally managed.
-              example: true
-            isUpgradeAvailable:
-              type:
-              - boolean
-              - 'null'
-              description: upgrade availability status of the OT Collector.
-              example: true
-            hasNoSourceTemplateLinked:
-              type:
-              - boolean
-              - 'null'
-              description: whether the remotely managed OT Collector has no source template linked.
-              example: true
-          description: parameter which is used for filtering.
-        sortBy:
-          type: string
-          description: parameter which is used for sorting.
-          example: name
-        next:
-          type: string
-          description: parameter which is used for fetching next set of results.
-          example: token
-        limit:
-          maximum: 1000
-          minimum: 1
-          type: integer
-          description: parameter which is used for limiting number of otCollectors on a page.
-          format: int32
-          example: 30
-        includeCount:
-          type:
-          - boolean
-          - 'null'
-          description: count of filtered otCollectors.
-          example: false
-    OTCollectorListResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of OT Collectors.
-          items:
-            $ref: '#/components/schemas/OTCollector'
-    OtTag:
-      required:
-      - key
-      - values
-      type: object
-      properties:
-        key:
-          type: string
-          description: key of the given tag.
-          example: key1
-        values:
-          type: array
-          description: values of the given tag.
-          items:
-            type: string
-            example: value1
-    OTCollectorCountResponse:
-      required:
-      - totalCount
-      type: object
-      properties:
-        totalCount:
-          type: integer
-          description: Total number of OT Collector for a customer.
-          format: int32
-          example: 100
-      description: response for total count of otCollectors.
-    PaginatedOTCollectorsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: paginated list of OT Collectors.
-          items:
-            $ref: '#/components/schemas/OTCollector'
-        next:
-          type: string
-          description: next page token.
-        count:
-          type: integer
-          description: count of otCollectors in response.
-          format: int32
   securitySchemes:
     basicAuth:
       type: http

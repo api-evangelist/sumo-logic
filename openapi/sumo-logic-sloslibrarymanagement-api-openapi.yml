@@ -525,6 +525,127 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SloUsageInfo:
+      type: array
+      description: The usage info of logs and metrics SLOs.
+      items:
+        $ref: '#/components/schemas/SloUsage'
+    SliStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          pattern: ^(Success|Error|InProgress)$
+          type: string
+          description: Whether the SLI computation is complete / had an error / is in progress.
+          example: Success
+        sliPercentage:
+          type: number
+          description: SLI percentage for the compliance period. Available if `status` is `Success`.
+          format: double
+          example: 95.14
+        errorBudgetRemainingPercentage:
+          type: number
+          description: Percentage of error budget remaining for the compliance period. Available if `status` is `Success`.
+          format: double
+        absoluteErrorBudgetRemaining:
+          type: string
+          description: Formatted string for the absolute error budget remaining (time duration for window-based SLIs, request count for request-based SLIs). Available if `status` is `Success`.
+          example: 1h56m, -3h45m, -241.3k req, 1.5k req
+        progressPercentage:
+          type: number
+          description: SLI computation progress.
+          format: double
+      description: Status of the SLI computation. If the status is successful, also contains the SLI value and error budget remaining for the current compliance period.
+    IdToSlosLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SlosLibraryBaseResponse'
+    ListSlosLibraryItemWithPath:
+      type: array
+      description: Multi-type list of types slo or folder.
+      items:
+        $ref: '#/components/schemas/SlosLibraryItemWithPath'
+    SlosLibraryBaseExport:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the slo or folder.
+        description:
+          type: string
+          description: Description of the slo or folder.
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    SlosLibraryBaseUpdate:
+      required:
+      - name
+      - type
+      - version
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the slo or folder.
+        description:
+          type: string
+          description: The description of the slo or folder.
+          default: ''
+        version:
+          type: integer
+          description: The version of the slo or folder.
+          format: int64
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    SlosLibraryBase:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the slo or folder.
+        description:
+          type: string
+          description: Description of the slo or folder.
+          default: ''
+        type:
+          type: string
+          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
+      discriminator:
+        propertyName: type
     SlosLibraryFolderResponse:
       allOf:
       - $ref: '#/components/schemas/SlosLibraryBaseResponse'
@@ -546,29 +667,23 @@ components:
             description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
             items:
               $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    SlosLibraryBase:
-      required:
-      - name
-      - type
-      type: object
+    SloUsage:
       properties:
-        name:
+        sliType:
+          pattern: ^(Logs|Metrics|Monitors)$
           type: string
-          description: Name of the slo or folder.
-        description:
-          type: string
-          description: Description of the slo or folder.
-          default: ''
-        type:
-          type: string
-          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
-      discriminator:
-        propertyName: type
-    ListSlosLibraryItemWithPath:
-      type: array
-      description: Multi-type list of types slo or folder.
-      items:
-        $ref: '#/components/schemas/SlosLibraryItemWithPath'
+          description: The type of SLO usage info (Logs/Metrics/Monitor based).
+          example: Logs
+          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
+        usage:
+          type: integer
+          description: Current number of active Logs/Metrics/Monitors SLOs.
+          example: 100
+        limit:
+          type: integer
+          description: The limit of active Logs/Metrics/Monitors SLOs.
+          example: 100
+      description: The usage info of SLOs.
     SlosLibraryBaseResponse:
       required:
       - contentType
@@ -638,26 +753,46 @@ components:
             type: string
       discriminator:
         propertyName: type
-    ErrorResponse:
+    ContentCopyParams:
       required:
-      - errors
-      - id
+      - parentId
       type: object
       properties:
-        id:
+        parentId:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
+          description: Identifier of the parent folder to copy to.
+        name:
+          type: string
+          description: Optionally provide a new name.
+        description:
+          type: string
+          description: Optionally provide a new description.
+    SlosLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/SlosLibraryBaseResponse'
+        path:
+          type: string
+          description: Path of the slo or folder.
+          example: /Slos/SampleFolder/TestSlo
+    Path:
+      required:
+      - path
+      - pathItems
+      type: object
+      properties:
+        pathItems:
           type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
+          description: Elements of the path.
           items:
-            $ref: '#/components/schemas/ErrorDescription'
+            $ref: '#/components/schemas/PathItem'
+        path:
+          type: string
+          description: String representation of the path.
     ErrorDescription:
       required:
       - code
@@ -682,107 +817,12 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    SlosLibraryBaseUpdate:
-      required:
-      - name
-      - type
-      - version
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the slo or folder.
-        description:
-          type: string
-          description: The description of the slo or folder.
-          default: ''
-        version:
-          type: integer
-          description: The version of the slo or folder.
-          format: int64
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
     IdToSliStatusMap:
       maxProperties: 1000
       type: object
       additionalProperties:
         $ref: '#/components/schemas/SliStatus'
       description: Map of SLO identifier to SliStatus object.
-    SlosLibraryBaseExport:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the slo or folder.
-        description:
-          type: string
-          description: Description of the slo or folder.
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
-    IdToSlosLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    Path:
-      required:
-      - path
-      - pathItems
-      type: object
-      properties:
-        pathItems:
-          type: array
-          description: Elements of the path.
-          items:
-            $ref: '#/components/schemas/PathItem'
-        path:
-          type: string
-          description: String representation of the path.
-    SloUsageInfo:
-      type: array
-      description: The usage info of logs and metrics SLOs.
-      items:
-        $ref: '#/components/schemas/SloUsage'
-    SloUsage:
-      properties:
-        sliType:
-          pattern: ^(Logs|Metrics|Monitors)$
-          type: string
-          description: The type of SLO usage info (Logs/Metrics/Monitor based).
-          example: Logs
-          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
-        usage:
-          type: integer
-          description: Current number of active Logs/Metrics/Monitors SLOs.
-          example: 100
-        limit:
-          type: integer
-          description: The limit of active Logs/Metrics/Monitors SLOs.
-          example: 100
-      description: The usage info of SLOs.
-    ContentCopyParams:
-      required:
-      - parentId
-      type: object
-      properties:
-        parentId:
-          type: string
-          description: Identifier of the parent folder to copy to.
-        name:
-          type: string
-          description: Optionally provide a new name.
-        description:
-          type: string
-          description: Optionally provide a new description.
     PathItem:
       required:
       - id
@@ -798,46 +838,6 @@ components:
         description:
           type: string
           description: Description of the path element.
-    SlosLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/SlosLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the slo or folder.
-          example: /Slos/SampleFolder/TestSlo
-    SliStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          pattern: ^(Success|Error|InProgress)$
-          type: string
-          description: Whether the SLI computation is complete / had an error / is in progress.
-          example: Success
-        sliPercentage:
-          type: number
-          description: SLI percentage for the compliance period. Available if `status` is `Success`.
-          format: double
-          example: 95.14
-        errorBudgetRemainingPercentage:
-          type: number
-          description: Percentage of error budget remaining for the compliance period. Available if `status` is `Success`.
-          format: double
-        absoluteErrorBudgetRemaining:
-          type: string
-          description: Formatted string for the absolute error budget remaining (time duration for window-based SLIs, request count for request-based SLIs). Available if `status` is `Success`.
-          example: 1h56m, -3h45m, -241.3k req, 1.5k req
-        progressPercentage:
-          type: number
-          description: SLI computation progress.
-          format: double
-      description: Status of the SLI computation. If the status is successful, also contains the SLI value and error budget remaining for the current compliance period.
   securitySchemes:
     basicAuth:
       type: http

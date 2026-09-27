@@ -159,83 +159,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ContentPermissionUpdateRequest:
-      required:
-      - contentPermissionAssignments
-      - notificationMessage
-      - notifyRecipients
-      type: object
-      properties:
-        contentPermissionAssignments:
-          type: array
-          description: Content permissions to be updated.
-          items:
-            $ref: '#/components/schemas/ContentPermissionAssignment'
-        notifyRecipients:
-          type: boolean
-          description: Set this to "true" to notify the users who had a permission update.
-        notificationMessage:
-          type: string
-          description: The notification message sent to the users who had a permission update.
-    ContentPermissionResult:
-      required:
-      - explicitPermissions
-      type: object
-      properties:
-        explicitPermissions:
-          type: array
-          description: Explicitly assigned content permissions.
-          items:
-            $ref: '#/components/schemas/ContentPermissionAssignment'
-        implicitPermissions:
-          type: array
-          description: Implicitly inherited content permissions.
-          items:
-            $ref: '#/components/schemas/ContentPermissionAssignment'
     ContentPermissionAssignment:
       required:
       - contentId
@@ -261,6 +184,83 @@ components:
         contentId:
           type: string
           description: Unique identifier for the content item.
+    ContentPermissionResult:
+      required:
+      - explicitPermissions
+      type: object
+      properties:
+        explicitPermissions:
+          type: array
+          description: Explicitly assigned content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+        implicitPermissions:
+          type: array
+          description: Implicitly inherited content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ContentPermissionUpdateRequest:
+      required:
+      - contentPermissionAssignments
+      - notificationMessage
+      - notifyRecipients
+      type: object
+      properties:
+        contentPermissionAssignments:
+          type: array
+          description: Content permissions to be updated.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+        notifyRecipients:
+          type: boolean
+          description: Set this to "true" to notify the users who had a permission update.
+        notificationMessage:
+          type: string
+          description: The notification message sent to the users who had a permission update.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

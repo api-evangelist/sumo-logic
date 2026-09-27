@@ -545,26 +545,21 @@ paths:
       deprecated: true
 components:
   schemas:
-    ErrorResponse:
+    UpgradeSchemaRef:
       required:
-      - errors
-      - id
+      - type
+      - version
       type: object
       properties:
-        id:
+        type:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
+          description: type of source template.
+          example: Apache
+        version:
+          type: string
+          description: version of source template.
+          example: 1.0.0
+      description: schema reference for upgrade source template request.
     ErrorDescription:
       required:
       - code
@@ -589,16 +584,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    SchemaRef:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: type of source template.
-          example: Apache
-      description: schema reference for source template.
     LinkedSourceTemplatesUpdateResponse:
       required:
       - collectorId
@@ -642,6 +627,69 @@ components:
           type: string
           description: Updated Name of the otCollector.
           example: demo_macOS
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    SchemaRef:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: type of source template.
+          example: Apache
+      description: schema reference for source template.
+    Selector:
+      type: object
+      properties:
+        tags:
+          type: array
+          description: tags filter for agents
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/OtTag'
+        names:
+          type: array
+          description: names to select custom agents
+          items:
+            type: string
+            example: demo_macOS
+      description: Agent selector conditions
+    OtTag:
+      required:
+      - key
+      - values
+      type: object
+      properties:
+        key:
+          type: string
+          description: key of the given tag.
+          example: key1
+        values:
+          type: array
+          description: values of the given tag.
+          items:
+            type: string
+            example: value1
     SourceTemplateUpgradeRequest:
       required:
       - inputJson
@@ -681,19 +729,20 @@ components:
           additionalProperties: true
           description: inputJson of source template
       description: request body for creating source template.
-    SourceTemplateStatusUpdateRequest:
+    CollectorTag:
       required:
-      - status
+      - key
+      - values
       type: object
       properties:
-        status:
+        key:
           type: string
-          description: status to set for the source template (enable or disable).
-          enum:
-          - enable
-          - disable
-      example:
-        status: enable
+          description: Key of the given tag.
+          example: key1
+        value:
+          type: string
+          description: Values of the given tag.
+          example: value1
     LinkingUpdatedSourceTemplateDetails:
       required:
       - reasonTags
@@ -710,62 +759,6 @@ components:
             items:
               $ref: '#/components/schemas/CollectorTag'
       description: source template details with tags responsible for otCollector Linking update.
-    SourceTemplateRequest:
-      required:
-      - inputJson
-      - schemaRef
-      type: object
-      properties:
-        schemaRef:
-          $ref: '#/components/schemas/SchemaRef'
-        inputJson:
-          maxProperties: 1000
-          required:
-          - name
-          - receivers
-          type: object
-          properties:
-            name:
-              type: string
-              description: name of source template.
-              example: apache_test_source_template
-            receivers:
-              type: object
-              description: receiver information of source template
-              example: {}
-            description:
-              type: string
-              description: description of source template
-              example: Demo Description for Source Template
-            processors:
-              type: object
-              description: processors for source template
-              example: {}
-          additionalProperties: true
-          description: inputJson of source template
-        selector:
-          $ref: '#/components/schemas/Selector'
-        isEnabled:
-          type: boolean
-          description: Indicates whether the source template is enabled - **Create operation:** Defaults to `true` (the template is enabled when created). - **Update operation:** If omitted, the existing status is preserved.
-          example: true
-      description: request body for creating source template.
-    OtTag:
-      required:
-      - key
-      - values
-      type: object
-      properties:
-        key:
-          type: string
-          description: key of the given tag.
-          example: key1
-        values:
-          type: array
-          description: values of the given tag.
-          items:
-            type: string
-            example: value1
     SourceTemplateListResponse:
       required:
       - data
@@ -776,63 +769,6 @@ components:
           description: List of source templates.
           items:
             $ref: '#/components/schemas/SourceTemplateDefinition'
-    SourceTemplateUpdateRequest:
-      required:
-      - inputJson
-      - schemaRef
-      type: object
-      properties:
-        schemaRef:
-          $ref: '#/components/schemas/SchemaRef'
-        inputJson:
-          maxProperties: 1000
-          required:
-          - name
-          - receivers
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of source template.
-              example: apache_test_source_template
-            receivers:
-              type: object
-              description: Receiver information of source template
-              example: {}
-            description:
-              type: string
-              description: Description of source template
-              example: Demo Description for source template
-            processors:
-              type: object
-              description: Processors for source template
-              example: {}
-          additionalProperties: true
-          description: InputJson of source template
-        selector:
-          $ref: '#/components/schemas/Selector'
-        isEnabled:
-          type: boolean
-          description: Indicates whether the source template is enabled. If omitted, the existing status is preserved.
-          example: true
-      description: Request body for updating source template.
-    Selector:
-      type: object
-      properties:
-        tags:
-          type: array
-          description: tags filter for agents
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/OtTag'
-        names:
-          type: array
-          description: names to select custom agents
-          items:
-            type: string
-            example: demo_macOS
-      description: Agent selector conditions
     SourceTemplateDefinition:
       type: object
       properties:
@@ -889,35 +825,99 @@ components:
           example: true
           default: true
       description: response definition of source template.
-    CollectorTag:
+    SourceTemplateUpdateRequest:
       required:
-      - key
-      - values
+      - inputJson
+      - schemaRef
       type: object
       properties:
-        key:
-          type: string
-          description: Key of the given tag.
-          example: key1
-        value:
-          type: string
-          description: Values of the given tag.
-          example: value1
-    UpgradeSchemaRef:
+        schemaRef:
+          $ref: '#/components/schemas/SchemaRef'
+        inputJson:
+          maxProperties: 1000
+          required:
+          - name
+          - receivers
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of source template.
+              example: apache_test_source_template
+            receivers:
+              type: object
+              description: Receiver information of source template
+              example: {}
+            description:
+              type: string
+              description: Description of source template
+              example: Demo Description for source template
+            processors:
+              type: object
+              description: Processors for source template
+              example: {}
+          additionalProperties: true
+          description: InputJson of source template
+        selector:
+          $ref: '#/components/schemas/Selector'
+        isEnabled:
+          type: boolean
+          description: Indicates whether the source template is enabled. If omitted, the existing status is preserved.
+          example: true
+      description: Request body for updating source template.
+    SourceTemplateStatusUpdateRequest:
       required:
-      - type
-      - version
+      - status
       type: object
       properties:
-        type:
+        status:
           type: string
-          description: type of source template.
-          example: Apache
-        version:
-          type: string
-          description: version of source template.
-          example: 1.0.0
-      description: schema reference for upgrade source template request.
+          description: status to set for the source template (enable or disable).
+          enum:
+          - enable
+          - disable
+      example:
+        status: enable
+    SourceTemplateRequest:
+      required:
+      - inputJson
+      - schemaRef
+      type: object
+      properties:
+        schemaRef:
+          $ref: '#/components/schemas/SchemaRef'
+        inputJson:
+          maxProperties: 1000
+          required:
+          - name
+          - receivers
+          type: object
+          properties:
+            name:
+              type: string
+              description: name of source template.
+              example: apache_test_source_template
+            receivers:
+              type: object
+              description: receiver information of source template
+              example: {}
+            description:
+              type: string
+              description: description of source template
+              example: Demo Description for Source Template
+            processors:
+              type: object
+              description: processors for source template
+              example: {}
+          additionalProperties: true
+          description: inputJson of source template
+        selector:
+          $ref: '#/components/schemas/Selector'
+        isEnabled:
+          type: boolean
+          description: Indicates whether the source template is enabled - **Create operation:** Defaults to `true` (the template is enabled when created). - **Update operation:** If omitted, the existing status is preserved.
+          example: true
+      description: request body for creating source template.
   securitySchemes:
     basicAuth:
       type: http
