@@ -68,6 +68,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    MetricsQueryRequest:
+      required:
+      - queries
+      - timeRange
+      type: object
+      properties:
+        queries:
+          minItems: 1
+          type: array
+          description: A list of metrics queries.
+          items:
+            $ref: '#/components/schemas/MetricsQueryRow'
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+      description: A list of metrics queries to run along with the time range for the query.
     MetricsQueryResultContext:
       type: object
       properties:
@@ -83,6 +98,134 @@ components:
           example: Avg
         actualQueryTimeRange:
           $ref: '#/components/schemas/Iso8601TimeRange'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    MetricsQueryResponse:
+      required:
+      - errors
+      - queryResults
+      type: object
+      properties:
+        queryResult:
+          type: array
+          description: A list of the time series returned by metric query.
+          items:
+            $ref: '#/components/schemas/TimeSeriesRow'
+        errors:
+          type: object
+          description: Errors, warnings, and information logged for the query.
+          example:
+            id: AXDUI-DGH5I-TJ045
+            errors:
+            - code: metrics:incomplete_results
+              message: Incomplete results
+          allOf:
+          - $ref: '#/components/schemas/ErrorResponse'
+    TimeSeriesList:
+      required:
+      - timeSeries
+      type: object
+      properties:
+        timeSeries:
+          type: array
+          description: A list of timeseries returned by corresponding query.
+          items:
+            $ref: '#/components/schemas/TimeSeries'
+        unit:
+          type: string
+          description: Unit of the query.
+          example: 1/second
+        timeShiftLabel:
+          type: string
+          description: Time shift value if specified in request in human readable format.
+          example: -1h
+        resultContext:
+          $ref: '#/components/schemas/MetricsQueryResultContext'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    TimeSeriesRow:
+      required:
+      - rowId
+      - timeSeriesList
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: Row id for the query row as specified in the request.
+          example: A
+        timeSeriesList:
+          $ref: '#/components/schemas/TimeSeriesList'
+    MetricDefinition:
+      type: object
+      properties:
+        metric:
+          type: string
+          description: Name of the metric returning the timeseries.
+          example: CPU_Total
+        dimensions:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Metric dimensions / metadata related to each timeseries.
+          example:
+            _sourceHost: us2-alert-1
+            _sourceCategory: alert
     Points:
       required:
       - timestamps
@@ -104,63 +247,6 @@ components:
             format: double
             example: 1.5
       description: The `values` and `timestamps` are of the same length, and points are sorted by time ascending.
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
-    TimeSeriesRow:
-      required:
-      - rowId
-      - timeSeriesList
-      type: object
-      properties:
-        rowId:
-          type: string
-          description: Row id for the query row as specified in the request.
-          example: A
-        timeSeriesList:
-          $ref: '#/components/schemas/TimeSeriesList'
-    TimeSeries:
-      required:
-      - metricDefinition
-      - points
-      type: object
-      properties:
-        metricDefinition:
-          $ref: '#/components/schemas/MetricDefinition'
-        points:
-          $ref: '#/components/schemas/Points'
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     Iso8601TimeRange:
       required:
       - end
@@ -215,102 +301,16 @@ components:
           description: Shifts the time series from your metrics query by the specified amount of time. This can help when comparing a time series across multiple time periods. Specified as a signed duration in milliseconds.
           format: int64
           example: -3600000
-    MetricsQueryRequest:
+    TimeSeries:
       required:
-      - queries
-      - timeRange
+      - metricDefinition
+      - points
       type: object
       properties:
-        queries:
-          minItems: 1
-          type: array
-          description: A list of metrics queries.
-          items:
-            $ref: '#/components/schemas/MetricsQueryRow'
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-      description: A list of metrics queries to run along with the time range for the query.
-    TimeSeriesList:
-      required:
-      - timeSeries
-      type: object
-      properties:
-        timeSeries:
-          type: array
-          description: A list of timeseries returned by corresponding query.
-          items:
-            $ref: '#/components/schemas/TimeSeries'
-        unit:
-          type: string
-          description: Unit of the query.
-          example: 1/second
-        timeShiftLabel:
-          type: string
-          description: Time shift value if specified in request in human readable format.
-          example: -1h
-        resultContext:
-          $ref: '#/components/schemas/MetricsQueryResultContext'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    MetricsQueryResponse:
-      required:
-      - errors
-      - queryResults
-      type: object
-      properties:
-        queryResult:
-          type: array
-          description: A list of the time series returned by metric query.
-          items:
-            $ref: '#/components/schemas/TimeSeriesRow'
-        errors:
-          type: object
-          description: Errors, warnings, and information logged for the query.
-          example:
-            id: AXDUI-DGH5I-TJ045
-            errors:
-            - code: metrics:incomplete_results
-              message: Incomplete results
-          allOf:
-          - $ref: '#/components/schemas/ErrorResponse'
-    MetricDefinition:
-      type: object
-      properties:
-        metric:
-          type: string
-          description: Name of the metric returning the timeseries.
-          example: CPU_Total
-        dimensions:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Metric dimensions / metadata related to each timeseries.
-          example:
-            _sourceHost: us2-alert-1
-            _sourceCategory: alert
+        metricDefinition:
+          $ref: '#/components/schemas/MetricDefinition'
+        points:
+          $ref: '#/components/schemas/Points'
   securitySchemes:
     basicAuth:
       type: http

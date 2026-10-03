@@ -63,36 +63,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ChildUsageDetailsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: Usage details of the child orgs.
-          items:
-            $ref: '#/components/schemas/ChildUsageDetail'
     ChildUsageDetail:
       required:
       - orgId
@@ -123,6 +93,50 @@ components:
           example: 10000.0
         usages:
           $ref: '#/components/schemas/ChildUsage'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     ChildUsage:
       required:
       - totalCreditsUsed
@@ -153,30 +167,6 @@ components:
           description: Percentage of usage change over the given time period.
           format: double
           example: 10000.0
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     ChildUsageDetailsRequest:
       type: object
       properties:
@@ -189,6 +179,16 @@ components:
           description: End date, without the time, of usage data to fetch.
           example: 2019-10-20
       description: The child usage details request for the parent account
+    ChildUsageDetailsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: Usage details of the child orgs.
+          items:
+            $ref: '#/components/schemas/ChildUsageDetail'
   securitySchemes:
     basicAuth:
       type: http

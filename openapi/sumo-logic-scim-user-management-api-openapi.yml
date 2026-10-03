@@ -281,6 +281,128 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseScim'
 components:
   schemas:
+    ErrorResponseScim:
+      required:
+      - schemas
+      - status
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The HTTP status code.
+          example: 409
+        schemas:
+          type: array
+          description: Defines the SCIM schemas for the user
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          items:
+            type: string
+        scimType:
+          type: string
+          description: A SCIM detail error keyword.
+          example: uniqueness
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+    ListSCIMUserModelsResponse:
+      type: object
+      properties:
+        totalResults:
+          type: integer
+          description: Total number of users that match the filter criteria
+          example: 100
+        startIndex:
+          minimum: 0
+          type: integer
+          description: The index of the first returned result
+          format: int32
+          example: 0
+          default: 0
+        itemsPerPage:
+          type: integer
+          description: The number of results returned in this page
+          example: 10
+        Resources:
+          type: array
+          description: List of SCIM user resources
+          items:
+            $ref: '#/components/schemas/SCIMUserModel'
+    ResourceData:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The name of the resource type of the resource
+          example: User
+        created:
+          type: string
+          description: Creation timestamp in date-time format
+          format: date-time
+          example: 2024-01-01 12:00:00+00:00
+        lastModified:
+          type: string
+          description: Last modification timestamp in date-time format
+          format: date-time
+          example: 2024-01-01 12:00:00+00:00
+      description: Resource meta data of a user
+    NameInfo:
+      required:
+      - familyName
+      - givenName
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: Given name of the user (firstName)
+          example: John
+        familyName:
+          type: string
+          description: Family name of the user (lastName)
+          example: Doe
+    SCIMPatchUserDefinition:
+      required:
+      - Operations
+      - schemas
+      type: object
+      properties:
+        schemas:
+          type: array
+          description: Defines the SCIM schemas for the patch operation
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+          items:
+            type: string
+        Operations:
+          type: array
+          description: Updates one or more attributes of a SCIM resource using a sequence of operations
+          items:
+            type: object
+            properties:
+              op:
+                pattern: (?i)^(replace|add|remove)$
+                type: string
+                description: Supports 'add', 'replace' and 'remove' operations
+                example: replace
+                x-pattern-message: '`replace`, `add`, `remove`'
+              path:
+                type: string
+                description: Attribute path to modify
+                example: name.familyName
+              value:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    value:
+                      type: string
+                - type: object
+                  properties:
+                    value:
+                      type: array
+                      items:
+                        type: string
     SCIMUpdateUserDefinition:
       required:
       - active
@@ -382,61 +504,6 @@ components:
             - value: role2
               primary: true
           items: {}
-    ListSCIMUserModelsResponse:
-      type: object
-      properties:
-        totalResults:
-          type: integer
-          description: Total number of users that match the filter criteria
-          example: 100
-        startIndex:
-          minimum: 0
-          type: integer
-          description: The index of the first returned result
-          format: int32
-          example: 0
-          default: 0
-        itemsPerPage:
-          type: integer
-          description: The number of results returned in this page
-          example: 10
-        Resources:
-          type: array
-          description: List of SCIM user resources
-          items:
-            $ref: '#/components/schemas/SCIMUserModel'
-    ResourceData:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          description: The name of the resource type of the resource
-          example: User
-        created:
-          type: string
-          description: Creation timestamp in date-time format
-          format: date-time
-          example: 2024-01-01 12:00:00+00:00
-        lastModified:
-          type: string
-          description: Last modification timestamp in date-time format
-          format: date-time
-          example: 2024-01-01 12:00:00+00:00
-      description: Resource meta data of a user
-    NameInfo:
-      required:
-      - familyName
-      - givenName
-      type: object
-      properties:
-        givenName:
-          type: string
-          description: Given name of the user (firstName)
-          example: John
-        familyName:
-          type: string
-          description: Family name of the user (lastName)
-          example: Doe
     SCIMUserModel:
       type: object
       allOf:
@@ -454,73 +521,6 @@ components:
             example: true
           meta:
             $ref: '#/components/schemas/ResourceData'
-    SCIMPatchUserDefinition:
-      required:
-      - Operations
-      - schemas
-      type: object
-      properties:
-        schemas:
-          type: array
-          description: Defines the SCIM schemas for the patch operation
-          example:
-          - urn:ietf:params:scim:api:messages:2.0:PatchOp
-          items:
-            type: string
-        Operations:
-          type: array
-          description: Updates one or more attributes of a SCIM resource using a sequence of operations
-          items:
-            type: object
-            properties:
-              op:
-                pattern: (?i)^(replace|add|remove)$
-                type: string
-                description: Supports 'add', 'replace' and 'remove' operations
-                example: replace
-                x-pattern-message: '`replace`, `add`, `remove`'
-              path:
-                type: string
-                description: Attribute path to modify
-                example: name.familyName
-              value:
-                type: object
-                allOf:
-                - type: object
-                  properties:
-                    value:
-                      type: string
-                - type: object
-                  properties:
-                    value:
-                      type: array
-                      items:
-                        type: string
-    ErrorResponseScim:
-      required:
-      - schemas
-      - status
-      type: object
-      properties:
-        status:
-          type: integer
-          description: The HTTP status code.
-          example: 409
-        schemas:
-          type: array
-          description: Defines the SCIM schemas for the user
-          example:
-          - urn:ietf:params:scim:schemas:core:2.0:User
-          items:
-            type: string
-        scimType:
-          type: string
-          description: A SCIM detail error keyword.
-          example: uniqueness
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
   securitySchemes:
     basicAuth:
       type: http

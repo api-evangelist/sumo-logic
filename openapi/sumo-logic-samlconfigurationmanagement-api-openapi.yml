@@ -275,40 +275,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    AuthnCertificateResult:
-      required:
-      - certificate
-      type: object
-      properties:
-        certificate:
-          type: string
-          description: Authentication Request Signing Certificate for the user.
     SamlIdentityProvider:
       type: object
       allOf:
@@ -337,6 +303,78 @@ components:
             description: The URL to fetch SAML metadata XML.
             example: https://api.sumologic.com/api/v1/saml/identityProviders/00000000361130F7/metadata
             default: ''
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    OnDemandProvisioningInfo:
+      required:
+      - onDemandProvisioningRoles
+      type: object
+      properties:
+        firstNameAttribute:
+          type: string
+          description: First name attribute of the new user account.
+          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/givenname
+          default: ''
+        lastNameAttribute:
+          type: string
+          description: Last name attribute of the new user account.
+          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/surname
+          default: ''
+        onDemandProvisioningRoles:
+          type: array
+          description: Sumo Logic RBAC roles to be assigned when user accounts are provisioned.
+          example: '["Analyst", "Administrator"]'
+          items:
+            type: string
+          default: []
     ErrorResponse:
       required:
       - errors
@@ -357,6 +395,14 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    AuthnCertificateResult:
+      required:
+      - certificate
+      type: object
+      properties:
+        certificate:
+          type: string
+          description: Authentication Request Signing Certificate for the user.
     AllowlistedUserResult:
       required:
       - canManageSaml
@@ -469,52 +515,6 @@ components:
           type: boolean
           description: True if the SAML binding is of HTTP Redirect type.
           default: false
-    OnDemandProvisioningInfo:
-      required:
-      - onDemandProvisioningRoles
-      type: object
-      properties:
-        firstNameAttribute:
-          type: string
-          description: First name attribute of the new user account.
-          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/givenname
-          default: ''
-        lastNameAttribute:
-          type: string
-          description: Last name attribute of the new user account.
-          example: http://schemas.microsoft.com/ws/2008/06/identity/claims/surname
-          default: ''
-        onDemandProvisioningRoles:
-          type: array
-          description: Sumo Logic RBAC roles to be assigned when user accounts are provisioned.
-          example: '["Analyst", "Administrator"]'
-          items:
-            type: string
-          default: []
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

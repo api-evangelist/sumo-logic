@@ -327,6 +327,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    PaginatedListOAuthConsentsResult:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: An array of OAuth consents.
+          items:
+            $ref: '#/components/schemas/OAuthConsent'
+        next:
+          type: string
+          description: Next continuation token.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+      description: List of OAuth consents.
     OAuthClientUpdateRequest:
       required:
       - description
@@ -367,6 +382,30 @@ components:
         mapping:
           ClientCredentialsClient: '#/components/schemas/UpdateClientCredentialsClientRequest'
           AuthorizationCodeClient: '#/components/schemas/UpdateAuthorizationCodeClientRequest'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     OAuthClientCreateRequest:
       required:
       - name
@@ -423,66 +462,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    OAuthConsent:
-      required:
-      - authorizedAt
-      - authorizedUser
-      - clientId
-      - clientName
-      - id
-      - scopes
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the consent.
-          example: 0000000006743FDE
-        clientId:
-          type: string
-          description: The ID of the registered client that was used in granting consent.
-          example: zVplCFHcpTDwtktBIQmFI2K6s9HEo4HAtcQD1f1M5eQ
-        clientName:
-          type: string
-          description: The name of the registered client that was used in granting consent.
-          example: My OAuth App
-        authorizedAt:
-          type: string
-          description: Timestamp when the consent was authorized in UTC in RFC3339 format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        authorizedUser:
-          type: string
-          description: Identifier of the user who authorized the consent.
-          example: 0000000006743FDD
-        lastUsedAt:
-          type: string
-          description: Timestamp when the consent was last used to grant an access token in UTC in RFC3339 format. Null if never used.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        scopes:
-          type: array
-          description: The scopes that were granted in the consent.
-          example:
-          - manageUsersAndRoles
-          - viewCollectors
-          items:
-            type: string
-      description: An OAuth consent granted by a user.
-    PaginatedListOAuthConsentsResult:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: An array of OAuth consents.
-          items:
-            $ref: '#/components/schemas/OAuthConsent'
-        next:
-          type: string
-          description: Next continuation token.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-      description: List of OAuth consents.
     PaginatedListOAuthClientsResult:
       required:
       - data
@@ -498,78 +477,6 @@ components:
           description: Next continuation token.
           example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
       description: List of OAuth clients.
-    OAuthClientWithSecret:
-      required:
-      - clientId
-      - clientSecret
-      - createdAt
-      - createdBy
-      - description
-      - disabled
-      - modifiedAt
-      - modifiedBy
-      - name
-      - scopes
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the object model.
-        clientId:
-          type: string
-          description: Identifier of the OAuth client.
-          example: zVplCFHcpTDwtktBIQmFI2K6s9HEo4HAtcQD1f1M5eQ
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the OAuth client.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who modified the OAuth client.
-          example: 0000000006743FDD
-        name:
-          maxLength: 128
-          minLength: 0
-          type: string
-          description: Name of the OAuth client.
-          example: My OAuth Client
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: Description of the OAuth client.
-          example: OAuth client for data ingestion
-        disabled:
-          type: boolean
-          description: Whether the OAuth client is disabled. Disabled OAuth clients cannot be used to authenticate users.
-        scopes:
-          type: array
-          description: "Scopes assigned to the client.\n### Alerting\n  - adminMonitorsV2\n  - viewMonitorsV2\n  - manageMonitorsV2\n\n### Data Management\n  - manageApps\n  - viewCollectors\n  - manageCollectors\n  - viewConnections\n  - manageConnections\n  - contentAdmin\n  - viewFieldExtractionRules\n  - manageFieldExtractionRules            \n  - viewFields\n  - manageFields\n  - manageBudgets\n  - viewLibrary\n  - manageLibrary\n  - viewPartitions\n  - managePartitions \n  - manageS3DataForwarding\n  - viewScheduledViews\n  - manageScheduledViews\n  - manageTokens\n\n### Logs\n  - runLogSearch\n\n### Metrics\n  - runMetricsQuery \n\n### Reliability Management\n  - viewSlos\n  - manageSlos\n\n### Security\n  - manageAccessKeys\n  - viewPersonalAccessKeys\n  - managePersonalAccessKeys\n\n### UserManagement\n  - viewUsersAndRoles\n  - manageUsersAndRoles"
-          example:
-          - manageUsersAndRoles
-          - viewCollectors
-          items:
-            type: string
-        clientSecret:
-          type: string
-          description: The client secret for the created OAuth Client.
-          example: EqyuIvsnae0LnMC2mbJArysXcmp0LuBsRgmyeLtSkFPEzSxdvpYQMDajn_8buaDj
-      discriminator:
-        propertyName: type
-        mapping:
-          ClientCredentialsClient: '#/components/schemas/ClientCredentialsClientWithSecret'
-          AuthorizationCodeClient: '#/components/schemas/AuthorizationCodeClientWithSecret'
     ScopeDefinition:
       required:
       - dependsOn
@@ -616,30 +523,51 @@ components:
               type: string
               description: The ID of the parent scope group
           description: The group that the scope belongs to.
-    ErrorDescription:
+    OAuthConsent:
       required:
-      - code
-      - message
+      - authorizedAt
+      - authorizedUser
+      - clientId
+      - clientName
+      - id
+      - scopes
       type: object
       properties:
-        code:
+        id:
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
+          description: Unique identifier for the consent.
+          example: 0000000006743FDE
+        clientId:
           type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
+          description: The ID of the registered client that was used in granting consent.
+          example: zVplCFHcpTDwtktBIQmFI2K6s9HEo4HAtcQD1f1M5eQ
+        clientName:
           type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
+          description: The name of the registered client that was used in granting consent.
+          example: My OAuth App
+        authorizedAt:
+          type: string
+          description: Timestamp when the consent was authorized in UTC in RFC3339 format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        authorizedUser:
+          type: string
+          description: Identifier of the user who authorized the consent.
+          example: 0000000006743FDD
+        lastUsedAt:
+          type: string
+          description: Timestamp when the consent was last used to grant an access token in UTC in RFC3339 format. Null if never used.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        scopes:
+          type: array
+          description: The scopes that were granted in the consent.
           example:
-            minLength: 12
-            actualLength: 5
+          - manageUsersAndRoles
+          - viewCollectors
+          items:
+            type: string
+      description: An OAuth consent granted by a user.
     ScopesList:
       required:
       - data
@@ -717,6 +645,78 @@ components:
         mapping:
           ClientCredentialsClient: '#/components/schemas/ClientCredentialsClient'
           AuthorizationCodeClient: '#/components/schemas/AuthorizationCodeClient'
+    OAuthClientWithSecret:
+      required:
+      - clientId
+      - clientSecret
+      - createdAt
+      - createdBy
+      - description
+      - disabled
+      - modifiedAt
+      - modifiedBy
+      - name
+      - scopes
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the object model.
+        clientId:
+          type: string
+          description: Identifier of the OAuth client.
+          example: zVplCFHcpTDwtktBIQmFI2K6s9HEo4HAtcQD1f1M5eQ
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the OAuth client.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who modified the OAuth client.
+          example: 0000000006743FDD
+        name:
+          maxLength: 128
+          minLength: 0
+          type: string
+          description: Name of the OAuth client.
+          example: My OAuth Client
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Description of the OAuth client.
+          example: OAuth client for data ingestion
+        disabled:
+          type: boolean
+          description: Whether the OAuth client is disabled. Disabled OAuth clients cannot be used to authenticate users.
+        scopes:
+          type: array
+          description: "Scopes assigned to the client.\n### Alerting\n  - adminMonitorsV2\n  - viewMonitorsV2\n  - manageMonitorsV2\n\n### Data Management\n  - manageApps\n  - viewCollectors\n  - manageCollectors\n  - viewConnections\n  - manageConnections\n  - contentAdmin\n  - viewFieldExtractionRules\n  - manageFieldExtractionRules            \n  - viewFields\n  - manageFields\n  - manageBudgets\n  - viewLibrary\n  - manageLibrary\n  - viewPartitions\n  - managePartitions \n  - manageS3DataForwarding\n  - viewScheduledViews\n  - manageScheduledViews\n  - manageTokens\n\n### Logs\n  - runLogSearch\n\n### Metrics\n  - runMetricsQuery \n\n### Reliability Management\n  - viewSlos\n  - manageSlos\n\n### Security\n  - manageAccessKeys\n  - viewPersonalAccessKeys\n  - managePersonalAccessKeys\n\n### UserManagement\n  - viewUsersAndRoles\n  - manageUsersAndRoles"
+          example:
+          - manageUsersAndRoles
+          - viewCollectors
+          items:
+            type: string
+        clientSecret:
+          type: string
+          description: The client secret for the created OAuth Client.
+          example: EqyuIvsnae0LnMC2mbJArysXcmp0LuBsRgmyeLtSkFPEzSxdvpYQMDajn_8buaDj
+      discriminator:
+        propertyName: type
+        mapping:
+          ClientCredentialsClient: '#/components/schemas/ClientCredentialsClientWithSecret'
+          AuthorizationCodeClient: '#/components/schemas/AuthorizationCodeClientWithSecret'
   securitySchemes:
     basicAuth:
       type: http

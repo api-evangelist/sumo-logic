@@ -204,65 +204,6 @@ components:
             example: 00000000FF42A0C3
       x-tf-generated-properties: id,name,description,regexPattern,maskString,enabled
       x-tf-resource-name: DataMaskingRule
-    DataMaskingRuleDefinition:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseDataMaskingRuleDefinition'
-      - required:
-        - name
-        properties:
-          name:
-            maxLength: 128
-            minLength: 1
-            type: string
-            description: Name of the data masking rule. Use a name that makes it easy to identify the rule. Must be unique within the organization. This field is immutable and cannot be changed after creation.
-            example: Email Masking
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     ListDataMaskingRulesResponse:
       required:
       - data
@@ -328,6 +269,65 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    DataMaskingRuleDefinition:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseDataMaskingRuleDefinition'
+      - required:
+        - name
+        properties:
+          name:
+            maxLength: 128
+            minLength: 1
+            type: string
+            description: Name of the data masking rule. Use a name that makes it easy to identify the rule. Must be unique within the organization. This field is immutable and cannot be changed after creation.
+            example: Email Masking
   securitySchemes:
     basicAuth:
       type: http

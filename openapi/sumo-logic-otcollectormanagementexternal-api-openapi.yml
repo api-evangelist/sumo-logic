@@ -178,102 +178,47 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PaginatedOTCollectorsRequest:
+    PaginatedOTCollectorsResponse:
+      required:
+      - data
       type: object
       properties:
-        search:
-          type: string
-          description: search by collector id or free text search on collector properties.
-          example: testAgent
-        filters:
-          type: object
-          properties:
-            tags:
-              type: array
-              description: tags associated with the OT collector
-              example:
-              - - key: region
-                  values:
-                  - us2
-                  - mum
-              - - key: key2
-                  values:
-                  - value2
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OtTag'
-              default: []
-            os:
-              type:
-              - string
-              - 'null'
-              description: Name of the Operating System.
-              example: linux
-              x-visibility: private
-            collectorVersionRange:
-              $ref: '#/components/schemas/VersionRange'
-            alive:
-              type:
-              - boolean
-              - 'null'
-              description: alive Status of the OT Collector based on heartbeat.
-              example: true
-            isRemotelyManaged:
-              type:
-              - boolean
-              - 'null'
-              description: Management Status of the OT Collector based on if it is remotely or locally managed.
-              example: true
-            isUpgradeAvailable:
-              type:
-              - boolean
-              - 'null'
-              description: upgrade availability status of the OT Collector.
-              example: true
-            hasNoSourceTemplateLinked:
-              type:
-              - boolean
-              - 'null'
-              description: whether the remotely managed OT Collector has no source template linked.
-              example: true
-          description: parameter which is used for filtering.
-        sortBy:
-          type: string
-          description: parameter which is used for sorting.
-          example: name
+        data:
+          type: array
+          description: paginated list of OT Collectors.
+          items:
+            $ref: '#/components/schemas/OTCollector'
         next:
           type: string
-          description: parameter which is used for fetching next set of results.
-          example: token
-        limit:
-          maximum: 1000
-          minimum: 1
+          description: next page token.
+        count:
           type: integer
-          description: parameter which is used for limiting number of otCollectors on a page.
+          description: count of otCollectors in response.
           format: int32
-          example: 30
-        includeCount:
-          type:
-          - boolean
-          - 'null'
-          description: count of filtered otCollectors.
-          example: false
-    VersionRange:
+    ErrorDescription:
+      required:
+      - code
+      - message
       type: object
       properties:
-        minVersion:
-          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+        code:
           type: string
-          description: Minimum version of otCollector.
-        maxVersion:
-          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
           type: string
-          description: Maximum version of the collector.
-        rangeType:
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
           type: string
-          description: 'Specifies how filtering should be applied when `minVersion` and `maxVersion` are defined. - `Within`: Filtering includes the specified range. - `Outside`: Filtering excludes the specified range. By default, filtering includes the specified range.'
-      description: Version range for otCollector.
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     ErrorResponse:
       required:
       - errors
@@ -321,6 +266,16 @@ components:
           format: int32
           example: 100
       description: response for total count of otCollectors.
+    OTCollectorListResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of OT Collectors.
+          items:
+            $ref: '#/components/schemas/OTCollector'
     OTCollector:
       required:
       - createdAt
@@ -455,57 +410,102 @@ components:
           description: Count of the source templates linked to a collector
           example: 1
       description: An OT Collector definition.
-    PaginatedOTCollectorsResponse:
-      required:
-      - data
+    VersionRange:
       type: object
       properties:
-        data:
-          type: array
-          description: paginated list of OT Collectors.
-          items:
-            $ref: '#/components/schemas/OTCollector'
+        minVersion:
+          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+          type: string
+          description: Minimum version of otCollector.
+        maxVersion:
+          pattern: ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-sumo.+)?$
+          type: string
+          description: Maximum version of the collector.
+        rangeType:
+          type: string
+          description: 'Specifies how filtering should be applied when `minVersion` and `maxVersion` are defined. - `Within`: Filtering includes the specified range. - `Outside`: Filtering excludes the specified range. By default, filtering includes the specified range.'
+      description: Version range for otCollector.
+    PaginatedOTCollectorsRequest:
+      type: object
+      properties:
+        search:
+          type: string
+          description: search by collector id or free text search on collector properties.
+          example: testAgent
+        filters:
+          type: object
+          properties:
+            tags:
+              type: array
+              description: tags associated with the OT collector
+              example:
+              - - key: region
+                  values:
+                  - us2
+                  - mum
+              - - key: key2
+                  values:
+                  - value2
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OtTag'
+              default: []
+            os:
+              type:
+              - string
+              - 'null'
+              description: Name of the Operating System.
+              example: linux
+              x-visibility: private
+            collectorVersionRange:
+              $ref: '#/components/schemas/VersionRange'
+            alive:
+              type:
+              - boolean
+              - 'null'
+              description: alive Status of the OT Collector based on heartbeat.
+              example: true
+            isRemotelyManaged:
+              type:
+              - boolean
+              - 'null'
+              description: Management Status of the OT Collector based on if it is remotely or locally managed.
+              example: true
+            isUpgradeAvailable:
+              type:
+              - boolean
+              - 'null'
+              description: upgrade availability status of the OT Collector.
+              example: true
+            hasNoSourceTemplateLinked:
+              type:
+              - boolean
+              - 'null'
+              description: whether the remotely managed OT Collector has no source template linked.
+              example: true
+          description: parameter which is used for filtering.
+        sortBy:
+          type: string
+          description: parameter which is used for sorting.
+          example: name
         next:
           type: string
-          description: next page token.
-        count:
+          description: parameter which is used for fetching next set of results.
+          example: token
+        limit:
+          maximum: 1000
+          minimum: 1
           type: integer
-          description: count of otCollectors in response.
+          description: parameter which is used for limiting number of otCollectors on a page.
           format: int32
-    OTCollectorListResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of OT Collectors.
-          items:
-            $ref: '#/components/schemas/OTCollector'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+          example: 30
+        includeCount:
+          type:
+          - boolean
+          - 'null'
+          description: count of filtered otCollectors.
+          example: false
   securitySchemes:
     basicAuth:
       type: http

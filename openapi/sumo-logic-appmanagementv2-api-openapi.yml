@@ -380,6 +380,150 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AsyncUpgradeAppJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+          example: Success
+        instanceId:
+          type: string
+          description: Instance identifier of the upgraded app. This field is not set yet but is a placeholder for future use.
+          example: 0000000001578BE8
+        path:
+          type: string
+          description: Path of the folder in which the app was upgraded.
+          example: /Library/Installed Apps/AWS CloudTrail
+        folderId:
+          type: string
+          description: Identifier of the folder in which the app was upgraded.
+          example: 0000000001578BE8
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      description: Status of the upgrade app async job.
+    BeginAsyncJobResponseV2:
+      required:
+      - jobId
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: Identifier of the asynchronous job. Use it to get status of the job.
+          example: C03E086C137F38B4
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ListAppsV2Response:
+      required:
+      - apps
+      type: object
+      properties:
+        apps:
+          type: array
+          description: An array of apps.
+          items:
+            $ref: '#/components/schemas/AppV2'
+      description: List of all apps from the apps
+    SubscriptionStatusResponse:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: boolean
+          description: Show if the user has subscribed to the app or not. value is true, if the user has subscribed to the app
+          example: true
+      description: Subscription Status
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    GetAppDetailsResponse:
+      required:
+      - baseUrl
+      - manifest
+      - uuid
+      - version
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: UUID of the app.
+          format: uuid
+          example: ceb7fac5-1127-4a04-a5b8-2e49190be3d5
+        version:
+          type: string
+          description: Version of the app.
+          example: 1.0.0
+        baseUrl:
+          type: string
+          description: URL prefix for where the app is stored.
+          format: url
+          example: https://some_bucket.s3.amazonaws.com/path/to/app/version/
+        manifest:
+          type: string
+          description: Content of the manifest YAML file, as Base64-encoded string.
+          format: byte
+        config:
+          type: string
+          description: Content of the config YAML file, as Base64-encoded string.
+          format: byte
+        readme:
+          type: string
+          description: Content of the README markdown file, as Base64-encoded string.
+          format: byte
+        files:
+          maxProperties: 100
+          type: object
+          additionalProperties:
+            type: string
+            format: byte
+          description: Content of various files part of app package, as Base64-encoded string.
+          example:
+            config: ICAtIGNvbXBvbmVudFR5cGU6IHNjb3BlCiAgICBsYWJlbDog4oCYQXBhY2hlIEVycm9yIExvZyBT b3VyY2XigJkKICAgIHRmVmFyOiBlcnJMb2dTY29wZQogICAgCiAgLSBjb21wb25lbnRUeXBlOiBz Y29wZQogICAgbGFiZWw6IOKAmEFwYWNoZSBBY2Nlc3MgTG9nIFNvdXJjZeKAmQogICAgdGZWYXI6 IGFjY2Vzc0xvZ1Njb3BlCgogIC0gY29tcG9uZW50VHlwZTogY3VzdG9tCiAgICBkYXRhVHlwZTog U3RyaW5nCiAgICBsYWJlbDog4oCYQXBhY2hlIEVuZ2luZSBUeXBl4oCYCiAgICBoZWxwVGV4dDog 4oCYVGhlIGVuZ2luZSB0eXBlIG9mIHlvdXIgQXBhY2hlIEluc3RhbmNl4oCYCiAgICByZXF1aXJl ZDogRmFsc2UKICAgIGRlZmF1bHQ6IOKAmHYxLjDigJkKICAgIHRmVmFyOiBlbmdpbmVUeXBlCg==
+            readme: IyBPdmVydmlldwoKVGhlIEFwYWNoZSBhcHAgaXMgYSB1bmlmaWVkIGxvZ3MgYW5kIG1ldHJpY3Mg YXBwIHRoYXQgaGVscHMgeW91IG1vbml0b3IgdGhlIGF2YWlsYWJpbGl0eSwgcGVyZm9ybWFuY2Us IGhlYWx0aCBhbmQgcmVzb3VyY2UgdXRpbGl6YXRpb24gb2YgQXBhY2hlIHdlYiBzZXJ2ZXIgZmFy bXMuICBQcmVjb25maWd1cmVkIGRhc2hib2FyZHMgYW5kIHNlYXJjaGVzIHByb3ZpZGUgaW5zaWdo dCBpbnRvIHZpc2l0b3IgbG9jYXRpb25zLCB2aXNpdG9yIGFjY2VzcyB0eXBlcywgdHJhZmZpYyBw YXR0ZXJucywgZXJyb3JzLCB3ZWIgc2VydmVyIG9wZXJhdGlvbnMsIHJlc291cmNlIHV0aWxpemF0 aW9uIGFuZCBhY2Nlc3MgZnJvbSBrbm93biBtYWxpY2lvdXMgc291cmNlcy4KCiMgU2V0dXAKVGhp cyBpcyB0aGUgc2VjdGlvbiBmb3IgQXBhY2hlIC0gT3BlblRlbGVtZXRyeSBjb2xsZWN0aW9uIHNl dHVwLgo=
+            manifest: CnNjaGVtYVZlcnNpb246ICIxLjAiCgpuYW1lOiBBcGFjaGUKCmRlc2NyaXB0aW9u OiA+LQogIFRoZSBBcGFjaGUgYXBwIGlzIGEgdW5pZmllZCBsb2dzIGFuZCBtZXRy aWNzIGFwcCB0aGF0IGhlbHBzIHlvdSBtb25pdG9yIHRoZSBhdmFpbGFiaWxpdHks IHBlcmZvcm1hbmNlLAogIGhlYWx0aCBhbmQgcmVzb3VyY2UgdXRpbGl6YXRpb24g b2YgQXBhY2hlIHdlYiBzZXJ2ZXIgZmFybXMuICBQcmVjb25maWd1cmVkIGRhc2hi b2FyZHMgYW5kIHNlYXJjaGVzCiAgcHJvdmlkZSBpbnNpZ2h0IGludG8gdmlzaXRv ciBsb2NhdGlvbnMsIHZpc2l0b3IgYWNjZXNzIHR5cGVzLCB0cmFmZmljIHBhdHRl cm5zLCBlcnJvcnMsIHdlYiBzZXJ2ZXIKICBvcGVyYXRpb25zLCByZXNvdXJjZSB1 dGlsaXphdGlvbiBhbmQgYWNjZXNzIGZyb20ga25vd24gbWFsaWNpb3VzIHNvdXJj ZXMuCmF1dGhvcjogU3VtbyBMb2dpYwoKdmVyc2lvbjogMS4wLjAKCgo=
+      description: Information about an app.
     AsyncInstallAppJobStatus:
       required:
       - status
@@ -404,6 +548,40 @@ components:
         error:
           $ref: '#/components/schemas/ErrorDescription'
       description: Status of the install app async job.
+    AsyncInstallAppRequest:
+      type: object
+      properties:
+        version:
+          type: string
+          description: 'Version of the app to install. You can either specify a specific version of the app or use `latest` to install the latest version of the app. _If version is not specified, the latest version of the app will be installed_.
+
+            '
+          example: 1.0.1
+          default: latest
+        parameters:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of additional parameters for the app installation.
+          example:
+            db_system: redis
+      description: Install app request.
+    AsyncUninstallAppJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+          example: Success
+        errors:
+          type: array
+          description: More information about the failure if the status is `Failed`.
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+      description: Status of an uninstall app job.
     AppV2:
       required:
       - accountTypes
@@ -492,70 +670,6 @@ components:
           format: date-time
           example: 2018-10-16 09:10:00+00:00
       description: An app object.
-    ListAppsV2Response:
-      required:
-      - apps
-      type: object
-      properties:
-        apps:
-          type: array
-          description: An array of apps.
-          items:
-            $ref: '#/components/schemas/AppV2'
-      description: List of all apps from the apps
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    BeginAsyncJobResponseV2:
-      required:
-      - jobId
-      type: object
-      properties:
-        jobId:
-          type: string
-          description: Identifier of the asynchronous job. Use it to get status of the job.
-          example: C03E086C137F38B4
-    AsyncUpgradeAppJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-          example: Success
-        instanceId:
-          type: string
-          description: Instance identifier of the upgraded app. This field is not set yet but is a placeholder for future use.
-          example: 0000000001578BE8
-        path:
-          type: string
-          description: Path of the folder in which the app was upgraded.
-          example: /Library/Installed Apps/AWS CloudTrail
-        folderId:
-          type: string
-          description: Identifier of the folder in which the app was upgraded.
-          example: 0000000001578BE8
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      description: Status of the upgrade app async job.
     AsyncUpgradeAppRequest:
       type: object
       properties:
@@ -575,120 +689,6 @@ components:
           example:
             db_system: redis
       description: Upgrade app request.
-    AsyncUninstallAppJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-          example: Success
-        errors:
-          type: array
-          description: More information about the failure if the status is `Failed`.
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-      description: Status of an uninstall app job.
-    SubscriptionStatusResponse:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: boolean
-          description: Show if the user has subscribed to the app or not. value is true, if the user has subscribed to the app
-          example: true
-      description: Subscription Status
-    GetAppDetailsResponse:
-      required:
-      - baseUrl
-      - manifest
-      - uuid
-      - version
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: UUID of the app.
-          format: uuid
-          example: ceb7fac5-1127-4a04-a5b8-2e49190be3d5
-        version:
-          type: string
-          description: Version of the app.
-          example: 1.0.0
-        baseUrl:
-          type: string
-          description: URL prefix for where the app is stored.
-          format: url
-          example: https://some_bucket.s3.amazonaws.com/path/to/app/version/
-        manifest:
-          type: string
-          description: Content of the manifest YAML file, as Base64-encoded string.
-          format: byte
-        config:
-          type: string
-          description: Content of the config YAML file, as Base64-encoded string.
-          format: byte
-        readme:
-          type: string
-          description: Content of the README markdown file, as Base64-encoded string.
-          format: byte
-        files:
-          maxProperties: 100
-          type: object
-          additionalProperties:
-            type: string
-            format: byte
-          description: Content of various files part of app package, as Base64-encoded string.
-          example:
-            config: ICAtIGNvbXBvbmVudFR5cGU6IHNjb3BlCiAgICBsYWJlbDog4oCYQXBhY2hlIEVycm9yIExvZyBT b3VyY2XigJkKICAgIHRmVmFyOiBlcnJMb2dTY29wZQogICAgCiAgLSBjb21wb25lbnRUeXBlOiBz Y29wZQogICAgbGFiZWw6IOKAmEFwYWNoZSBBY2Nlc3MgTG9nIFNvdXJjZeKAmQogICAgdGZWYXI6 IGFjY2Vzc0xvZ1Njb3BlCgogIC0gY29tcG9uZW50VHlwZTogY3VzdG9tCiAgICBkYXRhVHlwZTog U3RyaW5nCiAgICBsYWJlbDog4oCYQXBhY2hlIEVuZ2luZSBUeXBl4oCYCiAgICBoZWxwVGV4dDog 4oCYVGhlIGVuZ2luZSB0eXBlIG9mIHlvdXIgQXBhY2hlIEluc3RhbmNl4oCYCiAgICByZXF1aXJl ZDogRmFsc2UKICAgIGRlZmF1bHQ6IOKAmHYxLjDigJkKICAgIHRmVmFyOiBlbmdpbmVUeXBlCg==
-            readme: IyBPdmVydmlldwoKVGhlIEFwYWNoZSBhcHAgaXMgYSB1bmlmaWVkIGxvZ3MgYW5kIG1ldHJpY3Mg YXBwIHRoYXQgaGVscHMgeW91IG1vbml0b3IgdGhlIGF2YWlsYWJpbGl0eSwgcGVyZm9ybWFuY2Us IGhlYWx0aCBhbmQgcmVzb3VyY2UgdXRpbGl6YXRpb24gb2YgQXBhY2hlIHdlYiBzZXJ2ZXIgZmFy bXMuICBQcmVjb25maWd1cmVkIGRhc2hib2FyZHMgYW5kIHNlYXJjaGVzIHByb3ZpZGUgaW5zaWdo dCBpbnRvIHZpc2l0b3IgbG9jYXRpb25zLCB2aXNpdG9yIGFjY2VzcyB0eXBlcywgdHJhZmZpYyBw YXR0ZXJucywgZXJyb3JzLCB3ZWIgc2VydmVyIG9wZXJhdGlvbnMsIHJlc291cmNlIHV0aWxpemF0 aW9uIGFuZCBhY2Nlc3MgZnJvbSBrbm93biBtYWxpY2lvdXMgc291cmNlcy4KCiMgU2V0dXAKVGhp cyBpcyB0aGUgc2VjdGlvbiBmb3IgQXBhY2hlIC0gT3BlblRlbGVtZXRyeSBjb2xsZWN0aW9uIHNl dHVwLgo=
-            manifest: CnNjaGVtYVZlcnNpb246ICIxLjAiCgpuYW1lOiBBcGFjaGUKCmRlc2NyaXB0aW9u OiA+LQogIFRoZSBBcGFjaGUgYXBwIGlzIGEgdW5pZmllZCBsb2dzIGFuZCBtZXRy aWNzIGFwcCB0aGF0IGhlbHBzIHlvdSBtb25pdG9yIHRoZSBhdmFpbGFiaWxpdHks IHBlcmZvcm1hbmNlLAogIGhlYWx0aCBhbmQgcmVzb3VyY2UgdXRpbGl6YXRpb24g b2YgQXBhY2hlIHdlYiBzZXJ2ZXIgZmFybXMuICBQcmVjb25maWd1cmVkIGRhc2hi b2FyZHMgYW5kIHNlYXJjaGVzCiAgcHJvdmlkZSBpbnNpZ2h0IGludG8gdmlzaXRv ciBsb2NhdGlvbnMsIHZpc2l0b3IgYWNjZXNzIHR5cGVzLCB0cmFmZmljIHBhdHRl cm5zLCBlcnJvcnMsIHdlYiBzZXJ2ZXIKICBvcGVyYXRpb25zLCByZXNvdXJjZSB1 dGlsaXphdGlvbiBhbmQgYWNjZXNzIGZyb20ga25vd24gbWFsaWNpb3VzIHNvdXJj ZXMuCmF1dGhvcjogU3VtbyBMb2dpYwoKdmVyc2lvbjogMS4wLjAKCgo=
-      description: Information about an app.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    AsyncInstallAppRequest:
-      type: object
-      properties:
-        version:
-          type: string
-          description: 'Version of the app to install. You can either specify a specific version of the app or use `latest` to install the latest version of the app. _If version is not specified, the latest version of the app will be installed_.
-
-            '
-          example: 1.0.1
-          default: latest
-        parameters:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Map of additional parameters for the app installation.
-          example:
-            db_system: redis
-      description: Install app request.
   securitySchemes:
     basicAuth:
       type: http

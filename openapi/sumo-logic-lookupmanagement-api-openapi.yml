@@ -332,36 +332,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    LookupTableDefinition:
-      required:
-      - name
-      - parentFolderId
-      type: object
-      description: Definition of the lookup table.
-      allOf:
-      - $ref: '#/components/schemas/ExportableLookupTableInfo'
-      - properties:
-          name:
-            maxLength: 255
-            type: string
-            description: The name of the lookup table.
-            example: SampleLookupTable
-          parentFolderId:
-            type: string
-            description: The parent-folder-path identifier of the lookup table in the Library.
-            example: 0000000001C41EE4
-    RowDeleteDefinition:
-      required:
-      - primaryKey
-      type: object
-      properties:
-        primaryKey:
-          maxItems: 1000
-          type: array
-          description: A list of all the primary key field identifiers and their corresponding values which defines the row to delete.
-          items:
-            $ref: '#/components/schemas/TableRow'
-      description: Lookup table primary key of the row to be deleted.
     LookupAsyncJobStatus:
       required:
       - createdAt
@@ -454,141 +424,30 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
-    LookupUpdateDefinition:
+    ErrorDescription:
       required:
-      - description
-      - ttl
-      type: object
-      properties:
-        ttl:
-          maximum: 525600
-          minimum: 0
-          type: integer
-          description: A time to live for each entry in the lookup table (in minutes). 0 is a special value. A TTL of 0 implies entry will never be deleted from the table.
-          format: int32
-          example: 100
-          default: 0
-        description:
-          maxLength: 1000
-          type: string
-          description: The description of the lookup table. The description cannot be blank.
-          example: This is a sample lookup table description.
-        sizeLimitAction:
-          type: string
-          description: The action that needs to be taken when the size limit is reached for the table. The possible values can be `StopIncomingMessages` or `DeleteOldData`. DeleteOldData will starting deleting old data once size limit is reached whereas StopIncomingMessages will discard all the updates made to the lookup table once size limit is reached.
-          example: DeleteOldData
-          default: StopIncomingMessages
-      description: The updated lookup table parameters.
-    LookupTable:
-      required:
-      - id
-      type: object
-      description: Lookup table definition and metadata.
-      allOf:
-      - $ref: '#/components/schemas/MetadataModel'
-      - $ref: '#/components/schemas/LookupTableDefinition'
-      - properties:
-          id:
-            type: string
-            description: Identifier of the lookup table as a content item.
-            example: 0000000001C41EE4
-          contentPath:
-            type: string
-            description: 'Address/path of the parent folder of this lookup table in content library. For example, a lookup table existing  in the personal/lookupTable folder for user johndoe would be: /Library/Users/johndoe@acme.com/lookupTable'
-            example: /Library/Users/johndoe@acme.com/lookupTable
-          size:
-            type: integer
-            description: The current size of the lookup table in bytes
-            format: int64
-            example: 100
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    RowUpdateDefinition:
-      required:
-      - row
-      type: object
-      properties:
-        row:
-          maxItems: 1000
-          type: array
-          description: A list of all the field identifiers and their corresponding values.
-          items:
-            $ref: '#/components/schemas/TableRow'
-      description: Lookup table data to be uploaded.
-    LookupRequestToken:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier used to track the request.
-          example: 0000000001C41EF2
-      description: Allows you to track the status of an upload or export request.
-    LookupTableField:
-      required:
-      - fieldName
-      - fieldType
-      type: object
-      properties:
-        fieldName:
-          type: string
-          description: The name of the field.
-          example: FieldName1
-        fieldType:
-          pattern: ^(boolean|int|long|double|string)$
-          type: string
-          description: "The data type of the field. Supported types:\n  - `boolean`\n  - `int`\n  - `long`\n  - `double`\n  - `string`"
-          example: boolean
-          x-pattern-message: 'must be one of the following: `boolean`, `int`, `long`, `double`, `string`'
-      description: The definition of the field.
-    warningDescription:
-      required:
+      - code
       - message
       type: object
       properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
         message:
           type: string
-          description: Description of the warning.
-          example: 60 rows were dropped.
-        cause:
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
           type: string
-          description: An optional cause of this warning.
-          example: Primary key values were duplicate.
-      description: Warning description
-    TableRow:
-      required:
-      - columnName
-      - columnValue
-      type: object
-      properties:
-        columnName:
-          type: string
-          description: Name of the column of the table.
-          example: user_id
-        columnValue:
-          type: string
-          description: Value of the specified column.
-          example: user1
-      description: Lookup table row column and column value.
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     ExportableLookupTableInfo:
       required:
       - description
@@ -632,30 +491,171 @@ components:
           default: StopIncomingMessages
           x-pattern-message: must be either `StopIncomingMessages` or `DeleteOldData`
       description: The lookup table definition independent of its location in the Library and name.
-    ErrorDescription:
+    LookupUpdateDefinition:
       required:
-      - code
+      - description
+      - ttl
+      type: object
+      properties:
+        ttl:
+          maximum: 525600
+          minimum: 0
+          type: integer
+          description: A time to live for each entry in the lookup table (in minutes). 0 is a special value. A TTL of 0 implies entry will never be deleted from the table.
+          format: int32
+          example: 100
+          default: 0
+        description:
+          maxLength: 1000
+          type: string
+          description: The description of the lookup table. The description cannot be blank.
+          example: This is a sample lookup table description.
+        sizeLimitAction:
+          type: string
+          description: The action that needs to be taken when the size limit is reached for the table. The possible values can be `StopIncomingMessages` or `DeleteOldData`. DeleteOldData will starting deleting old data once size limit is reached whereas StopIncomingMessages will discard all the updates made to the lookup table once size limit is reached.
+          example: DeleteOldData
+          default: StopIncomingMessages
+      description: The updated lookup table parameters.
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    LookupTableDefinition:
+      required:
+      - name
+      - parentFolderId
+      type: object
+      description: Definition of the lookup table.
+      allOf:
+      - $ref: '#/components/schemas/ExportableLookupTableInfo'
+      - properties:
+          name:
+            maxLength: 255
+            type: string
+            description: The name of the lookup table.
+            example: SampleLookupTable
+          parentFolderId:
+            type: string
+            description: The parent-folder-path identifier of the lookup table in the Library.
+            example: 0000000001C41EE4
+    warningDescription:
+      required:
       - message
       type: object
       properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
         message:
           type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
+          description: Description of the warning.
+          example: 60 rows were dropped.
+        cause:
           type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+          description: An optional cause of this warning.
+          example: Primary key values were duplicate.
+      description: Warning description
+    RowDeleteDefinition:
+      required:
+      - primaryKey
+      type: object
+      properties:
+        primaryKey:
+          maxItems: 1000
+          type: array
+          description: A list of all the primary key field identifiers and their corresponding values which defines the row to delete.
+          items:
+            $ref: '#/components/schemas/TableRow'
+      description: Lookup table primary key of the row to be deleted.
+    LookupTable:
+      required:
+      - id
+      type: object
+      description: Lookup table definition and metadata.
+      allOf:
+      - $ref: '#/components/schemas/MetadataModel'
+      - $ref: '#/components/schemas/LookupTableDefinition'
+      - properties:
+          id:
+            type: string
+            description: Identifier of the lookup table as a content item.
+            example: 0000000001C41EE4
+          contentPath:
+            type: string
+            description: 'Address/path of the parent folder of this lookup table in content library. For example, a lookup table existing  in the personal/lookupTable folder for user johndoe would be: /Library/Users/johndoe@acme.com/lookupTable'
+            example: /Library/Users/johndoe@acme.com/lookupTable
+          size:
+            type: integer
+            description: The current size of the lookup table in bytes
+            format: int64
+            example: 100
+    TableRow:
+      required:
+      - columnName
+      - columnValue
+      type: object
+      properties:
+        columnName:
+          type: string
+          description: Name of the column of the table.
+          example: user_id
+        columnValue:
+          type: string
+          description: Value of the specified column.
+          example: user1
+      description: Lookup table row column and column value.
+    LookupRequestToken:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier used to track the request.
+          example: 0000000001C41EF2
+      description: Allows you to track the status of an upload or export request.
+    LookupTableField:
+      required:
+      - fieldName
+      - fieldType
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: The name of the field.
+          example: FieldName1
+        fieldType:
+          pattern: ^(boolean|int|long|double|string)$
+          type: string
+          description: "The data type of the field. Supported types:\n  - `boolean`\n  - `int`\n  - `long`\n  - `double`\n  - `string`"
+          example: boolean
+          x-pattern-message: 'must be one of the following: `boolean`, `int`, `long`, `double`, `string`'
+      description: The definition of the field.
+    RowUpdateDefinition:
+      required:
+      - row
+      type: object
+      properties:
+        row:
+          maxItems: 1000
+          type: array
+          description: A list of all the field identifiers and their corresponding values.
+          items:
+            $ref: '#/components/schemas/TableRow'
+      description: Lookup table data to be uploaded.
   securitySchemes:
     basicAuth:
       type: http

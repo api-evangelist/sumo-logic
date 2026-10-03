@@ -209,89 +209,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ListIngestBudgetsResponseV2:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of ingest budgets.
-          items:
-            $ref: '#/components/schemas/IngestBudgetV2'
-        next:
-          type: string
-          description: Next continuation token.
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    IngestBudgetV2:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/IngestBudgetDefinitionV2'
-      - required:
-        - createdAt
-        - createdBy
-        - id
-        - modifiedAt
-        - modifiedBy
-        - version
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the ingest budget.
-            example: 0000000003343FDD
-          usageBytes:
-            type: integer
-            description: Current usage since the last reset, in bytes.
-            format: int64
-            example: 900
-          usageStatus:
-            pattern: ^(Normal|Approaching|Exceeded|Unknown)$
-            type: string
-            description: Status of the current usage. Can be `Normal`, `Approaching`, `Exceeded`, or `Unknown` (unable to retrieve usage).
-            example: Approaching
-            x-pattern-message: must be either `Normal`, `Approaching`, `Exceeded`, or `Unknown`
-          createdAt:
-            type: string
-            description: The creation timestamp in UTC of the Ingest Budget.
-            format: date-time
-            example: 2018-10-16 09:10:00+00:00
-          createdBy:
-            type: string
-            description: The identifier of the user who created the Ingest Budget.
-            example: 0000000006743FDD
-          modifiedAt:
-            type: string
-            description: The modified timestamp in UTC of the Ingest Budget.
-            format: date-time
-            example: 2018-10-16 09:10:00+00:00
-          modifiedBy:
-            type: string
-            description: The identifier of the user who modified the Ingest Budget.
-            example: 0000000001243FDD
-          budgetVersion:
-            type: integer
-            description: The version of the Ingest Budget
-            format: int32
-            example: 2
     IngestBudgetDefinitionV2:
       required:
       - action
@@ -372,6 +289,89 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    IngestBudgetV2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IngestBudgetDefinitionV2'
+      - required:
+        - createdAt
+        - createdBy
+        - id
+        - modifiedAt
+        - modifiedBy
+        - version
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the ingest budget.
+            example: 0000000003343FDD
+          usageBytes:
+            type: integer
+            description: Current usage since the last reset, in bytes.
+            format: int64
+            example: 900
+          usageStatus:
+            pattern: ^(Normal|Approaching|Exceeded|Unknown)$
+            type: string
+            description: Status of the current usage. Can be `Normal`, `Approaching`, `Exceeded`, or `Unknown` (unable to retrieve usage).
+            example: Approaching
+            x-pattern-message: must be either `Normal`, `Approaching`, `Exceeded`, or `Unknown`
+          createdAt:
+            type: string
+            description: The creation timestamp in UTC of the Ingest Budget.
+            format: date-time
+            example: 2018-10-16 09:10:00+00:00
+          createdBy:
+            type: string
+            description: The identifier of the user who created the Ingest Budget.
+            example: 0000000006743FDD
+          modifiedAt:
+            type: string
+            description: The modified timestamp in UTC of the Ingest Budget.
+            format: date-time
+            example: 2018-10-16 09:10:00+00:00
+          modifiedBy:
+            type: string
+            description: The identifier of the user who modified the Ingest Budget.
+            example: 0000000001243FDD
+          budgetVersion:
+            type: integer
+            description: The version of the Ingest Budget
+            format: int32
+            example: 2
+    ListIngestBudgetsResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of ingest budgets.
+          items:
+            $ref: '#/components/schemas/IngestBudgetV2'
+        next:
+          type: string
+          description: Next continuation token.
   securitySchemes:
     basicAuth:
       type: http

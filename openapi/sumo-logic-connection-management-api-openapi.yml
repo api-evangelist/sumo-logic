@@ -275,16 +275,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    GetIncidentTemplatesResponse:
-      required:
-      - templates
-      type: object
-      properties:
-        templates:
-          type: array
-          description: List of incident templates.
-          items:
-            $ref: '#/components/schemas/IncidentTemplate'
     GetIncidentTemplatesRequest:
       type: object
       properties:
@@ -300,6 +290,18 @@ components:
           type: string
           description: Optional connectionId to get incident templates for an existing CloudSOAR connection. If provided, the authHeader and url will be taken from the existing connection object.
           example: 0000000000123ABC
+    IncidentTemplate:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the incident template.
+        name:
+          type: string
+          description: Name of the incident template.
     ListConnectionsResponse:
       required:
       - data
@@ -313,108 +315,6 @@ components:
         next:
           type: string
           description: Next continuation token.
-    IncidentTemplate:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier of the incident template.
-        name:
-          type: string
-          description: Name of the incident template.
-    Connection:
-      required:
-      - createdAt
-      - createdBy
-      - description
-      - id
-      - modifiedAt
-      - modifiedBy
-      - name
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of connection. Valid values are `WebhookConnection`, `ServiceNowConnection`.
-        id:
-          type: string
-          description: Unique identifier for the connection.
-        name:
-          type: string
-          description: Name of the connection.
-        description:
-          type: string
-          description: Description of the connection.
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-      discriminator:
-        propertyName: type
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    TestConnectionResponse:
-      required:
-      - responseContent
-      - statusCode
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          description: Status code of the response of the connection test.
-        responseContent:
-          type: string
-          description: Content of the response of the connection test.
-        alertStatusCode:
-          type: integer
-          description: Status code of the response of alert payload test.
-          format: int32
-          example: 200
-        alertResponseContent:
-          type: string
-          description: Content of the response of alert payload test.
-          example: ok
-        resolutionStatusCode:
-          type: integer
-          description: Status code of the response of resolution payload test.
-          format: int32
-          example: 200
-        resolutionResponseContent:
-          type: string
-          description: Content of the response of resolution payload test.
-          example: ok
     ErrorDescription:
       required:
       - code
@@ -465,6 +365,106 @@ components:
         mapping:
           ServiceNowDefinition: '#/components/schemas/ServiceNowDefinition'
           WebhookDefinition: '#/components/schemas/WebhookDefinition'
+    TestConnectionResponse:
+      required:
+      - responseContent
+      - statusCode
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Status code of the response of the connection test.
+        responseContent:
+          type: string
+          description: Content of the response of the connection test.
+        alertStatusCode:
+          type: integer
+          description: Status code of the response of alert payload test.
+          format: int32
+          example: 200
+        alertResponseContent:
+          type: string
+          description: Content of the response of alert payload test.
+          example: ok
+        resolutionStatusCode:
+          type: integer
+          description: Status code of the response of resolution payload test.
+          format: int32
+          example: 200
+        resolutionResponseContent:
+          type: string
+          description: Content of the response of resolution payload test.
+          example: ok
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    GetIncidentTemplatesResponse:
+      required:
+      - templates
+      type: object
+      properties:
+        templates:
+          type: array
+          description: List of incident templates.
+          items:
+            $ref: '#/components/schemas/IncidentTemplate'
+    Connection:
+      required:
+      - createdAt
+      - createdBy
+      - description
+      - id
+      - modifiedAt
+      - modifiedBy
+      - name
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of connection. Valid values are `WebhookConnection`, `ServiceNowConnection`.
+        id:
+          type: string
+          description: Unique identifier for the connection.
+        name:
+          type: string
+          description: Name of the connection.
+        description:
+          type: string
+          description: Description of the connection.
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+      discriminator:
+        propertyName: type
   securitySchemes:
     basicAuth:
       type: http

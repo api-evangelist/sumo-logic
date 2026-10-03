@@ -276,47 +276,43 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    FieldQuotaUsage:
-      required:
-      - quota
-      - remaining
-      type: object
-      properties:
-        quota:
-          type: integer
-          description: Maximum number of fields available.
-          format: int32
-          example: 200
-        remaining:
-          type: integer
-          description: Current number of fields available.
-          format: int32
-          example: 121
-    CustomField:
+    DroppedField:
       allOf:
       - $ref: '#/components/schemas/FieldName'
-      - required:
-        - dataType
-        - fieldId
-        - state
-        type: object
-        properties:
-          fieldId:
-            type: string
-            description: Identifier of the field.
-            example: 00000000031D02DA
-          dataType:
-            pattern: ^(String|Long|Int|Double|Boolean)$
-            type: string
-            description: Field type. Possible values are `String`, `Long`, `Int`, `Double`, and `Boolean`.
-            example: String
-            x-pattern-message: Must be `String`, `Long`, `Int`, `Double` or `Boolean`
-          state:
-            pattern: ^(Enabled|Disabled)$
-            type: string
-            description: Indicates whether the field is enabled and its values are being accepted. Possible values are `Enabled` and `Disabled`.
-            example: Enabled
-            x-pattern-message: Must be `Enabled` or `Disabled`
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ListBuiltinFieldsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of built-in fields.
+          items:
+            $ref: '#/components/schemas/BuiltinField'
     BuiltinField:
       allOf:
       - $ref: '#/components/schemas/FieldName'
@@ -342,19 +338,6 @@ components:
             description: Indicates whether the field is enabled and its values are being accepted. Possible values are `Enabled` and `Disabled`.
             example: Enabled
             x-pattern-message: Must be `Enabled` or `Disabled`
-    DroppedField:
-      allOf:
-      - $ref: '#/components/schemas/FieldName'
-    ListCustomFieldsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of custom fields.
-          items:
-            $ref: '#/components/schemas/CustomField'
     ErrorResponse:
       required:
       - errors
@@ -375,6 +358,32 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    ListCustomFieldsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of custom fields.
+          items:
+            $ref: '#/components/schemas/CustomField'
+    FieldQuotaUsage:
+      required:
+      - quota
+      - remaining
+      type: object
+      properties:
+        quota:
+          type: integer
+          description: Maximum number of fields available.
+          format: int32
+          example: 200
+        remaining:
+          type: integer
+          description: Current number of fields available.
+          format: int32
+          example: 121
     ListDroppedFieldsResponse:
       required:
       - data
@@ -396,40 +405,31 @@ components:
           type: string
           description: Field name.
           example: hostIP
-    ListBuiltinFieldsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of built-in fields.
-          items:
-            $ref: '#/components/schemas/BuiltinField'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+    CustomField:
+      allOf:
+      - $ref: '#/components/schemas/FieldName'
+      - required:
+        - dataType
+        - fieldId
+        - state
+        type: object
+        properties:
+          fieldId:
+            type: string
+            description: Identifier of the field.
+            example: 00000000031D02DA
+          dataType:
+            pattern: ^(String|Long|Int|Double|Boolean)$
+            type: string
+            description: Field type. Possible values are `String`, `Long`, `Int`, `Double`, and `Boolean`.
+            example: String
+            x-pattern-message: Must be `String`, `Long`, `Int`, `Double` or `Boolean`
+          state:
+            pattern: ^(Enabled|Disabled)$
+            type: string
+            description: Indicates whether the field is enabled and its values are being accepted. Possible values are `Enabled` and `Disabled`.
+            example: Enabled
+            x-pattern-message: Must be `Enabled` or `Disabled`
   securitySchemes:
     basicAuth:
       type: http

@@ -57,93 +57,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SchemaBaseTemplateYaml:
-      type: object
-      properties:
-        templateYaml:
-          maxLength: 10960
-          minLength: 1
-          type: string
-          description: The template yaml of schema.
-          example: example templateYaml
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     SchemaBaseComplete:
       type: object
       allOf:
       - $ref: '#/components/schemas/SchemaBaseIdentityWithMetadata'
       - $ref: '#/components/schemas/SchemaBaseTemplateYaml'
-    ListSchemaBaseTypeToVersionsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of maps containing the mappings schema type -> versions.
-          items:
-            $ref: '#/components/schemas/SchemaBaseTypeToVersionsResponse'
-    SchemaBaseIdentity:
-      required:
-      - family
-      - schema
-      - type
-      - version
-      type: object
-      properties:
-        type:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: The type of the integration.
-          example: Okta
-        version:
-          maxLength: 128
-          minLength: 5
-          pattern: ^([0-9]+)\.([0-9]+)\.([0-9]+)$
-          type: string
-          description: The version (or image tag) of the integration. Follows the Major.Minor.Patch semantic versioning format.
-          example: 1.0.0
-          x-pattern-message: 'must follow semantic versioning: https://semver.org/'
-        description:
-          maxLength: 1024
-          minLength: 0
-          type: string
-          description: The description of the integration.
-          example: An Okta integration that collects Okta event logs into Sumo Logic.
-        manifest:
-          maxProperties: 1000
-          type: object
-          additionalProperties: true
-          description: The manifest of the integration.
-        schema:
-          maxProperties: 1000
-          type: object
-          additionalProperties: true
-          description: The schema in JSON Schema specification.
-        family:
-          type: string
-          description: The family to which schema belong.
-          enum:
-          - OTC_Source_Template
     SchemaBaseIdentityWithMetadata:
       type: object
       allOf:
@@ -190,6 +108,88 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    SchemaBaseTemplateYaml:
+      type: object
+      properties:
+        templateYaml:
+          maxLength: 10960
+          minLength: 1
+          type: string
+          description: The template yaml of schema.
+          example: example templateYaml
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    SchemaBaseIdentity:
+      required:
+      - family
+      - schema
+      - type
+      - version
+      type: object
+      properties:
+        type:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The type of the integration.
+          example: Okta
+        version:
+          maxLength: 128
+          minLength: 5
+          pattern: ^([0-9]+)\.([0-9]+)\.([0-9]+)$
+          type: string
+          description: The version (or image tag) of the integration. Follows the Major.Minor.Patch semantic versioning format.
+          example: 1.0.0
+          x-pattern-message: 'must follow semantic versioning: https://semver.org/'
+        description:
+          maxLength: 1024
+          minLength: 0
+          type: string
+          description: The description of the integration.
+          example: An Okta integration that collects Okta event logs into Sumo Logic.
+        manifest:
+          maxProperties: 1000
+          type: object
+          additionalProperties: true
+          description: The manifest of the integration.
+        schema:
+          maxProperties: 1000
+          type: object
+          additionalProperties: true
+          description: The schema in JSON Schema specification.
+        family:
+          type: string
+          description: The family to which schema belong.
+          enum:
+          - OTC_Source_Template
+    ListSchemaBaseTypeToVersionsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of maps containing the mappings schema type -> versions.
+          items:
+            $ref: '#/components/schemas/SchemaBaseTypeToVersionsResponse'
     SchemaBaseTypeToVersionsResponse:
       required:
       - type

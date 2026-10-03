@@ -149,44 +149,79 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ServiceManifestDataSourceParameter:
+    AppDefinition:
       required:
-      - parameterId
-      - parameterType
+      - appVersion
+      - contentId
+      - name
+      - uuid
       type: object
       properties:
-        parameterType:
-          pattern: ^DATA_SOURCE$
+        contentId:
           type: string
-          description: Parameter type.
-          example: DATA_SOURCE
-          x-pattern-message: 'Supported parameter types include: DATA_SOURCE'
-        parameterId:
+          description: Content identifier of the app in hexadecimal format.
+          example: 00000000000011AE
+        uuid:
           type: string
-          description: Parameter identifier.
-          example: paramId1
-        dataSourceType:
-          pattern: ^(LOG|METRICS)$
+          description: Unique identifier for the app.
+          format: uuid
+          example: 1c57fbc3-3141-4b12-aab3-5f40152bc3d9
+        name:
           type: string
-          description: Data source type.
-          example: LOG
-          x-pattern-message: 'Supported data source types include: LOG, METRICS'
-        label:
+          description: Name of the app.
+          example: Sumo Config
+        appVersion:
           type: string
-          description: Label.
-          example: Log label
-        description:
-          type: string
-          description: Description.
-          example: Log data source
-        example:
-          type: string
-          description: Example.
-          example: ''
-        hidden:
+          description: Version of the app.
+          example: '1.0'
+        preview:
           type: boolean
-          description: Should the UI display?
-          default: false
+          description: Indicates whether the app is in preview or not.
+          example: true
+        manifestVersion:
+          type: string
+          description: Manifest version of the app
+          example: '0.1'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    AsyncJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
     App:
       required:
       - appDefinition
@@ -197,78 +232,6 @@ components:
           $ref: '#/components/schemas/AppDefinition'
         appManifest:
           $ref: '#/components/schemas/AppManifest'
-    BeginAsyncJobResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ListAppsResult:
-      required:
-      - apps
-      type: object
-      properties:
-        apps:
-          type: array
-          description: An array of Apps
-          items:
-            $ref: '#/components/schemas/App'
-      description: List of all available apps from the App Catalog.
-    AppInstallRequest:
-      required:
-      - description
-      - destinationFolderId
-      - name
-      type: object
-      properties:
-        name:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: Preferred name of the app to be installed. This will be the name of the app in the selected installation folder.
-          example: Sumo Logic Configuration App
-        description:
-          maxLength: 255
-          minLength: 1
-          type: string
-          description: Preferred description of the app to be installed. This will be displayed as the app description in the selected installation folder.
-          example: Sumo Logic Configuration App to configure collectors and data sources
-        destinationFolderId:
-          type: string
-          description: Identifier of the folder in which the app will be installed in hexadecimal format.
-          example: 00000000000001C8
-        dataSourceValues:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Dictionary of properties specifying log-source name and value.
-          example:
-            logsrc: _sourceCategory = api
-      description: JSON object containing name, description, destinationFolderId, and dataSourceType.
     AppManifest:
       required:
       - description
@@ -356,79 +319,116 @@ components:
           type: string
           description: App author website URL.
           example: https://www.sumologic.com
-    AppDefinition:
+    ErrorResponse:
       required:
-      - appVersion
-      - contentId
-      - name
-      - uuid
+      - errors
+      - id
       type: object
       properties:
-        contentId:
+        id:
           type: string
-          description: Content identifier of the app in hexadecimal format.
-          example: 00000000000011AE
-        uuid:
-          type: string
-          description: Unique identifier for the app.
-          format: uuid
-          example: 1c57fbc3-3141-4b12-aab3-5f40152bc3d9
-        name:
-          type: string
-          description: Name of the app.
-          example: Sumo Config
-        appVersion:
-          type: string
-          description: Version of the app.
-          example: '1.0'
-        preview:
-          type: boolean
-          description: Indicates whether the app is in preview or not.
-          example: true
-        manifestVersion:
-          type: string
-          description: Manifest version of the app
-          example: '0.1'
-    AsyncJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        statusMessage:
-          type: string
-          description: Additional status message generated if the status is not `Failed`.
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      example:
-        status: Success
-        statusMessage: ''
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
           example:
-            minLength: 12
-            actualLength: 5
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ListAppsResult:
+      required:
+      - apps
+      type: object
+      properties:
+        apps:
+          type: array
+          description: An array of Apps
+          items:
+            $ref: '#/components/schemas/App'
+      description: List of all available apps from the App Catalog.
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
+    ServiceManifestDataSourceParameter:
+      required:
+      - parameterId
+      - parameterType
+      type: object
+      properties:
+        parameterType:
+          pattern: ^DATA_SOURCE$
+          type: string
+          description: Parameter type.
+          example: DATA_SOURCE
+          x-pattern-message: 'Supported parameter types include: DATA_SOURCE'
+        parameterId:
+          type: string
+          description: Parameter identifier.
+          example: paramId1
+        dataSourceType:
+          pattern: ^(LOG|METRICS)$
+          type: string
+          description: Data source type.
+          example: LOG
+          x-pattern-message: 'Supported data source types include: LOG, METRICS'
+        label:
+          type: string
+          description: Label.
+          example: Log label
+        description:
+          type: string
+          description: Description.
+          example: Log data source
+        example:
+          type: string
+          description: Example.
+          example: ''
+        hidden:
+          type: boolean
+          description: Should the UI display?
+          default: false
+    AppInstallRequest:
+      required:
+      - description
+      - destinationFolderId
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Preferred name of the app to be installed. This will be the name of the app in the selected installation folder.
+          example: Sumo Logic Configuration App
+        description:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: Preferred description of the app to be installed. This will be displayed as the app description in the selected installation folder.
+          example: Sumo Logic Configuration App to configure collectors and data sources
+        destinationFolderId:
+          type: string
+          description: Identifier of the folder in which the app will be installed in hexadecimal format.
+          example: 00000000000001C8
+        dataSourceValues:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Dictionary of properties specifying log-source name and value.
+          example:
+            logsrc: _sourceCategory = api
+      description: JSON object containing name, description, destinationFolderId, and dataSourceType.
   securitySchemes:
     basicAuth:
       type: http

@@ -419,71 +419,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MutingSchedulesLibraryBaseExport:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the mutingschedule or folder.
-        description:
-          type: string
-          description: Description of the mutingschedule or folder.
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
-    MutingSchedulesLibraryBase:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the mutingschedule or folder.
-        description:
-          type: string
-          description: Description of the mutingschedule or folder.
-          default: ''
-        type:
-          type: string
-          description: "Type of the object model. Valid values:\n  1) MutingSchedulesLibraryMutingschedule\n  2) MutingSchedulesLibraryFolder"
-      discriminator:
-        propertyName: type
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    IdToMutingSchedulesLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
-    ListMutingSchedulesLibraryItemWithPath:
-      type: array
-      description: Multi-type list of types mutingschedule or folder.
-      items:
-        $ref: '#/components/schemas/MutingSchedulesLibraryItemWithPath'
     MutingSchedulesLibraryBaseResponse:
       required:
       - contentType
@@ -576,21 +511,20 @@ components:
           description: Type of the object model.
       discriminator:
         propertyName: type
-    PathItem:
+    Path:
       required:
-      - id
-      - name
+      - path
+      - pathItems
       type: object
       properties:
-        id:
+        pathItems:
+          type: array
+          description: Elements of the path.
+          items:
+            $ref: '#/components/schemas/PathItem'
+        path:
           type: string
-          description: Identifier of the path element.
-        name:
-          type: string
-          description: Name of the path element.
-        description:
-          type: string
-          description: Description of the path element.
+          description: String representation of the path.
     ContentCopyParams:
       required:
       - parentId
@@ -605,39 +539,6 @@ components:
         description:
           type: string
           description: Optionally provide a new description.
-    MutingSchedulesLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the mutingschedule or folder.
-          example: /MutingSchedules/SampleFolder/TestMutingschedule
-    MutingSchedulesLibraryFolderResponse:
-      allOf:
-      - $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
-      - required:
-        - children
-        - permissions
-        type: object
-        properties:
-          permissions:
-            type: array
-            description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
-            example:
-            - Read
-            - Delete
-            items:
-              type: string
-          children:
-            type: array
-            description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
-            items:
-              $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
     ErrorDescription:
       required:
       - code
@@ -662,20 +563,119 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    Path:
+    MutingSchedulesLibraryBase:
       required:
-      - path
-      - pathItems
+      - name
+      - type
       type: object
       properties:
-        pathItems:
+        name:
+          type: string
+          description: Name of the mutingschedule or folder.
+        description:
+          type: string
+          description: Description of the mutingschedule or folder.
+          default: ''
+        type:
+          type: string
+          description: "Type of the object model. Valid values:\n  1) MutingSchedulesLibraryMutingschedule\n  2) MutingSchedulesLibraryFolder"
+      discriminator:
+        propertyName: type
+    IdToMutingSchedulesLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
+    MutingSchedulesLibraryFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
+      - required:
+        - children
+        - permissions
+        type: object
+        properties:
+          permissions:
+            type: array
+            description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
+            example:
+            - Read
+            - Delete
+            items:
+              type: string
+          children:
+            type: array
+            description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
+            items:
+              $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
           type: array
-          description: Elements of the path.
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
           items:
-            $ref: '#/components/schemas/PathItem'
+            $ref: '#/components/schemas/ErrorDescription'
+    MutingSchedulesLibraryBaseExport:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the mutingschedule or folder.
+        description:
+          type: string
+          description: Description of the mutingschedule or folder.
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    PathItem:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the path element.
+        name:
+          type: string
+          description: Name of the path element.
+        description:
+          type: string
+          description: Description of the path element.
+    MutingSchedulesLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/MutingSchedulesLibraryBaseResponse'
         path:
           type: string
-          description: String representation of the path.
+          description: Path of the mutingschedule or folder.
+          example: /MutingSchedules/SampleFolder/TestMutingschedule
+    ListMutingSchedulesLibraryItemWithPath:
+      type: array
+      description: Multi-type list of types mutingschedule or folder.
+      items:
+        $ref: '#/components/schemas/MutingSchedulesLibraryItemWithPath'
   securitySchemes:
     basicAuth:
       type: http

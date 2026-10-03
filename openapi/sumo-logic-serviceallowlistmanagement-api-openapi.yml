@@ -190,26 +190,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     CidrList:
       required:
       - data
@@ -222,19 +202,6 @@ components:
           items:
             $ref: '#/components/schemas/Cidr'
       description: A list of CIDR notations and/or IP addresses.
-    AllowlistingStatus:
-      required:
-      - contentEnabled
-      - loginEnabled
-      type: object
-      properties:
-        contentEnabled:
-          type: boolean
-          description: Whether service allowlisting is enabled for Content.
-        loginEnabled:
-          type: boolean
-          description: Whether service allowlisting is enabled for Login.
-      description: The status of service allowlisting for Content and Login.
     Cidr:
       required:
       - cidr
@@ -275,6 +242,39 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    AllowlistingStatus:
+      required:
+      - contentEnabled
+      - loginEnabled
+      type: object
+      properties:
+        contentEnabled:
+          type: boolean
+          description: Whether service allowlisting is enabled for Content.
+        loginEnabled:
+          type: boolean
+          description: Whether service allowlisting is enabled for Login.
+      description: The status of service allowlisting for Content and Login.
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
   securitySchemes:
     basicAuth:
       type: http

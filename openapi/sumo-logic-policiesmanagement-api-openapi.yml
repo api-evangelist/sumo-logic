@@ -400,54 +400,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    AuditPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Audit policy is enabled.
-          example: true
-      description: Audit policy.
-    UserConcurrentSessionsLimitPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the User Concurrent Sessions Limit policy is enabled.
-          example: true
-        maxConcurrentSessions:
-          maximum: 100
-          minimum: 1
-          type: integer
-          description: Maximum number of concurrent sessions a user may have.
-          format: int32
-          example: 50
-          default: 100
-      description: User Concurrent Sessions Limit policy.
     DataAccessLevelPolicy:
       required:
       - enabled
@@ -468,28 +420,6 @@ components:
           description: Whether the Search Audit policy is enabled.
           example: true
       description: Search Audit policy.
-    DataDeletionPolicy:
-      required:
-      - enabled
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the Data Deletion policy is enabled.
-          example: true
-      description: Whether the Data Deletion policy is enabled.
-    MaxUserSessionTimeoutPolicy:
-      required:
-      - maxUserSessionTimeout
-      type: object
-      properties:
-        maxUserSessionTimeout:
-          pattern: ^(5m|15m|30m|1h|2h|6h|12h|1d|2d|3d|5d|7d)$
-          type: string
-          description: 'Maximum web session timeout users are able to configure within their user preferences. Valid values are: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
-          example: 1d
-          x-pattern-message: 'must be one of the following: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
-      description: Max User Session Timeout policy.
     ErrorDescription:
       required:
       - code
@@ -514,16 +444,54 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    ShareDashboardsOutsideOrganizationPolicy:
+    UserConcurrentSessionsLimitPolicy:
       required:
       - enabled
       type: object
       properties:
         enabled:
           type: boolean
-          description: Whether the Share Dashboards Outside Organization policy is enabled.
+          description: Whether the User Concurrent Sessions Limit policy is enabled.
           example: true
-      description: Share Dashboards Outside Organization policy.
+        maxConcurrentSessions:
+          maximum: 100
+          minimum: 1
+          type: integer
+          description: Maximum number of concurrent sessions a user may have.
+          format: int32
+          example: 50
+          default: 100
+      description: User Concurrent Sessions Limit policy.
+    DataDeletionPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Data Deletion policy is enabled.
+          example: true
+      description: Whether the Data Deletion policy is enabled.
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     AccessKeysLifetimePolicy:
       required:
       - accessKeysLifetimeInDays
@@ -536,6 +504,38 @@ components:
           example: '60'
           x-pattern-message: 'must be one of the following: `0`, `30`, `45`, `60`, `90`, `180`, or `365`'
       description: Access Keys Lifetime policy.
+    ShareDashboardsOutsideOrganizationPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Share Dashboards Outside Organization policy is enabled.
+          example: true
+      description: Share Dashboards Outside Organization policy.
+    MaxUserSessionTimeoutPolicy:
+      required:
+      - maxUserSessionTimeout
+      type: object
+      properties:
+        maxUserSessionTimeout:
+          pattern: ^(5m|15m|30m|1h|2h|6h|12h|1d|2d|3d|5d|7d)$
+          type: string
+          description: 'Maximum web session timeout users are able to configure within their user preferences. Valid values are: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
+          example: 1d
+          x-pattern-message: 'must be one of the following: `5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`, `2d`, `3d`, `5d`, or `7d`'
+      description: Max User Session Timeout policy.
+    AuditPolicy:
+      required:
+      - enabled
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the Audit policy is enabled.
+          example: true
+      description: Audit policy.
   securitySchemes:
     basicAuth:
       type: http

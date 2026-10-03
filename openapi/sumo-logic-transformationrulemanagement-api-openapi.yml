@@ -186,33 +186,43 @@ paths:
           description: The transformation rule was successfully deleted.
 components:
   schemas:
-    TransformationRuleResponse:
-      type: object
-      description: A generic response for transformation rule.
-      allOf:
-      - $ref: '#/components/schemas/TransformationRuleRequest'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the transformation rule.
-    TransformationRulesResponse:
+    TransformationRuleRequest:
       required:
-      - data
+      - enabled
+      - ruleDefinition
       type: object
       properties:
-        data:
-          type: array
-          description: List of transformation rules.
-          items:
-            $ref: '#/components/schemas/TransformationRuleResponse'
-        next:
+        ruleDefinition:
+          $ref: '#/components/schemas/TransformationRuleDefinition'
+        enabled:
+          type: boolean
+          description: True if the rule is enabled.
+          example: true
+      description: A request for creating or updating a transformation rule.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
           type: string
-          description: Next continuation token.
-          example: aGNzTmZBN1ZZWFk9
-      description: A generic response for transformation rule.
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     MetadataModel:
       required:
       - createdAt
@@ -239,6 +249,18 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    TransformationRuleResponse:
+      type: object
+      description: A generic response for transformation rule.
+      allOf:
+      - $ref: '#/components/schemas/TransformationRuleRequest'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the transformation rule.
     ErrorResponse:
       required:
       - errors
@@ -259,6 +281,21 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    TransformationRulesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of transformation rules.
+          items:
+            $ref: '#/components/schemas/TransformationRuleResponse'
+        next:
+          type: string
+          description: Next continuation token.
+          example: aGNzTmZBN1ZZWFk9
+      description: A generic response for transformation rule.
     TransformationRuleDefinition:
       required:
       - name
@@ -300,19 +337,6 @@ components:
           example: 8
           default: 400
       description: The properties that define a transformation rule.
-    TransformationRuleRequest:
-      required:
-      - enabled
-      - ruleDefinition
-      type: object
-      properties:
-        ruleDefinition:
-          $ref: '#/components/schemas/TransformationRuleDefinition'
-        enabled:
-          type: boolean
-          description: True if the rule is enabled.
-          example: true
-      description: A request for creating or updating a transformation rule.
     DimensionTransformation:
       required:
       - transformationType
@@ -324,30 +348,6 @@ components:
       description: Base class of all transformation types.
       discriminator:
         propertyName: transformationType
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
   securitySchemes:
     basicAuth:
       type: http

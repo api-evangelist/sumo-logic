@@ -693,19 +693,29 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Permissions:
-      required:
-      - permissions
-      type: object
-      properties:
-        permissions:
-          type: array
-          description: List of permissions.
-          example:
-          - Read
-          - Delete
-          items:
+    PermissionSummaryBySubjects:
+      description: A list of PermissionSubjects and PermissionSummaryMeta(s) associated with each subject.
+      allOf:
+      - $ref: '#/components/schemas/PermissionSubject'
+      - required:
+        - permissionSummaries
+        type: object
+        properties:
+          permissionSummaries:
+            type: array
+            items:
+              $ref: '#/components/schemas/PermissionSummaryMeta'
+    PermissionIdentifier:
+      allOf:
+      - $ref: '#/components/schemas/PermissionSubject'
+      - required:
+        - targetId
+        type: object
+        properties:
+          targetId:
             type: string
+            description: The identifier that belongs to the resource this permission assignment applies to.
+            example: 0000000006743FE2
     MetadataModel:
       required:
       - createdAt
@@ -732,63 +742,6 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
-    DisableMonitorWarning:
-      type: object
-      properties:
-        code:
-          type: string
-          description: A code for the warning message.
-          example: content:not_found
-        message:
-          type: string
-          description: A short message with details about the warning.
-          example: Monitor id=0000000000000001 not found.
-      description: Warning object from the operation providing details such as when a given monitor to disable does not exist.
-    MonitorsLibraryBase:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the monitor or folder.
-        description:
-          type: string
-          description: Description of the monitor or folder.
-          default: ''
-        type:
-          type: string
-          description: "Type of the object model. Valid values:\n  1) MonitorsLibraryMonitor\n  2) MonitorsLibraryFolder"
-      discriminator:
-        propertyName: type
-    PermissionStatementDefinitions:
-      required:
-      - permissionStatementDefinitions
-      type: object
-      properties:
-        permissionStatementDefinitions:
-          maxItems: 1000
-          minItems: 1
-          type: array
-          description: List of permission statement definitions.
-          items:
-            $ref: '#/components/schemas/PermissionStatementDefinition'
-    MonitorQuery:
-      required:
-      - query
-      - rowId
-      type: object
-      properties:
-        rowId:
-          type: string
-          description: The unique identifier of the row. Defaults to sequential capital letters, `A`, `B`, `C`, etc.
-          example: A
-        query:
-          type: string
-          description: The logs or metrics query that defines the stream of data the monitor runs on.
-          example: _sourceCategory=search error
-      description: A search query.
     ContentCopyParams:
       required:
       - parentId
@@ -803,165 +756,6 @@ components:
         description:
           type: string
           description: Optionally provide a new description.
-    MonitorsLibraryBaseResponse:
-      required:
-      - contentType
-      - createdAt
-      - createdBy
-      - description
-      - id
-      - isMutable
-      - isSystem
-      - modifiedAt
-      - modifiedBy
-      - name
-      - parentId
-      - type
-      - version
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of the monitor or folder.
-        name:
-          type: string
-          description: Identifier of the monitor or folder.
-        description:
-          type: string
-          description: Description of the monitor or folder.
-        version:
-          type: integer
-          description: Version of the monitor or folder.
-          format: int64
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-        parentId:
-          type: string
-          description: Identifier of the parent folder.
-        contentType:
-          type: string
-          description: "Type of the content. Valid values:\n  1) Monitor\n  2) Folder"
-        type:
-          type: string
-          description: Type of the object model.
-        isSystem:
-          type: boolean
-          description: System objects are objects provided by Sumo Logic. System objects can only be localized. Non-local fields can't be updated.
-        isMutable:
-          type: boolean
-          description: Immutable objects are "READ-ONLY".
-        permissions:
-          type: array
-          description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
-          example:
-          - Read
-          - Delete
-          items:
-            type: string
-      discriminator:
-        propertyName: type
-    PermissionIdentifiers:
-      required:
-      - permissionIdentifiers
-      type: object
-      properties:
-        permissionIdentifiers:
-          maxItems: 1000
-          minItems: 1
-          type: array
-          description: List of permission identifiers.
-          items:
-            $ref: '#/components/schemas/PermissionIdentifier'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    PermissionStatement:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/PermissionStatementDefinition'
-      - $ref: '#/components/schemas/MetadataModel'
-    MonitorsLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the monitor or folder.
-          example: /Monitors/SampleFolder/TestMonitor
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    PermissionSubject:
-      required:
-      - subjectId
-      - subjectType
-      type: object
-      properties:
-        subjectType:
-          pattern: ^(user|role|org)$
-          type: string
-          description: 'Type of subject for the permission. Valid values are: `user` or `role` or `org`.'
-          example: role
-          x-pattern-message: 'must be one of the following: `user`, `role`, `org`'
-        subjectId:
-          type: string
-          description: The identifier that belongs to the subject type chosen above. For e.g. if the subjectType is set to `user`, subjectId should be the identifier of a user (same goes for `role` or `org` subjectType).
-          example: 0000000006743FDA
-      description: Identifier for the entity (subject) that is granted the permission on resource(s).
     MonitorsLibraryMonitorResponse:
       allOf:
       - $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
@@ -1085,34 +879,6 @@ components:
             items:
               type: string
             default: []
-    MonitorsLibraryBaseUpdate:
-      required:
-      - name
-      - type
-      - version
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the monitor or folder.
-        description:
-          type: string
-          description: The description of the monitor or folder.
-          default: ''
-        version:
-          type: integer
-          description: The version of the monitor or folder.
-          format: int64
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
-    MonitorUsageInfo:
-      type: array
-      description: The usage info of logs and metrics monitors.
-      items:
-        $ref: '#/components/schemas/MonitorUsage'
     MonitorNotification:
       required:
       - notification
@@ -1127,6 +893,33 @@ components:
           description: The trigger types assigned to send this notification.
           items:
             type: string
+    DisableMonitorWarning:
+      type: object
+      properties:
+        code:
+          type: string
+          description: A code for the warning message.
+          example: content:not_found
+        message:
+          type: string
+          description: A short message with details about the warning.
+          example: Monitor id=0000000000000001 not found.
+      description: Warning object from the operation providing details such as when a given monitor to disable does not exist.
+    MonitorQuery:
+      required:
+      - query
+      - rowId
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: The unique identifier of the row. Defaults to sequential capital letters, `A`, `B`, `C`, etc.
+          example: A
+        query:
+          type: string
+          description: The logs or metrics query that defines the stream of data the monitor runs on.
+          example: _sourceCategory=search error
+      description: A search query.
     PermissionStatementDefinition:
       allOf:
       - $ref: '#/components/schemas/Permissions'
@@ -1150,29 +943,43 @@ components:
             type: string
             description: The identifier that belongs to the resource this permission assignment applies to.
             example: 0000000006743FE2
-    PermissionSummaryBySubjects:
-      description: A list of PermissionSubjects and PermissionSummaryMeta(s) associated with each subject.
-      allOf:
-      - $ref: '#/components/schemas/PermissionSubject'
-      - required:
-        - permissionSummaries
-        type: object
-        properties:
-          permissionSummaries:
-            type: array
-            items:
-              $ref: '#/components/schemas/PermissionSummaryMeta'
-    PermissionIdentifier:
-      allOf:
-      - $ref: '#/components/schemas/PermissionSubject'
-      - required:
-        - targetId
-        type: object
-        properties:
-          targetId:
-            type: string
-            description: The identifier that belongs to the resource this permission assignment applies to.
-            example: 0000000006743FE2
+    PermissionSubject:
+      required:
+      - subjectId
+      - subjectType
+      type: object
+      properties:
+        subjectType:
+          pattern: ^(user|role|org)$
+          type: string
+          description: 'Type of subject for the permission. Valid values are: `user` or `role` or `org`.'
+          example: role
+          x-pattern-message: 'must be one of the following: `user`, `role`, `org`'
+        subjectId:
+          type: string
+          description: The identifier that belongs to the subject type chosen above. For e.g. if the subjectType is set to `user`, subjectId should be the identifier of a user (same goes for `role` or `org` subjectType).
+          example: 0000000006743FDA
+      description: Identifier for the entity (subject) that is granted the permission on resource(s).
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     MonitorsLibraryBaseExport:
       required:
       - name
@@ -1190,11 +997,52 @@ components:
           description: Type of the object model.
       discriminator:
         propertyName: type
-    MonitorPlaybooksList:
-      type: array
-      description: The list of monitor playbooks.
-      items:
-        $ref: '#/components/schemas/MonitorPlaybook'
+    Permissions:
+      required:
+      - permissions
+      type: object
+      properties:
+        permissions:
+          type: array
+          description: List of permissions.
+          example:
+          - Read
+          - Delete
+          items:
+            type: string
+    PermissionStatement:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PermissionStatementDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+    MonitorsLibraryBase:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the monitor or folder.
+        description:
+          type: string
+          description: Description of the monitor or folder.
+          default: ''
+        type:
+          type: string
+          description: "Type of the object model. Valid values:\n  1) MonitorsLibraryMonitor\n  2) MonitorsLibraryFolder"
+      discriminator:
+        propertyName: type
+    PermissionStatements:
+      required:
+      - permissionStatements
+      type: object
+      properties:
+        permissionStatements:
+          type: array
+          description: A list of permission statements.
+          items:
+            $ref: '#/components/schemas/PermissionStatement'
     DisableMonitorResponse:
       type: object
       properties:
@@ -1210,21 +1058,6 @@ components:
           items:
             $ref: '#/components/schemas/DisableMonitorWarning'
       description: Response for disabling monitors.
-    ListPermissionsResponse:
-      required:
-      - permissionStatements
-      type: object
-      properties:
-        permissionStatements:
-          type: array
-          description: A list of permission statements.
-          items:
-            $ref: '#/components/schemas/PermissionStatement'
-    ListMonitorsLibraryItemWithPath:
-      type: array
-      description: Multi-type list of types monitor or folder.
-      items:
-        $ref: '#/components/schemas/MonitorsLibraryItemWithPath'
     RunAs:
       required:
       - runAsId
@@ -1234,121 +1067,38 @@ components:
           type: string
           description: The runAsId indicates the context in which monitors will run. If not provided, then it will run in the context of the monitor author.
           example: 00000000000001DF
-    MonitorsLibraryFolderResponse:
-      allOf:
-      - $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
-      - required:
-        - children
-        - permissions
-        type: object
-        properties:
-          permissions:
-            type: array
-            description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
-            example:
-            - Read
-            - Delete
-            items:
-              type: string
-          children:
-            type: array
-            description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
-            items:
-              $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
-    PermissionSummaryMeta:
-      required:
-      - isExplicit
-      - isInherited
-      - isRecursive
-      - isRevoked
-      - isSystemDefined
-      - name
-      type: object
+    MonitorPlaybooksList:
+      type: array
+      description: The list of monitor playbooks.
+      items:
+        $ref: '#/components/schemas/MonitorPlaybook'
+    ListMonitorsLibraryItemWithPath:
+      type: array
+      description: Multi-type list of types monitor or folder.
+      items:
+        $ref: '#/components/schemas/MonitorsLibraryItemWithPath'
+    MonitorUsage:
       properties:
-        name:
+        monitorType:
           type: string
-          description: 'Name of the permission. Example values are: `Read`, `Update`, `Create`, etc.'
-          example: Read
-        isInherited:
-          type: boolean
-          description: A true value implies that the permission is inherited from some ancestors of the resource. A false value implies that the permission is explicitly assigned to the resource.
-          example: true
-        isExplicit:
-          type: boolean
-          description: A true value implies that the permission is explicitly assigned to the resource. A false value implies that the permission is not explicitly assigned to the resource.
-          example: true
-        isRevoked:
-          type: boolean
-          description: A true value implies that the capability required for this permission has been revoked.
-          example: true
-        isRecursive:
-          type: boolean
-          description: A true value implies that the permission is recursively cascaded down to all the direct and indirect children of the resource.
-          example: true
-        isSystemDefined:
-          type: boolean
-          description: A true value implies that the permission is defined by the system on the resource and can not be modified by the user. A false value implies that the permission is defined by the user on the resource and can be modified by the user.
-          example: true
-      description: Permission Summary with additional information like inheritance, revocation, etc about the permission.
-    Path:
-      required:
-      - path
-      - pathItems
-      type: object
-      properties:
-        pathItems:
-          type: array
-          description: Elements of the path.
-          items:
-            $ref: '#/components/schemas/PathItem'
-        path:
-          type: string
-          description: String representation of the path.
-    PermissionStatements:
-      required:
-      - permissionStatements
-      type: object
-      properties:
-        permissionStatements:
-          type: array
-          description: A list of permission statements.
-          items:
-            $ref: '#/components/schemas/PermissionStatement'
-    MonitorPlaybook:
-      required:
-      - description
-      - name
-      - playbookId
-      - type
-      - versionId
-      type: object
-      properties:
-        description:
-          type: string
-          description: The description of the monitor playbook.
-          example: <p>30 Seconds API Will Take To Respond</p>
-        playbookId:
-          type: string
-          description: The id of the playbook.
-          example: '1'
-        name:
-          type: string
-          description: The name of the playbook.
-          example: Test
-        versionId:
-          type: string
-          description: The version id of the playbook.
-          example: '1'
-        type:
-          type: string
-          description: The type of the playbook.
-          example: Analytics
-      description: The single monitor playbook.
-    IdToMonitorsLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
+          description: The type of monitor usage info (Logs or Metrics).
+          example: Logs
+          enum:
+          - Logs
+          - Metrics
+        usage:
+          type: integer
+          description: Current number of active Logs/Metrics monitors.
+          example: 100
+        limit:
+          type: integer
+          description: The limit of active Logs/Metrics monitors.
+          example: 100
+        total:
+          type: integer
+          description: The total number of monitors created. (Including both active and disabled Logs/Metrics monitors)
+          example: 100
+      description: The usage info of monitors.
     TriggerCondition:
       required:
       - triggerType
@@ -1387,51 +1137,41 @@ components:
           SloBurnRateCondition: '#/components/schemas/SloBurnRateCondition'
           LogsAnomalyCondition: '#/components/schemas/LogsAnomalyCondition'
           MetricsAnomalyCondition: '#/components/schemas/MetricsAnomalyCondition'
-    PermissionSummariesBySubjects:
+    PermissionSummaryMeta:
       required:
-      - permissionSummariesBySubjects
+      - isExplicit
+      - isInherited
+      - isRecursive
+      - isRevoked
+      - isSystemDefined
+      - name
       type: object
       properties:
-        permissionSummariesBySubjects:
-          type: array
-          description: A list of PermissionSubjects and PermissionSummaryMeta(s) associated with each subject.
-          items:
-            $ref: '#/components/schemas/PermissionSummaryBySubjects'
-    MonitorUsage:
-      properties:
-        monitorType:
+        name:
           type: string
-          description: The type of monitor usage info (Logs or Metrics).
-          example: Logs
-          enum:
-          - Logs
-          - Metrics
-        usage:
-          type: integer
-          description: Current number of active Logs/Metrics monitors.
-          example: 100
-        limit:
-          type: integer
-          description: The limit of active Logs/Metrics monitors.
-          example: 100
-        total:
-          type: integer
-          description: The total number of monitors created. (Including both active and disabled Logs/Metrics monitors)
-          example: 100
-      description: The usage info of monitors.
-    Action:
-      required:
-      - connectionType
-      type: object
-      properties:
-        connectionType:
-          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
-          type: string
-          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
-          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
-      description: The base class of all connection types.
-      discriminator:
-        propertyName: connectionType
+          description: 'Name of the permission. Example values are: `Read`, `Update`, `Create`, etc.'
+          example: Read
+        isInherited:
+          type: boolean
+          description: A true value implies that the permission is inherited from some ancestors of the resource. A false value implies that the permission is explicitly assigned to the resource.
+          example: true
+        isExplicit:
+          type: boolean
+          description: A true value implies that the permission is explicitly assigned to the resource. A false value implies that the permission is not explicitly assigned to the resource.
+          example: true
+        isRevoked:
+          type: boolean
+          description: A true value implies that the capability required for this permission has been revoked.
+          example: true
+        isRecursive:
+          type: boolean
+          description: A true value implies that the permission is recursively cascaded down to all the direct and indirect children of the resource.
+          example: true
+        isSystemDefined:
+          type: boolean
+          description: A true value implies that the permission is defined by the system on the resource and can not be modified by the user. A false value implies that the permission is defined by the user on the resource and can be modified by the user.
+          example: true
+      description: Permission Summary with additional information like inheritance, revocation, etc about the permission.
     PathItem:
       required:
       - id
@@ -1447,6 +1187,266 @@ components:
         description:
           type: string
           description: Description of the path element.
+    PermissionSummariesBySubjects:
+      required:
+      - permissionSummariesBySubjects
+      type: object
+      properties:
+        permissionSummariesBySubjects:
+          type: array
+          description: A list of PermissionSubjects and PermissionSummaryMeta(s) associated with each subject.
+          items:
+            $ref: '#/components/schemas/PermissionSummaryBySubjects'
+    Action:
+      required:
+      - connectionType
+      type: object
+      properties:
+        connectionType:
+          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
+          type: string
+          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
+          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
+      description: The base class of all connection types.
+      discriminator:
+        propertyName: connectionType
+    MonitorPlaybook:
+      required:
+      - description
+      - name
+      - playbookId
+      - type
+      - versionId
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the monitor playbook.
+          example: <p>30 Seconds API Will Take To Respond</p>
+        playbookId:
+          type: string
+          description: The id of the playbook.
+          example: '1'
+        name:
+          type: string
+          description: The name of the playbook.
+          example: Test
+        versionId:
+          type: string
+          description: The version id of the playbook.
+          example: '1'
+        type:
+          type: string
+          description: The type of the playbook.
+          example: Analytics
+      description: The single monitor playbook.
+    MonitorUsageInfo:
+      type: array
+      description: The usage info of logs and metrics monitors.
+      items:
+        $ref: '#/components/schemas/MonitorUsage'
+    MonitorsLibraryBaseUpdate:
+      required:
+      - name
+      - type
+      - version
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the monitor or folder.
+        description:
+          type: string
+          description: The description of the monitor or folder.
+          default: ''
+        version:
+          type: integer
+          description: The version of the monitor or folder.
+          format: int64
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    Path:
+      required:
+      - path
+      - pathItems
+      type: object
+      properties:
+        pathItems:
+          type: array
+          description: Elements of the path.
+          items:
+            $ref: '#/components/schemas/PathItem'
+        path:
+          type: string
+          description: String representation of the path.
+    MonitorsLibraryFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
+      - required:
+        - children
+        - permissions
+        type: object
+        properties:
+          permissions:
+            type: array
+            description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
+            example:
+            - Read
+            - Delete
+            items:
+              type: string
+          children:
+            type: array
+            description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
+            items:
+              $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
+    PermissionIdentifiers:
+      required:
+      - permissionIdentifiers
+      type: object
+      properties:
+        permissionIdentifiers:
+          maxItems: 1000
+          minItems: 1
+          type: array
+          description: List of permission identifiers.
+          items:
+            $ref: '#/components/schemas/PermissionIdentifier'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    IdToMonitorsLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
+    ListPermissionsResponse:
+      required:
+      - permissionStatements
+      type: object
+      properties:
+        permissionStatements:
+          type: array
+          description: A list of permission statements.
+          items:
+            $ref: '#/components/schemas/PermissionStatement'
+    MonitorsLibraryBaseResponse:
+      required:
+      - contentType
+      - createdAt
+      - createdBy
+      - description
+      - id
+      - isMutable
+      - isSystem
+      - modifiedAt
+      - modifiedBy
+      - name
+      - parentId
+      - type
+      - version
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the monitor or folder.
+        name:
+          type: string
+          description: Identifier of the monitor or folder.
+        description:
+          type: string
+          description: Description of the monitor or folder.
+        version:
+          type: integer
+          description: Version of the monitor or folder.
+          format: int64
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+        parentId:
+          type: string
+          description: Identifier of the parent folder.
+        contentType:
+          type: string
+          description: "Type of the content. Valid values:\n  1) Monitor\n  2) Folder"
+        type:
+          type: string
+          description: Type of the object model.
+        isSystem:
+          type: boolean
+          description: System objects are objects provided by Sumo Logic. System objects can only be localized. Non-local fields can't be updated.
+        isMutable:
+          type: boolean
+          description: Immutable objects are "READ-ONLY".
+        permissions:
+          type: array
+          description: Aggregated permission summary for the calling user. If detailed permission statements are required, please call list permissions endpoint.
+          example:
+          - Read
+          - Delete
+          items:
+            type: string
+      discriminator:
+        propertyName: type
+    PermissionStatementDefinitions:
+      required:
+      - permissionStatementDefinitions
+      type: object
+      properties:
+        permissionStatementDefinitions:
+          maxItems: 1000
+          minItems: 1
+          type: array
+          description: List of permission statement definitions.
+          items:
+            $ref: '#/components/schemas/PermissionStatementDefinition'
+    MonitorsLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/MonitorsLibraryBaseResponse'
+        path:
+          type: string
+          description: Path of the monitor or folder.
+          example: /Monitors/SampleFolder/TestMonitor
   securitySchemes:
     basicAuth:
       type: http

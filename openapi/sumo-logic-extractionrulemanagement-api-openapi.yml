@@ -190,6 +190,30 @@ paths:
       x-tf-delete: deleteExtractionRule
 components:
   schemas:
+    BaseExtractionRuleDefinition:
+      required:
+      - name
+      - parseExpression
+      - scope
+      type: object
+      properties:
+        name:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Name of the field extraction rule. Use a name that makes it easy to identify the rule.
+          example: ExtractionRule123
+        scope:
+          maxLength: 2048
+          minLength: 0
+          type: string
+          description: Scope of the field extraction rule. This could be a sourceCategory, sourceHost, or any other metadata that describes the data you want to extract from. Think of the Scope as the first portion of an ad hoc search, before the first pipe ( | ). You'll use the Scope to run a search against the rule.
+          example: _sourceHost=127.0.0.1
+        parseExpression:
+          maxLength: 16384
+          type: string
+          description: Describes the fields to be parsed.
+          example: csv _raw extract 1 as f1
     MetadataModel:
       required:
       - createdAt
@@ -216,6 +240,39 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ExtractionRuleDefinition:
+      allOf:
+      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
+      - type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Is the field extraction rule enabled.
+            default: true
     ErrorResponse:
       required:
       - errors
@@ -254,49 +311,6 @@ components:
               type: string
       x-tf-generated-properties: id,name,scope,parseExpression,enabled
       x-tf-resource-name: ExtractionRule
-    ExtractionRuleDefinition:
-      allOf:
-      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
-      - type: object
-        properties:
-          enabled:
-            type: boolean
-            description: Is the field extraction rule enabled.
-            default: true
-    UpdateExtractionRuleDefinition:
-      allOf:
-      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
-      - required:
-        - enabled
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            description: Is the field extraction rule enabled.
-    BaseExtractionRuleDefinition:
-      required:
-      - name
-      - parseExpression
-      - scope
-      type: object
-      properties:
-        name:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Name of the field extraction rule. Use a name that makes it easy to identify the rule.
-          example: ExtractionRule123
-        scope:
-          maxLength: 2048
-          minLength: 0
-          type: string
-          description: Scope of the field extraction rule. This could be a sourceCategory, sourceHost, or any other metadata that describes the data you want to extract from. Think of the Scope as the first portion of an ad hoc search, before the first pipe ( | ). You'll use the Scope to run a search against the rule.
-          example: _sourceHost=127.0.0.1
-        parseExpression:
-          maxLength: 16384
-          type: string
-          description: Describes the fields to be parsed.
-          example: csv _raw extract 1 as f1
     ListExtractionRulesResponse:
       required:
       - data
@@ -310,30 +324,16 @@ components:
         next:
           type: string
           description: Next continuation token.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+    UpdateExtractionRuleDefinition:
+      allOf:
+      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
+      - required:
+        - enabled
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Is the field extraction rule enabled.
   securitySchemes:
     basicAuth:
       type: http

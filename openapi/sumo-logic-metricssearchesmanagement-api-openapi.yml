@@ -150,37 +150,6 @@ paths:
           description: The metrics search was successfully deleted.
 components:
   schemas:
-    MetricsSearchInstance:
-      allOf:
-      - $ref: '#/components/schemas/MetricsSearchV1'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        type: object
-        properties:
-          id:
-            type: string
-            description: Identifier of the metrics search.
-            example: 000000000000001A
-          parentId:
-            type: string
-            description: Identifier of the parent element in the content library, such as folder.
-            example: 0000000000007D2B
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
     MetadataModel:
       required:
       - createdAt
@@ -207,6 +176,76 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    MetricsSearchInstance:
+      allOf:
+      - $ref: '#/components/schemas/MetricsSearchV1'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        type: object
+        properties:
+          id:
+            type: string
+            description: Identifier of the metrics search.
+            example: 000000000000001A
+          parentId:
+            type: string
+            description: Identifier of the parent element in the content library, such as folder.
+            example: 0000000000007D2B
+    MetricsSearchQuery:
+      required:
+      - query
+      - rowId
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: Row identifier. All row IDs are represented by subsequent upper case letters starting with `A`.
+          example: A
+        query:
+          type: string
+          description: Metrics query.
+          example: my_metric | avg
+      description: Definition of a metrics query.
     ErrorResponse:
       required:
       - errors
@@ -227,34 +266,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    SaveMetricsSearchRequest:
-      type: object
-      description: The definition of the metrics search to save in the content library.
-      allOf:
-      - $ref: '#/components/schemas/MetricsSearchV1'
-      - required:
-        - parentId
-        type: object
-        properties:
-          parentId:
-            type: string
-            description: Identifier of a folder to which the metrics search should be added.
-            example: 000000000000001A
-    MetricsSearchQuery:
-      required:
-      - query
-      - rowId
-      type: object
-      properties:
-        rowId:
-          type: string
-          description: Row identifier. All row IDs are represented by subsequent upper case letters starting with `A`.
-          example: A
-        query:
-          type: string
-          description: Metrics query.
-          example: my_metric | avg
-      description: Definition of a metrics query.
     MetricsSearchV1:
       required:
       - description
@@ -303,30 +314,19 @@ components:
             '
           example: '{ \"key\": \"value\" }'
       description: Definition of a metrics search.
-    ErrorDescription:
-      required:
-      - code
-      - message
+    SaveMetricsSearchRequest:
       type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+      description: The definition of the metrics search to save in the content library.
+      allOf:
+      - $ref: '#/components/schemas/MetricsSearchV1'
+      - required:
+        - parentId
+        type: object
+        properties:
+          parentId:
+            type: string
+            description: Identifier of a folder to which the metrics search should be added.
+            example: 000000000000001A
   securitySchemes:
     basicAuth:
       type: http

@@ -583,11 +583,63 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ParsersLibraryBaseUpdate:
+    ParsersLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+        path:
+          type: string
+          description: Path of the folder or parser.
+          example: /Parsers/SampleFolder/TestParser
+    ParsersLibraryFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+      - required:
+        - children
+        type: object
+        properties:
+          children:
+            type: array
+            description: Children of the folder.
+            items:
+              $ref: '#/components/schemas/ParsersLibraryBaseResponse'
+    Path:
+      required:
+      - path
+      - pathItems
+      type: object
+      properties:
+        pathItems:
+          type: array
+          description: Elements of the path.
+          items:
+            $ref: '#/components/schemas/PathItem'
+        path:
+          type: string
+          description: String representation of the path.
+    ContentCopyParams:
+      required:
+      - parentId
+      type: object
+      properties:
+        parentId:
+          type: string
+          description: Identifier of the parent folder to copy to.
+        name:
+          type: string
+          description: Optionally provide a new name.
+        description:
+          type: string
+          description: Optionally provide a new description.
+    ParsersLibraryBase:
       required:
       - description
       - name
-      - version
+      - type
       type: object
       properties:
         name:
@@ -599,13 +651,13 @@ components:
           maxLength: 4096
           type: string
           description: Description of the folder or parser.
-        version:
-          type: integer
-          description: Version of the folder or parser.
-          format: int64
         type:
           type: string
           description: Type of the object model.
+        isLocked:
+          type: boolean
+          description: Locking/Unlocking requires the `LockParsers` capability. Locked objects can only be `Localized`. Updating or moving requires unlocking the object. Locking/Unlocking recursively locks all of the objects children. All children of a locked object must be locked.
+          default: false
       discriminator:
         propertyName: type
     ErrorDescription:
@@ -632,23 +684,11 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    ParsersLibraryFolderResponse:
-      allOf:
-      - $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-      - required:
-        - children
-        type: object
-        properties:
-          children:
-            type: array
-            description: Children of the folder.
-            items:
-              $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-    ListParsersLibraryItemWithPath:
-      type: array
-      description: List of folders or parsers.
-      items:
-        $ref: '#/components/schemas/ParsersLibraryItemWithPath'
+    IdToParsersLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ParsersLibraryBaseResponse'
     ErrorResponse:
       required:
       - errors
@@ -669,37 +709,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    IdToParsersLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-    ContentCopyParams:
-      required:
-      - parentId
-      type: object
-      properties:
-        parentId:
-          type: string
-          description: Identifier of the parent folder to copy to.
-        name:
-          type: string
-          description: Optionally provide a new name.
-        description:
-          type: string
-          description: Optionally provide a new description.
-    ParsersLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/ParsersLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the folder or parser.
-          example: /Parsers/SampleFolder/TestParser
     ParsersLibraryBaseResponse:
       required:
       - contentType
@@ -767,11 +776,11 @@ components:
           description: Immutable objects are "READ-ONLY".
       discriminator:
         propertyName: type
-    ParsersLibraryBase:
+    ParsersLibraryBaseUpdate:
       required:
       - description
       - name
-      - type
+      - version
       type: object
       properties:
         name:
@@ -783,29 +792,30 @@ components:
           maxLength: 4096
           type: string
           description: Description of the folder or parser.
+        version:
+          type: integer
+          description: Version of the folder or parser.
+          format: int64
         type:
           type: string
           description: Type of the object model.
-        isLocked:
-          type: boolean
-          description: Locking/Unlocking requires the `LockParsers` capability. Locked objects can only be `Localized`. Updating or moving requires unlocking the object. Locking/Unlocking recursively locks all of the objects children. All children of a locked object must be locked.
-          default: false
       discriminator:
         propertyName: type
-    Path:
+    PathItem:
       required:
-      - path
-      - pathItems
+      - id
+      - name
       type: object
       properties:
-        pathItems:
-          type: array
-          description: Elements of the path.
-          items:
-            $ref: '#/components/schemas/PathItem'
-        path:
+        id:
           type: string
-          description: String representation of the path.
+          description: Identifier of the path element.
+        name:
+          type: string
+          description: Name of the path element.
+        description:
+          type: string
+          description: Description of the path element.
     ParsersLibraryExportBase:
       required:
       - description
@@ -827,21 +837,11 @@ components:
           description: Type of the object model.
       discriminator:
         propertyName: type
-    PathItem:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of the path element.
-        name:
-          type: string
-          description: Name of the path element.
-        description:
-          type: string
-          description: Description of the path element.
+    ListParsersLibraryItemWithPath:
+      type: array
+      description: List of folders or parsers.
+      items:
+        $ref: '#/components/schemas/ParsersLibraryItemWithPath'
   securitySchemes:
     basicAuth:
       type: http

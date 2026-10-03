@@ -423,27 +423,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    FolderDefinition:
-      required:
-      - name
-      - parentId
-      type: object
-      properties:
-        name:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: The name of the folder.
-          example: SampleFolder
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: The description of the folder.
-          example: This is a sample folder.
-        parentId:
-          type: string
-          description: The identifier of the parent folder.
     MetadataModel:
       required:
       - createdAt
@@ -470,6 +449,46 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    AsyncJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
     Folder:
       allOf:
       - $ref: '#/components/schemas/Content'
@@ -515,6 +534,23 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    UpdateFolderRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
     Content:
       type: object
       allOf:
@@ -560,25 +596,10 @@ components:
             description: Indicates whether the content item refers to scheduled search. This field is only relevant to `Search` content type.
             example: false
             default: false
-    AsyncJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        statusMessage:
-          type: string
-          description: Additional status message generated if the status is not `Failed`.
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      example:
-        status: Success
-        statusMessage: ''
-    UpdateFolderRequest:
+    FolderDefinition:
       required:
       - name
+      - parentId
       type: object
       properties:
         name:
@@ -593,30 +614,9 @@ components:
           type: string
           description: The description of the folder.
           example: This is a sample folder.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
+        parentId:
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+          description: The identifier of the parent folder.
     ContentList:
       required:
       - data
