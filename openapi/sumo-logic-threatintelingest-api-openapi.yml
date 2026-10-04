@@ -161,6 +161,44 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    DatastoreRetentionPeriod:
+      required:
+      - retentionPeriod
+      type: object
+      properties:
+        retentionPeriod:
+          type: integer
+          description: Retention period in days.
+          format: int64
+          example: 120
+    DatastoreStatusResponse:
+      required:
+      - diskSize
+      - indicatorCount
+      - indicatorLimit
+      - sourceStatus
+      type: object
+      properties:
+        diskSize:
+          type: integer
+          description: Total DB size in terms of disk bytes
+          format: int64
+          example: 1024
+        indicatorCount:
+          type: integer
+          description: Total number of indicators in the DB
+          format: int64
+          example: 100
+        indicatorLimit:
+          type: integer
+          description: Limit number of indicators supported in the DB
+          format: int64
+          example: 10000000
+        sourceStatus:
+          type: array
+          description: A list of sources and their individual DB sizes and indicator counts
+          items:
+            $ref: '#/components/schemas/DatastoreSourceStatusResponse'
     DataSourceProperties:
       type: object
       properties:
@@ -196,36 +234,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    DatastoreRetentionPeriod:
-      required:
-      - retentionPeriod
-      type: object
-      properties:
-        retentionPeriod:
-          type: integer
-          description: Retention period in days.
-          format: int64
-          example: 120
     DatastoreSourceStatusResponse:
       required:
       - source
@@ -262,34 +270,26 @@ components:
           description: True if enabled
           example: true
       description: DB sizes and indicator counts for an individual source
-    DatastoreStatusResponse:
+    ErrorResponse:
       required:
-      - diskSize
-      - indicatorCount
-      - indicatorLimit
-      - sourceStatus
+      - errors
+      - id
       type: object
       properties:
-        diskSize:
-          type: integer
-          description: Total DB size in terms of disk bytes
-          format: int64
-          example: 1024
-        indicatorCount:
-          type: integer
-          description: Total number of indicators in the DB
-          format: int64
-          example: 100
-        indicatorLimit:
-          type: integer
-          description: Limit number of indicators supported in the DB
-          format: int64
-          example: 10000000
-        sourceStatus:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
           type: array
-          description: A list of sources and their individual DB sizes and indicator counts
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
           items:
-            $ref: '#/components/schemas/DatastoreSourceStatusResponse'
+            $ref: '#/components/schemas/ErrorDescription'
   securitySchemes:
     basicAuth:
       type: http

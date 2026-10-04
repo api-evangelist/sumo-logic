@@ -247,48 +247,60 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    BudgetType:
-      pattern: ^(ScanBudget)$
-      type: string
-      description: Type of the budget.
-      example: ScanBudget
-    ErrorDescription:
+    ScanBudgetDefinition:
       required:
-      - code
-      - message
+      - action
+      - applicableOn
+      - budgetType
+      - capacity
+      - groupBy
+      - name
+      - scope
+      - unit
+      - window
       type: object
       properties:
-        code:
+        name:
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
+          description: Name of the budget.
+        capacity:
+          type: integer
+          description: Capacity of the budget.
+          format: int64
+        unit:
+          pattern: ^(GB|MB|TB|KB)$
           type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
+          description: Unit of the budget.
+          example: GB
+        budgetType:
+          $ref: '#/components/schemas/BudgetType'
+        scope:
+          $ref: '#/components/schemas/ScanBudgetScope'
+        window:
+          pattern: ^(Query|Daily|Weekly|Monthly)$
           type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ScanBudgetUsageList:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of budget usages
-          items:
-            $ref: '#/components/schemas/ScanBudgetUsage'
-        next:
+          description: Window of the budget. Use Daily/Weekly/Monthly for creating a time based budget (beta)
+          example: Query
+        applicableOn:
+          pattern: ^(PerEntity|Sum)$
           type: string
-          description: Next continuation token.
+          description: Grouping of the budget.
+          example: PerEntity
+        groupBy:
+          pattern: ^(User)$
+          type: string
+          description: Grouping Entity of the budget.
+          example: User
+        action:
+          pattern: ^(StopForeGroundScan|Warn)$
+          type: string
+          description: Action to be taken if the budget is breached
+          example: Warn
+        status:
+          pattern: ^(active|inactive)$
+          type: string
+          description: Signifies the state of the budget. (Active/Inactive)
+          example: active
     ScanBudgetScope:
       required:
       - excludedRoles
@@ -329,19 +341,66 @@ components:
           - 00000000000002D2
           items:
             type: string
-    ScanBudgetList:
+    BudgetType:
+      pattern: ^(ScanBudget)$
+      type: string
+      description: Type of the budget.
+      example: ScanBudget
+    ScanBudgetUsageList:
       required:
       - data
       type: object
       properties:
         data:
           type: array
-          description: List of scan budgets.
+          description: List of budget usages
           items:
-            $ref: '#/components/schemas/ScanBudget'
+            $ref: '#/components/schemas/ScanBudgetUsage'
         next:
           type: string
           description: Next continuation token.
+    ScanBudgetUsage:
+      required:
+      - budgetId
+      - usage
+      - usagePercentage
+      type: object
+      properties:
+        budgetId:
+          type: string
+          description: Budget id.
+        usage:
+          type: integer
+          description: Budget usage (in bytes).
+          format: int64
+        usagePercentage:
+          type: integer
+          description: Budget usage percentage.
+          format: int64
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
     ErrorResponse:
       required:
       - errors
@@ -422,78 +481,19 @@ components:
           modifiedBy:
             type: string
             description: Id of the user who last modified the budget.
-    ScanBudgetDefinition:
+    ScanBudgetList:
       required:
-      - action
-      - applicableOn
-      - budgetType
-      - capacity
-      - groupBy
-      - name
-      - scope
-      - unit
-      - window
+      - data
       type: object
       properties:
-        name:
+        data:
+          type: array
+          description: List of scan budgets.
+          items:
+            $ref: '#/components/schemas/ScanBudget'
+        next:
           type: string
-          description: Name of the budget.
-        capacity:
-          type: integer
-          description: Capacity of the budget.
-          format: int64
-        unit:
-          pattern: ^(GB|MB|TB|KB)$
-          type: string
-          description: Unit of the budget.
-          example: GB
-        budgetType:
-          $ref: '#/components/schemas/BudgetType'
-        scope:
-          $ref: '#/components/schemas/ScanBudgetScope'
-        window:
-          pattern: ^(Query|Daily|Weekly|Monthly)$
-          type: string
-          description: Window of the budget. Use Daily/Weekly/Monthly for creating a time based budget (beta)
-          example: Query
-        applicableOn:
-          pattern: ^(PerEntity|Sum)$
-          type: string
-          description: Grouping of the budget.
-          example: PerEntity
-        groupBy:
-          pattern: ^(User)$
-          type: string
-          description: Grouping Entity of the budget.
-          example: User
-        action:
-          pattern: ^(StopForeGroundScan|Warn)$
-          type: string
-          description: Action to be taken if the budget is breached
-          example: Warn
-        status:
-          pattern: ^(active|inactive)$
-          type: string
-          description: Signifies the state of the budget. (Active/Inactive)
-          example: active
-    ScanBudgetUsage:
-      required:
-      - budgetId
-      - usage
-      - usagePercentage
-      type: object
-      properties:
-        budgetId:
-          type: string
-          description: Budget id.
-        usage:
-          type: integer
-          description: Budget usage (in bytes).
-          format: int64
-        usagePercentage:
-          type: integer
-          description: Budget usage percentage.
-          format: int64
+          description: Next continuation token.
   securitySchemes:
     basicAuth:
       type: http

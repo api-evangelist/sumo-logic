@@ -189,57 +189,77 @@ paths:
       x-tf-delete: deleteLogSearch
 components:
   schemas:
-    AutoCompleteDefinition:
+    LogSearchQueryParameterSyncDefinitionBase:
       required:
-      - type
+      - dataType
+      - name
+      - value
       type: object
       properties:
-        type:
+        autoComplete:
+          $ref: '#/components/schemas/AutoCompleteDefinition'
+        name:
+          maxLength: 50
+          pattern: ^[a-zA-Z0-9_]+$
           type: string
-          description: The autocomplete parameter type.
-          example: SKIP_AUTOCOMPLETE
-        autoCompleteKey:
+          description: The name of the parameter.
+          example: sourceCategory
+          x-pattern-message: Name must be between 1 and 50 Characters. Can only consist alphanumeric and underscore characters.
+        description:
+          maxLength: 256
+          pattern: ^[a-zA-Z0-9@ \-_\.]+$
           type: string
-          description: The autocomplete key to be used to fetch autocomplete values.
-          example: Ephemeral-3644138589235809747-1583470806220-parameter
-        autoCompleteValues:
+          description: A description of the parameter.
+          example: source category for the string
+          x-pattern-message: Description must be between 1 and 256 Characters. Can only consist alphanumeric, @, underscore and dash characters.
+        dataType:
+          pattern: ^(NUMBER|STRING|ANY|KEYWORD)$
+          type: string
+          description: "The data type of the parameter. Supported values are:\n  1. `NUMBER`\n  2. `STRING`\n  3. `ANY`\n  4. `KEYWORD`"
+          example: STRING
+        value:
+          maxLength: 256
+          type: string
+          description: A value for the parameter. Should be compatible with the type set in dataType field.
+          example: apache
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
           type: array
-          description: The array of label-value pairs for autocomplete.
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
           items:
-            $ref: '#/components/schemas/AutoCompleteValueSyncDefinition'
-        lookupMetaData:
-          $ref: '#/components/schemas/AutoCompleteLookupMetaData'
-    AutoCompleteLookupMetaData:
-      type: object
-      properties:
-        fileName:
-          type: string
-          description: The lookup file name to use as a source for autocomplete values.
-          example: users.csv
-        valueColumn:
-          type: string
-          description: The column from the lookup file to use as the value.
-          example: user_id
-        labelColumn:
-          type: string
-          description: The column from the lookup file to use as the label.
-          example: user_name
-      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
+            $ref: '#/components/schemas/ErrorDescription'
+    LogSearch:
+      allOf:
+      - $ref: '#/components/schemas/LogSearchDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        type: object
+        properties:
+          id:
+            type: string
+            description: Identifier of the saved log search.
+            example: 000000000000001A
+          parentId:
+            type: string
+            description: Identifier of the parent element in the content library, such as folder.
+            example: 0000000000007D2B
+      x-tf-generated-properties: id,parentId,name,description,schedule,queryString,timeRange,runByReceiptTime,queryParameters,parsingMode,intervalTimeType
+      x-tf-resource-name: LogSearch
     MetadataModel:
       required:
       - createdAt
@@ -266,6 +286,42 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
+    PaginatedLogSearches:
+      required:
+      - logSearches
+      type: object
+      properties:
+        logSearches:
+          type: array
+          description: List of log searches.
+          items:
+            $ref: '#/components/schemas/LogSearch'
+        warnings:
+          type: array
+          description: List of warning messages for invalid log search definitions.
+          items:
+            type: string
+            example: 'Invalid saved search: <saved_search_name>. Please validate your saved search.'
+        token:
+          type: string
+          description: Next continuation token. `token` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    AutoCompleteLookupMetaData:
+      type: object
+      properties:
+        fileName:
+          type: string
+          description: The lookup file name to use as a source for autocomplete values.
+          example: users.csv
+        valueColumn:
+          type: string
+          description: The column from the lookup file to use as the value.
+          example: user_id
+        labelColumn:
+          type: string
+          description: The column from the lookup file to use as the label.
+          example: user_name
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     LogSearchDefinition:
       type: object
       allOf:
@@ -296,6 +352,167 @@ components:
 
               '
             example: '{ "key": "value" }'
+    AutoCompleteValueSyncDefinition:
+      required:
+      - label
+      - value
+      type: object
+      properties:
+        label:
+          type: string
+          description: The label of the autocomplete value.
+        value:
+          type: string
+          description: The value of the autocomplete value.
+    LogSearchQueryTimeRangeBase:
+      description: Definition of the saved log search with query and timerange.
+      allOf:
+      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
+      - $ref: '#/components/schemas/LogSearchQueryParsingMode'
+    ScheduleSearchParameterSyncDefinition:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          maxLength: 60
+          type: string
+          description: Name of scheduled search parameter.
+        value:
+          maxLength: 300
+          type: string
+          description: Value of scheduled search parameter.
+    SaveLogSearchRequest:
+      type: object
+      description: The definition of the log search to save in the content library.
+      allOf:
+      - $ref: '#/components/schemas/LogSearchDefinition'
+      - required:
+        - parentId
+        properties:
+          parentId:
+            type: string
+            description: Identifier of a folder where to save the log search.
+            example: 000000000000001A
+    LogSearchQueryTimeRangeBaseExceptParsingMode:
+      required:
+      - queryString
+      - timeRange
+      type: object
+      properties:
+        queryString:
+          maxLength: 15000
+          type: string
+          description: Query to perform.
+          example: error {{sourceCategory}}| count by _sourceCategory
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+        runByReceiptTime:
+          type: boolean
+          description: This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
+          example: false
+          default: false
+        queryParameters:
+          maxLength: 50
+          type: array
+          description: 'Values for search template used in the search query. Learn more about the search templates here : https://help.sumologic.com/docs/search/get-started-with-search/build-search/search-templates/'
+          items:
+            $ref: '#/components/schemas/LogSearchQueryParameterSyncDefinitionBase'
+        intervalTimeType:
+          pattern: ^(messageTime|receiptTime|searchableTime)$
+          type: string
+          description: This parameter defines whether you want to run the search by messageTime, receiptTime, or searchableTime.  By default, the search will run by messageTime. If both runByReceiptTime and intervalTimeType parameters are present then  the preference will be given to the intervalTimeType.
+          example: messageTime
+          default: messageTime
+          x-pattern-message: should be either 'messageTime' or 'receiptTime' or 'searchableTime'
+      description: Definition of the saved log search with query and timerange.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    AutoCompleteDefinition:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The autocomplete parameter type.
+          example: SKIP_AUTOCOMPLETE
+        autoCompleteKey:
+          type: string
+          description: The autocomplete key to be used to fetch autocomplete values.
+          example: Ephemeral-3644138589235809747-1583470806220-parameter
+        autoCompleteValues:
+          type: array
+          description: The array of label-value pairs for autocomplete.
+          items:
+            $ref: '#/components/schemas/AutoCompleteValueSyncDefinition'
+        lookupMetaData:
+          $ref: '#/components/schemas/AutoCompleteLookupMetaData'
+    LogSearchNotificationThresholdSyncDefinition:
+      required:
+      - count
+      - operator
+      type: object
+      properties:
+        thresholdType:
+          pattern: ^(message|group)$
+          type: string
+          description: "This property is deprecated. The system will automatically infer the value of this field from the query going forward, so the user-specified value will no longer be honored.\nThreshold type. Possible values are:\n 1. `message`\n 2. `group`\n\nUse `group` as threshold type if the search query is of aggregate type. For non-aggregate queries, set it to `message`."
+        operator:
+          pattern: ^(eq|gt|ge|lt|le)$
+          type: string
+          description: "Criterion to be applied when comparing actual result count with expected count. Possible values are:\n 1. `eq`\n 2. `gt`\n 3. `ge`\n 4. `lt`\n 5. `le`"
+        count:
+          type: integer
+          description: Expected result count.
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    ScheduleNotificationSyncDefinition:
+      required:
+      - taskType
+      type: object
+      properties:
+        taskType:
+          type: string
+          description: Delivery channel for notifications.
+      discriminator:
+        propertyName: taskType
     LogSearchQueryParsingMode:
       type: object
       properties:
@@ -306,26 +523,6 @@ components:
           example: AutoParse
           default: Manual
       description: Definition of log search parsing mode
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     LogSearchScheduleSyncDefinition:
       required:
       - notification
@@ -364,203 +561,6 @@ components:
           description: 'A list of scheduled search template parameters to be used while executing the query. This is different from the queryParameters field in parent object as this field will be  used for execution as  per the schedule. The parent object field is for search itself, not part of execution.  Learn more about the search templates here :  https://help.sumologic.com/docs/search/get-started-with-search/build-search/search-templates/'
           items:
             $ref: '#/components/schemas/ScheduleSearchParameterSyncDefinition'
-    ScheduleNotificationSyncDefinition:
-      required:
-      - taskType
-      type: object
-      properties:
-        taskType:
-          type: string
-          description: Delivery channel for notifications.
-      discriminator:
-        propertyName: taskType
-    LogSearchQueryTimeRangeBaseExceptParsingMode:
-      required:
-      - queryString
-      - timeRange
-      type: object
-      properties:
-        queryString:
-          maxLength: 15000
-          type: string
-          description: Query to perform.
-          example: error {{sourceCategory}}| count by _sourceCategory
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-        runByReceiptTime:
-          type: boolean
-          description: This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
-          example: false
-          default: false
-        queryParameters:
-          maxLength: 50
-          type: array
-          description: 'Values for search template used in the search query. Learn more about the search templates here : https://help.sumologic.com/docs/search/get-started-with-search/build-search/search-templates/'
-          items:
-            $ref: '#/components/schemas/LogSearchQueryParameterSyncDefinitionBase'
-        intervalTimeType:
-          pattern: ^(messageTime|receiptTime|searchableTime)$
-          type: string
-          description: This parameter defines whether you want to run the search by messageTime, receiptTime, or searchableTime.  By default, the search will run by messageTime. If both runByReceiptTime and intervalTimeType parameters are present then  the preference will be given to the intervalTimeType.
-          example: messageTime
-          default: messageTime
-          x-pattern-message: should be either 'messageTime' or 'receiptTime' or 'searchableTime'
-      description: Definition of the saved log search with query and timerange.
-    SaveLogSearchRequest:
-      type: object
-      description: The definition of the log search to save in the content library.
-      allOf:
-      - $ref: '#/components/schemas/LogSearchDefinition'
-      - required:
-        - parentId
-        properties:
-          parentId:
-            type: string
-            description: Identifier of a folder where to save the log search.
-            example: 000000000000001A
-    PaginatedLogSearches:
-      required:
-      - logSearches
-      type: object
-      properties:
-        logSearches:
-          type: array
-          description: List of log searches.
-          items:
-            $ref: '#/components/schemas/LogSearch'
-        warnings:
-          type: array
-          description: List of warning messages for invalid log search definitions.
-          items:
-            type: string
-            example: 'Invalid saved search: <saved_search_name>. Please validate your saved search.'
-        token:
-          type: string
-          description: Next continuation token. `token` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    LogSearchQueryParameterSyncDefinitionBase:
-      required:
-      - dataType
-      - name
-      - value
-      type: object
-      properties:
-        autoComplete:
-          $ref: '#/components/schemas/AutoCompleteDefinition'
-        name:
-          maxLength: 50
-          pattern: ^[a-zA-Z0-9_]+$
-          type: string
-          description: The name of the parameter.
-          example: sourceCategory
-          x-pattern-message: Name must be between 1 and 50 Characters. Can only consist alphanumeric and underscore characters.
-        description:
-          maxLength: 256
-          pattern: ^[a-zA-Z0-9@ \-_\.]+$
-          type: string
-          description: A description of the parameter.
-          example: source category for the string
-          x-pattern-message: Description must be between 1 and 256 Characters. Can only consist alphanumeric, @, underscore and dash characters.
-        dataType:
-          pattern: ^(NUMBER|STRING|ANY|KEYWORD)$
-          type: string
-          description: "The data type of the parameter. Supported values are:\n  1. `NUMBER`\n  2. `STRING`\n  3. `ANY`\n  4. `KEYWORD`"
-          example: STRING
-        value:
-          maxLength: 256
-          type: string
-          description: A value for the parameter. Should be compatible with the type set in dataType field.
-          example: apache
-    LogSearchNotificationThresholdSyncDefinition:
-      required:
-      - count
-      - operator
-      type: object
-      properties:
-        thresholdType:
-          pattern: ^(message|group)$
-          type: string
-          description: "This property is deprecated. The system will automatically infer the value of this field from the query going forward, so the user-specified value will no longer be honored.\nThreshold type. Possible values are:\n 1. `message`\n 2. `group`\n\nUse `group` as threshold type if the search query is of aggregate type. For non-aggregate queries, set it to `message`."
-        operator:
-          pattern: ^(eq|gt|ge|lt|le)$
-          type: string
-          description: "Criterion to be applied when comparing actual result count with expected count. Possible values are:\n 1. `eq`\n 2. `gt`\n 3. `ge`\n 4. `lt`\n 5. `le`"
-        count:
-          type: integer
-          description: Expected result count.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    AutoCompleteValueSyncDefinition:
-      required:
-      - label
-      - value
-      type: object
-      properties:
-        label:
-          type: string
-          description: The label of the autocomplete value.
-        value:
-          type: string
-          description: The value of the autocomplete value.
-    LogSearchQueryTimeRangeBase:
-      description: Definition of the saved log search with query and timerange.
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
-      - $ref: '#/components/schemas/LogSearchQueryParsingMode'
-    ScheduleSearchParameterSyncDefinition:
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          maxLength: 60
-          type: string
-          description: Name of scheduled search parameter.
-        value:
-          maxLength: 300
-          type: string
-          description: Value of scheduled search parameter.
-    LogSearch:
-      allOf:
-      - $ref: '#/components/schemas/LogSearchDefinition'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        type: object
-        properties:
-          id:
-            type: string
-            description: Identifier of the saved log search.
-            example: 000000000000001A
-          parentId:
-            type: string
-            description: Identifier of the parent element in the content library, such as folder.
-            example: 0000000000007D2B
-      x-tf-generated-properties: id,parentId,name,description,schedule,queryString,timeRange,runByReceiptTime,queryParameters,parsingMode,intervalTimeType
-      x-tf-resource-name: LogSearch
   securitySchemes:
     basicAuth:
       type: http

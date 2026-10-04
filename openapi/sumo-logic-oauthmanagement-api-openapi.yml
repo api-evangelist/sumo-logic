@@ -327,85 +327,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PaginatedListOAuthConsentsResult:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: An array of OAuth consents.
-          items:
-            $ref: '#/components/schemas/OAuthConsent'
-        next:
-          type: string
-          description: Next continuation token.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-      description: List of OAuth consents.
-    OAuthClientUpdateRequest:
-      required:
-      - description
-      - disabled
-      - name
-      - scopes
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the object model.
-        name:
-          maxLength: 128
-          minLength: 0
-          type: string
-          description: Name of the OAuth client.
-          example: My OAuth Client
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: Description of the OAuth client.
-          example: OAuth client for data ingestion
-        disabled:
-          type: boolean
-          description: Whether the OAuth client is disabled. Disabled OAuth clients cannot be used to authenticate users.
-        scopes:
-          type: array
-          description: "Scopes assigned to the client.\n### Alerting\n  - adminMonitorsV2\n  - viewMonitorsV2\n  - manageMonitorsV2\n\n### Data Management\n  - manageApps\n  - viewCollectors\n  - manageCollectors\n  - viewConnections\n  - manageConnections\n  - contentAdmin\n  - viewFieldExtractionRules\n  - manageFieldExtractionRules            \n  - viewFields\n  - manageFields\n  - manageBudgets\n  - viewLibrary\n  - manageLibrary\n  - viewPartitions\n  - managePartitions \n  - manageS3DataForwarding\n  - viewScheduledViews\n  - manageScheduledViews\n  - manageTokens\n\n### Logs\n  - runLogSearch\n\n### Metrics\n  - runMetricsQuery \n\n### Reliability Management\n  - viewSlos\n  - manageSlos\n\n### Security\n  - manageAccessKeys\n  - viewPersonalAccessKeys\n  - managePersonalAccessKeys\n\n### UserManagement\n  - viewUsersAndRoles\n  - manageUsersAndRoles"
-          example:
-          - manageUsersAndRoles
-          - viewCollectors
-          items:
-            type: string
-      discriminator:
-        propertyName: type
-        mapping:
-          ClientCredentialsClient: '#/components/schemas/UpdateClientCredentialsClientRequest'
-          AuthorizationCodeClient: '#/components/schemas/UpdateAuthorizationCodeClientRequest'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     OAuthClientCreateRequest:
       required:
       - name
@@ -442,26 +363,31 @@ components:
         mapping:
           ClientCredentialsClient: '#/components/schemas/CreateClientCredentialsClientRequest'
           AuthorizationCodeClient: '#/components/schemas/CreateAuthorizationCodeClientRequest'
-    ErrorResponse:
+    ScopesList:
       required:
-      - errors
-      - id
+      - data
       type: object
       properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
+        data:
           type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
+          description: List of scopes
           items:
-            $ref: '#/components/schemas/ErrorDescription'
+            $ref: '#/components/schemas/ScopeDefinition'
+    PaginatedListOAuthConsentsResult:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: An array of OAuth consents.
+          items:
+            $ref: '#/components/schemas/OAuthConsent'
+        next:
+          type: string
+          description: Next continuation token.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+      description: List of OAuth consents.
     PaginatedListOAuthClientsResult:
       required:
       - data
@@ -477,52 +403,6 @@ components:
           description: Next continuation token.
           example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
       description: List of OAuth clients.
-    ScopeDefinition:
-      required:
-      - dependsOn
-      - group
-      - id
-      - label
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          description: The name of the scope.
-          example: managePartitions
-        label:
-          type: string
-          description: The UI label for the scope.
-          example: Manage Partitions
-        type:
-          type: string
-          description: Type of scope.
-          example: Manage
-        dependsOn:
-          type: array
-          description: Any scopes that are required for this scope to be enabled.
-          example:
-          - viewPartitions
-          items:
-            type: string
-        group:
-          required:
-          - id
-          - label
-          type: object
-          properties:
-            id:
-              type: string
-              description: The name of the scope group
-              example: dataManagement
-            label:
-              type: string
-              description: The label for the scope group
-              example: Data Management
-            parentId:
-              type: string
-              description: The ID of the parent scope group
-          description: The group that the scope belongs to.
     OAuthConsent:
       required:
       - authorizedAt
@@ -568,16 +448,46 @@ components:
           items:
             type: string
       description: An OAuth consent granted by a user.
-    ScopesList:
+    OAuthClientUpdateRequest:
       required:
-      - data
+      - description
+      - disabled
+      - name
+      - scopes
+      - type
       type: object
       properties:
-        data:
+        type:
+          type: string
+          description: Type of the object model.
+        name:
+          maxLength: 128
+          minLength: 0
+          type: string
+          description: Name of the OAuth client.
+          example: My OAuth Client
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Description of the OAuth client.
+          example: OAuth client for data ingestion
+        disabled:
+          type: boolean
+          description: Whether the OAuth client is disabled. Disabled OAuth clients cannot be used to authenticate users.
+        scopes:
           type: array
-          description: List of scopes
+          description: "Scopes assigned to the client.\n### Alerting\n  - adminMonitorsV2\n  - viewMonitorsV2\n  - manageMonitorsV2\n\n### Data Management\n  - manageApps\n  - viewCollectors\n  - manageCollectors\n  - viewConnections\n  - manageConnections\n  - contentAdmin\n  - viewFieldExtractionRules\n  - manageFieldExtractionRules            \n  - viewFields\n  - manageFields\n  - manageBudgets\n  - viewLibrary\n  - manageLibrary\n  - viewPartitions\n  - managePartitions \n  - manageS3DataForwarding\n  - viewScheduledViews\n  - manageScheduledViews\n  - manageTokens\n\n### Logs\n  - runLogSearch\n\n### Metrics\n  - runMetricsQuery \n\n### Reliability Management\n  - viewSlos\n  - manageSlos\n\n### Security\n  - manageAccessKeys\n  - viewPersonalAccessKeys\n  - managePersonalAccessKeys\n\n### UserManagement\n  - viewUsersAndRoles\n  - manageUsersAndRoles"
+          example:
+          - manageUsersAndRoles
+          - viewCollectors
           items:
-            $ref: '#/components/schemas/ScopeDefinition'
+            type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          ClientCredentialsClient: '#/components/schemas/UpdateClientCredentialsClientRequest'
+          AuthorizationCodeClient: '#/components/schemas/UpdateAuthorizationCodeClientRequest'
     OAuthClient:
       required:
       - clientId
@@ -645,6 +555,96 @@ components:
         mapping:
           ClientCredentialsClient: '#/components/schemas/ClientCredentialsClient'
           AuthorizationCodeClient: '#/components/schemas/AuthorizationCodeClient'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ScopeDefinition:
+      required:
+      - dependsOn
+      - group
+      - id
+      - label
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the scope.
+          example: managePartitions
+        label:
+          type: string
+          description: The UI label for the scope.
+          example: Manage Partitions
+        type:
+          type: string
+          description: Type of scope.
+          example: Manage
+        dependsOn:
+          type: array
+          description: Any scopes that are required for this scope to be enabled.
+          example:
+          - viewPartitions
+          items:
+            type: string
+        group:
+          required:
+          - id
+          - label
+          type: object
+          properties:
+            id:
+              type: string
+              description: The name of the scope group
+              example: dataManagement
+            label:
+              type: string
+              description: The label for the scope group
+              example: Data Management
+            parentId:
+              type: string
+              description: The ID of the parent scope group
+          description: The group that the scope belongs to.
     OAuthClientWithSecret:
       required:
       - clientId

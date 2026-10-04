@@ -290,18 +290,6 @@ components:
           type: string
           description: Optional connectionId to get incident templates for an existing CloudSOAR connection. If provided, the authHeader and url will be taken from the existing connection object.
           example: 0000000000123ABC
-    IncidentTemplate:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier of the incident template.
-        name:
-          type: string
-          description: Name of the incident template.
     ListConnectionsResponse:
       required:
       - data
@@ -315,30 +303,6 @@ components:
         next:
           type: string
           description: Next continuation token.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     ConnectionDefinition:
       required:
       - name
@@ -395,36 +359,6 @@ components:
           type: string
           description: Content of the response of resolution payload test.
           example: ok
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    GetIncidentTemplatesResponse:
-      required:
-      - templates
-      type: object
-      properties:
-        templates:
-          type: array
-          description: List of incident templates.
-          items:
-            $ref: '#/components/schemas/IncidentTemplate'
     Connection:
       required:
       - createdAt
@@ -465,6 +399,72 @@ components:
           description: Identifier of the user who last modified the resource.
       discriminator:
         propertyName: type
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    GetIncidentTemplatesResponse:
+      required:
+      - templates
+      type: object
+      properties:
+        templates:
+          type: array
+          description: List of incident templates.
+          items:
+            $ref: '#/components/schemas/IncidentTemplate'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    IncidentTemplate:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the incident template.
+        name:
+          type: string
+          description: Name of the incident template.
   securitySchemes:
     basicAuth:
       type: http

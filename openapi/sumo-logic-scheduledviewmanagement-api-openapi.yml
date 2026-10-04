@@ -265,6 +265,38 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    UpdateScheduledViewDefinition:
+      type: object
+      properties:
+        dataForwardingId:
+          type: string
+          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
+        retentionPeriod:
+          type: integer
+          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account.  Only relevant if your account has multi-retention. enabled.
+          format: int32
+          example: 365
+          default: -1
+        reduceRetentionPeriodImmediately:
+          type: boolean
+          description: This is required if the newly specified `retentionPeriod` is less than the existing retention period.  In such a situation, a value of `true` says that data between the existing retention period and the new retention period should be deleted immediately; if `false`, such data will be deleted after seven days. This property is optional and ignored if the specified `retentionPeriod` is greater than or equal to the current retention period.
+          default: false
+        timeZone:
+          type: string
+          description: Updates the time zone for ingesting data in scheduled view to the specified timezone ( does nothing if not specified ). Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+    ViewRetentionProperties:
+      type: object
+      properties:
+        newRetentionPeriod:
+          type: integer
+          description: If the retention period is scheduled to be updated in the future (i.e., if retention period is previously reduced with value of reduceRetentionPeriodImmediately as false), this property gives the future value of retention period while retentionPeriod gives the current value. retentionPeriod will take up the value of newRetentionPeriod after the scheduled time.
+          format: int32
+          example: 300
+        retentionEffectiveAt:
+          type: string
+          description: When the newRetentionPeriod will become effective in UTC format.
+          format: date-time
     ScheduledViewsQuotaUsage:
       required:
       - quota
@@ -281,19 +313,65 @@ components:
           description: Remaining number of Scheduled Views allowed.
           format: int32
           example: 121
-    ListScheduledViewsResponse:
+    FilledRange:
       required:
-      - data
+      - endTime
+      - startTime
       type: object
       properties:
-        data:
-          type: array
-          description: List of scheduled views.
-          items:
-            $ref: '#/components/schemas/ScheduledView'
-        next:
+        startTime:
           type: string
-          description: Next continuation token.
+          description: Start of the timestamp for each unit of filled ranges, expressed in UTC.
+          format: date-time
+        endTime:
+          type: string
+          description: End of the timestamp for each unit of filled ranges, expressed in UTC.
+          format: date-time
+      description: Range of timestamps already filled since the autoview has been created.
+    CreateScheduledViewDefinition:
+      required:
+      - indexName
+      - query
+      - startTime
+      type: object
+      properties:
+        query:
+          maxLength: 16384
+          minLength: 1
+          type: string
+          description: The query that defines the data to be included in the scheduled view.
+          example: _sourceCategory=*/Apache
+        indexName:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Name of the index for the scheduled view.
+          example: TestScheduledView
+        startTime:
+          type: string
+          description: Start timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+        retentionPeriod:
+          type: integer
+          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account. Only relevant if your account has multi-retention enabled.
+          format: int32
+          example: 60
+          default: -1
+        dataForwardingId:
+          type: string
+          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
+        parsingMode:
+          pattern: ^(AutoParse|Manual)$
+          type: string
+          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
+          example: AutoParse
+          default: Manual
+          x-pattern-message: should be either AutoParse or Manual
+        timeZone:
+          type: string
+          description: Time zone for ingesting data in scheduled view. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+          default: UTC
     ScheduledView:
       type: object
       allOf:
@@ -377,70 +455,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    CreateScheduledViewDefinition:
-      required:
-      - indexName
-      - query
-      - startTime
-      type: object
-      properties:
-        query:
-          maxLength: 16384
-          minLength: 1
-          type: string
-          description: The query that defines the data to be included in the scheduled view.
-          example: _sourceCategory=*/Apache
-        indexName:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: Name of the index for the scheduled view.
-          example: TestScheduledView
-        startTime:
-          type: string
-          description: Start timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-        retentionPeriod:
-          type: integer
-          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account. Only relevant if your account has multi-retention enabled.
-          format: int32
-          example: 60
-          default: -1
-        dataForwardingId:
-          type: string
-          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
-        parsingMode:
-          pattern: ^(AutoParse|Manual)$
-          type: string
-          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
-          example: AutoParse
-          default: Manual
-          x-pattern-message: should be either AutoParse or Manual
-        timeZone:
-          type: string
-          description: Time zone for ingesting data in scheduled view. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
-          default: UTC
-    UpdateScheduledViewDefinition:
-      type: object
-      properties:
-        dataForwardingId:
-          type: string
-          description: An optional ID of a data forwarding configuration to be used by the scheduled view.
-        retentionPeriod:
-          type: integer
-          description: The number of days to retain data in the scheduled view, or -1 to use the default value for your account.  Only relevant if your account has multi-retention. enabled.
-          format: int32
-          example: 365
-          default: -1
-        reduceRetentionPeriodImmediately:
-          type: boolean
-          description: This is required if the newly specified `retentionPeriod` is less than the existing retention period.  In such a situation, a value of `true` says that data between the existing retention period and the new retention period should be deleted immediately; if `false`, such data will be deleted after seven days. This property is optional and ignored if the specified `retentionPeriod` is greater than or equal to the current retention period.
-          default: false
-        timeZone:
-          type: string
-          description: Updates the time zone for ingesting data in scheduled view to the specified timezone ( does nothing if not specified ). Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
     ErrorResponse:
       required:
       - errors
@@ -461,33 +475,19 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ViewRetentionProperties:
-      type: object
-      properties:
-        newRetentionPeriod:
-          type: integer
-          description: If the retention period is scheduled to be updated in the future (i.e., if retention period is previously reduced with value of reduceRetentionPeriodImmediately as false), this property gives the future value of retention period while retentionPeriod gives the current value. retentionPeriod will take up the value of newRetentionPeriod after the scheduled time.
-          format: int32
-          example: 300
-        retentionEffectiveAt:
-          type: string
-          description: When the newRetentionPeriod will become effective in UTC format.
-          format: date-time
-    FilledRange:
+    ListScheduledViewsResponse:
       required:
-      - endTime
-      - startTime
+      - data
       type: object
       properties:
-        startTime:
+        data:
+          type: array
+          description: List of scheduled views.
+          items:
+            $ref: '#/components/schemas/ScheduledView'
+        next:
           type: string
-          description: Start of the timestamp for each unit of filled ranges, expressed in UTC.
-          format: date-time
-        endTime:
-          type: string
-          description: End of the timestamp for each unit of filled ranges, expressed in UTC.
-          format: date-time
-      description: Range of timestamps already filled since the autoview has been created.
+          description: Next continuation token.
   securitySchemes:
     basicAuth:
       type: http

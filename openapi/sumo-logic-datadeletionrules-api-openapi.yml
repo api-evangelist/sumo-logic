@@ -196,30 +196,19 @@ components:
           description: End of the timestamp for each unit of filled ranges, expressed in timeZone specified in rule.
           format: date-time
       description: Range of timestamps from which logs obtained from the query have been deleted.
-    ErrorDescription:
+    ListDeletionRulesResponse:
       required:
-      - code
-      - message
+      - deletionRulesList
       type: object
       properties:
-        code:
+        deletionRulesList:
+          type: array
+          description: List of data deletion rules.
+          items:
+            $ref: '#/components/schemas/DeletionRuleDefinition'
+        next:
           type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
+          description: Next Continuation token
     DeletionRuleDefinition:
       allOf:
       - $ref: '#/components/schemas/CreateDeletionRuleRequest'
@@ -255,6 +244,50 @@ components:
             description: List of the different units of deleted ranges since the deletion rule has been created.
             items:
               $ref: '#/components/schemas/DeletedRange'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     CreateDeletionRuleRequest:
       required:
       - endMillis
@@ -303,39 +336,6 @@ components:
           description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
           example: AutoParse
           default: Manual
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ListDeletionRulesResponse:
-      required:
-      - deletionRulesList
-      type: object
-      properties:
-        deletionRulesList:
-          type: array
-          description: List of data deletion rules.
-          items:
-            $ref: '#/components/schemas/DeletionRuleDefinition'
-        next:
-          type: string
-          description: Next Continuation token
   securitySchemes:
     basicAuth:
       type: http

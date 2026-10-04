@@ -155,93 +155,6 @@ components:
         severityLevel:
           type: string
           description: The criticality of the event. It is either `Error` or `Warning`
-    TrackerIdentity:
-      required:
-      - description
-      - error
-      - trackerId
-      type: object
-      properties:
-        trackerId:
-          type: string
-          description: Name that uniquely identifies the health event. It focuses on what happened rather than why.
-        error:
-          type: string
-          description: Description of the underlying reason for the event change.
-          example: Access denied to Amazon S3 bucket
-        description:
-          type: string
-          description: A more elaborate description of why the event occurred.
-          example: S3 collection is not working as expected because of access issues.
-      discriminator:
-        propertyName: description
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ListHealthEventResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of health events.
-          items:
-            $ref: '#/components/schemas/HealthEvent'
-        next:
-          type: string
-          description: Next continuation token.
-    ResourceIdentities:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: A list of the resources.
-          items:
-            $ref: '#/components/schemas/ResourceIdentity'
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     ResourceIdentity:
       required:
       - id
@@ -270,6 +183,93 @@ components:
           Organisation: '#/components/schemas/OrgIdentity'
           LogsToMetricsRule: '#/components/schemas/LogsToMetricsRuleIdentity'
           ScheduledView: '#/components/schemas/ScheduledViewResourceIdentity'
+    ResourceIdentities:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of the resources.
+          items:
+            $ref: '#/components/schemas/ResourceIdentity'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    ListHealthEventResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of health events.
+          items:
+            $ref: '#/components/schemas/HealthEvent'
+        next:
+          type: string
+          description: Next continuation token.
+    TrackerIdentity:
+      required:
+      - description
+      - error
+      - trackerId
+      type: object
+      properties:
+        trackerId:
+          type: string
+          description: Name that uniquely identifies the health event. It focuses on what happened rather than why.
+        error:
+          type: string
+          description: Description of the underlying reason for the event change.
+          example: Access denied to Amazon S3 bucket
+        description:
+          type: string
+          description: A more elaborate description of why the event occurred.
+          example: S3 collection is not working as expected because of access issues.
+      discriminator:
+        propertyName: description
   securitySchemes:
     basicAuth:
       type: http

@@ -276,43 +276,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    DroppedField:
-      allOf:
-      - $ref: '#/components/schemas/FieldName'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ListBuiltinFieldsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of built-in fields.
-          items:
-            $ref: '#/components/schemas/BuiltinField'
     BuiltinField:
       allOf:
       - $ref: '#/components/schemas/FieldName'
@@ -338,73 +301,9 @@ components:
             description: Indicates whether the field is enabled and its values are being accepted. Possible values are `Enabled` and `Disabled`.
             example: Enabled
             x-pattern-message: Must be `Enabled` or `Disabled`
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ListCustomFieldsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of custom fields.
-          items:
-            $ref: '#/components/schemas/CustomField'
-    FieldQuotaUsage:
-      required:
-      - quota
-      - remaining
-      type: object
-      properties:
-        quota:
-          type: integer
-          description: Maximum number of fields available.
-          format: int32
-          example: 200
-        remaining:
-          type: integer
-          description: Current number of fields available.
-          format: int32
-          example: 121
-    ListDroppedFieldsResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of dropped fields.
-          items:
-            $ref: '#/components/schemas/DroppedField'
-    FieldName:
-      required:
-      - fieldName
-      type: object
-      properties:
-        fieldName:
-          maxLength: 255
-          minLength: 1
-          type: string
-          description: Field name.
-          example: hostIP
+    DroppedField:
+      allOf:
+      - $ref: '#/components/schemas/FieldName'
     CustomField:
       allOf:
       - $ref: '#/components/schemas/FieldName'
@@ -430,6 +329,107 @@ components:
             description: Indicates whether the field is enabled and its values are being accepted. Possible values are `Enabled` and `Disabled`.
             example: Enabled
             x-pattern-message: Must be `Enabled` or `Disabled`
+    FieldQuotaUsage:
+      required:
+      - quota
+      - remaining
+      type: object
+      properties:
+        quota:
+          type: integer
+          description: Maximum number of fields available.
+          format: int32
+          example: 200
+        remaining:
+          type: integer
+          description: Current number of fields available.
+          format: int32
+          example: 121
+    ListCustomFieldsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of custom fields.
+          items:
+            $ref: '#/components/schemas/CustomField'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ListDroppedFieldsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of dropped fields.
+          items:
+            $ref: '#/components/schemas/DroppedField'
+    ListBuiltinFieldsResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of built-in fields.
+          items:
+            $ref: '#/components/schemas/BuiltinField'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    FieldName:
+      required:
+      - fieldName
+      type: object
+      properties:
+        fieldName:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: Field name.
+          example: hostIP
   securitySchemes:
     basicAuth:
       type: http

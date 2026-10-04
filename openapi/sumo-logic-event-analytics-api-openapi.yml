@@ -191,16 +191,73 @@ paths:
           description: The event extraction rule was successfully deleted.
 components:
   schemas:
-    ListEventExtractionRulesResponse:
+    FieldMapping:
       required:
-      - data
+      - valueSource
       type: object
       properties:
-        data:
-          type: array
-          description: List of event extraction rules.
-          items:
-            $ref: '#/components/schemas/EventExtractionRuleWithDetails'
+        valueSource:
+          maxLength: 256
+          type: string
+          description: The actual value or field reference for the mapping.
+          example: Knobs Changes
+        mappingType:
+          pattern: ^(HardCoded)$
+          type: string
+          description: Specifies valueSource is hardcoded.
+          example: HardCoded
+          x-pattern-message: Must be `HardCoded`
+    EventExtractionRulesQuotaUsage:
+      required:
+      - quota
+      - remaining
+      type: object
+      properties:
+        quota:
+          type: integer
+          description: Maximum number of EventExtractionRules allowed.
+          format: int32
+          example: 200
+        remaining:
+          type: integer
+          description: Remaining number of EventExtractionRules allowed.
+          format: int32
+          example: 121
+    EventExtractionRuleWithDetails:
+      type: object
+      description: Event extraction rule object.
+      allOf:
+      - $ref: '#/components/schemas/EventExtractionRule'
+      - required:
+        - id
+        type: object
+        properties:
+          id:
+            type: string
+            description: Id of the event extraction rule.
+            example: '0000000001213227'
+          createdAt:
+            type: string
+            description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+            format: date-time
+          createdBy:
+            type: string
+            description: Identifier of the user who created the resource.
+          modifiedAt:
+            type: string
+            description: Last modification timestamp in UTC.
+            format: date-time
+          modifiedBy:
+            type: string
+            description: Identifier of the user who last modified the resource.
+          enabled:
+            type: boolean
+            description: Flag indicating whether the event extraction rule is enabled or disabled.
+            example: true
+          disableReason:
+            type: string
+            description: Reason for disabling the event extraction rule, if applicable.
+            example: Event Extraction Rule output exceeded maximum allowed rate of 1000 events per hour in last 24 hours.
     ErrorDescription:
       required:
       - code
@@ -315,73 +372,16 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    EventExtractionRulesQuotaUsage:
+    ListEventExtractionRulesResponse:
       required:
-      - quota
-      - remaining
+      - data
       type: object
       properties:
-        quota:
-          type: integer
-          description: Maximum number of EventExtractionRules allowed.
-          format: int32
-          example: 200
-        remaining:
-          type: integer
-          description: Remaining number of EventExtractionRules allowed.
-          format: int32
-          example: 121
-    FieldMapping:
-      required:
-      - valueSource
-      type: object
-      properties:
-        valueSource:
-          maxLength: 256
-          type: string
-          description: The actual value or field reference for the mapping.
-          example: Knobs Changes
-        mappingType:
-          pattern: ^(HardCoded)$
-          type: string
-          description: Specifies valueSource is hardcoded.
-          example: HardCoded
-          x-pattern-message: Must be `HardCoded`
-    EventExtractionRuleWithDetails:
-      type: object
-      description: Event extraction rule object.
-      allOf:
-      - $ref: '#/components/schemas/EventExtractionRule'
-      - required:
-        - id
-        type: object
-        properties:
-          id:
-            type: string
-            description: Id of the event extraction rule.
-            example: '0000000001213227'
-          createdAt:
-            type: string
-            description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-            format: date-time
-          createdBy:
-            type: string
-            description: Identifier of the user who created the resource.
-          modifiedAt:
-            type: string
-            description: Last modification timestamp in UTC.
-            format: date-time
-          modifiedBy:
-            type: string
-            description: Identifier of the user who last modified the resource.
-          enabled:
-            type: boolean
-            description: Flag indicating whether the event extraction rule is enabled or disabled.
-            example: true
-          disableReason:
-            type: string
-            description: Reason for disabling the event extraction rule, if applicable.
-            example: Event Extraction Rule output exceeded maximum allowed rate of 1000 events per hour in last 24 hours.
+        data:
+          type: array
+          description: List of event extraction rules.
+          items:
+            $ref: '#/components/schemas/EventExtractionRuleWithDetails'
   securitySchemes:
     basicAuth:
       type: http

@@ -159,6 +159,46 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ContentPermissionResult:
+      required:
+      - explicitPermissions
+      type: object
+      properties:
+        explicitPermissions:
+          type: array
+          description: Explicitly assigned content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+        implicitPermissions:
+          type: array
+          description: Implicitly inherited content permissions.
+          items:
+            $ref: '#/components/schemas/ContentPermissionAssignment'
+    ContentPermissionAssignment:
+      required:
+      - contentId
+      - permissionName
+      - sourceId
+      - sourceType
+      type: object
+      properties:
+        permissionName:
+          pattern: ^(View|GrantView|Edit|GrantEdit|Manage|GrantManage)$
+          type: string
+          description: 'Content permission name. Valid values are: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, and `GrantManage`.'
+          x-pattern-message: 'must be one of the following: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, `GrantManage`'
+        sourceType:
+          pattern: ^(user|role|org)$
+          type: string
+          description: 'Type of source for the permission. Valid values are: `user`, `role`, and `org`.'
+          example: role
+          x-pattern-message: 'must be one of the following: `user`, `role`, `org`'
+        sourceId:
+          type: string
+          description: An identifier that belongs to the source type chosen above. For e.g. if the sourceType is set to "user", sourceId should be identifier of a user (same goes for `role` and `org` sourceType)
+        contentId:
+          type: string
+          description: Unique identifier for the content item.
     ErrorDescription:
       required:
       - code
@@ -203,46 +243,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ContentPermissionAssignment:
-      required:
-      - contentId
-      - permissionName
-      - sourceId
-      - sourceType
-      type: object
-      properties:
-        permissionName:
-          pattern: ^(View|GrantView|Edit|GrantEdit|Manage|GrantManage)$
-          type: string
-          description: 'Content permission name. Valid values are: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, and `GrantManage`.'
-          x-pattern-message: 'must be one of the following: `View`, `GrantView`, `Edit`, `GrantEdit`, `Manage`, `GrantManage`'
-        sourceType:
-          pattern: ^(user|role|org)$
-          type: string
-          description: 'Type of source for the permission. Valid values are: `user`, `role`, and `org`.'
-          example: role
-          x-pattern-message: 'must be one of the following: `user`, `role`, `org`'
-        sourceId:
-          type: string
-          description: An identifier that belongs to the source type chosen above. For e.g. if the sourceType is set to "user", sourceId should be identifier of a user (same goes for `role` and `org` sourceType)
-        contentId:
-          type: string
-          description: Unique identifier for the content item.
-    ContentPermissionResult:
-      required:
-      - explicitPermissions
-      type: object
-      properties:
-        explicitPermissions:
-          type: array
-          description: Explicitly assigned content permissions.
-          items:
-            $ref: '#/components/schemas/ContentPermissionAssignment'
-        implicitPermissions:
-          type: array
-          description: Implicitly inherited content permissions.
-          items:
-            $ref: '#/components/schemas/ContentPermissionAssignment'
     ContentPermissionUpdateRequest:
       required:
       - contentPermissionAssignments

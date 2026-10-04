@@ -196,132 +196,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    OperatorParameter:
+    MetricsSearch:
       required:
-      - key
-      - value
+      - queries
+      - timeRange
+      - title
       type: object
       properties:
-        key:
+        title:
+          maxLength: 255
+          minLength: 1
+          pattern: ^\s*\S.*$
           type: string
-          description: The key of the operator parameter.
-          example: operation
-        value:
+          description: Title of the metrics search page.
+          x-pattern-message: must contain at least 1 non-whitespace character
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+        description:
           type: string
-          description: The value of the operator parameter.
-          example: '>'
-      description: The operator parameter for operator data.
-      example:
-        key: aggregator
-        value: max
-    SpansGroupBy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          pattern: ^(time|field)$
-          type: string
-          description: The type of the group-by clause.
-          example: time
-          x-pattern-message: Must be `time` or `field`
-      discriminator:
-        propertyName: type
-        mapping:
-          time: '#/components/schemas/SpansTimeGroupBy'
-          field: '#/components/schemas/SpansFieldGroupBy'
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
-    OperatorData:
-      required:
-      - operatorName
-      - parameters
-      type: object
-      properties:
-        operatorName:
-          type: string
-          description: The name of the metrics operator.
-          example: avg
-        parameters:
+          description: Description of the metrics search page.
+        queries:
           type: array
-          description: A list of operator parameters for the operator data.
+          description: Queries of the metrics search page.
           items:
-            $ref: '#/components/schemas/OperatorParameter'
-      description: The operator data for metrics query.
-      example:
-        operatorName: avg
-        parameters:
-        - key: aggregator
-          value: max
-        - key: operation
-          value: ''
-        - key: value
-          value: 50
-    SpansFilter:
-      required:
-      - fieldName
-      - type
-      type: object
-      properties:
-        type:
-          pattern: ^(StandaloneKey|KeyValuePair)$
+            $ref: '#/components/schemas/Query'
+        visualSettings:
           type: string
-          description: The spans filter type.
-          example: StandaloneKey
-          x-pattern-message: Must be `StandaloneKey` or `KeyValuePair`.
-        fieldName:
-          type: string
-          description: The name of the filtering field.
-          example: service
-      discriminator:
-        propertyName: type
-        mapping:
-          StandaloneKey: '#/components/schemas/SpansFilterStandaloneKey'
-          KeyValuePair: '#/components/schemas/SpansFilterKeyValuePair'
-    TracesQueryData:
-      required:
-      - filters
-      type: object
-      properties:
-        filters:
-          type: array
-          description: A list of filters for the traces query.
-          items:
-            $ref: '#/components/schemas/TracesFilter'
-      description: The data format describing a basic traces query.
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
+          description: Visual settings of the metrics search page.
     MetricsQueryData:
       required:
       - filters
@@ -371,35 +272,17 @@ components:
             value: ''
           - key: value
             value: 50
-    SpansQueryData:
-      required:
-      - filters
-      - groupBy
-      - limit
-      - visualizations
-      type: object
-      properties:
-        filters:
-          type: array
-          description: A list of filters for the spans query.
-          items:
-            $ref: '#/components/schemas/SpansFilter'
-        visualizations:
-          type: array
-          description: A list of used visualization methods for the spans query.
-          items:
-            $ref: '#/components/schemas/SpansVisualization'
-        groupBy:
-          type: array
-          description: A list of group-by clauses for the spans query.
-          items:
-            $ref: '#/components/schemas/SpansGroupBy'
-        limit:
-          type: array
-          description: A list of limits that will be applied to the spans query.
-          items:
-            $ref: '#/components/schemas/SpansLimitItem'
-      description: The data format describing a basic spans query.
+    MetricsSearchRequest:
+      allOf:
+      - $ref: '#/components/schemas/MetricsSearch'
+      - type: object
+        properties:
+          folderId:
+            type: string
+            description: 'The identifier of the folder to save the metrics search in. By default it is saved in your personal folder.
+
+              '
+            example: 000000000C1C17C6
     Query:
       required:
       - queryKey
@@ -463,6 +346,48 @@ components:
           format: int32
           example: 1000
           default: 1000
+    SpansLimitItem:
+      required:
+      - direction
+      - limitValue
+      type: object
+      properties:
+        direction:
+          pattern: ^(asc|desc)$
+          type: string
+          description: Describes whether the results should be sorted in an ascending or a descending order.
+          example: asc
+          x-pattern-message: Must be `asc` or `desc`
+        limitValue:
+          type: integer
+          description: 'The number of aggregated results returned, e.g. if 10 is requested, then only the first 10 aggregated results are returned.
+
+            '
+          format: int32
+          example: 10
+      description: 'A representation of the limit operator which reduces the number of aggregate results returned:  either the top k results or bottom k results.
+
+        '
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     TracesFilter:
       required:
       - type
@@ -477,17 +402,142 @@ components:
       description: The filter for traces query.
       discriminator:
         propertyName: type
-    MetricsSearchRequest:
+    MetricsSearchResponse:
       allOf:
-      - $ref: '#/components/schemas/MetricsSearch'
+      - $ref: '#/components/schemas/MetricsSearchRequest'
       - type: object
         properties:
-          folderId:
+          id:
             type: string
-            description: 'The identifier of the folder to save the metrics search in. By default it is saved in your personal folder.
-
-              '
-            example: 000000000C1C17C6
+            description: Unique identifier for the metrics search page.
+            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
+    MetricsFilter:
+      required:
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the metrics filter.
+          example: _sourceCategory
+        value:
+          type: string
+          description: The value of the metrics filter.
+          example: kubernetes
+        negation:
+          type: boolean
+          description: Whether or not the metrics filter is negated.
+          example: false
+      description: The filter for metrics query.
+      example:
+        key: _sourceCategory
+        value: cqmerger
+        negation: false
+    SpansFilter:
+      required:
+      - fieldName
+      - type
+      type: object
+      properties:
+        type:
+          pattern: ^(StandaloneKey|KeyValuePair)$
+          type: string
+          description: The spans filter type.
+          example: StandaloneKey
+          x-pattern-message: Must be `StandaloneKey` or `KeyValuePair`.
+        fieldName:
+          type: string
+          description: The name of the filtering field.
+          example: service
+      discriminator:
+        propertyName: type
+        mapping:
+          StandaloneKey: '#/components/schemas/SpansFilterStandaloneKey'
+          KeyValuePair: '#/components/schemas/SpansFilterKeyValuePair'
+    TracesQueryData:
+      required:
+      - filters
+      type: object
+      properties:
+        filters:
+          type: array
+          description: A list of filters for the traces query.
+          items:
+            $ref: '#/components/schemas/TracesFilter'
+      description: The data format describing a basic traces query.
+    SpansGroupBy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          pattern: ^(time|field)$
+          type: string
+          description: The type of the group-by clause.
+          example: time
+          x-pattern-message: Must be `time` or `field`
+      discriminator:
+        propertyName: type
+        mapping:
+          time: '#/components/schemas/SpansTimeGroupBy'
+          field: '#/components/schemas/SpansFieldGroupBy'
+    OperatorData:
+      required:
+      - operatorName
+      - parameters
+      type: object
+      properties:
+        operatorName:
+          type: string
+          description: The name of the metrics operator.
+          example: avg
+        parameters:
+          type: array
+          description: A list of operator parameters for the operator data.
+          items:
+            $ref: '#/components/schemas/OperatorParameter'
+      description: The operator data for metrics query.
+      example:
+        operatorName: avg
+        parameters:
+        - key: aggregator
+          value: max
+        - key: operation
+          value: ''
+        - key: value
+          value: 50
+    OperatorParameter:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the operator parameter.
+          example: operation
+        value:
+          type: string
+          description: The value of the operator parameter.
+          example: '>'
+      description: The operator parameter for operator data.
+      example:
+        key: aggregator
+        value: max
+    PaginatedMetricsSearches:
+      required:
+      - metricsSearches
+      type: object
+      properties:
+        metricsSearches:
+          type: array
+          description: List of metrics search pages.
+          items:
+            $ref: '#/components/schemas/MetricsSearchResponse'
+        next:
+          type: string
+          description: Next continuation token. `token` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
     ErrorDescription:
       required:
       - code
@@ -512,6 +562,21 @@ components:
           example:
             minLength: 12
             actualLength: 5
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
     SpansVisualization:
       required:
       - name
@@ -533,100 +598,35 @@ components:
         mapping:
           count: '#/components/schemas/SpansCountVisualization'
           calculation: '#/components/schemas/SpansCalculationVisualization'
-    MetricsFilter:
+    SpansQueryData:
       required:
-      - value
+      - filters
+      - groupBy
+      - limit
+      - visualizations
       type: object
       properties:
-        key:
-          type: string
-          description: The key of the metrics filter.
-          example: _sourceCategory
-        value:
-          type: string
-          description: The value of the metrics filter.
-          example: kubernetes
-        negation:
-          type: boolean
-          description: Whether or not the metrics filter is negated.
-          example: false
-      description: The filter for metrics query.
-      example:
-        key: _sourceCategory
-        value: cqmerger
-        negation: false
-    MetricsSearch:
-      required:
-      - queries
-      - timeRange
-      - title
-      type: object
-      properties:
-        title:
-          maxLength: 255
-          minLength: 1
-          pattern: ^\s*\S.*$
-          type: string
-          description: Title of the metrics search page.
-          x-pattern-message: must contain at least 1 non-whitespace character
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-        description:
-          type: string
-          description: Description of the metrics search page.
-        queries:
+        filters:
           type: array
-          description: Queries of the metrics search page.
+          description: A list of filters for the spans query.
           items:
-            $ref: '#/components/schemas/Query'
-        visualSettings:
-          type: string
-          description: Visual settings of the metrics search page.
-    MetricsSearchResponse:
-      allOf:
-      - $ref: '#/components/schemas/MetricsSearchRequest'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the metrics search page.
-            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
-    PaginatedMetricsSearches:
-      required:
-      - metricsSearches
-      type: object
-      properties:
-        metricsSearches:
+            $ref: '#/components/schemas/SpansFilter'
+        visualizations:
           type: array
-          description: List of metrics search pages.
+          description: A list of used visualization methods for the spans query.
           items:
-            $ref: '#/components/schemas/MetricsSearchResponse'
-        next:
-          type: string
-          description: Next continuation token. `token` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    SpansLimitItem:
-      required:
-      - direction
-      - limitValue
-      type: object
-      properties:
-        direction:
-          pattern: ^(asc|desc)$
-          type: string
-          description: Describes whether the results should be sorted in an ascending or a descending order.
-          example: asc
-          x-pattern-message: Must be `asc` or `desc`
-        limitValue:
-          type: integer
-          description: 'The number of aggregated results returned, e.g. if 10 is requested, then only the first 10 aggregated results are returned.
-
-            '
-          format: int32
-          example: 10
-      description: 'A representation of the limit operator which reduces the number of aggregate results returned:  either the top k results or bottom k results.
-
-        '
+            $ref: '#/components/schemas/SpansVisualization'
+        groupBy:
+          type: array
+          description: A list of group-by clauses for the spans query.
+          items:
+            $ref: '#/components/schemas/SpansGroupBy'
+        limit:
+          type: array
+          description: A list of limits that will be applied to the spans query.
+          items:
+            $ref: '#/components/schemas/SpansLimitItem'
+      description: The data format describing a basic spans query.
   securitySchemes:
     basicAuth:
       type: http

@@ -525,110 +525,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SlosLibraryItemWithPath:
-      required:
-      - item
-      - path
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/SlosLibraryBaseResponse'
-        path:
-          type: string
-          description: Path of the slo or folder.
-          example: /Slos/SampleFolder/TestSlo
-    Path:
-      required:
-      - path
-      - pathItems
-      type: object
-      properties:
-        pathItems:
-          type: array
-          description: Elements of the path.
-          items:
-            $ref: '#/components/schemas/PathItem'
-        path:
-          type: string
-          description: String representation of the path.
-    ContentCopyParams:
-      required:
-      - parentId
-      type: object
-      properties:
-        parentId:
-          type: string
-          description: Identifier of the parent folder to copy to.
-        name:
-          type: string
-          description: Optionally provide a new name.
-        description:
-          type: string
-          description: Optionally provide a new description.
-    SlosLibraryBaseUpdate:
-      required:
-      - name
-      - type
-      - version
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the slo or folder.
-        description:
-          type: string
-          description: The description of the slo or folder.
-          default: ''
-        version:
-          type: integer
-          description: The version of the slo or folder.
-          format: int64
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    SlosLibraryBaseExport:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the slo or folder.
-        description:
-          type: string
-          description: Description of the slo or folder.
-        type:
-          type: string
-          description: Type of the object model.
-      discriminator:
-        propertyName: type
     SlosLibraryFolderResponse:
       allOf:
       - $ref: '#/components/schemas/SlosLibraryBaseResponse'
@@ -650,47 +546,32 @@ components:
             description: 'Children of the folder. NOTE: Permissions field will not be filled (empty list) for children.'
             items:
               $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    IdToSlosLibraryBaseResponseMap:
-      maxProperties: 1000
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/SlosLibraryBaseResponse'
-    SlosLibraryBase:
+    SloUsageInfo:
+      type: array
+      description: The usage info of logs and metrics SLOs.
+      items:
+        $ref: '#/components/schemas/SloUsage'
+    SlosLibraryBaseUpdate:
       required:
       - name
       - type
+      - version
       type: object
       properties:
         name:
           type: string
-          description: Name of the slo or folder.
+          description: The name of the slo or folder.
         description:
           type: string
-          description: Description of the slo or folder.
+          description: The description of the slo or folder.
           default: ''
+        version:
+          type: integer
+          description: The version of the slo or folder.
+          format: int64
         type:
           type: string
-          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
+          description: Type of the object model.
       discriminator:
         propertyName: type
     SliStatus:
@@ -721,6 +602,167 @@ components:
           description: SLI computation progress.
           format: double
       description: Status of the SLI computation. If the status is successful, also contains the SLI value and error budget remaining for the current compliance period.
+    ContentCopyParams:
+      required:
+      - parentId
+      type: object
+      properties:
+        parentId:
+          type: string
+          description: Identifier of the parent folder to copy to.
+        name:
+          type: string
+          description: Optionally provide a new name.
+        description:
+          type: string
+          description: Optionally provide a new description.
+    SlosLibraryBaseExport:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the slo or folder.
+        description:
+          type: string
+          description: Description of the slo or folder.
+        type:
+          type: string
+          description: Type of the object model.
+      discriminator:
+        propertyName: type
+    IdToSlosLibraryBaseResponseMap:
+      maxProperties: 1000
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SlosLibraryBaseResponse'
+    ListSlosLibraryItemWithPath:
+      type: array
+      description: Multi-type list of types slo or folder.
+      items:
+        $ref: '#/components/schemas/SlosLibraryItemWithPath'
+    Path:
+      required:
+      - path
+      - pathItems
+      type: object
+      properties:
+        pathItems:
+          type: array
+          description: Elements of the path.
+          items:
+            $ref: '#/components/schemas/PathItem'
+        path:
+          type: string
+          description: String representation of the path.
+    SlosLibraryBase:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the slo or folder.
+        description:
+          type: string
+          description: Description of the slo or folder.
+          default: ''
+        type:
+          type: string
+          description: "Type of the object model. Valid values:\n  1) SlosLibrarySlo\n  2) SlosLibraryFolder"
+      discriminator:
+        propertyName: type
+    SlosLibraryItemWithPath:
+      required:
+      - item
+      - path
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/SlosLibraryBaseResponse'
+        path:
+          type: string
+          description: Path of the slo or folder.
+          example: /Slos/SampleFolder/TestSlo
+    PathItem:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the path element.
+        name:
+          type: string
+          description: Name of the path element.
+        description:
+          type: string
+          description: Description of the path element.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    SloUsage:
+      properties:
+        sliType:
+          pattern: ^(Logs|Metrics|Monitors)$
+          type: string
+          description: The type of SLO usage info (Logs/Metrics/Monitor based).
+          example: Logs
+          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
+        usage:
+          type: integer
+          description: Current number of active Logs/Metrics/Monitors SLOs.
+          example: 100
+        limit:
+          type: integer
+          description: The limit of active Logs/Metrics/Monitors SLOs.
+          example: 100
+      description: The usage info of SLOs.
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     SlosLibraryBaseResponse:
       required:
       - contentType
@@ -790,48 +832,6 @@ components:
             type: string
       discriminator:
         propertyName: type
-    PathItem:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of the path element.
-        name:
-          type: string
-          description: Name of the path element.
-        description:
-          type: string
-          description: Description of the path element.
-    SloUsage:
-      properties:
-        sliType:
-          pattern: ^(Logs|Metrics|Monitors)$
-          type: string
-          description: The type of SLO usage info (Logs/Metrics/Monitor based).
-          example: Logs
-          x-pattern-message: Either `Logs` or `Metrics` or `Monitors`.
-        usage:
-          type: integer
-          description: Current number of active Logs/Metrics/Monitors SLOs.
-          example: 100
-        limit:
-          type: integer
-          description: The limit of active Logs/Metrics/Monitors SLOs.
-          example: 100
-      description: The usage info of SLOs.
-    ListSlosLibraryItemWithPath:
-      type: array
-      description: Multi-type list of types slo or folder.
-      items:
-        $ref: '#/components/schemas/SlosLibraryItemWithPath'
-    SloUsageInfo:
-      type: array
-      description: The usage info of logs and metrics SLOs.
-      items:
-        $ref: '#/components/schemas/SloUsage'
     IdToSliStatusMap:
       maxProperties: 1000
       type: object

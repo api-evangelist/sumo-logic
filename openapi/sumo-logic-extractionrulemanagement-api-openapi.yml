@@ -190,6 +190,29 @@ paths:
       x-tf-delete: deleteExtractionRule
 components:
   schemas:
+    ListExtractionRulesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of field extraction rules.
+          items:
+            $ref: '#/components/schemas/ExtractionRule'
+        next:
+          type: string
+          description: Next continuation token.
+    UpdateExtractionRuleDefinition:
+      allOf:
+      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
+      - required:
+        - enabled
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Is the field extraction rule enabled.
     BaseExtractionRuleDefinition:
       required:
       - name
@@ -214,6 +237,77 @@ components:
           type: string
           description: Describes the fields to be parsed.
           example: csv _raw extract 1 as f1
+    ExtractionRuleDefinition:
+      allOf:
+      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
+      - type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Is the field extraction rule enabled.
+            default: true
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ExtractionRule:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ExtractionRuleDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the field extraction rule.
+          fieldNames:
+            type: array
+            description: List of extracted fields from "parseExpression".
+            items:
+              type: string
+      x-tf-generated-properties: id,name,scope,parseExpression,enabled
+      x-tf-resource-name: ExtractionRule
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     MetadataModel:
       required:
       - createdAt
@@ -240,100 +334,6 @@ components:
           type: string
           description: Identifier of the user who last modified the resource.
           example: 0000000006743FE8
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ExtractionRuleDefinition:
-      allOf:
-      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
-      - type: object
-        properties:
-          enabled:
-            type: boolean
-            description: Is the field extraction rule enabled.
-            default: true
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ExtractionRule:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ExtractionRuleDefinition'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the field extraction rule.
-          fieldNames:
-            type: array
-            description: List of extracted fields from "parseExpression".
-            items:
-              type: string
-      x-tf-generated-properties: id,name,scope,parseExpression,enabled
-      x-tf-resource-name: ExtractionRule
-    ListExtractionRulesResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of field extraction rules.
-          items:
-            $ref: '#/components/schemas/ExtractionRule'
-        next:
-          type: string
-          description: Next continuation token.
-    UpdateExtractionRuleDefinition:
-      allOf:
-      - $ref: '#/components/schemas/BaseExtractionRuleDefinition'
-      - required:
-        - enabled
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            description: Is the field extraction rule enabled.
   securitySchemes:
     basicAuth:
       type: http

@@ -423,134 +423,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    AsyncJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        statusMessage:
-          type: string
-          description: Additional status message generated if the status is not `Failed`.
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      example:
-        status: Success
-        statusMessage: ''
-    Folder:
-      allOf:
-      - $ref: '#/components/schemas/Content'
-      - type: object
-        properties:
-          description:
-            maxLength: 255
-            minLength: 0
-            type: string
-            description: The description of the folder.
-            example: This is a sample folder.
-          children:
-            type: array
-            description: A list of the content items.
-            items:
-              $ref: '#/components/schemas/Content'
-    BeginAsyncJobResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    UpdateFolderRequest:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          maxLength: 128
-          minLength: 1
-          type: string
-          description: The name of the folder.
-          example: SampleFolder
-        description:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: The description of the folder.
-          example: This is a sample folder.
     Content:
       type: object
       allOf:
@@ -596,6 +468,41 @@ components:
             description: Indicates whether the content item refers to scheduled search. This field is only relevant to `Search` content type.
             example: false
             default: false
+    AsyncJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
+    ContentList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of the content items.
+          items:
+            $ref: '#/components/schemas/Content'
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
     FolderDefinition:
       required:
       - name
@@ -617,16 +524,109 @@ components:
         parentId:
           type: string
           description: The identifier of the parent folder.
-    ContentList:
+    UpdateFolderRequest:
       required:
-      - data
+      - name
       type: object
       properties:
-        data:
+        name:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: The name of the folder.
+          example: SampleFolder
+        description:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The description of the folder.
+          example: This is a sample folder.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
           type: array
-          description: A list of the content items.
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
           items:
-            $ref: '#/components/schemas/Content'
+            $ref: '#/components/schemas/ErrorDescription'
+    Folder:
+      allOf:
+      - $ref: '#/components/schemas/Content'
+      - type: object
+        properties:
+          description:
+            maxLength: 255
+            minLength: 0
+            type: string
+            description: The description of the folder.
+            example: This is a sample folder.
+          children:
+            type: array
+            description: A list of the content items.
+            items:
+              $ref: '#/components/schemas/Content'
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
   securitySchemes:
     basicAuth:
       type: http

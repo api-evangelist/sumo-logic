@@ -186,69 +186,6 @@ paths:
           description: The transformation rule was successfully deleted.
 components:
   schemas:
-    TransformationRuleRequest:
-      required:
-      - enabled
-      - ruleDefinition
-      type: object
-      properties:
-        ruleDefinition:
-          $ref: '#/components/schemas/TransformationRuleDefinition'
-        enabled:
-          type: boolean
-          description: True if the rule is enabled.
-          example: true
-      description: A request for creating or updating a transformation rule.
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
     TransformationRuleResponse:
       type: object
       description: A generic response for transformation rule.
@@ -261,26 +198,6 @@ components:
           id:
             type: string
             description: Unique identifier for the transformation rule.
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
     TransformationRulesResponse:
       required:
       - data
@@ -296,6 +213,19 @@ components:
           description: Next continuation token.
           example: aGNzTmZBN1ZZWFk9
       description: A generic response for transformation rule.
+    TransformationRuleRequest:
+      required:
+      - enabled
+      - ruleDefinition
+      type: object
+      properties:
+        ruleDefinition:
+          $ref: '#/components/schemas/TransformationRuleDefinition'
+        enabled:
+          type: boolean
+          description: True if the rule is enabled.
+          example: true
+      description: A request for creating or updating a transformation rule.
     TransformationRuleDefinition:
       required:
       - name
@@ -337,6 +267,50 @@ components:
           example: 8
           default: 400
       description: The properties that define a transformation rule.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     DimensionTransformation:
       required:
       - transformationType
@@ -348,6 +322,32 @@ components:
       description: Base class of all transformation types.
       discriminator:
         propertyName: transformationType
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
   securitySchemes:
     basicAuth:
       type: http

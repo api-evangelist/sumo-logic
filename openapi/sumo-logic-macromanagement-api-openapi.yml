@@ -184,107 +184,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Macro:
-      allOf:
-      - $ref: '#/components/schemas/MacroRequest'
-      - required:
-        - createdAt
-        - createdBy
-        - id
-        type: object
-        properties:
-          id:
-            type: string
-            description: 'Unique identifier for the macro. This id is used to get detailed information about the macro, such as name, definition, arguments and argument validations.
-
-              '
-            example: C03E086C137F38B4
-          createdAt:
-            type: string
-            description: Creation timestamp of the macro in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-            format: date-time
-            example: 2024-10-01 09:10:00+00:00
-          createdBy:
-            type: string
-            description: The identifier of the user who created the macro.
-            example: 0000000006743FDD
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    MacroRequest:
-      allOf:
-      - $ref: '#/components/schemas/BaseMacroRequest'
-      - required:
-        - name
-        type: object
-        properties:
-          name:
-            maxLength: 128
-            minLength: 1
-            type: string
-            description: Name of the macro.
-            example: MacroGeoLookup
-          macroCreationSuggestionId:
-            type: string
-            description: Identifier if the suggestion comes from an macro creation suggestion. This id is used to track macro creation suggestions, and to delete the suggestion once the macro is created.
-            example: ABC12
-    Argument:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Argument name for the macro.
-          example: ip_field
-        type:
-          pattern: ^(String|Any|Number|Keyword)$
-          type: string
-          description: The type of the macro.
-          example: String
-          default: String
-          x-pattern-message: Must be `String`, `Any`, `Number or `Keyword`.
     ArgumentValidation:
       required:
       - errorMessage
@@ -299,20 +198,6 @@ components:
           type: string
           description: Error message to be shown if the macro argument validation fails.
           example: You need to enter a field name which is a valid ip.
-    PaginatedMacros:
-      required:
-      - macros
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of macros.
-          items:
-            $ref: '#/components/schemas/Macro'
-        next:
-          type: string
-          description: Next continuation token. `token` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
     BaseMacroRequest:
       required:
       - definition
@@ -343,6 +228,121 @@ components:
           description: Validation expressions for the arguments.
           items:
             $ref: '#/components/schemas/ArgumentValidation'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    Argument:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Argument name for the macro.
+          example: ip_field
+        type:
+          pattern: ^(String|Any|Number|Keyword)$
+          type: string
+          description: The type of the macro.
+          example: String
+          default: String
+          x-pattern-message: Must be `String`, `Any`, `Number or `Keyword`.
+    Macro:
+      allOf:
+      - $ref: '#/components/schemas/MacroRequest'
+      - required:
+        - createdAt
+        - createdBy
+        - id
+        type: object
+        properties:
+          id:
+            type: string
+            description: 'Unique identifier for the macro. This id is used to get detailed information about the macro, such as name, definition, arguments and argument validations.
+
+              '
+            example: C03E086C137F38B4
+          createdAt:
+            type: string
+            description: Creation timestamp of the macro in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+            format: date-time
+            example: 2024-10-01 09:10:00+00:00
+          createdBy:
+            type: string
+            description: The identifier of the user who created the macro.
+            example: 0000000006743FDD
+    MacroRequest:
+      allOf:
+      - $ref: '#/components/schemas/BaseMacroRequest'
+      - required:
+        - name
+        type: object
+        properties:
+          name:
+            maxLength: 128
+            minLength: 1
+            type: string
+            description: Name of the macro.
+            example: MacroGeoLookup
+          macroCreationSuggestionId:
+            type: string
+            description: Identifier if the suggestion comes from an macro creation suggestion. This id is used to track macro creation suggestions, and to delete the suggestion once the macro is created.
+            example: ABC12
+    PaginatedMacros:
+      required:
+      - macros
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of macros.
+          items:
+            $ref: '#/components/schemas/Macro'
+        next:
+          type: string
+          description: Next continuation token. `token` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
   securitySchemes:
     basicAuth:
       type: http

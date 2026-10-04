@@ -61,26 +61,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ServiceMapEdge:
+    ServiceMapNode:
       required:
+      - isRemote
       - lastSeenAt
-      - source
-      - target
+      - serviceName
+      - serviceType
       type: object
       properties:
-        source:
+        serviceName:
           type: string
-          description: Name of a source service. Edge is directed from source to target.
+          description: Name of a service in a service map.
           example: service_name_1
-        target:
+        serviceColor:
           type: string
-          description: Name of a target service. Edge is directed from source to target.
-          example: service_name_2
+          description: Color hex code assigned to the service.
+          example: '#fa41c6'
         lastSeenAt:
           type: string
-          description: The last time in UTC an edge has been seen. Formatted as defined by date-time - RFC3339.
+          description: The last time in UTC a service has been seen. Formatted as defined by date-time - RFC3339.
           format: date-time
           example: 2019-11-22 09:00:00+00:00
+        isRemote:
+          type: boolean
+          description: Indicates whether node comes from inferred remote service or instrumented one.
+          example: true
+        serviceType:
+          $ref: '#/components/schemas/ServiceType'
     ServiceMapResponse:
       required:
       - edges
@@ -141,33 +148,26 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    ServiceMapNode:
+    ServiceMapEdge:
       required:
-      - isRemote
       - lastSeenAt
-      - serviceName
-      - serviceType
+      - source
+      - target
       type: object
       properties:
-        serviceName:
+        source:
           type: string
-          description: Name of a service in a service map.
+          description: Name of a source service. Edge is directed from source to target.
           example: service_name_1
-        serviceColor:
+        target:
           type: string
-          description: Color hex code assigned to the service.
-          example: '#fa41c6'
+          description: Name of a target service. Edge is directed from source to target.
+          example: service_name_2
         lastSeenAt:
           type: string
-          description: The last time in UTC a service has been seen. Formatted as defined by date-time - RFC3339.
+          description: The last time in UTC an edge has been seen. Formatted as defined by date-time - RFC3339.
           format: date-time
           example: 2019-11-22 09:00:00+00:00
-        isRemote:
-          type: boolean
-          description: Indicates whether node comes from inferred remote service or instrumented one.
-          example: true
-        serviceType:
-          $ref: '#/components/schemas/ServiceType'
     ServiceType:
       pattern: ^(Db|HTTP|MQ|Web|Mixed|Unknown|Cpp|DotNET|Erlang|Go|Java|NodeJS|Php|Python|Ruby|WebJS|Swift|MSSQL|MySQL|Oracle|Db2|PostgreSQL|Redshift|Hive|Cloudscape|HSQLDB|Progress|MaxDB|HANADB|Ingres|FirstSQL|EnterpriseDB|Cache|Adabas|Firebird|ApacheDerby|FileMaker|Informix|InstantDB|InterBase|MariaDB|Netezza|PervasivePSQL|PointBase|SQLite|Sybase|Teradata|Vertica|H2|ColdFusion|Cassandra|HBase|MongoDB|Redis|Couchbase|CouchDB|CosmosDB|DynamoDB|Neo4j|Geode|Elasticsearch|Memcached|CockroachDB|RPC|gRPC|JavaRMI|DotNETWCF|ApacheDubbo)$
       type: string

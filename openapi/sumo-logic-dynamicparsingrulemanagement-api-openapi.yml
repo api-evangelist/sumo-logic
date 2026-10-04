@@ -190,30 +190,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    DynamicRuleDefinition:
-      required:
-      - enabled
-      - name
-      - scope
-      type: object
-      properties:
-        name:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Name of the dynamic parsing rule. Use a name that makes it easy to identify the rule.
-          example: DynamicParsingRule123
-        scope:
-          maxLength: 2048
-          minLength: 1
-          type: string
-          description: Scope of the dynamic parsing rule. This could be a sourceCategory, sourceHost, or any other metadata that describes the data you want to extract from. Think of the Scope as the first portion of an ad hoc search, before the first pipe ( | ). You'll use the Scope to run a search against the rule.
-          example: _sourceHost=127.0.0.1
-        enabled:
-          type: boolean
-          description: Is the dynamic parsing rule enabled.
-          example: false
-          default: true
     ListDynamicRulesResponse:
       required:
       - data
@@ -228,6 +204,45 @@ components:
           type: string
           description: Next continuation token.
           example: 0000000001C51FF7
+    Metadata:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: dateTime
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: dateTime
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+    DynamicRule:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DynamicRuleDefinition'
+      - $ref: '#/components/schemas/Metadata'
+      - required:
+        - id
+        - isSystemRule
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the dynamic parsing rule.
+            example: 0000000001C41EE4
+          isSystemRule:
+            type: boolean
+            description: Whether the rule has been defined by the system, rather than by a user.
+            example: false
     ErrorDescription:
       required:
       - code
@@ -272,45 +287,30 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    DynamicRule:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/DynamicRuleDefinition'
-      - $ref: '#/components/schemas/Metadata'
-      - required:
-        - id
-        - isSystemRule
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the dynamic parsing rule.
-            example: 0000000001C41EE4
-          isSystemRule:
-            type: boolean
-            description: Whether the rule has been defined by the system, rather than by a user.
-            example: false
-    Metadata:
+    DynamicRuleDefinition:
       required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
+      - enabled
+      - name
+      - scope
       type: object
       properties:
-        createdAt:
+        name:
+          maxLength: 256
+          minLength: 1
           type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: dateTime
-        createdBy:
+          description: Name of the dynamic parsing rule. Use a name that makes it easy to identify the rule.
+          example: DynamicParsingRule123
+        scope:
+          maxLength: 2048
+          minLength: 1
           type: string
-          description: Identifier of the user who created the resource.
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: dateTime
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
+          description: Scope of the dynamic parsing rule. This could be a sourceCategory, sourceHost, or any other metadata that describes the data you want to extract from. Think of the Scope as the first portion of an ad hoc search, before the first pipe ( | ). You'll use the Scope to run a search against the rule.
+          example: _sourceHost=127.0.0.1
+        enabled:
+          type: boolean
+          description: Is the dynamic parsing rule enabled.
+          example: false
+          default: true
   securitySchemes:
     basicAuth:
       type: http

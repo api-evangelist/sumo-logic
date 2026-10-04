@@ -150,87 +150,6 @@ paths:
           description: The metrics search was successfully deleted.
 components:
   schemas:
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
-    MetricsSearchInstance:
-      allOf:
-      - $ref: '#/components/schemas/MetricsSearchV1'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        type: object
-        properties:
-          id:
-            type: string
-            description: Identifier of the metrics search.
-            example: 000000000000001A
-          parentId:
-            type: string
-            description: Identifier of the parent element in the content library, such as folder.
-            example: 0000000000007D2B
     MetricsSearchQuery:
       required:
       - query
@@ -246,26 +165,34 @@ components:
           description: Metrics query.
           example: my_metric | avg
       description: Definition of a metrics query.
-    ErrorResponse:
+    ResolvableTimeRange:
       required:
-      - errors
-      - id
+      - type
       type: object
       properties:
-        id:
+        type:
           type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    SaveMetricsSearchRequest:
+      type: object
+      description: The definition of the metrics search to save in the content library.
+      allOf:
+      - $ref: '#/components/schemas/MetricsSearchV1'
+      - required:
+        - parentId
+        type: object
+        properties:
+          parentId:
+            type: string
+            description: Identifier of a folder to which the metrics search should be added.
+            example: 000000000000001A
     MetricsSearchV1:
       required:
       - description
@@ -314,19 +241,92 @@ components:
             '
           example: '{ \"key\": \"value\" }'
       description: Definition of a metrics search.
-    SaveMetricsSearchRequest:
-      type: object
-      description: The definition of the metrics search to save in the content library.
+    MetricsSearchInstance:
       allOf:
       - $ref: '#/components/schemas/MetricsSearchV1'
+      - $ref: '#/components/schemas/MetadataModel'
       - required:
-        - parentId
+        - id
         type: object
         properties:
+          id:
+            type: string
+            description: Identifier of the metrics search.
+            example: 000000000000001A
           parentId:
             type: string
-            description: Identifier of a folder to which the metrics search should be added.
-            example: 000000000000001A
+            description: Identifier of the parent element in the content library, such as folder.
+            example: 0000000000007D2B
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
   securitySchemes:
     basicAuth:
       type: http

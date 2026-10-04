@@ -190,34 +190,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CidrList:
+    AllowlistingStatus:
       required:
-      - data
+      - contentEnabled
+      - loginEnabled
       type: object
       properties:
-        data:
-          maxItems: 50
-          type: array
-          description: An array of CIDR notations and/or IP addresses.
-          items:
-            $ref: '#/components/schemas/Cidr'
-      description: A list of CIDR notations and/or IP addresses.
-    Cidr:
-      required:
-      - cidr
-      type: object
-      properties:
-        cidr:
-          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))?$
-          type: string
-          description: The string representation of the CIDR notation or IP address.
-          example: 192.35.24.1
-          x-pattern-message: Invalid CIDR/IP
-        description:
-          type: string
-          description: Description of the CIDR notation or IP address.
-          example: Accountant
-      description: A CIDR notation or IP address along with its description.
+        contentEnabled:
+          type: boolean
+          description: Whether service allowlisting is enabled for Content.
+        loginEnabled:
+          type: boolean
+          description: Whether service allowlisting is enabled for Login.
+      description: The status of service allowlisting for Content and Login.
     ErrorDescription:
       required:
       - code
@@ -242,19 +227,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    AllowlistingStatus:
-      required:
-      - contentEnabled
-      - loginEnabled
-      type: object
-      properties:
-        contentEnabled:
-          type: boolean
-          description: Whether service allowlisting is enabled for Content.
-        loginEnabled:
-          type: boolean
-          description: Whether service allowlisting is enabled for Login.
-      description: The status of service allowlisting for Content and Login.
     ErrorResponse:
       required:
       - errors
@@ -275,6 +247,34 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    Cidr:
+      required:
+      - cidr
+      type: object
+      properties:
+        cidr:
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))?$
+          type: string
+          description: The string representation of the CIDR notation or IP address.
+          example: 192.35.24.1
+          x-pattern-message: Invalid CIDR/IP
+        description:
+          type: string
+          description: Description of the CIDR notation or IP address.
+          example: Accountant
+      description: A CIDR notation or IP address along with its description.
+    CidrList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          maxItems: 50
+          type: array
+          description: An array of CIDR notations and/or IP addresses.
+          items:
+            $ref: '#/components/schemas/Cidr'
+      description: A list of CIDR notations and/or IP addresses.
   securitySchemes:
     basicAuth:
       type: http

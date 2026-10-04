@@ -152,9 +152,76 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    LogSearchEstimatedUsageByMeteringTypeDefinition:
+    LogSearchEstimatedUsageDefinition:
       allOf:
-      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV3'
+      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequest'
+      - required:
+        - estimatedUsageDetails
+        type: object
+        properties:
+          estimatedUsageDetails:
+            $ref: '#/components/schemas/EstimatedUsageDetails'
+    EstimatedUsageDetails:
+      type: object
+      properties:
+        dataScannedInBytes:
+          type: integer
+          description: Amount of data scanned in bytes, to run the query.
+          format: int64
+          example: 114086541
+    EmulateSearchContext:
+      type: object
+      properties:
+        roleIds:
+          type: array
+          description: List of role IDs to emulate the search context for.
+          example:
+          - 000000000000000C
+          items:
+            type: string
+        userId:
+          type: string
+          description: User ID to emulate the search context for.
+          example: 000000000000019F
+      description: 'Contains keys like "roleIds" with a list of role IDs or "userId" as a string.
+
+        '
+    LogSearchQueryParameterSyncDefinitionBase:
+      required:
+      - dataType
+      - name
+      - value
+      type: object
+      properties:
+        autoComplete:
+          $ref: '#/components/schemas/AutoCompleteDefinition'
+        name:
+          maxLength: 50
+          pattern: ^[a-zA-Z0-9_]+$
+          type: string
+          description: The name of the parameter.
+          example: sourceCategory
+          x-pattern-message: Name must be between 1 and 50 Characters. Can only consist alphanumeric and underscore characters.
+        description:
+          maxLength: 256
+          pattern: ^[a-zA-Z0-9@ \-_\.]+$
+          type: string
+          description: A description of the parameter.
+          example: source category for the string
+          x-pattern-message: Description must be between 1 and 256 Characters. Can only consist alphanumeric, @, underscore and dash characters.
+        dataType:
+          pattern: ^(NUMBER|STRING|ANY|KEYWORD)$
+          type: string
+          description: "The data type of the parameter. Supported values are:\n  1. `NUMBER`\n  2. `STRING`\n  3. `ANY`\n  4. `KEYWORD`"
+          example: STRING
+        value:
+          maxLength: 256
+          type: string
+          description: A value for the parameter. Should be compatible with the type set in dataType field.
+          example: apache
+    LogSearchEstimatedUsageByTierDefinition:
+      allOf:
+      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV2'
       - required:
         - estimatedUsageDetails
         type: object
@@ -162,7 +229,43 @@ components:
           estimatedUsageDetails:
             type: array
             items:
-              $ref: '#/components/schemas/EstimatedUsageDetailsWithMeteringType'
+              $ref: '#/components/schemas/EstimatedUsageDetailsWithTier'
+    LogSearchQueryEstimationQueryDefinition:
+      description: Definition of the log search with query and timerange.
+      allOf:
+      - $ref: '#/components/schemas/LogSearchQueryEstimationBaseDefinition'
+      - type: object
+        properties:
+          runByReceiptTime:
+            type: boolean
+            description: This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
+            example: false
+            default: false
+    EstimatedUsageDetailsWithMeteringType:
+      type: object
+      properties:
+        meteringType:
+          type: string
+          description: 'Name of the metering type. Metering type indicates how the data scanned within a particular data tier is actually metered and billed. Supported Values are Continuous, Frequent, Infrequent, ContinuousSecurity and FlexSecurity.
+
+            '
+          example: Continuous
+        dataScannedInBytes:
+          type: integer
+          description: Amount of data scanned in bytes, to run the query.
+          format: int64
+          example: 114086541
+        tier:
+          type: string
+          description: Name of the data tier. Supported Values are Continuous, Frequent, Infrequent and Flex.
+          example: Continuous
+        scanCreditAccounted:
+          type: boolean
+          description: 'Whether particular metering type is accounted against a customer''s credit on a per scan basis.  e.g Data belonging to "Flex" and "Infrequent" metering type is accounted for credits on per scan basis. For other metering types, eg. "Continuous" it''s charged upfront during ingestion.
+
+            '
+          example: false
+      description: Estimated Usage details for the given log search query with the above timerange.
     LogSearchQueryEstimationBaseDefinition:
       required:
       - queryString
@@ -190,104 +293,6 @@ components:
           default: messageTime
           x-pattern-message: should be either 'messageTime' or 'receiptTime' or 'searchableTime'
       description: Base definition of the log search with query and timerange (without runByReceiptTime).
-    AutoCompleteDefinition:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: The autocomplete parameter type.
-          example: SKIP_AUTOCOMPLETE
-        autoCompleteKey:
-          type: string
-          description: The autocomplete key to be used to fetch autocomplete values.
-          example: Ephemeral-3644138589235809747-1583470806220-parameter
-        autoCompleteValues:
-          type: array
-          description: The array of label-value pairs for autocomplete.
-          items:
-            $ref: '#/components/schemas/AutoCompleteValueSyncDefinition'
-        lookupMetaData:
-          $ref: '#/components/schemas/AutoCompleteLookupMetaData'
-    AutoCompleteLookupMetaData:
-      type: object
-      properties:
-        fileName:
-          type: string
-          description: The lookup file name to use as a source for autocomplete values.
-          example: users.csv
-        valueColumn:
-          type: string
-          description: The column from the lookup file to use as the value.
-          example: user_id
-        labelColumn:
-          type: string
-          description: The column from the lookup file to use as the label.
-          example: user_name
-      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
-    LogSearchEstimatedUsageRequest:
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBase'
-      - required:
-        - timezone
-        type: object
-        properties:
-          timezone:
-            type: string
-            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-
-              '
-            example: America/Los_Angeles
-    LogSearchQueryParsingMode:
-      type: object
-      properties:
-        parsingMode:
-          pattern: ^(AutoParse|Manual)$
-          type: string
-          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
-          example: AutoParse
-          default: Manual
-      description: Definition of log search parsing mode
-    LogSearchEstimatedUsageByViewDefinition:
-      allOf:
-      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV3'
-      - required:
-        - estimatedUsageDetails
-        type: object
-        properties:
-          estimatedUsageDetails:
-            type: array
-            items:
-              $ref: '#/components/schemas/EstimatedUsageDetailsPerView'
-    LogSearchEstimatedUsageRequestV2:
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
-      - required:
-        - timezone
-        type: object
-        properties:
-          timezone:
-            type: string
-            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-
-              '
-            example: America/Los_Angeles
     ErrorResponse:
       required:
       - errors
@@ -308,6 +313,76 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
+    LogSearchEstimatedUsageRequestV2:
+      allOf:
+      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
+      - required:
+        - timezone
+        type: object
+        properties:
+          timezone:
+            type: string
+            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+              '
+            example: America/Los_Angeles
+    LogSearchEstimatedUsageByViewDefinition:
+      allOf:
+      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV3'
+      - required:
+        - estimatedUsageDetails
+        type: object
+        properties:
+          estimatedUsageDetails:
+            type: array
+            items:
+              $ref: '#/components/schemas/EstimatedUsageDetailsPerView'
+    LogSearchEstimatedUsageRequest:
+      allOf:
+      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBase'
+      - required:
+        - timezone
+        type: object
+        properties:
+          timezone:
+            type: string
+            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+              '
+            example: America/Los_Angeles
+    AutoCompleteLookupMetaData:
+      type: object
+      properties:
+        fileName:
+          type: string
+          description: The lookup file name to use as a source for autocomplete values.
+          example: users.csv
+        valueColumn:
+          type: string
+          description: The column from the lookup file to use as the value.
+          example: user_id
+        labelColumn:
+          type: string
+          description: The column from the lookup file to use as the label.
+          example: user_name
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    AutoCompleteValueSyncDefinition:
+      required:
+      - label
+      - value
+      type: object
+      properties:
+        label:
+          type: string
+          description: The label of the autocomplete value.
+        value:
+          type: string
+          description: The value of the autocomplete value.
+    LogSearchQueryTimeRangeBase:
+      description: Definition of the saved log search with query and timerange.
+      allOf:
+      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
+      - $ref: '#/components/schemas/LogSearchQueryParsingMode'
     LogSearchQueryTimeRangeBaseExceptParsingMode:
       required:
       - queryString
@@ -352,108 +427,6 @@ components:
           description: Amount of data scanned in bytes, to run the query.
           format: int64
           example: 114086541
-    LogSearchEstimatedUsageRequestV3:
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryEstimationQueryDefinition'
-      - required:
-        - timezone
-        type: object
-        properties:
-          timezone:
-            type: string
-            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-
-              '
-            example: America/Los_Angeles
-          emulateSearchContext:
-            $ref: '#/components/schemas/EmulateSearchContext'
-    LogSearchQueryParameterSyncDefinitionBase:
-      required:
-      - dataType
-      - name
-      - value
-      type: object
-      properties:
-        autoComplete:
-          $ref: '#/components/schemas/AutoCompleteDefinition'
-        name:
-          maxLength: 50
-          pattern: ^[a-zA-Z0-9_]+$
-          type: string
-          description: The name of the parameter.
-          example: sourceCategory
-          x-pattern-message: Name must be between 1 and 50 Characters. Can only consist alphanumeric and underscore characters.
-        description:
-          maxLength: 256
-          pattern: ^[a-zA-Z0-9@ \-_\.]+$
-          type: string
-          description: A description of the parameter.
-          example: source category for the string
-          x-pattern-message: Description must be between 1 and 256 Characters. Can only consist alphanumeric, @, underscore and dash characters.
-        dataType:
-          pattern: ^(NUMBER|STRING|ANY|KEYWORD)$
-          type: string
-          description: "The data type of the parameter. Supported values are:\n  1. `NUMBER`\n  2. `STRING`\n  3. `ANY`\n  4. `KEYWORD`"
-          example: STRING
-        value:
-          maxLength: 256
-          type: string
-          description: A value for the parameter. Should be compatible with the type set in dataType field.
-          example: apache
-    LogSearchQueryEstimationQueryDefinition:
-      description: Definition of the log search with query and timerange.
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryEstimationBaseDefinition'
-      - type: object
-        properties:
-          runByReceiptTime:
-            type: boolean
-            description: This has the value `true` if the search is to be run by receipt time and `false` if it is to be run by message time.
-            example: false
-            default: false
-    EstimatedUsageDetailsPerView:
-      required:
-      - usageDetails
-      - viewName
-      type: object
-      properties:
-        viewName:
-          type: string
-          description: Name of the view for which usage is estimated.
-        usageDetails:
-          type: array
-          description: The scanning and data retrieval usages to run the query per view.
-          items:
-            $ref: '#/components/schemas/EstimatedUsageDetailsWithMeteringType'
-    EmulateSearchContext:
-      type: object
-      properties:
-        roleIds:
-          type: array
-          description: List of role IDs to emulate the search context for.
-          example:
-          - 000000000000000C
-          items:
-            type: string
-        userId:
-          type: string
-          description: User ID to emulate the search context for.
-          example: 000000000000019F
-      description: 'Contains keys like "roleIds" with a list of role IDs or "userId" as a string.
-
-        '
-    AutoCompleteValueSyncDefinition:
-      required:
-      - label
-      - value
-      type: object
-      properties:
-        label:
-          type: string
-          description: The label of the autocomplete value.
-        value:
-          type: string
-          description: The value of the autocomplete value.
     ErrorDescription:
       required:
       - code
@@ -478,9 +451,58 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    LogSearchEstimatedUsageByTierDefinition:
+    AutoCompleteDefinition:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The autocomplete parameter type.
+          example: SKIP_AUTOCOMPLETE
+        autoCompleteKey:
+          type: string
+          description: The autocomplete key to be used to fetch autocomplete values.
+          example: Ephemeral-3644138589235809747-1583470806220-parameter
+        autoCompleteValues:
+          type: array
+          description: The array of label-value pairs for autocomplete.
+          items:
+            $ref: '#/components/schemas/AutoCompleteValueSyncDefinition'
+        lookupMetaData:
+          $ref: '#/components/schemas/AutoCompleteLookupMetaData'
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    EstimatedUsageDetailsPerView:
+      required:
+      - usageDetails
+      - viewName
+      type: object
+      properties:
+        viewName:
+          type: string
+          description: Name of the view for which usage is estimated.
+        usageDetails:
+          type: array
+          description: The scanning and data retrieval usages to run the query per view.
+          items:
+            $ref: '#/components/schemas/EstimatedUsageDetailsWithMeteringType'
+    LogSearchEstimatedUsageByMeteringTypeDefinition:
       allOf:
-      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV2'
+      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequestV3'
       - required:
         - estimatedUsageDetails
         type: object
@@ -488,54 +510,32 @@ components:
           estimatedUsageDetails:
             type: array
             items:
-              $ref: '#/components/schemas/EstimatedUsageDetailsWithTier'
-    LogSearchEstimatedUsageDefinition:
+              $ref: '#/components/schemas/EstimatedUsageDetailsWithMeteringType'
+    LogSearchEstimatedUsageRequestV3:
       allOf:
-      - $ref: '#/components/schemas/LogSearchEstimatedUsageRequest'
+      - $ref: '#/components/schemas/LogSearchQueryEstimationQueryDefinition'
       - required:
-        - estimatedUsageDetails
+        - timezone
         type: object
         properties:
-          estimatedUsageDetails:
-            $ref: '#/components/schemas/EstimatedUsageDetails'
-    LogSearchQueryTimeRangeBase:
-      description: Definition of the saved log search with query and timerange.
-      allOf:
-      - $ref: '#/components/schemas/LogSearchQueryTimeRangeBaseExceptParsingMode'
-      - $ref: '#/components/schemas/LogSearchQueryParsingMode'
-    EstimatedUsageDetails:
+          timezone:
+            type: string
+            description: 'Time zone to get the estimated usage details. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+              '
+            example: America/Los_Angeles
+          emulateSearchContext:
+            $ref: '#/components/schemas/EmulateSearchContext'
+    LogSearchQueryParsingMode:
       type: object
       properties:
-        dataScannedInBytes:
-          type: integer
-          description: Amount of data scanned in bytes, to run the query.
-          format: int64
-          example: 114086541
-    EstimatedUsageDetailsWithMeteringType:
-      type: object
-      properties:
-        meteringType:
+        parsingMode:
+          pattern: ^(AutoParse|Manual)$
           type: string
-          description: 'Name of the metering type. Metering type indicates how the data scanned within a particular data tier is actually metered and billed. Supported Values are Continuous, Frequent, Infrequent, ContinuousSecurity and FlexSecurity.
-
-            '
-          example: Continuous
-        dataScannedInBytes:
-          type: integer
-          description: Amount of data scanned in bytes, to run the query.
-          format: int64
-          example: 114086541
-        tier:
-          type: string
-          description: Name of the data tier. Supported Values are Continuous, Frequent, Infrequent and Flex.
-          example: Continuous
-        scanCreditAccounted:
-          type: boolean
-          description: 'Whether particular metering type is accounted against a customer''s credit on a per scan basis.  e.g Data belonging to "Flex" and "Infrequent" metering type is accounted for credits on per scan basis. For other metering types, eg. "Continuous" it''s charged upfront during ingestion.
-
-            '
-          example: false
-      description: Estimated Usage details for the given log search query with the above timerange.
+          description: "Define the parsing mode to scan the JSON format log messages. Possible values are:\n  1. `AutoParse`\n  2. `Manual`\nIn AutoParse mode, the system automatically figures out fields to parse based on the search query. While in the Manual mode, no fields are parsed out automatically. For more information see [Dynamic Parsing](https://help.sumologic.com/?cid=0011)."
+          example: AutoParse
+          default: Manual
+      description: Definition of log search parsing mode
   securitySchemes:
     basicAuth:
       type: http

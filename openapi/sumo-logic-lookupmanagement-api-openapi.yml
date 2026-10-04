@@ -332,6 +332,89 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    TableRow:
+      required:
+      - columnName
+      - columnValue
+      type: object
+      properties:
+        columnName:
+          type: string
+          description: Name of the column of the table.
+          example: user_id
+        columnValue:
+          type: string
+          description: Value of the specified column.
+          example: user1
+      description: Lookup table row column and column value.
+    RowDeleteDefinition:
+      required:
+      - primaryKey
+      type: object
+      properties:
+        primaryKey:
+          maxItems: 1000
+          type: array
+          description: A list of all the primary key field identifiers and their corresponding values which defines the row to delete.
+          items:
+            $ref: '#/components/schemas/TableRow'
+      description: Lookup table primary key of the row to be deleted.
+    LookupTableDefinition:
+      required:
+      - name
+      - parentFolderId
+      type: object
+      description: Definition of the lookup table.
+      allOf:
+      - $ref: '#/components/schemas/ExportableLookupTableInfo'
+      - properties:
+          name:
+            maxLength: 255
+            type: string
+            description: The name of the lookup table.
+            example: SampleLookupTable
+          parentFolderId:
+            type: string
+            description: The parent-folder-path identifier of the lookup table in the Library.
+            example: 0000000001C41EE4
+    RowUpdateDefinition:
+      required:
+      - row
+      type: object
+      properties:
+        row:
+          maxItems: 1000
+          type: array
+          description: A list of all the field identifiers and their corresponding values.
+          items:
+            $ref: '#/components/schemas/TableRow'
+      description: Lookup table data to be uploaded.
     LookupAsyncJobStatus:
       required:
       - createdAt
@@ -398,32 +481,16 @@ components:
           format: date-time
           example: 2018-10-16 09:10:00+00:00
       description: Lookup table async job status.
-    MetadataModel:
+    LookupRequestToken:
       required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
+      - id
       type: object
       properties:
-        createdAt:
+        id:
           type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
+          description: The identifier used to track the request.
+          example: 0000000001C41EF2
+      description: Allows you to track the status of an upload or export request.
     ErrorDescription:
       required:
       - code
@@ -448,49 +515,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    ExportableLookupTableInfo:
-      required:
-      - description
-      - fields
-      - primaryKeys
-      type: object
-      properties:
-        description:
-          maxLength: 1000
-          type: string
-          description: The description of the lookup table.
-          example: This is a sample lookup table description.
-        fields:
-          minItems: 1
-          type: array
-          description: The list of fields in the lookup table.
-          items:
-            $ref: '#/components/schemas/LookupTableField'
-        primaryKeys:
-          minItems: 1
-          uniqueItems: true
-          type: array
-          description: The names of the fields that make up the primary key for the lookup table. These will be a subset of the fields that the table will contain.
-          example:
-          - FieldName1
-          items:
-            type: string
-        ttl:
-          maximum: 525600
-          minimum: 0
-          type: integer
-          description: A time to live for each entry in the lookup table (in minutes). 365 days is the maximum time to live for each entry that you can specify. Setting it to 0 means that the records will not expire automatically.
-          format: int32
-          example: 100
-          default: 0
-        sizeLimitAction:
-          pattern: ^(StopIncomingMessages|DeleteOldData)$
-          type: string
-          description: The action that needs to be taken when the size limit is reached for the table. The possible values can be `StopIncomingMessages` or `DeleteOldData`. DeleteOldData will start deleting old data once size limit is reached whereas StopIncomingMessages will discard all the updates made to the lookup table once size limit is reached.
-          example: DeleteOldData
-          default: StopIncomingMessages
-          x-pattern-message: must be either `StopIncomingMessages` or `DeleteOldData`
-      description: The lookup table definition independent of its location in the Library and name.
     LookupUpdateDefinition:
       required:
       - description
@@ -536,50 +560,23 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    LookupTableDefinition:
+    LookupTableField:
       required:
-      - name
-      - parentFolderId
-      type: object
-      description: Definition of the lookup table.
-      allOf:
-      - $ref: '#/components/schemas/ExportableLookupTableInfo'
-      - properties:
-          name:
-            maxLength: 255
-            type: string
-            description: The name of the lookup table.
-            example: SampleLookupTable
-          parentFolderId:
-            type: string
-            description: The parent-folder-path identifier of the lookup table in the Library.
-            example: 0000000001C41EE4
-    warningDescription:
-      required:
-      - message
+      - fieldName
+      - fieldType
       type: object
       properties:
-        message:
+        fieldName:
           type: string
-          description: Description of the warning.
-          example: 60 rows were dropped.
-        cause:
+          description: The name of the field.
+          example: FieldName1
+        fieldType:
+          pattern: ^(boolean|int|long|double|string)$
           type: string
-          description: An optional cause of this warning.
-          example: Primary key values were duplicate.
-      description: Warning description
-    RowDeleteDefinition:
-      required:
-      - primaryKey
-      type: object
-      properties:
-        primaryKey:
-          maxItems: 1000
-          type: array
-          description: A list of all the primary key field identifiers and their corresponding values which defines the row to delete.
-          items:
-            $ref: '#/components/schemas/TableRow'
-      description: Lookup table primary key of the row to be deleted.
+          description: "The data type of the field. Supported types:\n  - `boolean`\n  - `int`\n  - `long`\n  - `double`\n  - `string`"
+          example: boolean
+          x-pattern-message: 'must be one of the following: `boolean`, `int`, `long`, `double`, `string`'
+      description: The definition of the field.
     LookupTable:
       required:
       - id
@@ -602,60 +599,63 @@ components:
             description: The current size of the lookup table in bytes
             format: int64
             example: 100
-    TableRow:
+    warningDescription:
       required:
-      - columnName
-      - columnValue
+      - message
       type: object
       properties:
-        columnName:
+        message:
           type: string
-          description: Name of the column of the table.
-          example: user_id
-        columnValue:
+          description: Description of the warning.
+          example: 60 rows were dropped.
+        cause:
           type: string
-          description: Value of the specified column.
-          example: user1
-      description: Lookup table row column and column value.
-    LookupRequestToken:
+          description: An optional cause of this warning.
+          example: Primary key values were duplicate.
+      description: Warning description
+    ExportableLookupTableInfo:
       required:
-      - id
+      - description
+      - fields
+      - primaryKeys
       type: object
       properties:
-        id:
+        description:
+          maxLength: 1000
           type: string
-          description: The identifier used to track the request.
-          example: 0000000001C41EF2
-      description: Allows you to track the status of an upload or export request.
-    LookupTableField:
-      required:
-      - fieldName
-      - fieldType
-      type: object
-      properties:
-        fieldName:
-          type: string
-          description: The name of the field.
-          example: FieldName1
-        fieldType:
-          pattern: ^(boolean|int|long|double|string)$
-          type: string
-          description: "The data type of the field. Supported types:\n  - `boolean`\n  - `int`\n  - `long`\n  - `double`\n  - `string`"
-          example: boolean
-          x-pattern-message: 'must be one of the following: `boolean`, `int`, `long`, `double`, `string`'
-      description: The definition of the field.
-    RowUpdateDefinition:
-      required:
-      - row
-      type: object
-      properties:
-        row:
-          maxItems: 1000
+          description: The description of the lookup table.
+          example: This is a sample lookup table description.
+        fields:
+          minItems: 1
           type: array
-          description: A list of all the field identifiers and their corresponding values.
+          description: The list of fields in the lookup table.
           items:
-            $ref: '#/components/schemas/TableRow'
-      description: Lookup table data to be uploaded.
+            $ref: '#/components/schemas/LookupTableField'
+        primaryKeys:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          description: The names of the fields that make up the primary key for the lookup table. These will be a subset of the fields that the table will contain.
+          example:
+          - FieldName1
+          items:
+            type: string
+        ttl:
+          maximum: 525600
+          minimum: 0
+          type: integer
+          description: A time to live for each entry in the lookup table (in minutes). 365 days is the maximum time to live for each entry that you can specify. Setting it to 0 means that the records will not expire automatically.
+          format: int32
+          example: 100
+          default: 0
+        sizeLimitAction:
+          pattern: ^(StopIncomingMessages|DeleteOldData)$
+          type: string
+          description: The action that needs to be taken when the size limit is reached for the table. The possible values can be `StopIncomingMessages` or `DeleteOldData`. DeleteOldData will start deleting old data once size limit is reached whereas StopIncomingMessages will discard all the updates made to the lookup table once size limit is reached.
+          example: DeleteOldData
+          default: StopIncomingMessages
+          x-pattern-message: must be either `StopIncomingMessages` or `DeleteOldData`
+      description: The lookup table definition independent of its location in the Library and name.
   securitySchemes:
     basicAuth:
       type: http

@@ -354,74 +354,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SpanQueryFieldDetail:
-      allOf:
-      - $ref: '#/components/schemas/TraceFieldDetail'
-      - required:
-        - inSchema
-        type: object
-        properties:
-          inSchema:
-            type: boolean
-            description: Indicates whether the field is available in the schema.
-            example: false
-    SpanQueryResultFacetsResponse:
-      required:
-      - facets
-      type: object
-      properties:
-        facets:
-          type: array
-          description: List of facets.
-          items:
-            $ref: '#/components/schemas/SpanQueryRowFacet'
-    TraceFieldDetail:
-      required:
-      - field
-      - fieldType
-      - type
-      type: object
-      properties:
-        field:
-          type: string
-          description: Filter field name.
-          example: operation
-        fieldType:
-          pattern: ^(SpanAttribute|SpanEventAttribute)$
-          type: string
-          description: 'Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`.'
-          example: SpanEventAttribute
-          default: SpanAttribute
-          x-pattern-message: 'Should be one of: `SpanAttribute`, `SpanEventAttribute`.'
-        valueListing:
-          type: boolean
-          description: Indicates whether values for this field can be listed.
-          example: false
-        description:
-          type: string
-          description: Short description of the field.
-          example: A piece of the workflow represented by a span
-        type:
-          type: string
-          description: 'The type the values of this field will have. Possible values: `DoubleTracingValue`, `IntegerTracingValue`, `StringTracingValue`, `DateTimeTracingValue`.'
-          example: StringTracingValue
-        noValuesReason:
-          $ref: '#/components/schemas/NoTraceFieldValuesReason'
-    ResolvableTimeRange:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
-      discriminator:
-        propertyName: type
     SpanQueryRowStatus:
       required:
       - count
@@ -457,6 +389,155 @@ components:
           type: boolean
           description: Indicates whether facets calculation has completed.
           example: false
+    SpanQueryAggregateDataSeries:
+      required:
+      - dataPoints
+      - name
+      - queryId
+      type: object
+      properties:
+        queryId:
+          type: string
+          description: The id of the query.
+          example: A
+        name:
+          type: string
+          description: "The meaning of 'name' depends on the series type.\n  - For results of type 'timeseries', it is the value of the x axis 'field' key.\n  - For results of type 'nontimeseries', it is the name of one of the fields that is not part of 'xAxisKeys'.\n  - For results of type 'table', it is the comma-separated string of names of all fields.\n"
+          example: max(Disk_Used)
+        dataPoints:
+          type: array
+          description: A list of data points in the series.
+          items:
+            $ref: '#/components/schemas/SpanQueryAggregatePointData'
+        aggregateInfo:
+          $ref: '#/components/schemas/SpanQueryAggregateAggregateData'
+        metaData:
+          $ref: '#/components/schemas/SpanQueryAggregateMetaData'
+        seriesType:
+          pattern: ^(TIMESERIES|NONTIMESERIES|TABLE)$
+          type: string
+          description: Type of the visual series.
+          example: TIMESERIES
+          x-pattern-message: Should be either `TIMESERIES`, `NONTIMESERIES`, `TABLE`.
+        xAxisKeys:
+          type: array
+          description: Keys that will be plotted as a point on the x axis.
+          example:
+          - _sourceCategory
+          - _sourceHost
+          items:
+            type: string
+        valueType:
+          pattern: ^(STRING|DOUBLE)$
+          type: string
+          description: Type of the values in the series.
+          example: DOUBLE
+          x-pattern-message: Should be either `STRING`, `DOUBLE`.
+    TimeRangeBoundary:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of the time range boundary. Value must be from list: - `RelativeTimeRangeBoundary`, - `EpochTimeRangeBoundary`, - `Iso8601TimeRangeBoundary`, - `LiteralTimeRangeBoundary`.'
+          example: RelativeTimeRangeBoundary
+      discriminator:
+        propertyName: type
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    SpanQueryAggregateAggregateData:
+      required:
+      - avg
+      - latest
+      - max
+      - min
+      - sum
+      type: object
+      properties:
+        max:
+          type: number
+          description: The maximum value in the series.
+          format: double
+          example: 10.0
+        min:
+          type: number
+          description: The minimum value in the series.
+          format: double
+          example: 1.2
+        avg:
+          type: number
+          description: The average value in the series.
+          format: double
+          example: 5.6
+        sum:
+          type: number
+          description: The sum of all the values in the series.
+          format: double
+          example: 123.4
+        latest:
+          type: number
+          description: The last value in the series.
+          format: double
+          example: 23.4
+        count:
+          type: number
+          description: The number of values in the series.
+          format: double
+          example: 600
+    SpanQueryRowFacet:
+      required:
+      - cardinality
+      - dataType
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the field facet.
+          example: _sourceHost
+        cardinality:
+          type: integer
+          description: The number of unique values this field occured.
+          format: int32
+          example: 3
+        dataType:
+          pattern: ^(String|Int|Long|Double|Boolean)$
+          type: string
+          description: Data type of the field.
+          example: String
+          x-pattern-message: Should be either `String`, `Int`, `Long`, `Double` or `Boolean`.
+        inSchema:
+          type: boolean
+          description: Indicates whether the field is available in the span schema.
+          example: false
+        valueFrequency:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Map of field value frequencies.
+          example:
+            _sourceHost: 34099
     SpanQuerySpanData:
       required:
       - duration
@@ -517,204 +598,6 @@ components:
           description: Metadata attached to the span.
           example:
             _sourceCategory: account-backend
-    SpanQueryAggregateMetaData:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: The value of the metadata.
-          example:
-            deployment: dev
-            cluster: frontend
-            instance: frontend-12
-          default: {}
-    SpanQueryRowResponse:
-      required:
-      - isAggregation
-      - rowId
-      type: object
-      properties:
-        rowId:
-          type: string
-          description: A unique identifier of the query.
-          example: A
-        errors:
-          type: array
-          description: List of errors which occured when executing the query
-          items:
-            $ref: '#/components/schemas/SpanQueryRowError'
-        isAggregation:
-          type: boolean
-          description: Indicates whether this query is an aggregation
-          example: true
-          default: false
-        executedQuery:
-          type: string
-          description: The executed query after rewriting
-          example: _index=_trace_spans traceId=00000000002317A9
-    SpanQueryAggregateDataSeries:
-      required:
-      - dataPoints
-      - name
-      - queryId
-      type: object
-      properties:
-        queryId:
-          type: string
-          description: The id of the query.
-          example: A
-        name:
-          type: string
-          description: "The meaning of 'name' depends on the series type.\n  - For results of type 'timeseries', it is the value of the x axis 'field' key.\n  - For results of type 'nontimeseries', it is the name of one of the fields that is not part of 'xAxisKeys'.\n  - For results of type 'table', it is the comma-separated string of names of all fields.\n"
-          example: max(Disk_Used)
-        dataPoints:
-          type: array
-          description: A list of data points in the series.
-          items:
-            $ref: '#/components/schemas/SpanQueryAggregatePointData'
-        aggregateInfo:
-          $ref: '#/components/schemas/SpanQueryAggregateAggregateData'
-        metaData:
-          $ref: '#/components/schemas/SpanQueryAggregateMetaData'
-        seriesType:
-          pattern: ^(TIMESERIES|NONTIMESERIES|TABLE)$
-          type: string
-          description: Type of the visual series.
-          example: TIMESERIES
-          x-pattern-message: Should be either `TIMESERIES`, `NONTIMESERIES`, `TABLE`.
-        xAxisKeys:
-          type: array
-          description: Keys that will be plotted as a point on the x axis.
-          example:
-          - _sourceCategory
-          - _sourceHost
-          items:
-            type: string
-        valueType:
-          pattern: ^(STRING|DOUBLE)$
-          type: string
-          description: Type of the values in the series.
-          example: DOUBLE
-          x-pattern-message: Should be either `STRING`, `DOUBLE`.
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    SpanQueryAggregatePointData:
-      required:
-      - y
-      type: object
-      properties:
-        x:
-          type: number
-          description: Value that represents a point on the x axis.
-          format: double
-          example: 1.0
-        y:
-          type: string
-          description: Value that represents a point on the y axis.
-          example: '12.3'
-        xAxisValues:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Values that represents a point on the x axis.
-          example:
-            operation: /get/accounts
-            service: accountService
-          default: {}
-    SpanQueryStatusResponse:
-      required:
-      - queryRows
-      - status
-      type: object
-      properties:
-        queryRows:
-          type: array
-          description: A list of span analytics queries.
-          items:
-            $ref: '#/components/schemas/SpanQueryRowStatus'
-        status:
-          pattern: ^(Processing|Finished|Error|Paused)$
-          type: string
-          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`'
-          example: Processing
-          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
-    SpanQueryAggregateAggregateData:
-      required:
-      - avg
-      - latest
-      - max
-      - min
-      - sum
-      type: object
-      properties:
-        max:
-          type: number
-          description: The maximum value in the series.
-          format: double
-          example: 10.0
-        min:
-          type: number
-          description: The minimum value in the series.
-          format: double
-          example: 1.2
-        avg:
-          type: number
-          description: The average value in the series.
-          format: double
-          example: 5.6
-        sum:
-          type: number
-          description: The sum of all the values in the series.
-          format: double
-          example: 123.4
-        latest:
-          type: number
-          description: The last value in the series.
-          format: double
-          example: 23.4
-        count:
-          type: number
-          description: The number of values in the series.
-          format: double
-          example: 600
-    SpanQueryResultSpansResponse:
-      required:
-      - spanPage
-      type: object
-      properties:
-        spanPage:
-          type: array
-          description: List of trace spans.
-          items:
-            $ref: '#/components/schemas/SpanQuerySpanData'
-        next:
-          type: string
-          description: Next continuation token.
-          example: Mi93V0ZqTTBzaW89
     SpanQueryRowError:
       required:
       - code
@@ -749,66 +632,102 @@ components:
           type: string
           description: A short English-language description of the reason.
           example: Autocomplete has been disabled for this field due to high cardinality.
-    SpanQueryRow:
+    BeginBoundedTimeRange:
+      allOf:
+      - $ref: '#/components/schemas/ResolvableTimeRange'
+      - required:
+        - from
+        type: object
+        properties:
+          from:
+            $ref: '#/components/schemas/TimeRangeBoundary'
+          to:
+            $ref: '#/components/schemas/TimeRangeBoundary'
+    TraceSpanStatus:
       required:
-      - queryString
-      - rowId
+      - code
       type: object
       properties:
-        queryString:
+        code:
           type: string
-          description: Query string using the log search syntax.
-        rowId:
-          pattern: ^[a-zA-Z0-9_]*$
+          description: 'Status code of the span. Possible values: `OK`, `ERROR`, `UNKNOWN`.'
+          example: OK
+        message:
           type: string
-          description: An identifier used to reference this particular row of the query request. Within a query, row ids must have distinct values.
-          example: A
-    SpanQueryRowFacet:
+          description: Optional descriptive message about the status, could be an http status code or the kind of an error, e.g. OSError.
+          example: '404'
+    SpanQueryStatusResponse:
       required:
-      - cardinality
-      - dataType
-      - name
+      - queryRows
+      - status
       type: object
       properties:
-        name:
+        queryRows:
+          type: array
+          description: A list of span analytics queries.
+          items:
+            $ref: '#/components/schemas/SpanQueryRowStatus'
+        status:
+          pattern: ^(Processing|Finished|Error|Paused)$
           type: string
-          description: Name of the field facet.
-          example: _sourceHost
-        cardinality:
-          type: integer
-          description: The number of unique values this field occured.
-          format: int32
-          example: 3
-        dataType:
-          pattern: ^(String|Int|Long|Double|Boolean)$
+          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`'
+          example: Processing
+          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
+    SpanQueryAggregateResult:
+      required:
+      - series
+      - status
+      type: object
+      properties:
+        status:
+          pattern: ^(Processing|Finished|Error|Paused)$
           type: string
-          description: Data type of the field.
-          example: String
-          x-pattern-message: Should be either `String`, `Int`, `Long`, `Double` or `Boolean`.
-        inSchema:
-          type: boolean
-          description: Indicates whether the field is available in the span schema.
-          example: false
-        valueFrequency:
+          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
+          example: Processing
+          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
+        statusMessage:
+          type: string
+          description: Descriptive message of the status
+          example: Finished successfully
+        series:
+          type: array
+          description: The series returned from a search.
+          items:
+            $ref: '#/components/schemas/SpanQueryAggregateDataSeries'
+    SpanQueryAggregatePointData:
+      required:
+      - y
+      type: object
+      properties:
+        x:
+          type: number
+          description: Value that represents a point on the x axis.
+          format: double
+          example: 1.0
+        y:
+          type: string
+          description: Value that represents a point on the y axis.
+          example: '12.3'
+        xAxisValues:
           maxProperties: 1000
           type: object
           additionalProperties:
-            type: integer
-            format: int64
-          description: Map of field value frequencies.
+            type: string
+          description: Values that represents a point on the x axis.
           example:
-            _sourceHost: 34099
-    TimeRangeBoundary:
+            operation: /get/accounts
+            service: accountService
+          default: {}
+    SpanQueryFieldsResponse:
       required:
-      - type
+      - fields
       type: object
       properties:
-        type:
-          type: string
-          description: 'Type of the time range boundary. Value must be from list: - `RelativeTimeRangeBoundary`, - `EpochTimeRangeBoundary`, - `Iso8601TimeRangeBoundary`, - `LiteralTimeRangeBoundary`.'
-          example: RelativeTimeRangeBoundary
-      discriminator:
-        propertyName: type
+        fields:
+          type: array
+          description: List of span fields.
+          items:
+            $ref: '#/components/schemas/SpanQueryFieldDetail'
     SpanQueryAggregateResponse:
       required:
       - result
@@ -816,6 +735,27 @@ components:
       properties:
         result:
           $ref: '#/components/schemas/SpanQueryAggregateResult'
+    SpanQueryResponse:
+      required:
+      - queryId
+      - queryRows
+      type: object
+      properties:
+        queryId:
+          type: string
+          description: Id of the created query
+        queryRows:
+          type: array
+          description: A list of row responses with details about individual queries.
+          items:
+            $ref: '#/components/schemas/SpanQueryRowResponse'
+        hasErrors:
+          type: boolean
+          description: Indicates whether there was an error while executing the query.
+          example: true
+          default: false
+        timeRange:
+          $ref: '#/components/schemas/BeginBoundedTimeRange'
     ErrorDescription:
       required:
       - code
@@ -840,82 +780,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    TraceSpanStatus:
-      required:
-      - code
-      type: object
-      properties:
-        code:
-          type: string
-          description: 'Status code of the span. Possible values: `OK`, `ERROR`, `UNKNOWN`.'
-          example: OK
-        message:
-          type: string
-          description: Optional descriptive message about the status, could be an http status code or the kind of an error, e.g. OSError.
-          example: '404'
-    BeginBoundedTimeRange:
-      allOf:
-      - $ref: '#/components/schemas/ResolvableTimeRange'
-      - required:
-        - from
-        type: object
-        properties:
-          from:
-            $ref: '#/components/schemas/TimeRangeBoundary'
-          to:
-            $ref: '#/components/schemas/TimeRangeBoundary'
-    SpanQueryResponse:
-      required:
-      - queryId
-      - queryRows
-      type: object
-      properties:
-        queryId:
-          type: string
-          description: Id of the created query
-        queryRows:
-          type: array
-          description: A list of row responses with details about individual queries.
-          items:
-            $ref: '#/components/schemas/SpanQueryRowResponse'
-        hasErrors:
-          type: boolean
-          description: Indicates whether there was an error while executing the query.
-          example: true
-          default: false
-        timeRange:
-          $ref: '#/components/schemas/BeginBoundedTimeRange'
-    SpanQueryFieldsResponse:
-      required:
-      - fields
-      type: object
-      properties:
-        fields:
-          type: array
-          description: List of span fields.
-          items:
-            $ref: '#/components/schemas/SpanQueryFieldDetail'
-    SpanQueryAggregateResult:
-      required:
-      - series
-      - status
-      type: object
-      properties:
-        status:
-          pattern: ^(Processing|Finished|Error|Paused)$
-          type: string
-          description: 'Status of the query. Possible values: `Processing`, `Finished`, `Error`, `Paused`.'
-          example: Processing
-          x-pattern-message: Should be either `Processing`, `Finished`, `Error`, `Paused`.
-        statusMessage:
-          type: string
-          description: Descriptive message of the status
-          example: Finished successfully
-        series:
-          type: array
-          description: The series returned from a search.
-          items:
-            $ref: '#/components/schemas/SpanQueryAggregateDataSeries'
     SpanQueryRequest:
       required:
       - queryRows
@@ -934,6 +798,30 @@ components:
           description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
           example: America/Los_Angeles
           default: UTC
+    SpanQueryRowResponse:
+      required:
+      - isAggregation
+      - rowId
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: A unique identifier of the query.
+          example: A
+        errors:
+          type: array
+          description: List of errors which occured when executing the query
+          items:
+            $ref: '#/components/schemas/SpanQueryRowError'
+        isAggregation:
+          type: boolean
+          description: Indicates whether this query is an aggregation
+          example: true
+          default: false
+        executedQuery:
+          type: string
+          description: The executed query after rewriting
+          example: _index=_trace_spans traceId=00000000002317A9
     TraceFieldValuesResponse:
       required:
       - fieldValues
@@ -954,6 +842,118 @@ components:
           type: string
           description: Next continuation token.
           example: Mi93V0ZqTTBzaW89
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    SpanQueryRow:
+      required:
+      - queryString
+      - rowId
+      type: object
+      properties:
+        queryString:
+          type: string
+          description: Query string using the log search syntax.
+        rowId:
+          pattern: ^[a-zA-Z0-9_]*$
+          type: string
+          description: An identifier used to reference this particular row of the query request. Within a query, row ids must have distinct values.
+          example: A
+    SpanQueryResultSpansResponse:
+      required:
+      - spanPage
+      type: object
+      properties:
+        spanPage:
+          type: array
+          description: List of trace spans.
+          items:
+            $ref: '#/components/schemas/SpanQuerySpanData'
+        next:
+          type: string
+          description: Next continuation token.
+          example: Mi93V0ZqTTBzaW89
+    SpanQueryFieldDetail:
+      allOf:
+      - $ref: '#/components/schemas/TraceFieldDetail'
+      - required:
+        - inSchema
+        type: object
+        properties:
+          inSchema:
+            type: boolean
+            description: Indicates whether the field is available in the schema.
+            example: false
+    SpanQueryAggregateMetaData:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: The value of the metadata.
+          example:
+            deployment: dev
+            cluster: frontend
+            instance: frontend-12
+          default: {}
+    SpanQueryResultFacetsResponse:
+      required:
+      - facets
+      type: object
+      properties:
+        facets:
+          type: array
+          description: List of facets.
+          items:
+            $ref: '#/components/schemas/SpanQueryRowFacet'
+    TraceFieldDetail:
+      required:
+      - field
+      - fieldType
+      - type
+      type: object
+      properties:
+        field:
+          type: string
+          description: Filter field name.
+          example: operation
+        fieldType:
+          pattern: ^(SpanAttribute|SpanEventAttribute)$
+          type: string
+          description: 'Indicates the kind of a field. Possible values: `SpanAttribute`, `SpanEventAttribute`.'
+          example: SpanEventAttribute
+          default: SpanAttribute
+          x-pattern-message: 'Should be one of: `SpanAttribute`, `SpanEventAttribute`.'
+        valueListing:
+          type: boolean
+          description: Indicates whether values for this field can be listed.
+          example: false
+        description:
+          type: string
+          description: Short description of the field.
+          example: A piece of the workflow represented by a span
+        type:
+          type: string
+          description: 'The type the values of this field will have. Possible values: `DoubleTracingValue`, `IntegerTracingValue`, `StringTracingValue`, `DateTimeTracingValue`.'
+          example: StringTracingValue
+        noValuesReason:
+          $ref: '#/components/schemas/NoTraceFieldValuesReason'
   securitySchemes:
     basicAuth:
       type: http

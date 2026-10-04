@@ -546,15 +546,145 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Organizations:
+    Layout:
+      required:
+      - layoutStructures
+      - layoutType
       type: object
       properties:
-        defaultOrgIds:
+        layoutType:
+          type: string
+          description: The type of panel layout on the Dashboard. For example, Grid, Tabs, or Hierarchical. Currently supports `Grid` only.
+          example: Grid
+        layoutStructures:
           type: array
-          description: The default list of organization IDs to run the dashboard by
+          description: Layout structures for the panel childen.
           items:
-            $ref: '#/components/schemas/OrgId'
-      description: The organization details to run the dashboard by
+            $ref: '#/components/schemas/LayoutStructure'
+      discriminator:
+        propertyName: layoutType
+    Action:
+      required:
+      - connectionType
+      type: object
+      properties:
+        connectionType:
+          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
+          type: string
+          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
+          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
+      description: The base class of all connection types.
+      discriminator:
+        propertyName: connectionType
+    TopologyLabelMap:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TopologyLabelValuesList'
+          description: Map from topology labels to `TopologyLabelValuesList`.
+      description: 'Map of the topology labels. Each label has a key and a list of values. If a value is `*`, it means the label will match content for all values of its key.
+
+        '
+      example:
+        data:
+          service:
+          - kube-scheduler
+          - kube-dns
+    LayoutStructure:
+      required:
+      - key
+      - structure
+      type: object
+      properties:
+        key:
+          type: string
+          description: The identifier of the panel that this structure applies to.
+          example: panelPANE-3DC454FD977E2A46
+        structure:
+          type: string
+          description: The structure of a panel.
+          example: '{\"height\":5,\"width\":9,\"x\":0,\"y\":0}'
+    VariableValuesData:
+      required:
+      - variableValues
+      type: object
+      properties:
+        variableValues:
+          type: array
+          description: Values for the variable.
+          example:
+          - myCluster
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/DashboardSearchStatus'
+        variableType:
+          pattern: ^(LogQueryVariableSourceDefinition|MetadataVariableSourceDefinition|CsvVariableSourceDefinition|FilterSourceDefinition)$
+          type: string
+          description: The type of the variable.
+          example: LogQueryVariableSourceDefinition
+          x-pattern-message: Must be `LogQueryVariableSourceDefinition`, `MetadataVariableSourceDefinition` `CsvVariableSourceDefinition` or `FilterSourceDefinition`.
+        valueType:
+          type: string
+          description: 'The type of value of the variable. Allowed values are `String`, Any`, `Numeric`, `Integer`, `Long`, `Double`, `Boolean`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
+
+            '
+          example: Any
+          default: Any
+        allowMultiSelect:
+          type: boolean
+          description: Allow multiple selections in the values dropdown.
+          example: false
+          default: false
+        variableKey:
+          type: string
+          description: The key of the variable.
+          example: _source
+        errors:
+          type: array
+          description: Generic errors returned by backend from downstream assemblies. More specific errors will be thrown in the future.
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+      description: Variable values, status, type and errors for the variable values search.
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    DashboardSearchStatus:
+      required:
+      - state
+      type: object
+      properties:
+        state:
+          type: string
+          description: Current state of the search.
+        percentCompleted:
+          maximum: 100
+          minimum: 0
+          type: integer
+          description: Percentage of search completed.
+          format: int32
     AsyncJobStatus:
       required:
       - status
@@ -571,49 +701,143 @@ components:
       example:
         status: Success
         statusMessage: ''
-    ResolvableTimeRange:
+    ReportScheduleRequest:
       required:
-      - type
+      - dashboardId
+      - emailNotification
+      - reportFormat
+      - scheduleType
+      - timeZone
       type: object
       properties:
-        type:
+        dashboardId:
           type: string
-          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
-      example:
-        type: BeginBoundedTimeRange
-        from:
-          type: RelativeTimeRangeBoundary
-          relativeTime: -15m
+          description: Identifier of dashboard the schedule will generate report for.
+          example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+        variableValues:
+          $ref: '#/components/schemas/VariablesValuesData'
+        reportFormat:
+          pattern: ^(Pdf|Png)$
+          type: string
+          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
+          example: Pdf
+          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
+        scheduleType:
+          type: string
+          description: "Run schedule of the scheduled report. Set to \"Custom\" to specify the schedule with a CRON expression. Possible schedule types are:\n  - `RealTime`\n  - `15Minutes`\n  - `1Hour`\n  - `2Hours`\n  - `4Hours`\n  - `6Hours`\n  - `8Hours`\n  - `12Hours`\n  - `1Day`\n  - `1Week`\n  - `Custom`"
+          example: 1Day
+        cronExpression:
+          type: string
+          description: Cron-like expression specifying the report's schedule. Field scheduleType must be set to "Custom", otherwise, scheduleType takes precedence over cronExpression.
+          example: 0 0/15 * * * ? *
+        timeZone:
+          maxLength: 1024
+          minLength: 1
+          type: string
+          description: Time zone identifier for time specification. Either an abbreviation such as "PST", a full name such as "America/Los_Angeles", or a custom ID such as "GMT-8:00". Note that the support of abbreviations is for JDK 1.1.x compatibility only and full names should be used.
+          example: America/Los_Angeles
+        emailNotification:
+          $ref: '#/components/schemas/Email'
+        isActive:
+          type: boolean
+          description: Is the dashboard report schedule active
+          default: true
+    Organizations:
+      type: object
+      properties:
+        defaultOrgIds:
+          type: array
+          description: The default list of organization IDs to run the dashboard by
+          items:
+            $ref: '#/components/schemas/OrgId'
+      description: The organization details to run the dashboard by
+    Panel:
+      required:
+      - key
+      - panelType
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the panel.
+          example: 2F7D449E3D511066
+        key:
+          type: string
+          description: 'Key for the panel. Used to create searches for the queries in the panel and configure the layout of the panel in the dashboard.
+
+            '
+          example: panelca6280e4a75fca45
+        title:
+          type: string
+          description: Title of the panel.
+          example: This panel shows memory usage for your kubernetes pod.
+        visualSettings:
+          type: string
+          description: Visual settings of the panel.
+          example: '{\"general\":{\"type\":\"column\"}'
+        keepVisualSettingsConsistentWithParent:
+          type: boolean
+          description: Keeps the visual settings, like series colors, consistent with the settings of the parent panel.
+          default: true
+        panelType:
+          type: string
+          description: Type of panel.
+          example: SumoSearchPanel
       discriminator:
-        propertyName: type
-    Dashboard:
+        propertyName: panelType
+    PaginatedReportSchedules:
+      required:
+      - reportSchedules
+      type: object
+      properties:
+        reportSchedules:
+          type: array
+          description: List of dashboard report schedules.
+          items:
+            $ref: '#/components/schemas/ReportSchedule'
+        next:
+          type: string
+          description: Next continuation token. `token` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    BeginAsyncJobResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier to get the status of an asynchronous job.
+          example: C03E086C137F38B4
+    OrgId:
+      maxLength: 23
+      minLength: 19
+      type: string
+      description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
+      example: us2-00000000FF42A0C3
+    ReportSchedule:
       allOf:
-      - $ref: '#/components/schemas/DashboardRequest'
+      - $ref: '#/components/schemas/ReportScheduleRequest'
       - type: object
         properties:
-          id:
-            type: string
-            description: 'Unique identifier for the dashboard. This id is used to get detailed information about the dashboard, such as panels, variables and the layout.
-
-              '
-            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
-          contentId:
-            type: string
-            description: 'Content identifier for the dashboard. This id is used to connect to the Sumo Content Library and get general metadata about the dashboard. Use this id if you want to search for dashboards in Sumo folders.
-
-              '
-            example: '1'
           scheduleId:
             type: string
-            description: 'Scheduled report identifier for the dashboard. Only most recently modified report schedule is rerun per dashboard. This id is used to manage the schedule details through the scheduled report API.
-
-              '
+            description: Identifier of the dashboard report schedule.
             example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
-          scheduleCount:
-            type: integer
-            description: Count of report schedules for the dashboard.
-            format: int32
-            example: 10
+    DashboardMigrationRequest:
+      required:
+      - contentIds
+      type: object
+      properties:
+        contentIds:
+          maxItems: 50
+          type: array
+          description: Content identifiers of the Legacy dashboards.
+          items:
+            type: string
+            description: Content identifier of the Legacy dashboard.
+            example: 00000000000001C8
     MigratedDashboardInfo:
       required:
       - id
@@ -628,134 +852,6 @@ components:
           type: string
           description: The name of the Dashboard(New)
           example: New Dashboard
-    ReportAction:
-      required:
-      - actionType
-      type: object
-      properties:
-        actionType:
-          pattern: ^DirectDownloadReportAction$
-          type: string
-          description: Type of action.
-          example: DirectDownloadReportAction
-          x-pattern-message: should be 'DirectDownloadReportAction'
-      description: The base class of all report action types. `DirectDownloadReportAction` downloads dashboard from browser. New action types may be supported in the future.
-      discriminator:
-        propertyName: actionType
-    DashboardMigrationResult:
-      required:
-      - data
-      - status
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) Content Ids. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
-
-            '
-          example:
-            '1': 64
-        richData:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/MigratedDashboardInfo'
-          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) info. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
-
-            '
-        status:
-          $ref: '#/components/schemas/DashboardMigrationStatus'
-        errors:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/ErrorDescription'
-          description: A mapping of Legacy Dashboards Content Identifiers that failed validation to the failure reason(s).
-        warnings:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/ErrorDescription'
-          description: A mapping of Legacy Dashboards Content Identifiers to warnings.
-    BeginAsyncJobResponseV2:
-      required:
-      - jobId
-      type: object
-      properties:
-        jobId:
-          type: string
-          description: Identifier of the asynchronous job. Use it to get status of the job.
-          example: C03E086C137F38B4
-    Variable:
-      required:
-      - name
-      - sourceDefinition
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the variable.
-        name:
-          maxLength: 256
-          type: string
-          description: Name of the variable. The variable name is case-insensitive.
-          example: _sourceHost
-        displayName:
-          maxLength: 256
-          type: string
-          description: 'Display name of the variable shown in the UI. If this field is empty, the name field will be used.
-
-            The display name is case-insensitive. Only numbers, and underscores are allowed in the variable name.
-
-            This field is not yet supported by the UI.
-
-            '
-          example: Source Host
-        defaultValue:
-          type: string
-          description: Default value of the variable.
-          example: default_value
-        sourceDefinition:
-          $ref: '#/components/schemas/VariableSourceDefinition'
-        allowMultiSelect:
-          type: boolean
-          description: Allow multiple selections in the values dropdown.
-          example: false
-          default: false
-        includeAllOption:
-          type: boolean
-          description: Include an "All" option at the top of the variable's values dropdown.
-          example: true
-          default: true
-        hideFromUI:
-          type: boolean
-          description: Hide the variable in the dashboard UI.
-          example: false
-          default: false
-        valueType:
-          type: string
-          description: 'The type of value of the variable. Allowed values are `String`, Any` and `Numeric`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
-
-            '
-          example: Any
-          default: Any
-    MigrationPreviewResponse:
-      required:
-      - count
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Count of dashboards to be migrated.
-          example: 5
-      description: Preview of the dashboard migration.
     DashboardRequest:
       required:
       - timeRange
@@ -832,404 +928,73 @@ components:
           default: false
         organizations:
           $ref: '#/components/schemas/Organizations'
-    VariableValuesData:
+    ReportAction:
       required:
-      - variableValues
+      - actionType
       type: object
       properties:
-        variableValues:
-          type: array
-          description: Values for the variable.
-          example:
-          - myCluster
-          items:
-            type: string
-        status:
-          $ref: '#/components/schemas/DashboardSearchStatus'
-        variableType:
-          pattern: ^(LogQueryVariableSourceDefinition|MetadataVariableSourceDefinition|CsvVariableSourceDefinition|FilterSourceDefinition)$
+        actionType:
+          pattern: ^DirectDownloadReportAction$
           type: string
-          description: The type of the variable.
-          example: LogQueryVariableSourceDefinition
-          x-pattern-message: Must be `LogQueryVariableSourceDefinition`, `MetadataVariableSourceDefinition` `CsvVariableSourceDefinition` or `FilterSourceDefinition`.
-        valueType:
+          description: Type of action.
+          example: DirectDownloadReportAction
+          x-pattern-message: should be 'DirectDownloadReportAction'
+      description: The base class of all report action types. `DirectDownloadReportAction` downloads dashboard from browser. New action types may be supported in the future.
+      discriminator:
+        propertyName: actionType
+    Variable:
+      required:
+      - name
+      - sourceDefinition
+      type: object
+      properties:
+        id:
           type: string
-          description: 'The type of value of the variable. Allowed values are `String`, Any`, `Numeric`, `Integer`, `Long`, `Double`, `Boolean`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
+          description: Unique identifier for the variable.
+        name:
+          maxLength: 256
+          type: string
+          description: Name of the variable. The variable name is case-insensitive.
+          example: _sourceHost
+        displayName:
+          maxLength: 256
+          type: string
+          description: 'Display name of the variable shown in the UI. If this field is empty, the name field will be used.
+
+            The display name is case-insensitive. Only numbers, and underscores are allowed in the variable name.
+
+            This field is not yet supported by the UI.
 
             '
-          example: Any
-          default: Any
+          example: Source Host
+        defaultValue:
+          type: string
+          description: Default value of the variable.
+          example: default_value
+        sourceDefinition:
+          $ref: '#/components/schemas/VariableSourceDefinition'
         allowMultiSelect:
           type: boolean
           description: Allow multiple selections in the values dropdown.
           example: false
           default: false
-        variableKey:
+        includeAllOption:
+          type: boolean
+          description: Include an "All" option at the top of the variable's values dropdown.
+          example: true
+          default: true
+        hideFromUI:
+          type: boolean
+          description: Hide the variable in the dashboard UI.
+          example: false
+          default: false
+        valueType:
           type: string
-          description: The key of the variable.
-          example: _source
-        errors:
-          type: array
-          description: Generic errors returned by backend from downstream assemblies. More specific errors will be thrown in the future.
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-      description: Variable values, status, type and errors for the variable values search.
-    DashboardSearchStatus:
-      required:
-      - state
-      type: object
-      properties:
-        state:
-          type: string
-          description: Current state of the search.
-        percentCompleted:
-          maximum: 100
-          minimum: 0
-          type: integer
-          description: Percentage of search completed.
-          format: int32
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    DashboardMigrationStatus:
-      required:
-      - failedCount
-      - successCount
-      - totalCount
-      type: object
-      properties:
-        successCount:
-          type: integer
-          description: A successful migration to Dashboard(New).
-          example: 3
-        failedCount:
-          type: integer
-          description: A failed migration to Dashboard(New).
-          example: 1
-        totalCount:
-          type: integer
-          description: The total number of Legacy Dashboards to migrate.
-          example: 10
-    Panel:
-      required:
-      - key
-      - panelType
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the panel.
-          example: 2F7D449E3D511066
-        key:
-          type: string
-          description: 'Key for the panel. Used to create searches for the queries in the panel and configure the layout of the panel in the dashboard.
+          description: 'The type of value of the variable. Allowed values are `String`, Any` and `Numeric`. - `String` considers as a single phrase and will wrap in double-quotes. - `Any` is all characters. - `Numeric` consists of a numeric value for variables, it will be displayed differently in the UI. - `Integer` is a variable with an `Int` value. - `Long` is a variable with a `Long` value. - `Double` is a variable with a `Double` value. - `Boolean` is a variable with a `Boolean` value.
 
             '
-          example: panelca6280e4a75fca45
-        title:
-          type: string
-          description: Title of the panel.
-          example: This panel shows memory usage for your kubernetes pod.
-        visualSettings:
-          type: string
-          description: Visual settings of the panel.
-          example: '{\"general\":{\"type\":\"column\"}'
-        keepVisualSettingsConsistentWithParent:
-          type: boolean
-          description: Keeps the visual settings, like series colors, consistent with the settings of the parent panel.
-          default: true
-        panelType:
-          type: string
-          description: Type of panel.
-          example: SumoSearchPanel
-      discriminator:
-        propertyName: panelType
-    Layout:
-      required:
-      - layoutStructures
-      - layoutType
-      type: object
-      properties:
-        layoutType:
-          type: string
-          description: The type of panel layout on the Dashboard. For example, Grid, Tabs, or Hierarchical. Currently supports `Grid` only.
-          example: Grid
-        layoutStructures:
-          type: array
-          description: Layout structures for the panel childen.
-          items:
-            $ref: '#/components/schemas/LayoutStructure'
-      discriminator:
-        propertyName: layoutType
-    OrgId:
-      maxLength: 23
-      minLength: 19
-      type: string
-      description: The unique identifier of an organization. It consists of the deployment ID and the hexadecimal account ID separated by a dash `-` character.
-      example: us2-00000000FF42A0C3
-    GenerateReportRequest:
-      required:
-      - action
-      - exportFormat
-      - template
-      - timezone
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ReportAction'
-        exportFormat:
-          pattern: ^(Pdf|Png)$
-          type: string
-          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
-          example: Pdf
-          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
-        timezone:
-          type: string
-          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
-          example: America/Los_Angeles
-        template:
-          $ref: '#/components/schemas/Template'
-    Template:
-      required:
-      - templateType
-      type: object
-      properties:
-        templateType:
-          pattern: ^(DashboardTemplate|DashboardReportModeTemplate)$
-          type: string
-          description: The type of template. `DashboardTemplate` provides a snapshot view of the exported dashboard. `DashboardReportModeTemplate` provides a printer-friendly view of the exported dashboard. New templates may be supported in the future.
-          example: DashboardTemplate
-          x-pattern-message: Must be `DashboardTemplate`, or `DashboardReportModeTemplate`
-      discriminator:
-        propertyName: templateType
-    TopologyLabelMap:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TopologyLabelValuesList'
-          description: Map from topology labels to `TopologyLabelValuesList`.
-      description: 'Map of the topology labels. Each label has a key and a list of values. If a value is `*`, it means the label will match content for all values of its key.
-
-        '
-      example:
-        data:
-          service:
-          - kube-scheduler
-          - kube-dns
-    PaginatedReportSchedules:
-      required:
-      - reportSchedules
-      type: object
-      properties:
-        reportSchedules:
-          type: array
-          description: List of dashboard report schedules.
-          items:
-            $ref: '#/components/schemas/ReportSchedule'
-        next:
-          type: string
-          description: Next continuation token. `token` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    VariablesValuesData:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Data for variable values.
-          default: {}
-        richData:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/VariableValuesData'
-          description: A rich form of data for the variable search, including variable values, status and variable type. This field is different from `data` in that it includes an object instead of list as the value in the map. The `data` field is kept for backwards compatibility, please use `richData` for all usages going forward.
-    ReportSchedule:
-      allOf:
-      - $ref: '#/components/schemas/ReportScheduleRequest'
-      - type: object
-        properties:
-          scheduleId:
-            type: string
-            description: Identifier of the dashboard report schedule.
-            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
-    TopologyLabelValuesList:
-      type: array
-      description: List of values corresponding to a key of a label.
-      example:
-      - kube-scheduler
-      items:
-        type: string
-        description: Value of the label.
-    ReportScheduleRequest:
-      required:
-      - dashboardId
-      - emailNotification
-      - reportFormat
-      - scheduleType
-      - timeZone
-      type: object
-      properties:
-        dashboardId:
-          type: string
-          description: Identifier of dashboard the schedule will generate report for.
-          example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-        variableValues:
-          $ref: '#/components/schemas/VariablesValuesData'
-        reportFormat:
-          pattern: ^(Pdf|Png)$
-          type: string
-          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
-          example: Pdf
-          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
-        scheduleType:
-          type: string
-          description: "Run schedule of the scheduled report. Set to \"Custom\" to specify the schedule with a CRON expression. Possible schedule types are:\n  - `RealTime`\n  - `15Minutes`\n  - `1Hour`\n  - `2Hours`\n  - `4Hours`\n  - `6Hours`\n  - `8Hours`\n  - `12Hours`\n  - `1Day`\n  - `1Week`\n  - `Custom`"
-          example: 1Day
-        cronExpression:
-          type: string
-          description: Cron-like expression specifying the report's schedule. Field scheduleType must be set to "Custom", otherwise, scheduleType takes precedence over cronExpression.
-          example: 0 0/15 * * * ? *
-        timeZone:
-          maxLength: 1024
-          minLength: 1
-          type: string
-          description: Time zone identifier for time specification. Either an abbreviation such as "PST", a full name such as "America/Los_Angeles", or a custom ID such as "GMT-8:00". Note that the support of abbreviations is for JDK 1.1.x compatibility only and full names should be used.
-          example: America/Los_Angeles
-        emailNotification:
-          $ref: '#/components/schemas/Email'
-        isActive:
-          type: boolean
-          description: Is the dashboard report schedule active
-          default: true
-    Action:
-      required:
-      - connectionType
-      type: object
-      properties:
-        connectionType:
-          pattern: ^(Email|AWSLambda|AzureFunctions|Datadog|HipChat|Jira|NewRelic|Opsgenie|PagerDuty|Slack|MicrosoftTeams|ServiceNow|SumoCloudSOAR|Webhook)$
-          type: string
-          description: "Connection type of the connection. Valid values:\n  1.  `Email`\n  2.  `AWSLambda`\n  3.  `AzureFunctions`\n  4.  `Datadog`\n  5.  `HipChat`\n  6.  `Jira`\n  7.  `NewRelic`\n  8.  `Opsgenie`\n  9.  `PagerDuty`\n  10. `Slack`\n  11. `MicrosoftTeams`\n  12. `ServiceNow`\n  13. `SumoCloudSOAR`\n  14. `Webhook`"
-          x-pattern-message: 'should be one of the following: ''Email'', ''AWSLambda'', ''AzureFunctions'', ''Datadog'', ''HipChat'', ''Jira'', ''NewRelic'', ''Opsgenie'', ''PagerDuty'', ''Slack'', ''MicrosoftTeams'', ''ServiceNow'', ''SumoCloudSOAR'' and ''Webhook'''
-      description: The base class of all connection types.
-      discriminator:
-        propertyName: connectionType
-    PaginatedDashboards:
-      required:
-      - dashboards
-      type: object
-      properties:
-        dashboards:
-          type: array
-          description: List of dashboards.
-          items:
-            $ref: '#/components/schemas/Dashboard'
-        next:
-          type: string
-          description: Next continuation token. `next` is set to null when no more pages are left.
-          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
-    VariableSourceDefinition:
-      required:
-      - variableSourceType
-      type: object
-      properties:
-        variableSourceType:
-          type: string
-          description: Source type of the variable values.
-          example: MetadataVariableSourceDefinition
-      discriminator:
-        propertyName: variableSourceType
-    DashboardMigrationRequest:
-      required:
-      - contentIds
-      type: object
-      properties:
-        contentIds:
-          maxItems: 50
-          type: array
-          description: Content identifiers of the Legacy dashboards.
-          items:
-            type: string
-            description: Content identifier of the Legacy dashboard.
-            example: 00000000000001C8
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    LayoutStructure:
-      required:
-      - key
-      - structure
-      type: object
-      properties:
-        key:
-          type: string
-          description: The identifier of the panel that this structure applies to.
-          example: panelPANE-3DC454FD977E2A46
-        structure:
-          type: string
-          description: The structure of a panel.
-          example: '{\"height\":5,\"width\":9,\"x\":0,\"y\":0}'
-    BeginAsyncJobResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier to get the status of an asynchronous job.
-          example: C03E086C137F38B4
+          example: Any
+          default: Any
     Email:
       allOf:
       - $ref: '#/components/schemas/Action'
@@ -1256,6 +1021,241 @@ components:
             type: string
             description: Time zone for the email content. All dates/times will be displayed in this timeZone in the email payload. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
             example: America/Los_Angeles
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    DashboardMigrationResult:
+      required:
+      - data
+      - status
+      type: object
+      properties:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) Content Ids. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
+
+            '
+          example:
+            '1': 64
+        richData:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MigratedDashboardInfo'
+          description: 'A mapping of Legacy Dashboard Content Ids to migrated Dashboard(New) info. Only successful migration are shown here, see errors field for failed migrations and the failure reason.
+
+            '
+        status:
+          $ref: '#/components/schemas/DashboardMigrationStatus'
+        errors:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ErrorDescription'
+          description: A mapping of Legacy Dashboards Content Identifiers that failed validation to the failure reason(s).
+        warnings:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ErrorDescription'
+          description: A mapping of Legacy Dashboards Content Identifiers to warnings.
+    BeginAsyncJobResponseV2:
+      required:
+      - jobId
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: Identifier of the asynchronous job. Use it to get status of the job.
+          example: C03E086C137F38B4
+    MigrationPreviewResponse:
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Count of dashboards to be migrated.
+          example: 5
+      description: Preview of the dashboard migration.
+    ResolvableTimeRange:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the time range. Value must be either `CompleteLiteralTimeRange` or `BeginBoundedTimeRange`.
+      example:
+        type: BeginBoundedTimeRange
+        from:
+          type: RelativeTimeRangeBoundary
+          relativeTime: -15m
+      discriminator:
+        propertyName: type
+    TopologyLabelValuesList:
+      type: array
+      description: List of values corresponding to a key of a label.
+      example:
+      - kube-scheduler
+      items:
+        type: string
+        description: Value of the label.
+    Template:
+      required:
+      - templateType
+      type: object
+      properties:
+        templateType:
+          pattern: ^(DashboardTemplate|DashboardReportModeTemplate)$
+          type: string
+          description: The type of template. `DashboardTemplate` provides a snapshot view of the exported dashboard. `DashboardReportModeTemplate` provides a printer-friendly view of the exported dashboard. New templates may be supported in the future.
+          example: DashboardTemplate
+          x-pattern-message: Must be `DashboardTemplate`, or `DashboardReportModeTemplate`
+      discriminator:
+        propertyName: templateType
+    PaginatedDashboards:
+      required:
+      - dashboards
+      type: object
+      properties:
+        dashboards:
+          type: array
+          description: List of dashboards.
+          items:
+            $ref: '#/components/schemas/Dashboard'
+        next:
+          type: string
+          description: Next continuation token. `next` is set to null when no more pages are left.
+          example: GDCiRv4vebF3UWFJQ1kySXBOR3Bzh69GR0RyWm9vCtc
+    GenerateReportRequest:
+      required:
+      - action
+      - exportFormat
+      - template
+      - timezone
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ReportAction'
+        exportFormat:
+          pattern: ^(Pdf|Png)$
+          type: string
+          description: File format of the report. Can be `Pdf` or `Png`. `Pdf` is portable document format. `Png` is portable graphics image format.
+          example: Pdf
+          x-pattern-message: 'should be one of the following: ''Pdf'', ''Png'''
+        timezone:
+          type: string
+          description: Time zone for the query time ranges. Follow the format in the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+          example: America/Los_Angeles
+        template:
+          $ref: '#/components/schemas/Template'
+    DashboardMigrationStatus:
+      required:
+      - failedCount
+      - successCount
+      - totalCount
+      type: object
+      properties:
+        successCount:
+          type: integer
+          description: A successful migration to Dashboard(New).
+          example: 3
+        failedCount:
+          type: integer
+          description: A failed migration to Dashboard(New).
+          example: 1
+        totalCount:
+          type: integer
+          description: The total number of Legacy Dashboards to migrate.
+          example: 10
+    Dashboard:
+      allOf:
+      - $ref: '#/components/schemas/DashboardRequest'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: 'Unique identifier for the dashboard. This id is used to get detailed information about the dashboard, such as panels, variables and the layout.
+
+              '
+            example: B23OjNs5ZCyn5VdMwOBoLo3PjgRnJSAlNTKEDAcpuDG2CIgRe9KFXMofm2H2
+          contentId:
+            type: string
+            description: 'Content identifier for the dashboard. This id is used to connect to the Sumo Content Library and get general metadata about the dashboard. Use this id if you want to search for dashboards in Sumo folders.
+
+              '
+            example: '1'
+          scheduleId:
+            type: string
+            description: 'Scheduled report identifier for the dashboard. Only most recently modified report schedule is rerun per dashboard. This id is used to manage the schedule details through the scheduled report API.
+
+              '
+            example: RdQHYPh2jxoS90DXtKfA7nAJV2rsQ9BncpfY7IkjNzQWi52ug85W7r6Rrmtd
+          scheduleCount:
+            type: integer
+            description: Count of report schedules for the dashboard.
+            format: int32
+            example: 10
+    VariablesValuesData:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Data for variable values.
+          default: {}
+        richData:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableValuesData'
+          description: A rich form of data for the variable search, including variable values, status and variable type. This field is different from `data` in that it includes an object instead of list as the value in the map. The `data` field is kept for backwards compatibility, please use `richData` for all usages going forward.
+    VariableSourceDefinition:
+      required:
+      - variableSourceType
+      type: object
+      properties:
+        variableSourceType:
+          type: string
+          description: Source type of the variable values.
+          example: MetadataVariableSourceDefinition
+      discriminator:
+        propertyName: variableSourceType
   securitySchemes:
     basicAuth:
       type: http

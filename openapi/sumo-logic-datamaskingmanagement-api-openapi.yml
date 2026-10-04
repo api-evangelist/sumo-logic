@@ -190,33 +190,32 @@ paths:
       x-tf-delete: deleteDataMaskingRule
 components:
   schemas:
-    DataMaskingRule:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/DataMaskingRuleDefinition'
-      - $ref: '#/components/schemas/MetadataModel'
-      - required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique identifier for the data masking rule.
-            example: 00000000FF42A0C3
-      x-tf-generated-properties: id,name,description,regexPattern,maskString,enabled
-      x-tf-resource-name: DataMaskingRule
-    ListDataMaskingRulesResponse:
+    MetadataModel:
       required:
-      - data
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
       type: object
       properties:
-        data:
-          type: array
-          description: List of data masking rules.
-          items:
-            $ref: '#/components/schemas/DataMaskingRule'
-        next:
+        createdAt:
           type: string
-          description: Next continuation token. Null if this is the last page.
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
     BaseDataMaskingRuleDefinition:
       required:
       - enabled
@@ -245,6 +244,33 @@ components:
           type: boolean
           description: Whether the data masking rule is active. Only enabled rules are applied to search results. Set to false to temporarily disable a rule without deleting it.
           default: true
+    DataMaskingRule:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DataMaskingRuleDefinition'
+      - $ref: '#/components/schemas/MetadataModel'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the data masking rule.
+            example: 00000000FF42A0C3
+      x-tf-generated-properties: id,name,description,regexPattern,maskString,enabled
+      x-tf-resource-name: DataMaskingRule
+    ListDataMaskingRulesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of data masking rules.
+          items:
+            $ref: '#/components/schemas/DataMaskingRule'
+        next:
+          type: string
+          description: Next continuation token. Null if this is the last page.
     ErrorDescription:
       required:
       - code
@@ -269,32 +295,6 @@ components:
           example:
             minLength: 12
             actualLength: 5
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
     ErrorResponse:
       required:
       - errors

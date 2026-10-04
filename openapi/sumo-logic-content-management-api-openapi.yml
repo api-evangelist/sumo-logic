@@ -535,181 +535,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PathSegment:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier of the path segment.
-          example: 0000000013D98A2A
-        name:
-          type: string
-          description: The name of the path segment.
-          example: Test Folder
-        description:
-          type: string
-          description: An optional description of the path segment.
-          example: This is a test folder
-      description: A segment of a path.
-    MetadataModel:
-      required:
-      - createdAt
-      - createdBy
-      - modifiedAt
-      - modifiedBy
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        createdBy:
-          type: string
-          description: Identifier of the user who created the resource.
-          example: 0000000006743FDD
-        modifiedAt:
-          type: string
-          description: Last modification timestamp in UTC.
-          format: date-time
-          example: 2018-10-16 09:10:00+00:00
-        modifiedBy:
-          type: string
-          description: Identifier of the user who last modified the resource.
-          example: 0000000006743FE8
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    AsyncJobStatus:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        statusMessage:
-          type: string
-          description: Additional status message generated if the status is not `Failed`.
-        error:
-          $ref: '#/components/schemas/ErrorDescription'
-      example:
-        status: Success
-        statusMessage: ''
-    ImportResult:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
-        summary:
-          type: object
-          properties:
-            totalItems:
-              type: integer
-              description: Total content items attempted in the import.
-              example: 15
-            successCount:
-              type: integer
-              description: Number of content items successfully imported.
-              example: 12
-            failureCount:
-              type: integer
-              description: Number of content items that failed to import.
-              example: 3
-          description: Summary about the import job indicating total, success and failure count.
-        failures:
-          type: array
-          description: Detailed listing of failed import items.
-          items:
-            $ref: '#/components/schemas/ImportErrorResultItem'
-    ContentSyncDefinition:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: "The content item type.\n**Note:**\n - `MewboardSyncDefinition` _is depreciated, and will soon be removed. Please use_ `DashboardV2SyncDefinition`\n   _instead_.\n - Dashboard links are not supported for dashboards."
-        name:
-          type: string
-          description: The name of the item.
-      discriminator:
-        propertyName: type
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    ContentPath:
-      required:
-      - path
-      type: object
-      properties:
-        path:
-          type: string
-          description: Path of the content item.
-          example: /Library/Users/user@test.com/SampleFolder
-        pathItems:
-          type: array
-          description: The items in the path of the content.
-          items:
-            $ref: '#/components/schemas/PathSegment'
-    ImportErrorResultItem:
-      type: object
-      properties:
-        path:
-          type: string
-          description: Full folder path to the failed item.
-          example: /Marketing/Website Analytics/Daily Traffic Report
-        type:
-          type: string
-          description: The type of the content item (e.g., Folder, Search, Dashboard).
-          example: Dashboard
-        error:
-          type: string
-          description: Reason why the item failed to import.
-          example: Invalid JSON format in widget configuration.
     Content:
       type: object
       allOf:
@@ -755,6 +580,36 @@ components:
             description: Indicates whether the content item refers to scheduled search. This field is only relevant to `Search` content type.
             example: false
             default: false
+    AsyncJobStatus:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        statusMessage:
+          type: string
+          description: Additional status message generated if the status is not `Failed`.
+        error:
+          $ref: '#/components/schemas/ErrorDescription'
+      example:
+        status: Success
+        statusMessage: ''
+    ContentSyncDefinition:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: "The content item type.\n**Note:**\n - `MewboardSyncDefinition` _is depreciated, and will soon be removed. Please use_ `DashboardV2SyncDefinition`\n   _instead_.\n - Dashboard links are not supported for dashboards."
+        name:
+          type: string
+          description: The name of the item.
+      discriminator:
+        propertyName: type
     BeginAsyncJobResponse:
       required:
       - id
@@ -764,6 +619,151 @@ components:
           type: string
           description: Identifier to get the status of an asynchronous job.
           example: C03E086C137F38B4
+    PathSegment:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the path segment.
+          example: 0000000013D98A2A
+        name:
+          type: string
+          description: The name of the path segment.
+          example: Test Folder
+        description:
+          type: string
+          description: An optional description of the path segment.
+          example: This is a test folder
+      description: A segment of a path.
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    ImportResult:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Whether or not the request is in progress (`InProgress`), has completed successfully (`Success`), or has completed with an error (`Failed`).
+        summary:
+          type: object
+          properties:
+            totalItems:
+              type: integer
+              description: Total content items attempted in the import.
+              example: 15
+            successCount:
+              type: integer
+              description: Number of content items successfully imported.
+              example: 12
+            failureCount:
+              type: integer
+              description: Number of content items that failed to import.
+              example: 3
+          description: Summary about the import job indicating total, success and failure count.
+        failures:
+          type: array
+          description: Detailed listing of failed import items.
+          items:
+            $ref: '#/components/schemas/ImportErrorResultItem'
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    MetadataModel:
+      required:
+      - createdAt
+      - createdBy
+      - modifiedAt
+      - modifiedBy
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Creation timestamp in UTC in [RFC3339](https://tools.ietf.org/html/rfc3339) format.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        createdBy:
+          type: string
+          description: Identifier of the user who created the resource.
+          example: 0000000006743FDD
+        modifiedAt:
+          type: string
+          description: Last modification timestamp in UTC.
+          format: date-time
+          example: 2018-10-16 09:10:00+00:00
+        modifiedBy:
+          type: string
+          description: Identifier of the user who last modified the resource.
+          example: 0000000006743FE8
+    ImportErrorResultItem:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Full folder path to the failed item.
+          example: /Marketing/Website Analytics/Daily Traffic Report
+        type:
+          type: string
+          description: The type of the content item (e.g., Folder, Search, Dashboard).
+          example: Dashboard
+        error:
+          type: string
+          description: Reason why the item failed to import.
+          example: Invalid JSON format in widget configuration.
+    ContentPath:
+      required:
+      - path
+      type: object
+      properties:
+        path:
+          type: string
+          description: Path of the content item.
+          example: /Library/Users/user@test.com/SampleFolder
+        pathItems:
+          type: array
+          description: The items in the path of the content.
+          items:
+            $ref: '#/components/schemas/PathSegment'
   securitySchemes:
     basicAuth:
       type: http

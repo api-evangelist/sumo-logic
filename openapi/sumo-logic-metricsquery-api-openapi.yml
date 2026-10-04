@@ -68,60 +68,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    MetricsQueryRequest:
-      required:
-      - queries
-      - timeRange
-      type: object
-      properties:
-        queries:
-          minItems: 1
-          type: array
-          description: A list of metrics queries.
-          items:
-            $ref: '#/components/schemas/MetricsQueryRow'
-        timeRange:
-          $ref: '#/components/schemas/ResolvableTimeRange'
-      description: A list of metrics queries to run along with the time range for the query.
-    MetricsQueryResultContext:
-      type: object
-      properties:
-        quantizationGranularity:
-          type: integer
-          description: Quantization granularity. Size of the quantization bucket/quant in milliseconds.
-          format: int64
-          example: 30000
-        rollup:
-          pattern: ^(Avg|Sum|Min|Max|Count|Rate)$|^$
-          type: string
-          description: We use the term rollup to refer to the aggregation function Sumo Logic uses when quantizing metrics. Can be `Avg`, `Sum`, `Min`, `Max`, `Count` or `Rate`.
-          example: Avg
-        actualQueryTimeRange:
-          $ref: '#/components/schemas/Iso8601TimeRange'
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
     ResolvableTimeRange:
       required:
       - type
@@ -158,26 +104,22 @@ components:
               message: Incomplete results
           allOf:
           - $ref: '#/components/schemas/ErrorResponse'
-    TimeSeriesList:
-      required:
-      - timeSeries
+    MetricDefinition:
       type: object
       properties:
-        timeSeries:
-          type: array
-          description: A list of timeseries returned by corresponding query.
-          items:
-            $ref: '#/components/schemas/TimeSeries'
-        unit:
+        metric:
           type: string
-          description: Unit of the query.
-          example: 1/second
-        timeShiftLabel:
-          type: string
-          description: Time shift value if specified in request in human readable format.
-          example: -1h
-        resultContext:
-          $ref: '#/components/schemas/MetricsQueryResultContext'
+          description: Name of the metric returning the timeseries.
+          example: CPU_Total
+        dimensions:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Metric dimensions / metadata related to each timeseries.
+          example:
+            _sourceHost: us2-alert-1
+            _sourceCategory: alert
     ErrorResponse:
       required:
       - errors
@@ -198,55 +140,6 @@ components:
             message: Your password did not contain any non-alphanumeric characters
           items:
             $ref: '#/components/schemas/ErrorDescription'
-    TimeSeriesRow:
-      required:
-      - rowId
-      - timeSeriesList
-      type: object
-      properties:
-        rowId:
-          type: string
-          description: Row id for the query row as specified in the request.
-          example: A
-        timeSeriesList:
-          $ref: '#/components/schemas/TimeSeriesList'
-    MetricDefinition:
-      type: object
-      properties:
-        metric:
-          type: string
-          description: Name of the metric returning the timeseries.
-          example: CPU_Total
-        dimensions:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Metric dimensions / metadata related to each timeseries.
-          example:
-            _sourceHost: us2-alert-1
-            _sourceCategory: alert
-    Points:
-      required:
-      - timestamps
-      - values
-      type: object
-      properties:
-        timestamps:
-          type: array
-          description: Array of timestamps of datapoints in milliseconds.
-          items:
-            type: integer
-            format: int64
-            example: 1623258710000
-        values:
-          type: array
-          description: Array of values of datapoints corresponding to timestamp array.
-          items:
-            type: number
-            format: double
-            example: 1.5
-      description: The `values` and `timestamps` are of the same length, and points are sorted by time ascending.
     Iso8601TimeRange:
       required:
       - end
@@ -301,6 +194,101 @@ components:
           description: Shifts the time series from your metrics query by the specified amount of time. This can help when comparing a time series across multiple time periods. Specified as a signed duration in milliseconds.
           format: int64
           example: -3600000
+    TimeSeriesList:
+      required:
+      - timeSeries
+      type: object
+      properties:
+        timeSeries:
+          type: array
+          description: A list of timeseries returned by corresponding query.
+          items:
+            $ref: '#/components/schemas/TimeSeries'
+        unit:
+          type: string
+          description: Unit of the query.
+          example: 1/second
+        timeShiftLabel:
+          type: string
+          description: Time shift value if specified in request in human readable format.
+          example: -1h
+        resultContext:
+          $ref: '#/components/schemas/MetricsQueryResultContext'
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    MetricsQueryRequest:
+      required:
+      - queries
+      - timeRange
+      type: object
+      properties:
+        queries:
+          minItems: 1
+          type: array
+          description: A list of metrics queries.
+          items:
+            $ref: '#/components/schemas/MetricsQueryRow'
+        timeRange:
+          $ref: '#/components/schemas/ResolvableTimeRange'
+      description: A list of metrics queries to run along with the time range for the query.
+    MetricsQueryResultContext:
+      type: object
+      properties:
+        quantizationGranularity:
+          type: integer
+          description: Quantization granularity. Size of the quantization bucket/quant in milliseconds.
+          format: int64
+          example: 30000
+        rollup:
+          pattern: ^(Avg|Sum|Min|Max|Count|Rate)$|^$
+          type: string
+          description: We use the term rollup to refer to the aggregation function Sumo Logic uses when quantizing metrics. Can be `Avg`, `Sum`, `Min`, `Max`, `Count` or `Rate`.
+          example: Avg
+        actualQueryTimeRange:
+          $ref: '#/components/schemas/Iso8601TimeRange'
+    Points:
+      required:
+      - timestamps
+      - values
+      type: object
+      properties:
+        timestamps:
+          type: array
+          description: Array of timestamps of datapoints in milliseconds.
+          items:
+            type: integer
+            format: int64
+            example: 1623258710000
+        values:
+          type: array
+          description: Array of values of datapoints corresponding to timestamp array.
+          items:
+            type: number
+            format: double
+            example: 1.5
+      description: The `values` and `timestamps` are of the same length, and points are sorted by time ascending.
     TimeSeries:
       required:
       - metricDefinition
@@ -311,6 +299,18 @@ components:
           $ref: '#/components/schemas/MetricDefinition'
         points:
           $ref: '#/components/schemas/Points'
+    TimeSeriesRow:
+      required:
+      - rowId
+      - timeSeriesList
+      type: object
+      properties:
+        rowId:
+          type: string
+          description: Row id for the query row as specified in the request.
+          example: A
+        timeSeriesList:
+          $ref: '#/components/schemas/TimeSeriesList'
   securitySchemes:
     basicAuth:
       type: http

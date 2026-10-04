@@ -123,6 +123,182 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    UploadStixIndicatorsRequest:
+      required:
+      - indicators
+      - source
+      type: object
+      properties:
+        source:
+          type: string
+          description: User-provided text to identify the source of the indicator
+          example: FreeTAXII
+        indicators:
+          type: array
+          description: The list of stix threat intel indicators to upload.
+          items:
+            $ref: '#/components/schemas/StixIndicator'
+    UploadStixIndicatorsResponse:
+      required:
+      - invalidIndicators
+      type: object
+      properties:
+        invalidIndicators:
+          type: array
+          description: A list of invalid indicator IDs that were not ingested
+          example:
+          - indicator--foo
+          - indicator--bar
+          items:
+            type: string
+    ExternalReference:
+      required:
+      - source_name
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The name of the source that the external-reference is defined within
+          example: system
+        description:
+          type: string
+          description: A human readable description
+        url:
+          type: string
+          description: A URL reference to an external resource
+          example: https://github.com/vz-risk/0001AA7F-C601-424A-B2B8-BE6C9F5164E7.json
+        hashes:
+          maxProperties: 1000
+          type: object
+          additionalProperties:
+            type: string
+          description: Specifies a dictionary of hashes for the contents of the url
+          example:
+            SHA-256: 6db12788c37247f2316052e142f42f4b259d6561751e5f401a1ae2a6df9c674b
+        external_id:
+          type: string
+          description: An identifier for the external reference content
+          example: 0001AA7F-C601-424A-B2B8-BE6C9F5164E7
+    KillChainPhase:
+      required:
+      - kill_chain_name
+      type: object
+      properties:
+        kill_chain_name:
+          type: string
+          description: The name of the kill chain. The value of this property SHOULD be all lowercase and SHOULD use hyphens instead of spaces or underscores as word separators
+          example: lockheed-martin-cyber-kill-chain
+        phase_name:
+          type: string
+          description: The name of the phase in the kill chain. The value of this property SHOULD be all lowercase and SHOULD use hyphens instead of spaces or underscores as word separators
+          example: reconnaissance
+    Extension:
+      required:
+      - created
+      - created_by_ref
+      - extension_types
+      - id
+      - modified
+      - name
+      - schema
+      - spec_version
+      - type
+      - version
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type property identifies the type of object
+          example: indicator
+        spec_version:
+          type: string
+          description: The STIX version
+          example: '2.1'
+        id:
+          type: string
+          description: The ID of the indicator
+          example: acme:indicator-bf8bc5d5-c7e6-46b0-8d22-7500fea77196
+        created:
+          type: string
+          description: The time from which this Indicator is considered a valid indicator of the behaviors it is related or represents.
+          format: date-time
+          example: 2023-03-21 12:00:00+00:00
+        modified:
+          type: string
+          description: The time from which this Indicator is considered a valid indicator of the behaviors it is related or represents.
+          format: date-time
+          example: 2023-03-21 12:00:00+00:00
+        created_by_ref:
+          type: string
+          description: Identifier of type identity
+          example: identity--f431f809-377b-45e0-aa1c-6a4751cae5ff
+        revoked:
+          type: boolean
+          description: The revoked property is only used by STIX Objects that support versioning and indicates whether the object has been revoked.
+        labels:
+          type: array
+          description: The labels property specifies a set of terms used to describe this object. The terms are user-defined or trust-group defined and their meaning is outside the scope of this specification and MAY be ignored.
+          example:
+          - heartbleed
+          - has-logo
+          items:
+            type: string
+        external_references:
+          type: array
+          description: A list of external references which refer to non-STIX information. This property MAY be used to provide one or more Vulnerability identifiers, such as a CVE ID
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        object_marking_refs:
+          type: array
+          description: The object_marking_refs property specifies a list of id properties of marking-definition objects that apply to this object.
+          example:
+          - marking-definition--089a6ecb-cc15-43cc-9494-767639779123
+          items:
+            type: string
+        granular_markings:
+          type: array
+          description: The granular_markings property specifies a list of granular markings applied to this object
+          items:
+            $ref: '#/components/schemas/GranularMarkingType'
+        name:
+          type: string
+          description: The name of the object
+        description:
+          type: string
+          description: A human readable description
+        schema:
+          type: string
+          description: The normative definition of the extension, either as a URL or as plain text explaining the definition
+          example: https://www.example.com/schema-my-favorite-sdo-1/v1
+        version:
+          type: string
+          description: The version of this extension
+        extension_types:
+          type: array
+          description: This property specifies one or more extension types contained within this extension
+          items:
+            type: string
+            enum:
+            - new-sdo
+            - new-sco
+            - new-sro
+            - property-extension
+            - toplevel-property-extension
+        extension_properties:
+          type: array
+          description: This property contains the list of new property names that are added to an object by an extension
+          items:
+            type: string
+    UploadNormalizedIndicatorRequest:
+      required:
+      - indicators
+      type: object
+      properties:
+        indicators:
+          type: array
+          description: The list of normalized threat intel indicators to upload.
+          items:
+            $ref: '#/components/schemas/NormalizedIndicator'
     NormalizedIndicator:
       required:
       - confidence
@@ -188,6 +364,68 @@ components:
           additionalProperties:
             type: string
           description: Flattened fields from the original indicator object (e.g. flattened STIX fields)
+    ErrorDescription:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code describing the type of error.
+          example: auth:password_too_short
+        message:
+          type: string
+          description: A short English-language description of the error.
+          example: Your password was too short.
+        detail:
+          type: string
+          description: An optional fuller English-language description of the error.
+          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
+        meta:
+          type: object
+          description: An optional list of metadata about the error.
+          example:
+            minLength: 12
+            actualLength: 5
+    RemoveIndicatorsRequest:
+      required:
+      - indicatorIds
+      - source
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source of the indicator ID to match against
+          example: Crowdstrike
+        indicatorIds:
+          type: array
+          description: The list of indicator IDs to match against
+          example:
+          - indicator--abcd
+          - indicator--ef012
+          items:
+            type: string
+    ErrorResponse:
+      required:
+      - errors
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier for the error; this is unique to the specific API request.
+          example: IUUQI-DGH5I-TJ045
+        errors:
+          type: array
+          description: A list of one or more causes of the error.
+          example:
+          - code: auth:password_too_short
+            message: Your password was too short.
+          - code: auth:password_character_classes
+            message: Your password did not contain any non-alphanumeric characters
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
     StixIndicator:
       required:
       - created
@@ -308,231 +546,6 @@ components:
           description: The list of Kill Chain Phases for which this Attack Pattern is used
           items:
             $ref: '#/components/schemas/KillChainPhase'
-    ExternalReference:
-      required:
-      - source_name
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The name of the source that the external-reference is defined within
-          example: system
-        description:
-          type: string
-          description: A human readable description
-        url:
-          type: string
-          description: A URL reference to an external resource
-          example: https://github.com/vz-risk/0001AA7F-C601-424A-B2B8-BE6C9F5164E7.json
-        hashes:
-          maxProperties: 1000
-          type: object
-          additionalProperties:
-            type: string
-          description: Specifies a dictionary of hashes for the contents of the url
-          example:
-            SHA-256: 6db12788c37247f2316052e142f42f4b259d6561751e5f401a1ae2a6df9c674b
-        external_id:
-          type: string
-          description: An identifier for the external reference content
-          example: 0001AA7F-C601-424A-B2B8-BE6C9F5164E7
-    Extension:
-      required:
-      - created
-      - created_by_ref
-      - extension_types
-      - id
-      - modified
-      - name
-      - schema
-      - spec_version
-      - type
-      - version
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type property identifies the type of object
-          example: indicator
-        spec_version:
-          type: string
-          description: The STIX version
-          example: '2.1'
-        id:
-          type: string
-          description: The ID of the indicator
-          example: acme:indicator-bf8bc5d5-c7e6-46b0-8d22-7500fea77196
-        created:
-          type: string
-          description: The time from which this Indicator is considered a valid indicator of the behaviors it is related or represents.
-          format: date-time
-          example: 2023-03-21 12:00:00+00:00
-        modified:
-          type: string
-          description: The time from which this Indicator is considered a valid indicator of the behaviors it is related or represents.
-          format: date-time
-          example: 2023-03-21 12:00:00+00:00
-        created_by_ref:
-          type: string
-          description: Identifier of type identity
-          example: identity--f431f809-377b-45e0-aa1c-6a4751cae5ff
-        revoked:
-          type: boolean
-          description: The revoked property is only used by STIX Objects that support versioning and indicates whether the object has been revoked.
-        labels:
-          type: array
-          description: The labels property specifies a set of terms used to describe this object. The terms are user-defined or trust-group defined and their meaning is outside the scope of this specification and MAY be ignored.
-          example:
-          - heartbleed
-          - has-logo
-          items:
-            type: string
-        external_references:
-          type: array
-          description: A list of external references which refer to non-STIX information. This property MAY be used to provide one or more Vulnerability identifiers, such as a CVE ID
-          items:
-            $ref: '#/components/schemas/ExternalReference'
-        object_marking_refs:
-          type: array
-          description: The object_marking_refs property specifies a list of id properties of marking-definition objects that apply to this object.
-          example:
-          - marking-definition--089a6ecb-cc15-43cc-9494-767639779123
-          items:
-            type: string
-        granular_markings:
-          type: array
-          description: The granular_markings property specifies a list of granular markings applied to this object
-          items:
-            $ref: '#/components/schemas/GranularMarkingType'
-        name:
-          type: string
-          description: The name of the object
-        description:
-          type: string
-          description: A human readable description
-        schema:
-          type: string
-          description: The normative definition of the extension, either as a URL or as plain text explaining the definition
-          example: https://www.example.com/schema-my-favorite-sdo-1/v1
-        version:
-          type: string
-          description: The version of this extension
-        extension_types:
-          type: array
-          description: This property specifies one or more extension types contained within this extension
-          items:
-            type: string
-            enum:
-            - new-sdo
-            - new-sco
-            - new-sro
-            - property-extension
-            - toplevel-property-extension
-        extension_properties:
-          type: array
-          description: This property contains the list of new property names that are added to an object by an extension
-          items:
-            type: string
-    RemoveIndicatorsRequest:
-      required:
-      - indicatorIds
-      - source
-      type: object
-      properties:
-        source:
-          type: string
-          description: The source of the indicator ID to match against
-          example: Crowdstrike
-        indicatorIds:
-          type: array
-          description: The list of indicator IDs to match against
-          example:
-          - indicator--abcd
-          - indicator--ef012
-          items:
-            type: string
-    ErrorDescription:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: An error code describing the type of error.
-          example: auth:password_too_short
-        message:
-          type: string
-          description: A short English-language description of the error.
-          example: Your password was too short.
-        detail:
-          type: string
-          description: An optional fuller English-language description of the error.
-          example: Your password was 5 characters long, the minimum length is 12 characters. See http://example.com/password for more information.
-        meta:
-          type: object
-          description: An optional list of metadata about the error.
-          example:
-            minLength: 12
-            actualLength: 5
-    UploadStixIndicatorsRequest:
-      required:
-      - indicators
-      - source
-      type: object
-      properties:
-        source:
-          type: string
-          description: User-provided text to identify the source of the indicator
-          example: FreeTAXII
-        indicators:
-          type: array
-          description: The list of stix threat intel indicators to upload.
-          items:
-            $ref: '#/components/schemas/StixIndicator'
-    UploadNormalizedIndicatorRequest:
-      required:
-      - indicators
-      type: object
-      properties:
-        indicators:
-          type: array
-          description: The list of normalized threat intel indicators to upload.
-          items:
-            $ref: '#/components/schemas/NormalizedIndicator'
-    ErrorResponse:
-      required:
-      - errors
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for the error; this is unique to the specific API request.
-          example: IUUQI-DGH5I-TJ045
-        errors:
-          type: array
-          description: A list of one or more causes of the error.
-          example:
-          - code: auth:password_too_short
-            message: Your password was too short.
-          - code: auth:password_character_classes
-            message: Your password did not contain any non-alphanumeric characters
-          items:
-            $ref: '#/components/schemas/ErrorDescription'
-    KillChainPhase:
-      required:
-      - kill_chain_name
-      type: object
-      properties:
-        kill_chain_name:
-          type: string
-          description: The name of the kill chain. The value of this property SHOULD be all lowercase and SHOULD use hyphens instead of spaces or underscores as word separators
-          example: lockheed-martin-cyber-kill-chain
-        phase_name:
-          type: string
-          description: The name of the phase in the kill chain. The value of this property SHOULD be all lowercase and SHOULD use hyphens instead of spaces or underscores as word separators
-          example: reconnaissance
     GranularMarkingType:
       required:
       - selectors
@@ -552,19 +565,6 @@ components:
           example:
           - description
           - labels
-          items:
-            type: string
-    UploadStixIndicatorsResponse:
-      required:
-      - invalidIndicators
-      type: object
-      properties:
-        invalidIndicators:
-          type: array
-          description: A list of invalid indicator IDs that were not ingested
-          example:
-          - indicator--foo
-          - indicator--bar
           items:
             type: string
   securitySchemes:
