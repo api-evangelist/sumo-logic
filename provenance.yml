@@ -22,17 +22,17 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-accesskeymanagement-api
   collections/sumo-logic-accountmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-accountmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-accountmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-accountmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-appmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-appmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-appmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-appmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-appmanagementv2-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-appmanagementv2-api
@@ -46,11 +46,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-archivemanagement-api
   collections/sumo-logic-budgetmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-budgetmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-budgetmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-budgetmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-collectors-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-collectors-api
@@ -58,11 +58,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-collectors-api
   collections/sumo-logic-connectionmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-connectionmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-connectionmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-connectionmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-content-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-content-api
@@ -70,17 +70,17 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-content-api
   collections/sumo-logic-contentmanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-contentmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-contentmanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-contentmanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-contentpermissions-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-contentpermissions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-contentpermissions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-contentpermissions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-dashboardmanagement-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-dashboardmanagement-api
@@ -88,11 +88,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-dashboardmanagement-api
   collections/sumo-logic-dashboards-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-dashboards-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-dashboards-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-dashboards-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-datadeletionrules-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-datadeletionrules-api
@@ -112,11 +112,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-dynamicparsingrulemanagement-api
   collections/sumo-logic-eventanalytics-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-eventanalytics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-eventanalytics-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-eventanalytics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-extractionrulemanagement-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-extractionrulemanagement-api
@@ -196,11 +196,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-metricssearchesmanagementv2-api
   collections/sumo-logic-monitors-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-monitors-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-monitors-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-monitors-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-monitorslibrarymanagement-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-monitorslibrarymanagement-api
@@ -244,11 +244,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-partitionmanagement-api
   collections/sumo-logic-passwordpolicy-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-passwordpolicy-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-passwordpolicy-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-passwordpolicy-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-policiesmanagement-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-policiesmanagement-api
@@ -256,11 +256,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-policiesmanagement-api
   collections/sumo-logic-rolemanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-rolemanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-rolemanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-rolemanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-rolemanagementv2-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-rolemanagementv2-api
@@ -268,11 +268,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-rolemanagementv2-api
   collections/sumo-logic-roles-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-roles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-roles-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-roles-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-samlconfigurationmanagement-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-samlconfigurationmanagement-api
@@ -292,11 +292,11 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-schemabasemanagement-api
   collections/sumo-logic-scimusermanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-scimusermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-scimusermanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-scimusermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-search-jobs-api.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic-search-jobs-api
@@ -370,17 +370,17 @@ artifacts:
     method: derived
     evidence: openapi/sumo-logic-transformationrulemanagement-api
   collections/sumo-logic-usermanagement-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-usermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-usermanagement-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-usermanagement-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-users-api.opencollection.json:
-    method: derived
-    evidence: openapi/sumo-logic-users-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic-users-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sumo-logic-users-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sumo-logic.opencollection.json:
     method: derived
     evidence: openapi/sumo-logic
@@ -402,10 +402,7 @@ artifacts:
   finops/sumo-logic-finops.yml:
     method: generated
     evidence: declared in the artifact
-  graphql/sumo-logic-graphql.md:
-    method: unknown
-    evidence: no authorship recorded
-  graphql/sumo-logic-schema.graphql:
+  front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
   json-ld/sumo-logic-context.jsonld:
@@ -420,55 +417,7 @@ artifacts:
   json-structure/sumo-logic-user-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-06T210741.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-07T135032.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T093022.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T111628.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -555,16 +504,137 @@ artifacts:
   kin/score-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T144739.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T195450.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T211839.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T011047.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T224210.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T200636.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T213054.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T214843.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T232836.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T204815.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T222408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  mcp/sumo-logic-mcp.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/_original/sumo-logic-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/sumo-logic-accesskeymanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-accountmanagement-api-openapi.yml:
+  openapi/sumo-logic-account-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-appmanagement-api-openapi.yml:
+  openapi/sumo-logic-app-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-appmanagementv2-api-openapi.yml:
@@ -573,28 +643,25 @@ artifacts:
   openapi/sumo-logic-archivemanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-budgetmanagement-api-openapi.yml:
+  openapi/sumo-logic-budget-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-collectors-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
-  openapi/sumo-logic-connectionmanagement-api-openapi.yml:
+  openapi/sumo-logic-connection-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-content-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
-  openapi/sumo-logic-contentmanagement-api-openapi.yml:
+  openapi/sumo-logic-content-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-contentpermissions-api-openapi.yml:
+  openapi/sumo-logic-content-permissions-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-dashboardmanagement-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-dashboards-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-datadeletionrules-api-openapi.yml:
@@ -606,7 +673,7 @@ artifacts:
   openapi/sumo-logic-dynamicparsingrulemanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-eventanalytics-api-openapi.yml:
+  openapi/sumo-logic-event-analytics-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-extractionrulemanagement-api-openapi.yml:
@@ -648,9 +715,6 @@ artifacts:
   openapi/sumo-logic-metricssearchesmanagementv2-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-monitors-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-monitorslibrarymanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -672,19 +736,16 @@ artifacts:
   openapi/sumo-logic-partitionmanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-passwordpolicy-api-openapi.yml:
+  openapi/sumo-logic-password-policy-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-policiesmanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-rolemanagement-api-openapi.yml:
+  openapi/sumo-logic-role-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-rolemanagementv2-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-roles-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-samlconfigurationmanagement-api-openapi.yml:
@@ -696,7 +757,7 @@ artifacts:
   openapi/sumo-logic-schemabasemanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-scimusermanagement-api-openapi.yml:
+  openapi/sumo-logic-scim-user-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sumo-logic-search-jobs-api-openapi.yml:
@@ -735,14 +796,11 @@ artifacts:
   openapi/sumo-logic-transformationrulemanagement-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-usermanagement-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sumo-logic-users-api-openapi.yml:
+  openapi/sumo-logic-user-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   plans/sumo-logic-plans-pricing.yml:
-    method: generated
+    method: searched
     evidence: declared in the artifact
   rate-limits/sumo-logic-rate-limits.yml:
     method: generated
@@ -763,5 +821,14 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   vocabulary/sumo-logic-vocabulary.yml:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/sumo-logic-mcp-oauth-protected-resource.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/sumo-logic-service-oauth-authorization-server.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/sumo-logic-well-known.yml:
     method: unknown
     evidence: no authorship recorded
