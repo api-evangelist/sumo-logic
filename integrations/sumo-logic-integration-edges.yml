@@ -7,40 +7,6 @@ checked:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
 marketplace_apps: []
 edges:
-- partner_name: AWS Marketplace
-  partner: amazon-web-services
-  partner_match: aggregator
-  type: marketplace
-  marketplace: aws-marketplace
-  channel: distribution
-  relationship: platform-app
-  direction: provider-built
-  evidence: https://aws.amazon.com/marketplace/seller-profile?id=385d00cf-40a2-4f4f-aa5c-eed63ab8c21c
-  listing_count: 4
-  apps:
-  - Sumo Logic Log Analytics Platform (Pay-As-You-Go with 30-day Free Trial)
-  - Logs for Security (AWS Built-In)
-  - Sumo Logic Monitoring and Analytics Platform
-  - Sumo Logic Essentials Service (Monthly) Credits
-  seller_name: Sumo Logic Inc.
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
-  type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: platform-app
-  direction: provider-built
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Sumo%20Logic
-  listing_count: 2
-  apps:
-  - Sumo Logic for Azure Web Apps
-  - Sumo Logic for Azure Audit
-  seller_name: Sumo Logic
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
 - partner_name: OpenTelemetry
   partner: null
   type: contract
@@ -65,6 +31,40 @@ edges:
     detected_by: sweep-observability.py
     detected: '2026-10-13'
   detected_by: sweep-observability.py
+  detected: '2026-10-13'
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=385d00cf-40a2-4f4f-aa5c-eed63ab8c21c
+  listing_count: 4
+  apps:
+  - Sumo Logic Log Analytics Platform (Pay-As-You-Go with 30-day Free Trial)
+  - Logs for Security (AWS Built-In)
+  - Sumo Logic Monitoring and Analytics Platform
+  - Sumo Logic Essentials Service (Monthly) Credits
+  seller_name: Sumo Logic Inc.
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Sumo%20Logic
+  listing_count: 2
+  apps:
+  - Sumo Logic for Azure Web Apps
+  - Sumo Logic for Azure Audit
+  seller_name: Sumo Logic
+  detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
