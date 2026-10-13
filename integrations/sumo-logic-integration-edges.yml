@@ -7,31 +7,6 @@ checked:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
 marketplace_apps: []
 edges:
-- partner_name: OpenTelemetry
-  partner: null
-  type: contract
-  channel: network-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
-  contract_reference:
-    register: OpenTelemetry ecosystem + registry (opentelemetry.io data/)
-    spec_file: null
-    role: otlp-native
-    registered_name: Sumo Logic
-    matched_domain: sumologic.com
-    partner_match: domain
-    api_families:
-    - distribution:collector
-    - otlp-native
-    records:
-    - vendors.yaml: Sumo Logic
-      nativeOTLP: true
-    - distributions.yaml: Sumo Logic Distribution for OpenTelemetry Collector
-    detected_by: sweep-observability.py
-    detected: '2026-10-13'
-  detected_by: sweep-observability.py
-  detected: '2026-10-13'
 - partner_name: AWS Marketplace
   partner: amazon-web-services
   partner_match: aggregator
@@ -65,6 +40,31 @@ edges:
   - Sumo Logic for Azure Audit
   seller_name: Sumo Logic
   detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: OpenTelemetry
+  partner: null
+  type: contract
+  channel: network-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
+  contract_reference:
+    register: OpenTelemetry ecosystem + registry (opentelemetry.io data/)
+    spec_file: null
+    role: otlp-native
+    registered_name: Sumo Logic
+    matched_domain: sumologic.com
+    partner_match: domain
+    api_families:
+    - distribution:collector
+    - otlp-native
+    records:
+    - vendors.yaml: Sumo Logic
+      nativeOTLP: true
+    - distributions.yaml: Sumo Logic Distribution for OpenTelemetry Collector
+    detected_by: sweep-observability.py
+    detected: '2026-10-13'
+  detected_by: sweep-observability.py
   detected: '2026-10-13'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
