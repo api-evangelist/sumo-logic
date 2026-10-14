@@ -65,3 +65,28 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: sumo-logic-crowdstrike-own
+  label: CrowdStrike (own)
+  partner: crowdstrike
+  partner_name: CrowdStrike (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.crowdstrike.com/listings/sumo-logic-cloud-siem/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: sumo-logic-palo-alto-networks-own
+  label: Palo Alto Networks (own)
+  partner: palo-alto-networks
+  partner_name: Palo Alto Networks (own)
+  category: Analytics & SIEM
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://cortex.marketplace.pan.dev/marketplace/details/SumoLogic_Cloud_SIEM/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
