@@ -5,6 +5,7 @@ checked:
 - https://azuremarketplace.microsoft.com/
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
+- https://marketplace.atlassian.com/
 marketplace_apps: []
 edges:
 - partner_name: OpenTelemetry
@@ -66,6 +67,24 @@ edges:
   seller_name: Sumo Logic
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Atlassian Marketplace
+  partner: atlassian
+  partner_match: aggregator
+  type: marketplace
+  marketplace: atlassian
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.atlassian.com/vendors/1216570/sumo-logic
+  listing_count: 4
+  apps:
+  - Sumo Logic for Bitbucket
+  - Sumo Logic for Jira
+  - Software Development Optimization
+  - Sumo Logic for Opsgenie
+  publisher_name: Sumo Logic
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
