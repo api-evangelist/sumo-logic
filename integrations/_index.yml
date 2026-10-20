@@ -90,38 +90,35 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: sumo-logic-cncf-cloud-native-landscape
-  label: CNCF (Cloud Native Landscape)
-  partner: cncf
-  partner_name: CNCF (Cloud Native Landscape)
-  category: Cloud native landscape
-  type: register
-  channel: standard-directory
-  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
+- slug: sumo-logic-meltano
+  label: Meltano
+  partner: meltano
+  partner_name: Meltano
+  type: marketplace
+  marketplace: meltano-hub
+  channel: elt-connector
+  evidence: https://hub.meltano.com/extractors/tap-sumologic--splitio
   source: edge
-  relationship: standard-participant
+  relationship: ipaas-bridge
   contract_reference:
-    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
+    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
     spec_file: null
-    standard: Cloud Native (CNCF)
-    role: landscape-listed
+    role: elt-connector:meltano-hub
     registered_name: Sumo Logic
-    registered_names:
-    - Sumo Logic
-    website: https://www.sumologic.com/
     matched_domain: sumologic.com
     matched_by: domain
-    member_tier: null
-    joined: null
-    end_user: false
-    cncf_projects: []
-    landscape_categories:
-    - Observability and Analysis / Observability
-    landscape_entries: 1
-    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
-      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
-    detected_by: sweep-cloud-native.py
-    detected: '2026-10-15'
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    plugins:
+    - tap-sumologic--splitio
+    - tap-sumologic--widen
+    maintenance_status:
+    - active
+    quality:
+    - silver
+    - unknown
+    builder: 'community (Meltano Hub variant maintainers: splitio, widen)'
   status: not-a-workflow
   arazzo: null
 - slug: sumo-logic-fedramp
@@ -163,34 +160,37 @@
       latest_authorization: '2020-11-13'
   status: not-a-workflow
   arazzo: null
-- slug: sumo-logic-meltano
-  label: Meltano
-  partner: meltano
-  partner_name: Meltano
-  type: marketplace
-  marketplace: meltano-hub
-  channel: elt-connector
-  evidence: https://hub.meltano.com/extractors/tap-sumologic--splitio
+- slug: sumo-logic-cncf-cloud-native-landscape
+  label: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_name: CNCF (Cloud Native Landscape)
+  category: Cloud native landscape
+  type: register
+  channel: standard-directory
+  evidence: https://github.com/cncf/landscape/blob/42dd4cd91dad8ec8558ac02467a43f0805b9957a/landscape.yml
   source: edge
-  relationship: ipaas-bridge
+  relationship: standard-participant
   contract_reference:
-    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @42dd4cd91d)
     spec_file: null
-    role: elt-connector:meltano-hub
+    standard: Cloud Native (CNCF)
+    role: landscape-listed
     registered_name: Sumo Logic
+    registered_names:
+    - Sumo Logic
+    website: https://www.sumologic.com/
     matched_domain: sumologic.com
     matched_by: domain
-    detected_by: sweep-data-integration.py
-    detected: '2026-10-18'
-    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
-    plugins:
-    - tap-sumologic--splitio
-    - tap-sumologic--widen
-    maintenance_status:
-    - active
-    quality:
-    - silver
-    - unknown
-    builder: 'community (Meltano Hub variant maintainers: splitio, widen)'
+    member_tier: null
+    joined: null
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - Observability and Analysis / Observability
+    landscape_entries: 1
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
