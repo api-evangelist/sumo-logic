@@ -1251,6 +1251,8 @@ apis:
   - type: GettingStarted
     url: https://help.sumologic.com/docs/api/about-apis/getting-started/
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/sumo-logic/overview
 - type: Pricing
   url: https://www.sumologic.com/pricing
 - type: CapabilityMap
