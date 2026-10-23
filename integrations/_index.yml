@@ -338,6 +338,80 @@
     detected: '2026-10-22'
   status: not-a-workflow
   arazzo: null
+- slug: sumo-logic-cd-foundation-continuous-delivery-foundation-landscape
+  label: CD Foundation (Continuous Delivery Foundation landscape)
+  partner: continuous-delivery-foundation
+  partner_name: CD Foundation (Continuous Delivery Foundation landscape)
+  category: Continuous delivery foundation membership / landscape
+  type: register
+  channel: standard-directory
+  evidence: https://landscape.cd.foundation/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
+    spec_file: null
+    standard: Continuous Delivery Foundation
+    role: cdf-landscape-listed
+    registered_name: Sumo Logic
+    registered_names:
+    - Sumo Logic
+    website: https://www.sumologic.com/
+    matched_domain: sumologic.com
+    matched_by: domain
+    member_tier: null
+    landscape_categories:
+    - Observability and Analysis / Monitoring and Logging
+    cdf_projects: []
+    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
+      depth; tier, categories and entries are context, never counted'
+    detected_by: sweep-jenkins-cd-foundation-plugins.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: sumo-logic-tx-ramp
+  label: TX-RAMP
+  partner_name: TX-RAMP
+  category: Texas state cloud security certification (TX-RAMP)
+  type: contract
+  channel: regulator-register
+  evidence: https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: TX-RAMP Certified Cloud Products (Texas DIR)
+    standard: TX-RAMP
+    spec_file: null
+    role: tx-ramp-certified
+    register_file: https://dir.texas.gov/sites/default/files/2026-10/Copy%20of%20TX-RAMP%20Certified%20Cloud%20Products_1.xlsx
+    registrations:
+    - certification_id: TX985568
+      product: Sumo Logic
+      registered_vendor: Sumo Logic
+      certification_level: Level 2
+      cloud_categories:
+      - SaaS
+      certification_path: Certification Due to Existing Other RAMP-Certification
+      expires: null
+      lapsed: false
+      matched_domain: sumologic.com
+      matched_by: domain
+    identity: wikidata Q7638010 'Sumo Logic' P856 https://www.sumologic.com
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    signal_note: 'certified_products = one entry per cloud category (SaaS / PaaS / IaaS) the vendor holds a TX-RAMP
+      certification in, never per product; products are context, never counted. certification_level = the highest
+      level in that category; lapsed: true when every product in the category is past its expiry date. partner_tier
+      = the highest CURRENT level'
+    certified_products:
+    - product: SaaS
+      product_type: SaaS
+      standard: TX-RAMP
+      certification_level: Level 2
+      lapsed: false
+    detected_by: sweep-tx-ramp-certified-cloud.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
 - slug: sumo-logic-crowdstrike-own
   label: CrowdStrike (own)
   partner: crowdstrike
@@ -441,34 +515,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: sumo-logic-cd-foundation-continuous-delivery-foundation-landscape
-  label: CD Foundation (Continuous Delivery Foundation landscape)
-  partner: continuous-delivery-foundation
-  partner_name: CD Foundation (Continuous Delivery Foundation landscape)
-  category: Continuous delivery foundation membership / landscape
-  type: register
-  channel: standard-directory
-  evidence: https://landscape.cd.foundation/
+- slug: sumo-logic-chef-software-chef-supermarket
+  label: Chef Software (chef-supermarket)
+  partner: chef-software
+  partner_name: Chef Software (chef-supermarket)
+  category: configuration-management content listing (Chef cookbook)
+  type: marketplace
+  marketplace: chef-supermarket
+  channel: partner-built
+  evidence: https://supermarket.chef.io/cookbooks/sumologic-collector
   source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
-    spec_file: null
-    standard: Continuous Delivery Foundation
-    role: cdf-landscape-listed
-    registered_name: Sumo Logic
-    registered_names:
-    - Sumo Logic
-    website: https://www.sumologic.com/
-    matched_domain: sumologic.com
-    matched_by: domain
-    member_tier: null
-    landscape_categories:
-    - Observability and Analysis / Monitoring and Logging
-    cdf_projects: []
-    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
-      depth; tier, categories and entries are context, never counted'
-    detected_by: sweep-jenkins-cd-foundation-plugins.py
-    detected: '2026-10-22'
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
