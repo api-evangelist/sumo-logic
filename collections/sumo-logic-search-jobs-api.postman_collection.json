@@ -1,484 +1,482 @@
 {
+  "info": {
+    "_postman_id": "bf9c36eb-a3bd-4abd-92da-f6c8ce7407ad",
+    "name": "Sumo Logic REST Collectors Search Jobs API",
+    "description": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform.\n\nContact Support:\n Name: Sumo Logic Help",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:26:51.000Z",
+    "updatedAt": "2026-10-21T21:26:51.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bf9c36eb-a3bd-4abd-92da-f6c8ce7407ad"
+  },
   "item": [
     {
-      "id": "d9707d6c-46fa-45b6-9f5b-a5244e9c413c",
-      "name": "Search Jobs",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "6d2d44f4-ee16-46aa-943f-f7d63212d58a",
-          "name": "Create a search job",
-          "request": {
-            "name": "Create a search job",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "search",
-                "jobs"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
+          "name": "search",
+          "item": [
             {
-              "id": "3016997d-5c9e-48db-9688-4f542d70a83b",
-              "name": "Search job accepted",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "search",
-                    "jobs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Accepted",
-              "code": 202,
-              "header": [
+              "name": "jobs",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "{searchJobId}",
+                  "item": [
+                    {
+                      "name": "messages",
+                      "item": [
+                        {
+                          "name": "Page through messages produced by a search job",
+                          "id": "6505f1f9-3f95-43ce-a563-08df004271a2",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId/messages?offset=<integer>&limit=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "search",
+                                "jobs",
+                                ":searchJobId",
+                                "messages"
+                              ],
+                              "query": [
+                                {
+                                  "key": "offset",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "aed6abcd-d385-4422-a802-c8847aa229d8",
+                                  "key": "searchJobId",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "10010942-05ce-4253-8ee9-b82787313efa",
+                              "name": "Page of messages",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId/messages?offset=<integer>&limit=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "search",
+                                    "jobs",
+                                    ":searchJobId",
+                                    "messages"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "offset",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "searchJobId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:26:51.000Z",
+                              "updatedAt": "2026-10-21T21:26:51.000Z",
+                              "uid": "35240-10010942-05ce-4253-8ee9-b82787313efa"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:26:51.000Z",
+                          "updatedAt": "2026-10-21T21:26:51.000Z",
+                          "uid": "35240-6505f1f9-3f95-43ce-a563-08df004271a2"
+                        }
+                      ],
+                      "id": "544751da-fa4a-421d-aa24-3a62a489e128",
+                      "createdAt": "2026-10-21T21:26:51.000Z",
+                      "updatedAt": "2026-10-21T21:26:51.000Z",
+                      "uid": "35240-544751da-fa4a-421d-aa24-3a62a489e128"
+                    },
+                    {
+                      "name": "records",
+                      "item": [
+                        {
+                          "name": "Page through records produced by a search job",
+                          "id": "9f32d08e-202a-4590-b0cb-457c3d563b39",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId/records?offset=<integer>&limit=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "search",
+                                "jobs",
+                                ":searchJobId",
+                                "records"
+                              ],
+                              "query": [
+                                {
+                                  "key": "offset",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "cd6afd27-b603-4a99-805d-650eb0b9ab24",
+                                  "key": "searchJobId",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "2ba87dd5-1892-4140-8629-e2bead7322f3",
+                              "name": "Page of records",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId/records?offset=<integer>&limit=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "search",
+                                    "jobs",
+                                    ":searchJobId",
+                                    "records"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "offset",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "searchJobId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:26:51.000Z",
+                              "updatedAt": "2026-10-21T21:26:51.000Z",
+                              "uid": "35240-2ba87dd5-1892-4140-8629-e2bead7322f3"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:26:51.000Z",
+                          "updatedAt": "2026-10-21T21:26:51.000Z",
+                          "uid": "35240-9f32d08e-202a-4590-b0cb-457c3d563b39"
+                        }
+                      ],
+                      "id": "30806948-45ba-476c-9b01-0543b2ebe585",
+                      "createdAt": "2026-10-21T21:26:51.000Z",
+                      "updatedAt": "2026-10-21T21:26:51.000Z",
+                      "uid": "35240-30806948-45ba-476c-9b01-0543b2ebe585"
+                    },
+                    {
+                      "name": "Get search job status",
+                      "id": "82d21b61-a25a-4f23-b99f-2395c5406f1c",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "search",
+                            "jobs",
+                            ":searchJobId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "27ef69fd-e725-482e-9030-bcbae245776c",
+                              "key": "searchJobId",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "b80b7926-bd48-4e5c-a667-6db9959b10aa",
+                          "name": "Current search job status",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "search",
+                                "jobs",
+                                ":searchJobId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "searchJobId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:26:51.000Z",
+                          "updatedAt": "2026-10-21T21:26:51.000Z",
+                          "uid": "35240-b80b7926-bd48-4e5c-a667-6db9959b10aa"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:26:51.000Z",
+                      "updatedAt": "2026-10-21T21:26:51.000Z",
+                      "uid": "35240-82d21b61-a25a-4f23-b99f-2395c5406f1c"
+                    },
+                    {
+                      "name": "Delete a search job",
+                      "id": "bd8b2f31-1503-4708-a6af-32fc0c325bf5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "search",
+                            "jobs",
+                            ":searchJobId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "065f664c-0113-4dc4-bb0a-748b07891a87",
+                              "key": "searchJobId",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "e50fd336-328b-4cc7-b8c7-0a0e3147370f",
+                          "name": "Search job deleted",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/search/jobs/:searchJobId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "search",
+                                "jobs",
+                                ":searchJobId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "searchJobId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:26:51.000Z",
+                          "updatedAt": "2026-10-21T21:26:51.000Z",
+                          "uid": "35240-e50fd336-328b-4cc7-b8c7-0a0e3147370f"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:26:51.000Z",
+                      "updatedAt": "2026-10-21T21:26:51.000Z",
+                      "uid": "35240-bd8b2f31-1503-4708-a6af-32fc0c325bf5"
+                    }
+                  ],
+                  "id": "ea5fc2f3-61a7-4369-b5e4-c7978657b5df",
+                  "createdAt": "2026-10-21T21:26:51.000Z",
+                  "updatedAt": "2026-10-21T21:26:51.000Z",
+                  "uid": "35240-ea5fc2f3-61a7-4369-b5e4-c7978657b5df"
+                },
+                {
+                  "name": "Create a search job",
+                  "id": "9e3fe0c6-8615-49a0-a105-03aec8ebe1f7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/search/jobs",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "search",
+                        "jobs"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "3fe760c4-6509-4c0b-a196-ca5144b266e8",
+                      "name": "Search job accepted",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/search/jobs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "search",
+                            "jobs"
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:51.000Z",
+                      "updatedAt": "2026-10-21T21:26:51.000Z",
+                      "uid": "35240-3fe760c4-6509-4c0b-a196-ca5144b266e8"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:51.000Z",
+                  "updatedAt": "2026-10-21T21:26:51.000Z",
+                  "uid": "35240-9e3fe0c6-8615-49a0-a105-03aec8ebe1f7"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "9131d727-8204-4e6b-bbd6-f43d66158d1f",
+              "createdAt": "2026-10-21T21:26:51.000Z",
+              "updatedAt": "2026-10-21T21:26:51.000Z",
+              "uid": "35240-9131d727-8204-4e6b-bbd6-f43d66158d1f"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "042791c5-2939-4605-89ba-23a97e688fe2",
-          "name": "Get search job status",
-          "request": {
-            "name": "Get search job status",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "search",
-                "jobs",
-                ":searchJobId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "searchJobId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "3c166650-aab2-410f-8ee8-02d90bc7944d",
-              "name": "Current search job status",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "search",
-                    "jobs",
-                    ":searchJobId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "searchJobId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b11cbe35-eff0-4157-b938-9e4cb08a5a43",
-          "name": "Delete a search job",
-          "request": {
-            "name": "Delete a search job",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "search",
-                "jobs",
-                ":searchJobId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "searchJobId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "ee42ed37-80e3-463b-83d3-5791c527fb90",
-              "name": "Search job deleted",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "search",
-                    "jobs",
-                    ":searchJobId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "searchJobId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b35ab747-5378-4048-ab50-1d07b194ca88",
-          "name": "Page through messages produced by a search job",
-          "request": {
-            "name": "Page through messages produced by a search job",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "search",
-                "jobs",
-                ":searchJobId",
-                "messages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "offset",
-                  "value": "<integer>"
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "<integer>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "searchJobId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "23fb1d8e-8247-4572-b9e7-44dbaff567f1",
-              "name": "Page of messages",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "search",
-                    "jobs",
-                    ":searchJobId",
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "offset",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "searchJobId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e9eb8e56-850d-49f1-a396-3671baaf2e00",
-          "name": "Page through records produced by a search job",
-          "request": {
-            "name": "Page through records produced by a search job",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "search",
-                "jobs",
-                ":searchJobId",
-                "records"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "offset",
-                  "value": "<integer>"
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "<integer>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "searchJobId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "121b7785-3da6-4843-b04c-a5cc853c51d6",
-              "name": "Page of records",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "search",
-                    "jobs",
-                    ":searchJobId",
-                    "records"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "offset",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "searchJobId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "cccf0ccb-e610-4ca6-973e-df92e2944f8c",
+          "createdAt": "2026-10-21T21:26:51.000Z",
+          "updatedAt": "2026-10-21T21:26:51.000Z",
+          "uid": "35240-cccf0ccb-e610-4ca6-973e-df92e2944f8c"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.sumologic.com/api",
-      "key": "baseUrl"
+      "id": "90a4c1f9-01f3-4bde-81c6-71d1bdcce3d0",
+      "createdAt": "2026-10-21T21:26:51.000Z",
+      "updatedAt": "2026-10-21T21:26:51.000Z",
+      "uid": "35240-90a4c1f9-01f3-4bde-81c6-71d1bdcce3d0"
     }
   ],
   "auth": {
@@ -486,21 +484,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "8cc058c4-03ae-488c-b737-0be4fcaedae0",
-    "name": "Sumo Logic REST Collectors Search Jobs API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform. The REST API exposes search jobs, dashboards, metrics, monitors and\nalerts, content management, roles, users, collectors, connections, partitions,\nlookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.\n\nSumo Logic operates multiple regional deployments. Each deployment exposes a\ndeployment-specific API endpoint; the `servers` section below enumerates them.\nAuthentication uses HTTP Basic with the Access ID as username and Access Key as\npassword, or service-account credentials.\n\n\nContact Support:\n Name: Sumo Logic Help",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sumologic.com/api"
     }
-  }
+  ]
 }

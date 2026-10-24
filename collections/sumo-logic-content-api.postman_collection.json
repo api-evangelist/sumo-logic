@@ -1,262 +1,191 @@
 {
+  "info": {
+    "_postman_id": "45097697-f381-46f0-8d55-4e7af9811860",
+    "name": "Sumo Logic REST Collectors Content API",
+    "description": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform.\n\nContact Support:\n Name: Sumo Logic Help",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:26:47.000Z",
+    "updatedAt": "2026-10-21T21:26:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-45097697-f381-46f0-8d55-4e7af9811860"
+  },
   "item": [
     {
-      "id": "e28abce8-4205-4b12-9d34-061f8cc05791",
-      "name": "Content",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v2",
       "item": [
         {
-          "id": "33f7cd75-4972-4b0f-acb2-a2449370fdfd",
-          "name": "Create a content folder",
-          "request": {
-            "name": "Create a content folder",
-            "description": {},
-            "url": {
-              "path": [
-                "v2",
-                "content",
-                "folders"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
+          "name": "content",
+          "item": [
             {
-              "id": "87a46246-06c8-4c06-83aa-5fc42f6ec724",
-              "name": "The created folder",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "content",
-                    "folders"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{id}",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "4b39f976-0a0f-4bb5-ab98-5b83d67d766a",
-          "name": "Get a content item",
-          "request": {
-            "name": "Get a content item",
-            "description": {},
-            "url": {
-              "path": [
-                "v2",
-                "content",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "18f6eb90-ac0c-4a7c-ab41-b9aec0139611",
-              "name": "Content item",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "content",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
+                  "name": "Get a content item",
+                  "id": "c51af12c-e277-4ae1-a508-9c14833125d1",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/content/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "content",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "20471fa3-16a9-4c55-ba58-43d1b7217f50",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d9235700-c450-441f-9802-f57020871d5a",
-          "name": "Delete a content item",
-          "request": {
-            "name": "Delete a content item",
-            "description": {},
-            "url": {
-              "path": [
-                "v2",
-                "content",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "140dc5cc-f500-4e1c-8601-3c2f7bd10077",
-              "name": "Content item deleted",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "content",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+                  },
+                  "response": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
+                      "id": "d592e56f-a74e-403e-9c8e-652f62011e01",
+                      "name": "Content item",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:48.000Z",
+                      "updatedAt": "2026-10-21T21:26:48.000Z",
+                      "uid": "35240-d592e56f-a74e-403e-9c8e-652f62011e01"
                     }
-                  ]
+                  ],
+                  "createdAt": "2026-10-21T21:26:48.000Z",
+                  "updatedAt": "2026-10-21T21:26:48.000Z",
+                  "uid": "35240-c51af12c-e277-4ae1-a508-9c14833125d1"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "Delete a content item",
+                  "id": "1d6e4240-347d-47f2-8bb5-05e71d3ae516",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/content/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "content",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "60594b90-9dbd-477d-9ca6-38250b266570",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "6c863d59-ca17-4d83-9b3d-a4fce3695de2",
+                      "name": "Content item deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:48.000Z",
+                      "updatedAt": "2026-10-21T21:26:48.000Z",
+                      "uid": "35240-6c863d59-ca17-4d83-9b3d-a4fce3695de2"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:48.000Z",
+                  "updatedAt": "2026-10-21T21:26:48.000Z",
+                  "uid": "35240-1d6e4240-347d-47f2-8bb5-05e71d3ae516"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "96977362-b432-4390-af1e-eb6647c7892c",
+              "createdAt": "2026-10-21T21:26:48.000Z",
+              "updatedAt": "2026-10-21T21:26:48.000Z",
+              "uid": "35240-96977362-b432-4390-af1e-eb6647c7892c"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "b3d70536-759f-4370-b773-625e318c6db1",
+          "createdAt": "2026-10-21T21:26:48.000Z",
+          "updatedAt": "2026-10-21T21:26:48.000Z",
+          "uid": "35240-b3d70536-759f-4370-b773-625e318c6db1"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.sumologic.com/api",
-      "key": "baseUrl"
+      "id": "b5fae2fe-f740-4dba-ad0e-a9ea03fc0b3e",
+      "createdAt": "2026-10-21T21:26:48.000Z",
+      "updatedAt": "2026-10-21T21:26:48.000Z",
+      "uid": "35240-b5fae2fe-f740-4dba-ad0e-a9ea03fc0b3e"
     }
   ],
   "auth": {
@@ -264,21 +193,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "e30ddccb-138b-4d2d-bbc4-a76a9afbe02e",
-    "name": "Sumo Logic REST Collectors Content API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform. The REST API exposes search jobs, dashboards, metrics, monitors and\nalerts, content management, roles, users, collectors, connections, partitions,\nlookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.\n\nSumo Logic operates multiple regional deployments. Each deployment exposes a\ndeployment-specific API endpoint; the `servers` section below enumerates them.\nAuthentication uses HTTP Basic with the Access ID as username and Access Key as\npassword, or service-account credentials.\n\n\nContact Support:\n Name: Sumo Logic Help",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sumologic.com/api"
     }
-  }
+  ]
 }

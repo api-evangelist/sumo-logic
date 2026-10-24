@@ -1,0 +1,671 @@
+{
+  "info": {
+    "_postman_id": "bb1db021-2ae7-4799-9bde-0b5a5bfc8c67",
+    "name": "Sumo Logic Content Permissions API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:11.000Z",
+    "updatedAt": "2026-10-21T21:27:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bb1db021-2ae7-4799-9bde-0b5a5bfc8c67"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "content",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "permissions",
+                  "item": [
+                    {
+                      "name": "add",
+                      "item": [
+                        {
+                          "name": "Add Permissions To A Content Item",
+                          "id": "283a4214-2a47-4795-b3b8-6ead491c827b",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/permissions/add",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "permissions",
+                                "add"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "829470d7-da9a-46f1-8a35-eb73546e803e",
+                                  "key": "id",
+                                  "value": "<string>",
+                                  "description": "(Required) The identifier of the content item."
+                                }
+                              ]
+                            },
+                            "description": "Add permissions to a content item with the given identifier."
+                          },
+                          "response": [
+                            {
+                              "id": "143e7bd8-bc3e-4ad7-9940-0e6b45d272f8",
+                              "name": "Updated permission object for the requested content item.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/permissions/add",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "permissions",
+                                    "add"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"explicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantView\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    }\n  ],\n  \"implicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Manage\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ]\n}",
+                              "createdAt": "2026-10-21T21:27:12.000Z",
+                              "updatedAt": "2026-10-21T21:27:12.000Z",
+                              "uid": "35240-143e7bd8-bc3e-4ad7-9940-0e6b45d272f8"
+                            },
+                            {
+                              "id": "505c80e0-b8fb-4d6b-81f4-858f726a12a8",
+                              "name": "Operation failed with an error.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/permissions/add",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "permissions",
+                                    "add"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:12.000Z",
+                              "updatedAt": "2026-10-21T21:27:12.000Z",
+                              "uid": "35240-505c80e0-b8fb-4d6b-81f4-858f726a12a8"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:12.000Z",
+                          "updatedAt": "2026-10-21T21:27:12.000Z",
+                          "uid": "35240-283a4214-2a47-4795-b3b8-6ead491c827b"
+                        }
+                      ],
+                      "id": "d109bc98-476e-48e5-afff-5c421e091300",
+                      "createdAt": "2026-10-21T21:27:12.000Z",
+                      "updatedAt": "2026-10-21T21:27:12.000Z",
+                      "uid": "35240-d109bc98-476e-48e5-afff-5c421e091300"
+                    },
+                    {
+                      "name": "remove",
+                      "item": [
+                        {
+                          "name": "Remove Permissions From A Content Item",
+                          "id": "64b65866-3546-43af-9bc5-a4e8f8c2ba45",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/permissions/remove",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "permissions",
+                                "remove"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "0ae8beb7-fb32-4406-bfe9-26492ceb314b",
+                                  "key": "id",
+                                  "value": "<string>",
+                                  "description": "(Required) The identifier of the content item."
+                                }
+                              ]
+                            },
+                            "description": "Remove permissions from a content item with the given identifier."
+                          },
+                          "response": [
+                            {
+                              "id": "9f7024be-cd97-4a82-afdc-0e2b47076958",
+                              "name": "Updated permissions for the requested content item.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/permissions/remove",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "permissions",
+                                    "remove"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"explicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantView\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    }\n  ],\n  \"implicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Manage\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ]\n}",
+                              "createdAt": "2026-10-21T21:27:12.000Z",
+                              "updatedAt": "2026-10-21T21:27:12.000Z",
+                              "uid": "35240-9f7024be-cd97-4a82-afdc-0e2b47076958"
+                            },
+                            {
+                              "id": "ab1b853c-93e3-4c22-87d1-175c9a2c4b26",
+                              "name": "Operation failed with an error. Check that your request is valid.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contentPermissionAssignments\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ],\n  \"notificationMessage\": \"<string>\",\n  \"notifyRecipients\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/permissions/remove",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "permissions",
+                                    "remove"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:12.000Z",
+                              "updatedAt": "2026-10-21T21:27:12.000Z",
+                              "uid": "35240-ab1b853c-93e3-4c22-87d1-175c9a2c4b26"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:12.000Z",
+                          "updatedAt": "2026-10-21T21:27:12.000Z",
+                          "uid": "35240-64b65866-3546-43af-9bc5-a4e8f8c2ba45"
+                        }
+                      ],
+                      "id": "b8d00ce0-7561-49a0-8617-c725042e57c4",
+                      "createdAt": "2026-10-21T21:27:12.000Z",
+                      "updatedAt": "2026-10-21T21:27:12.000Z",
+                      "uid": "35240-b8d00ce0-7561-49a0-8617-c725042e57c4"
+                    },
+                    {
+                      "name": "Get Permissions Of A Content Item",
+                      "id": "cce42a27-6954-44a8-8557-495ff1f236de",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                            "key": "isAdminMode",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id/permissions?explicitOnly=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "There are two permission types: explicit and implicit. Permissions specifically assigned to the content item are explicit. Permissions derived from a parent content item, like a folder are implicit. To return only explicit permissions set this to true.",
+                              "key": "explicitOnly",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "10c65d35-e7da-48ee-8ff2-12353c4db534",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) The identifier of the content item."
+                            }
+                          ]
+                        },
+                        "description": "Returns content permissions of a content item with the given identifier."
+                      },
+                      "response": [
+                        {
+                          "id": "3c0eda50-e16a-4487-96d3-ad6c9f91802e",
+                          "name": "A list of permissions for the requested content item.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/permissions?explicitOnly=false",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "permissions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "There are two permission types: explicit and implicit. Permissions specifically assigned to the content item are explicit. Permissions derived from a parent content item, like a folder are implicit. To return only explicit permissions set this to true.",
+                                  "key": "explicitOnly",
+                                  "value": "false"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"explicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantEdit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"GrantView\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    }\n  ],\n  \"implicitPermissions\": [\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Edit\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"role\"\n    },\n    {\n      \"contentId\": \"<string>\",\n      \"permissionName\": \"Manage\",\n      \"sourceId\": \"<string>\",\n      \"sourceType\": \"user\"\n    }\n  ]\n}",
+                          "createdAt": "2026-10-21T21:27:12.000Z",
+                          "updatedAt": "2026-10-21T21:27:12.000Z",
+                          "uid": "35240-3c0eda50-e16a-4487-96d3-ad6c9f91802e"
+                        },
+                        {
+                          "id": "6bc18efc-9e10-4f2d-9037-544459f68ac0",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/permissions?explicitOnly=false",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "permissions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "There are two permission types: explicit and implicit. Permissions specifically assigned to the content item are explicit. Permissions derived from a parent content item, like a folder are implicit. To return only explicit permissions set this to true.",
+                                  "key": "explicitOnly",
+                                  "value": "false"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:12.000Z",
+                          "updatedAt": "2026-10-21T21:27:12.000Z",
+                          "uid": "35240-6bc18efc-9e10-4f2d-9037-544459f68ac0"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:12.000Z",
+                      "updatedAt": "2026-10-21T21:27:12.000Z",
+                      "uid": "35240-cce42a27-6954-44a8-8557-495ff1f236de"
+                    }
+                  ],
+                  "id": "a1671e4d-304e-45d2-b98b-d6b409b7e37c",
+                  "createdAt": "2026-10-21T21:27:12.000Z",
+                  "updatedAt": "2026-10-21T21:27:12.000Z",
+                  "uid": "35240-a1671e4d-304e-45d2-b98b-d6b409b7e37c"
+                }
+              ],
+              "id": "31d3377e-407a-4f29-858e-7455aa469c3f",
+              "createdAt": "2026-10-21T21:27:12.000Z",
+              "updatedAt": "2026-10-21T21:27:12.000Z",
+              "uid": "35240-31d3377e-407a-4f29-858e-7455aa469c3f"
+            }
+          ],
+          "id": "cf9566cf-380f-4b3a-ba81-6bb7a204ac16",
+          "createdAt": "2026-10-21T21:27:12.000Z",
+          "updatedAt": "2026-10-21T21:27:12.000Z",
+          "uid": "35240-cf9566cf-380f-4b3a-ba81-6bb7a204ac16"
+        }
+      ],
+      "id": "8496c9f7-b2b7-409e-9bba-cb29a11e792d",
+      "createdAt": "2026-10-21T21:27:12.000Z",
+      "updatedAt": "2026-10-21T21:27:12.000Z",
+      "uid": "35240-8496c9f7-b2b7-409e-9bba-cb29a11e792d"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

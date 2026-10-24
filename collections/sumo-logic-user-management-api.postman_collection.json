@@ -1,0 +1,1737 @@
+{
+  "info": {
+    "_postman_id": "43aaf663-d14e-4ff9-bd1f-64f52c552dcf",
+    "name": "Sumo Logic User Management API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:27.000Z",
+    "updatedAt": "2026-10-21T21:27:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-43aaf663-d14e-4ff9-bd1f-64f52c552dcf"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "email",
+                  "item": [
+                    {
+                      "name": "requestChange",
+                      "item": [
+                        {
+                          "name": "Change Email Address",
+                          "id": "4f304965-9399-4730-aa13-90be11878008",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"email\": \"<email>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/email/requestChange",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "email",
+                                "requestChange"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "21751901-339c-4c5a-ba6a-934a745de4a4",
+                                  "key": "id",
+                                  "value": "<string>",
+                                  "description": "(Required) Identifier of the user to change email address."
+                                }
+                              ]
+                            },
+                            "description": "An email with an activation link is sent to the user\u2019s new email address. The user must click the link in the email within seven days to complete the email address change, or the link will expire."
+                          },
+                          "response": [
+                            {
+                              "id": "9d6816e9-d8e2-4172-a4ee-7f8aea911810",
+                              "name": "Email change request was submitted successfully.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"email\": \"<email>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/email/requestChange",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "email",
+                                    "requestChange"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-9d6816e9-d8e2-4172-a4ee-7f8aea911810"
+                            },
+                            {
+                              "id": "eb2228ab-8aa4-468b-89aa-06c1607fb237",
+                              "name": "Operation failed with an error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"email\": \"<email>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/email/requestChange",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "email",
+                                    "requestChange"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-eb2228ab-8aa4-468b-89aa-06c1607fb237"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-4f304965-9399-4730-aa13-90be11878008"
+                        }
+                      ],
+                      "id": "c648f88d-b600-4109-877e-5284d5a4209e",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-c648f88d-b600-4109-877e-5284d5a4209e"
+                    }
+                  ],
+                  "id": "81a1bda8-0c65-49da-88f8-925eb0bc3407",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-81a1bda8-0c65-49da-88f8-925eb0bc3407"
+                },
+                {
+                  "name": "password",
+                  "item": [
+                    {
+                      "name": "reset",
+                      "item": [
+                        {
+                          "name": "Reset Password",
+                          "id": "d1ac8776-090b-4f4e-8240-3aa94b9df2a4",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/password/reset",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "password",
+                                "reset"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "4675d5af-b9f6-4bca-b073-5f080c876644",
+                                  "key": "id",
+                                  "value": "<string>",
+                                  "description": "(Required) Identifier of the user to reset password."
+                                }
+                              ]
+                            },
+                            "description": "Reset a user's password."
+                          },
+                          "response": [
+                            {
+                              "id": "15d40a69-c5f3-4432-86c1-36e5e6b24e13",
+                              "name": "User's password was reset successfully.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/password/reset",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "password",
+                                    "reset"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-15d40a69-c5f3-4432-86c1-36e5e6b24e13"
+                            },
+                            {
+                              "id": "87429419-3c96-48f8-9de5-70a29bd2205c",
+                              "name": "Operation failed with an error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/password/reset",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "password",
+                                    "reset"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-87429419-3c96-48f8-9de5-70a29bd2205c"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-d1ac8776-090b-4f4e-8240-3aa94b9df2a4"
+                        }
+                      ],
+                      "id": "5fa916a4-5026-46a8-b9d6-d9347ef0157a",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-5fa916a4-5026-46a8-b9d6-d9347ef0157a"
+                    }
+                  ],
+                  "id": "7e74e74e-a3c6-4e91-918c-2e8f84b36509",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-7e74e74e-a3c6-4e91-918c-2e8f84b36509"
+                },
+                {
+                  "name": "unlock",
+                  "item": [
+                    {
+                      "name": "Unlock A User",
+                      "id": "6f4dff69-599b-4165-922b-e45c8029063e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id/unlock",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id",
+                            "unlock"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c91457f6-c90a-439f-9a3f-d59821a1dcb1",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) The id of the user that needs to be unlocked."
+                            }
+                          ]
+                        },
+                        "description": "Unlock another user's account."
+                      },
+                      "response": [
+                        {
+                          "id": "77112c14-4b97-4e14-9b9f-68f7fd3ee585",
+                          "name": "User's account was unlocked successfully.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/unlock",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "unlock"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-77112c14-4b97-4e14-9b9f-68f7fd3ee585"
+                        },
+                        {
+                          "id": "06e274f5-fa16-4bc4-842b-50f32ea28a3d",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/unlock",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "unlock"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-06e274f5-fa16-4bc4-842b-50f32ea28a3d"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-6f4dff69-599b-4165-922b-e45c8029063e"
+                    }
+                  ],
+                  "id": "d8507b09-2f83-4513-9b19-de2f0530ed7f",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-d8507b09-2f83-4513-9b19-de2f0530ed7f"
+                },
+                {
+                  "name": "mfa",
+                  "item": [
+                    {
+                      "name": "disable",
+                      "item": [
+                        {
+                          "name": "Disable MFA For User",
+                          "id": "16595d84-d612-4366-98a7-c496cef65392",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/mfa/disable",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "mfa",
+                                "disable"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "28b18b11-2376-43de-b529-d851cbb62114",
+                                  "key": "id",
+                                  "value": "<string>",
+                                  "description": "(Required) Identifier of the user to disable MFA for."
+                                }
+                              ]
+                            },
+                            "description": "Disable multi-factor authentication for given user."
+                          },
+                          "response": [
+                            {
+                              "id": "199eaa0d-27b7-49de-8948-0a57a042052f",
+                              "name": "User's MFA was disabled successfully.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/mfa/disable",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "mfa",
+                                    "disable"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-199eaa0d-27b7-49de-8948-0a57a042052f"
+                            },
+                            {
+                              "id": "93911116-a7a0-4914-a610-96645de7ba8b",
+                              "name": "Operation failed with an error.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/users/:id/mfa/disable",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "users",
+                                    ":id",
+                                    "mfa",
+                                    "disable"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:28.000Z",
+                              "updatedAt": "2026-10-21T21:27:28.000Z",
+                              "uid": "35240-93911116-a7a0-4914-a610-96645de7ba8b"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-16595d84-d612-4366-98a7-c496cef65392"
+                        }
+                      ],
+                      "id": "9fcc7583-9b9f-4d6d-a204-269dd545dcc1",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-9fcc7583-9b9f-4d6d-a204-269dd545dcc1"
+                    }
+                  ],
+                  "id": "bba63d8e-50f2-4f0c-a877-364fcec221fc",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-bba63d8e-50f2-4f0c-a877-364fcec221fc"
+                },
+                {
+                  "name": "resendWelcomeEmail",
+                  "item": [
+                    {
+                      "name": "Resend Verification Email",
+                      "id": "66bae115-51cf-4c0a-933f-1be16de35893",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id/resendWelcomeEmail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id",
+                            "resendWelcomeEmail"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c9045977-150d-4cd7-ab69-667b859b7508",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Identifier of the user to resend the welcome email."
+                            }
+                          ]
+                        },
+                        "description": "Resend the welcome email to a user."
+                      },
+                      "response": [
+                        {
+                          "id": "8656ee92-e7bf-45de-b15c-61f2cad948fb",
+                          "name": "Welcome email was resent successfully.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/resendWelcomeEmail",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "resendWelcomeEmail"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-8656ee92-e7bf-45de-b15c-61f2cad948fb"
+                        },
+                        {
+                          "id": "af55063f-38ee-4d0d-903f-49efaf86f925",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/users/:id/resendWelcomeEmail",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "users",
+                                ":id",
+                                "resendWelcomeEmail"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:28.000Z",
+                          "updatedAt": "2026-10-21T21:27:28.000Z",
+                          "uid": "35240-af55063f-38ee-4d0d-903f-49efaf86f925"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-66bae115-51cf-4c0a-933f-1be16de35893"
+                    }
+                  ],
+                  "id": "59350148-b838-4b48-8d4c-a6eb7e99ac45",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-59350148-b838-4b48-8d4c-a6eb7e99ac45"
+                },
+                {
+                  "name": "Get A User",
+                  "id": "4d67222f-4a99-4f8a-bd31-176b23f69e73",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "deb2e87e-1537-4fe7-82dc-1e120c5ea633",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of user to return."
+                        }
+                      ]
+                    },
+                    "description": "Get a user with the given identifier from the organization."
+                  },
+                  "response": [
+                    {
+                      "id": "57c27a56-5c92-4beb-a4f1-5081a2e07422",
+                      "name": "User object that was requested.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"id\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"isLocked\": \"<boolean>\",\n  \"isMfaEnabled\": \"<boolean>\",\n  \"lastLoginTimestamp\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-57c27a56-5c92-4beb-a4f1-5081a2e07422"
+                    },
+                    {
+                      "id": "2c4e7f17-552b-4e8d-9461-a75fbaf33e30",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-2c4e7f17-552b-4e8d-9461-a75fbaf33e30"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-4d67222f-4a99-4f8a-bd31-176b23f69e73"
+                },
+                {
+                  "name": "Update A User",
+                  "id": "f4cb801b-ddb0-412c-a093-406ab5f70d23",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"isActive\": \"<boolean>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cdddd900-9193-42a3-8374-21ac01246909",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the user to update."
+                        }
+                      ]
+                    },
+                    "description": "Update an existing user in the organization."
+                  },
+                  "response": [
+                    {
+                      "id": "fbcb2782-742c-4064-813c-3c938176c557",
+                      "name": "The user was successfully modified.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"isActive\": \"<boolean>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"id\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"isLocked\": \"<boolean>\",\n  \"isMfaEnabled\": \"<boolean>\",\n  \"lastLoginTimestamp\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-fbcb2782-742c-4064-813c-3c938176c557"
+                    },
+                    {
+                      "id": "2a96543d-ee71-4788-95e7-982deb883831",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"isActive\": \"<boolean>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-2a96543d-ee71-4788-95e7-982deb883831"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-f4cb801b-ddb0-412c-a093-406ab5f70d23"
+                },
+                {
+                  "name": "Delete A User",
+                  "id": "d96aeb9d-12bd-49c0-a738-af94227a8356",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users/:id?transferTo=<string>&deleteContent=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users",
+                        ":id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifier of the user to receive the transfer of content from the deleted user. <br> **Note:** If `deleteContent` is not set to `true`, and no user identifier is specified in `transferTo`, content from the deleted user is transferred to the executing user.",
+                          "key": "transferTo",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Whether to delete content from the deleted user or not. <br> **Warning:** If `deleteContent` is set to `true`, all of the content for the user being deleted is permanently deleted and cannot be recovered.",
+                          "key": "deleteContent",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "f62dbd2b-2ff2-4177-8ff1-7863b46edcf8",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the user to delete."
+                        }
+                      ]
+                    },
+                    "description": "Delete a user with the given identifier from the organization and transfer their content to the user with the identifier specified in \"transferTo\"."
+                  },
+                  "response": [
+                    {
+                      "id": "be98e0c4-9de4-4ca8-83c0-6aa30bb80fd2",
+                      "name": "User was deleted successfully.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id?transferTo=<string>&deleteContent=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Identifier of the user to receive the transfer of content from the deleted user. <br> **Note:** If `deleteContent` is not set to `true`, and no user identifier is specified in `transferTo`, content from the deleted user is transferred to the executing user.",
+                              "key": "transferTo",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Whether to delete content from the deleted user or not. <br> **Warning:** If `deleteContent` is set to `true`, all of the content for the user being deleted is permanently deleted and cannot be recovered.",
+                              "key": "deleteContent",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-be98e0c4-9de4-4ca8-83c0-6aa30bb80fd2"
+                    },
+                    {
+                      "id": "eee20ab6-1de1-4e5e-9b0f-d14b82aae414",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/users/:id?transferTo=<string>&deleteContent=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "users",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Identifier of the user to receive the transfer of content from the deleted user. <br> **Note:** If `deleteContent` is not set to `true`, and no user identifier is specified in `transferTo`, content from the deleted user is transferred to the executing user.",
+                              "key": "transferTo",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Whether to delete content from the deleted user or not. <br> **Warning:** If `deleteContent` is set to `true`, all of the content for the user being deleted is permanently deleted and cannot be recovered.",
+                              "key": "deleteContent",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:28.000Z",
+                      "updatedAt": "2026-10-21T21:27:28.000Z",
+                      "uid": "35240-eee20ab6-1de1-4e5e-9b0f-d14b82aae414"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-d96aeb9d-12bd-49c0-a738-af94227a8356"
+                }
+              ],
+              "id": "c92bea7d-e373-4a53-b162-c36a35630fd9",
+              "createdAt": "2026-10-21T21:27:28.000Z",
+              "updatedAt": "2026-10-21T21:27:28.000Z",
+              "uid": "35240-c92bea7d-e373-4a53-b162-c36a35630fd9"
+            },
+            {
+              "name": "Get A List Of Users",
+              "id": "7ea12618-6edf-4a7d-ab6c-38e0188d50b1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/users?limit=100&token=<string>&sortBy=<string>&email=<string>&includeServiceAccounts=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of users returned in the response. The number of users returned may be less than the `limit`.",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort the list of users by the `firstName`, `lastName`, or `email` field.",
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Find user with the given email address.",
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Include service accounts while listing users within the organization.",
+                      "key": "includeServiceAccounts",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "Get a list of all users in the organization. The response is paginated with a default limit of 100 users per page."
+              },
+              "response": [
+                {
+                  "id": "5f82e421-2a3c-4ca1-b932-4f8826d07ac2",
+                  "name": "A paginated list of users in the organization.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users?limit=100&token=<string>&sortBy=<string>&email=<string>&includeServiceAccounts=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users"
+                      ],
+                      "query": [
+                        {
+                          "description": "Limit the number of users returned in the response. The number of users returned may be less than the `limit`.",
+                          "key": "limit",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                          "key": "token",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Sort the list of users by the `firstName`, `lastName`, or `email` field.",
+                          "key": "sortBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Find user with the given email address.",
+                          "key": "email",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Include service accounts while listing users within the organization.",
+                          "key": "includeServiceAccounts",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"email\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"roleIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isActive\": \"<boolean>\",\n      \"isLocked\": \"<boolean>\",\n      \"isMfaEnabled\": \"<boolean>\",\n      \"lastLoginTimestamp\": \"<dateTime>\"\n    },\n    {\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"email\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"roleIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isActive\": \"<boolean>\",\n      \"isLocked\": \"<boolean>\",\n      \"isMfaEnabled\": \"<boolean>\",\n      \"lastLoginTimestamp\": \"<dateTime>\"\n    }\n  ],\n  \"next\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-5f82e421-2a3c-4ca1-b932-4f8826d07ac2"
+                },
+                {
+                  "id": "9d297329-e393-4b3e-bd16-124fec50d3ea",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users?limit=100&token=<string>&sortBy=<string>&email=<string>&includeServiceAccounts=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users"
+                      ],
+                      "query": [
+                        {
+                          "description": "Limit the number of users returned in the response. The number of users returned may be less than the `limit`.",
+                          "key": "limit",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                          "key": "token",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Sort the list of users by the `firstName`, `lastName`, or `email` field.",
+                          "key": "sortBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Find user with the given email address.",
+                          "key": "email",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Include service accounts while listing users within the organization.",
+                          "key": "includeServiceAccounts",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-9d297329-e393-4b3e-bd16-124fec50d3ea"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:28.000Z",
+              "updatedAt": "2026-10-21T21:27:28.000Z",
+              "uid": "35240-7ea12618-6edf-4a7d-ab6c-38e0188d50b1"
+            },
+            {
+              "name": "Create A New User",
+              "id": "f22256f0-259c-4338-bfe2-25273dd35ada",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "users"
+                  ]
+                },
+                "description": "Create a new user in the organization."
+              },
+              "response": [
+                {
+                  "id": "59be8a9c-f733-4550-8424-70caa806c03e",
+                  "name": "The user has been created.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"id\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"isLocked\": \"<boolean>\",\n  \"isMfaEnabled\": \"<boolean>\",\n  \"lastLoginTimestamp\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-59be8a9c-f733-4550-8424-70caa806c03e"
+                },
+                {
+                  "id": "79970d44-75bf-4755-9084-4ed6e0cf8e29",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"roleIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "users"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:28.000Z",
+                  "updatedAt": "2026-10-21T21:27:28.000Z",
+                  "uid": "35240-79970d44-75bf-4755-9084-4ed6e0cf8e29"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:28.000Z",
+              "updatedAt": "2026-10-21T21:27:28.000Z",
+              "uid": "35240-f22256f0-259c-4338-bfe2-25273dd35ada"
+            }
+          ],
+          "id": "ca16adf5-a5ca-49e0-a9c2-fa6712b4c2dc",
+          "createdAt": "2026-10-21T21:27:28.000Z",
+          "updatedAt": "2026-10-21T21:27:28.000Z",
+          "uid": "35240-ca16adf5-a5ca-49e0-a9c2-fa6712b4c2dc"
+        }
+      ],
+      "id": "cd9aeb1d-20e5-40b3-80f7-079826ff5879",
+      "createdAt": "2026-10-21T21:27:28.000Z",
+      "updatedAt": "2026-10-21T21:27:28.000Z",
+      "uid": "35240-cd9aeb1d-20e5-40b3-80f7-079826ff5879"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

@@ -1,412 +1,386 @@
 {
+  "info": {
+    "_postman_id": "6be94783-0e84-4022-a27f-7d38d94e0c98",
+    "name": "Sumo Logic REST Collectors API",
+    "description": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform.\n\nContact Support:\n Name: Sumo Logic Help",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:26:44.000Z",
+    "updatedAt": "2026-10-21T21:26:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6be94783-0e84-4022-a27f-7d38d94e0c98"
+  },
   "item": [
     {
-      "id": "dac90c69-db10-4d20-aa3b-7298fab19fa5",
-      "name": "Collectors",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "555471a3-4c19-4b2e-a0f3-8f9e829eb7ac",
-          "name": "List collectors",
-          "request": {
-            "name": "List collectors",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "collectors"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "collectors",
+          "item": [
             {
-              "id": "b325a352-80c7-406c-9646-308ff51f2270",
-              "name": "A list of collectors",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "collectors"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{id}",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "Get a collector",
+                  "id": "6b5610f5-f13e-4240-8ce2-0777d3abc16e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/collectors/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "collectors",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b349b27f-457c-4dcb-a43d-26d6cbd90012",
+                          "key": "id",
+                          "value": "<long>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "08b6691d-13bb-49fc-b812-c01480e51887",
+                      "name": "A collector",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/collectors/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "collectors",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:45.000Z",
+                      "updatedAt": "2026-10-21T21:26:45.000Z",
+                      "uid": "35240-08b6691d-13bb-49fc-b812-c01480e51887"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:45.000Z",
+                  "updatedAt": "2026-10-21T21:26:45.000Z",
+                  "uid": "35240-6b5610f5-f13e-4240-8ce2-0777d3abc16e"
+                },
+                {
+                  "name": "Update a collector",
+                  "id": "3ef130bb-d583-49e0-b9e3-acbf0745183d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/collectors/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "collectors",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "3b9c4e21-6877-40d9-8f8d-c4e14ceb5c39",
+                          "key": "id",
+                          "value": "<long>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "2343a5cc-56e7-40af-b4e8-485ed207c24d",
+                      "name": "The updated collector",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/collectors/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "collectors",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:45.000Z",
+                      "updatedAt": "2026-10-21T21:26:45.000Z",
+                      "uid": "35240-2343a5cc-56e7-40af-b4e8-485ed207c24d"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:45.000Z",
+                  "updatedAt": "2026-10-21T21:26:45.000Z",
+                  "uid": "35240-3ef130bb-d583-49e0-b9e3-acbf0745183d"
+                },
+                {
+                  "name": "Delete a collector",
+                  "id": "63ebdc49-85c5-45a3-a020-4106c707c08a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/collectors/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "collectors",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "076b7b87-dcd2-4c5f-b297-8428eaa49510",
+                          "key": "id",
+                          "value": "<long>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "70dd77a6-291c-4dfe-8343-2da9f7301c31",
+                      "name": "Collector deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/collectors/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "collectors",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:45.000Z",
+                      "updatedAt": "2026-10-21T21:26:45.000Z",
+                      "uid": "35240-70dd77a6-291c-4dfe-8343-2da9f7301c31"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:45.000Z",
+                  "updatedAt": "2026-10-21T21:26:45.000Z",
+                  "uid": "35240-63ebdc49-85c5-45a3-a020-4106c707c08a"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "7a17fbaa-c11a-4bca-ad1a-90c52bab4b7b",
-          "name": "Create a collector",
-          "request": {
-            "name": "Create a collector",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "collectors"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
+              "id": "b6a5dd85-3b0d-45f6-a218-14ca4e3f7bd8",
+              "createdAt": "2026-10-21T21:26:45.000Z",
+              "updatedAt": "2026-10-21T21:26:45.000Z",
+              "uid": "35240-b6a5dd85-3b0d-45f6-a218-14ca4e3f7bd8"
             },
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "edbbb631-19ef-4132-81f6-625e31c659ee",
-              "name": "The created collector",
-              "originalRequest": {
+              "name": "List collectors",
+              "id": "41e54999-3193-4588-851c-8b19c8eb4575",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
                 "url": {
-                  "path": [
-                    "v1",
-                    "collectors"
-                  ],
+                  "raw": "{{baseUrl}}/v1/collectors",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
+                  "path": [
+                    "v1",
+                    "collectors"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "9af506d6-fdeb-4a50-a94f-df8d3d7ba7e3",
+                  "name": "A list of collectors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/collectors",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "collectors"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T21:26:45.000Z",
+                  "updatedAt": "2026-10-21T21:26:45.000Z",
+                  "uid": "35240-9af506d6-fdeb-4a50-a94f-df8d3d7ba7e3"
+                }
+              ],
+              "createdAt": "2026-10-21T21:26:45.000Z",
+              "updatedAt": "2026-10-21T21:26:45.000Z",
+              "uid": "35240-41e54999-3193-4588-851c-8b19c8eb4575"
+            },
+            {
+              "name": "Create a collector",
+              "id": "0e0330c3-c9b2-4d1d-a780-c6b20a7c6670",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
                 "method": "POST",
-                "body": {}
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "47885d23-0480-4e76-939e-85cb498338c7",
-          "name": "Get a collector",
-          "request": {
-            "name": "Get a collector",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "collectors",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<long>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "fc8f2a2b-9a57-4a0e-93ad-b08fb0cc3787",
-              "name": "A collector",
-              "originalRequest": {
+                "header": [],
                 "url": {
-                  "path": [
-                    "v1",
-                    "collectors",
-                    ":id"
-                  ],
+                  "raw": "{{baseUrl}}/v1/collectors",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<long>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a8f8fc04-d5e7-4b61-8107-855d6c8c65f4",
-          "name": "Update a collector",
-          "request": {
-            "name": "Update a collector",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "collectors",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<long>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "PUT",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "6eb3cef8-27ab-4682-aaa2-1289bf80020e",
-              "name": "The updated collector",
-              "originalRequest": {
-                "url": {
                   "path": [
                     "v1",
-                    "collectors",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<long>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
+                    "collectors"
                   ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "PUT",
-                "body": {}
+                }
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "id": "929017f5-9ba3-44b0-aacf-a19f5ca72ccb",
+                  "name": "The created collector",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/collectors",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "collectors"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T21:26:45.000Z",
+                  "updatedAt": "2026-10-21T21:26:45.000Z",
+                  "uid": "35240-929017f5-9ba3-44b0-aacf-a19f5ca72ccb"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "createdAt": "2026-10-21T21:26:45.000Z",
+              "updatedAt": "2026-10-21T21:26:45.000Z",
+              "uid": "35240-0e0330c3-c9b2-4d1d-a780-c6b20a7c6670"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "de77b896-f685-418c-ab5f-bbcc2e4e4faf",
-          "name": "Delete a collector",
-          "request": {
-            "name": "Delete a collector",
-            "description": {},
-            "url": {
-              "path": [
-                "v1",
-                "collectors",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<long>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "7e0bede5-059f-4328-b5fa-cfd5760a7299",
-              "name": "Collector deleted",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "collectors",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<long>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "e4834999-7d10-4b01-af36-0aa9e56ade3d",
+          "createdAt": "2026-10-21T21:26:45.000Z",
+          "updatedAt": "2026-10-21T21:26:45.000Z",
+          "uid": "35240-e4834999-7d10-4b01-af36-0aa9e56ade3d"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.sumologic.com/api",
-      "key": "baseUrl"
+      "id": "5ace7dde-d5e8-4da4-acd0-efbdcfc1a517",
+      "createdAt": "2026-10-21T21:26:45.000Z",
+      "updatedAt": "2026-10-21T21:26:45.000Z",
+      "uid": "35240-5ace7dde-d5e8-4da4-acd0-efbdcfc1a517"
     }
   ],
   "auth": {
@@ -414,21 +388,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "22b13e4b-bf95-46f5-9ae8-f57a45f246c9",
-    "name": "Sumo Logic REST Collectors API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Sumo Logic is a cloud-native log analytics, observability, and security\nplatform. The REST API exposes search jobs, dashboards, metrics, monitors and\nalerts, content management, roles, users, collectors, connections, partitions,\nlookup tables, SAML configuration, traces, and Cloud SIEM / Cloud SOAR.\n\nSumo Logic operates multiple regional deployments. Each deployment exposes a\ndeployment-specific API endpoint; the `servers` section below enumerates them.\nAuthentication uses HTTP Basic with the Access ID as username and Access Key as\npassword, or service-account credentials.\n\n\nContact Support:\n Name: Sumo Logic Help",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sumologic.com/api"
     }
-  }
+  ]
 }

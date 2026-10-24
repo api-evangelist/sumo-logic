@@ -1,0 +1,1079 @@
+{
+  "info": {
+    "_postman_id": "0c31b705-5479-4e10-9314-5e46cd901b58",
+    "name": "Sumo Logic SCIM User Management API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:24.000Z",
+    "updatedAt": "2026-10-21T21:27:24.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0c31b705-5479-4e10-9314-5e46cd901b58"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "scim",
+          "item": [
+            {
+              "name": "Users",
+              "item": [
+                {
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "Get A SCIM User",
+                      "id": "65b65998-9096-4318-8511-1e186afdd617",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "b965015d-a498-47ba-babc-273627142a0c",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the SCIM user"
+                            }
+                          ]
+                        },
+                        "description": "Fetches the details of a SCIM user by their unique identifier"
+                      },
+                      "response": [
+                        {
+                          "id": "7c643fe6-9d50-4bcd-b8bd-cca1a53f018d",
+                          "name": "User details retrieved successfully",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"emails\": [\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    },\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    }\n  ],\n  \"id\": \"<string>\",\n  \"name\": {\n    \"familyName\": \"<string>\",\n    \"givenName\": \"<string>\"\n  },\n  \"roles\": [],\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\",\n    \"created\": \"<dateTime>\",\n    \"lastModified\": \"<dateTime>\"\n  }\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-7c643fe6-9d50-4bcd-b8bd-cca1a53f018d"
+                        },
+                        {
+                          "id": "01e836b6-9160-4d3f-b800-e495985b1f11",
+                          "name": "Operation failed with an error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-01e836b6-9160-4d3f-b800-e495985b1f11"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-65b65998-9096-4318-8511-1e186afdd617"
+                    },
+                    {
+                      "name": "Update SCIM User",
+                      "id": "d755b3ed-7774-4ae7-b41b-b7990a632908",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "219cc9b4-6a1d-4f60-aa21-0c51564344d5",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the SCIM user"
+                            }
+                          ]
+                        },
+                        "description": "Updates an existing user's attributes in the SCIM system"
+                      },
+                      "response": [
+                        {
+                          "id": "8fea4413-e248-40db-8d7e-2bd3bf105200",
+                          "name": "The user has been updated successfully",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"emails\": [\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    },\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    }\n  ],\n  \"id\": \"<string>\",\n  \"name\": {\n    \"familyName\": \"<string>\",\n    \"givenName\": \"<string>\"\n  },\n  \"roles\": [],\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\",\n    \"created\": \"<dateTime>\",\n    \"lastModified\": \"<dateTime>\"\n  }\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-8fea4413-e248-40db-8d7e-2bd3bf105200"
+                        },
+                        {
+                          "id": "21a28acc-a780-4bbb-88ad-769ea03e3ec9",
+                          "name": "Operation failed with an error",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-21a28acc-a780-4bbb-88ad-769ea03e3ec9"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-d755b3ed-7774-4ae7-b41b-b7990a632908"
+                    },
+                    {
+                      "name": "Delete SCIM User",
+                      "id": "1f59ce3c-09d2-49cf-b083-f5fd4b197861",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "29f0ddde-6996-427f-8e1c-223fa81a52b6",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the SCIM user to delete"
+                            }
+                          ]
+                        },
+                        "description": "Deletes a SCIM user by their unique identifier"
+                      },
+                      "response": [
+                        {
+                          "id": "70f2dfbf-596d-480b-b592-5298f1bdd470",
+                          "name": "User was deleted successfully",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-70f2dfbf-596d-480b-b592-5298f1bdd470"
+                        },
+                        {
+                          "id": "22e28e52-846e-454c-b84f-702805f59b40",
+                          "name": "Operation failed with an error",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-22e28e52-846e-454c-b84f-702805f59b40"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-1f59ce3c-09d2-49cf-b083-f5fd4b197861"
+                    },
+                    {
+                      "name": "Update SCIM User Attributes",
+                      "id": "f6018774-152d-4629-95f5-b45d7fc5d65b",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "e0c74d8b-be3e-4a28-b557-9790625de056",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the SCIM user"
+                            }
+                          ]
+                        },
+                        "description": "Updates specific attributes of an existing user in the SCIM system"
+                      },
+                      "response": [
+                        {
+                          "id": "b37334fa-eba5-42c6-8325-0a805cac2058",
+                          "name": "The user attributes updated successfully",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"emails\": [\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    },\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    }\n  ],\n  \"id\": \"<string>\",\n  \"name\": {\n    \"familyName\": \"<string>\",\n    \"givenName\": \"<string>\"\n  },\n  \"roles\": [],\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\",\n    \"created\": \"<dateTime>\",\n    \"lastModified\": \"<dateTime>\"\n  }\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-b37334fa-eba5-42c6-8325-0a805cac2058"
+                        },
+                        {
+                          "id": "8d8de94b-3aaf-4847-bd53-946c77eb1b4a",
+                          "name": "Operation failed with an error",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/scim+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/scim/Users/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "scim",
+                                "Users",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:25.000Z",
+                          "updatedAt": "2026-10-21T21:27:25.000Z",
+                          "uid": "35240-8d8de94b-3aaf-4847-bd53-946c77eb1b4a"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-f6018774-152d-4629-95f5-b45d7fc5d65b"
+                    }
+                  ],
+                  "id": "a10e726e-61d8-4e29-96d2-df7f7b9480be",
+                  "createdAt": "2026-10-21T21:27:24.000Z",
+                  "updatedAt": "2026-10-21T21:27:24.000Z",
+                  "uid": "35240-a10e726e-61d8-4e29-96d2-df7f7b9480be"
+                },
+                {
+                  "name": "List SCIM Users",
+                  "id": "99d0b8ce-5725-4c8d-87c1-717c5ad5b1b6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/scim+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/scim/Users?startIndex=1&count=100&filter=<string>&sortOrder=descending&sortBy=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "scim",
+                        "Users"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the first result to return. Defaults to 1 if not specified, a value less than 1 SHALL be interpreted as 1",
+                          "key": "startIndex",
+                          "value": "1"
+                        },
+                        {
+                          "description": "The maximum number of results to return. Defaults to 100",
+                          "key": "count",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Find user with the given email address",
+                          "key": "filter",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The sort order. Use \"ascending\" or \"descending\"",
+                          "key": "sortOrder",
+                          "value": "descending"
+                        },
+                        {
+                          "description": "Sort the list of users by the `givenName`, `familyName`, or `emails` field",
+                          "key": "sortBy",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a list of users in the SCIM system, with optional pagination"
+                  },
+                  "response": [
+                    {
+                      "id": "d78c9443-7113-48e2-982e-e3f0c9f4426a",
+                      "name": "A paginated list of users in the organization",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users?startIndex=1&count=100&filter=<string>&sortOrder=descending&sortBy=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users"
+                          ],
+                          "query": [
+                            {
+                              "description": "The index of the first result to return. Defaults to 1 if not specified, a value less than 1 SHALL be interpreted as 1",
+                              "key": "startIndex",
+                              "value": "1"
+                            },
+                            {
+                              "description": "The maximum number of results to return. Defaults to 100",
+                              "key": "count",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Find user with the given email address",
+                              "key": "filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The sort order. Use \"ascending\" or \"descending\"",
+                              "key": "sortOrder",
+                              "value": "descending"
+                            },
+                            {
+                              "description": "Sort the list of users by the `givenName`, `familyName`, or `emails` field",
+                              "key": "sortBy",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-d78c9443-7113-48e2-982e-e3f0c9f4426a"
+                    },
+                    {
+                      "id": "38844cb7-5e27-4a4b-a803-c2991a377414",
+                      "name": "Operation failed with an error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users?startIndex=1&count=100&filter=<string>&sortOrder=descending&sortBy=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users"
+                          ],
+                          "query": [
+                            {
+                              "description": "The index of the first result to return. Defaults to 1 if not specified, a value less than 1 SHALL be interpreted as 1",
+                              "key": "startIndex",
+                              "value": "1"
+                            },
+                            {
+                              "description": "The maximum number of results to return. Defaults to 100",
+                              "key": "count",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Find user with the given email address",
+                              "key": "filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The sort order. Use \"ascending\" or \"descending\"",
+                              "key": "sortOrder",
+                              "value": "descending"
+                            },
+                            {
+                              "description": "Sort the list of users by the `givenName`, `familyName`, or `emails` field",
+                              "key": "sortBy",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-38844cb7-5e27-4a4b-a803-c2991a377414"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:25.000Z",
+                  "updatedAt": "2026-10-21T21:27:25.000Z",
+                  "uid": "35240-99d0b8ce-5725-4c8d-87c1-717c5ad5b1b6"
+                },
+                {
+                  "name": "Create SCIM User",
+                  "id": "a0e0cec7-91b3-47ac-8b53-e8ddb6f042c2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/scim+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/scim/Users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "scim",
+                        "Users"
+                      ]
+                    },
+                    "description": "Creates a new user in the SCIM system"
+                  },
+                  "response": [
+                    {
+                      "id": "0d903596-a7a0-4a87-b557-ea2b1d72868c",
+                      "name": "The user has been created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"emails\": [\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    },\n    {\n      \"value\": \"<email>\",\n      \"type\": \"<string>\",\n      \"primary\": true\n    }\n  ],\n  \"id\": \"<string>\",\n  \"name\": {\n    \"familyName\": \"<string>\",\n    \"givenName\": \"<string>\"\n  },\n  \"roles\": [],\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\",\n    \"created\": \"<dateTime>\",\n    \"lastModified\": \"<dateTime>\"\n  }\n}",
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-0d903596-a7a0-4a87-b557-ea2b1d72868c"
+                    },
+                    {
+                      "id": "1d528b66-0eaf-4083-8dc2-657e665d5ccc",
+                      "name": "Operation failed with an error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/scim+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"totalResults\": \"<integer>\",\n  \"startIndex\": 0,\n  \"itemsPerPage\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    },\n    {\n      \"emails\": [\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        },\n        {\n          \"value\": \"<email>\",\n          \"type\": \"<string>\",\n          \"primary\": true\n        }\n      ],\n      \"id\": \"<string>\",\n      \"name\": {\n        \"familyName\": \"<string>\",\n        \"givenName\": \"<string>\"\n      },\n      \"roles\": [],\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"userName\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\",\n        \"created\": \"<dateTime>\",\n        \"lastModified\": \"<dateTime>\"\n      }\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/scim/Users",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "scim",
+                            "Users"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<integer>\",\n  \"scimType\": \"<string>\",\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:25.000Z",
+                      "updatedAt": "2026-10-21T21:27:25.000Z",
+                      "uid": "35240-1d528b66-0eaf-4083-8dc2-657e665d5ccc"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:25.000Z",
+                  "updatedAt": "2026-10-21T21:27:25.000Z",
+                  "uid": "35240-a0e0cec7-91b3-47ac-8b53-e8ddb6f042c2"
+                }
+              ],
+              "id": "c1c65372-0c21-43e2-bb44-3aef78119b82",
+              "createdAt": "2026-10-21T21:27:24.000Z",
+              "updatedAt": "2026-10-21T21:27:24.000Z",
+              "uid": "35240-c1c65372-0c21-43e2-bb44-3aef78119b82"
+            }
+          ],
+          "id": "f7aefeeb-8215-4ef9-9b4d-91d5a7ebda69",
+          "createdAt": "2026-10-21T21:27:24.000Z",
+          "updatedAt": "2026-10-21T21:27:24.000Z",
+          "uid": "35240-f7aefeeb-8215-4ef9-9b4d-91d5a7ebda69"
+        }
+      ],
+      "id": "ae360fd6-836f-4fcf-a636-9f1fe5cb6052",
+      "createdAt": "2026-10-21T21:27:24.000Z",
+      "updatedAt": "2026-10-21T21:27:24.000Z",
+      "uid": "35240-ae360fd6-836f-4fcf-a636-9f1fe5cb6052"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

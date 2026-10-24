@@ -1,0 +1,1248 @@
+{
+  "info": {
+    "_postman_id": "c7fe7e7f-8a74-42c3-b342-a1562c895207",
+    "name": "Sumo Logic Connection Management API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:04.000Z",
+    "updatedAt": "2026-10-21T21:27:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c7fe7e7f-8a74-42c3-b342-a1562c895207"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "connections",
+          "item": [
+            {
+              "name": "test",
+              "item": [
+                {
+                  "name": "Test A New Connection Url",
+                  "id": "1efe4d58-c8a8-445c-ad54-01cf52b27dad",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections/test?functionalities=alert&connectionId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections",
+                        "test"
+                      ],
+                      "query": [
+                        {
+                          "description": "A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`.",
+                          "key": "functionalities",
+                          "value": "alert"
+                        },
+                        {
+                          "description": "Unique identifier of an existing connection to test. It should be provided when the request body of an existing connection contains masked authorization headers. If not provided, the authorization headers will not be correctly unmasked, and the test may fail due to unauthorized access.",
+                          "key": "connectionId",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Test a new connection url is valid and can connect."
+                  },
+                  "response": [
+                    {
+                      "id": "05dee3a4-30eb-4f51-885f-38b1b99d3b3f",
+                      "name": "The connection url has been tested.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/test?functionalities=alert&connectionId=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            "test"
+                          ],
+                          "query": [
+                            {
+                              "description": "A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`.",
+                              "key": "functionalities",
+                              "value": "alert"
+                            },
+                            {
+                              "description": "Unique identifier of an existing connection to test. It should be provided when the request body of an existing connection contains masked authorization headers. If not provided, the authorization headers will not be correctly unmasked, and the test may fail due to unauthorized access.",
+                              "key": "connectionId",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"responseContent\": \"<string>\",\n  \"statusCode\": \"<integer>\",\n  \"alertStatusCode\": \"<integer>\",\n  \"alertResponseContent\": \"<string>\",\n  \"resolutionStatusCode\": \"<integer>\",\n  \"resolutionResponseContent\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-05dee3a4-30eb-4f51-885f-38b1b99d3b3f"
+                    },
+                    {
+                      "id": "37c235f9-17a9-4203-bbd2-016ccb4e0685",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/test?functionalities=alert&connectionId=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            "test"
+                          ],
+                          "query": [
+                            {
+                              "description": "A comma-separated functionalities of webhook payload to test. Acceptable values: `alert`, `resolution`.",
+                              "key": "functionalities",
+                              "value": "alert"
+                            },
+                            {
+                              "description": "Unique identifier of an existing connection to test. It should be provided when the request body of an existing connection contains masked authorization headers. If not provided, the authorization headers will not be correctly unmasked, and the test may fail due to unauthorized access.",
+                              "key": "connectionId",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-37c235f9-17a9-4203-bbd2-016ccb4e0685"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-1efe4d58-c8a8-445c-ad54-01cf52b27dad"
+                }
+              ],
+              "id": "30d300ac-6e83-42f5-9489-9edee93318ce",
+              "createdAt": "2026-10-21T21:27:05.000Z",
+              "updatedAt": "2026-10-21T21:27:05.000Z",
+              "uid": "35240-30d300ac-6e83-42f5-9489-9edee93318ce"
+            },
+            {
+              "name": "incidentTemplates",
+              "item": [
+                {
+                  "name": "Get Incident Templates For CloudSOAR Connections",
+                  "id": "74c7714c-0299-4d26-b214-1930cf909e8b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"url\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"connectionId\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections/incidentTemplates",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections",
+                        "incidentTemplates"
+                      ]
+                    },
+                    "description": "Get incident templates for CloudSOAR connections."
+                  },
+                  "response": [
+                    {
+                      "id": "b39c4f88-d6c9-4bef-9e2a-db322358a1d4",
+                      "name": "A list of the incident templates for the given CloudSOAR account.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"url\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"connectionId\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/incidentTemplates",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            "incidentTemplates"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"templates\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-b39c4f88-d6c9-4bef-9e2a-db322358a1d4"
+                    },
+                    {
+                      "id": "47469bf7-563f-40e5-bb21-2037a7a3a9ab",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"url\": \"<string>\",\n  \"authHeader\": \"<string>\",\n  \"connectionId\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/incidentTemplates",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            "incidentTemplates"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-47469bf7-563f-40e5-bb21-2037a7a3a9ab"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-74c7714c-0299-4d26-b214-1930cf909e8b"
+                }
+              ],
+              "id": "b8521945-2c20-438a-8eff-adcbe6b0e5b8",
+              "createdAt": "2026-10-21T21:27:05.000Z",
+              "updatedAt": "2026-10-21T21:27:05.000Z",
+              "uid": "35240-b8521945-2c20-438a-8eff-adcbe6b0e5b8"
+            },
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Get A Connection",
+                  "id": "0912124e-78c7-4298-8c20-89e8b9a8368c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections/:id?type=WebhookConnection",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections",
+                        ":id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                          "key": "type",
+                          "value": "WebhookConnection"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "e29375e2-d153-4292-bcfb-5c911837c9a8",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of connection to return."
+                        }
+                      ]
+                    },
+                    "description": "Get a connection with the given identifier."
+                  },
+                  "response": [
+                    {
+                      "id": "e7d0f69c-3ae3-468c-999a-47db9666fc4a",
+                      "name": "Connection object that was requested.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id?type=WebhookConnection",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                              "key": "type",
+                              "value": "WebhookConnection"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-e7d0f69c-3ae3-468c-999a-47db9666fc4a"
+                    },
+                    {
+                      "id": "0064c24c-87f8-42ad-a6b8-54f1317ceb90",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id?type=WebhookConnection",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Type of connection to return. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                              "key": "type",
+                              "value": "WebhookConnection"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-0064c24c-87f8-42ad-a6b8-54f1317ceb90"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-0912124e-78c7-4298-8c20-89e8b9a8368c"
+                },
+                {
+                  "name": "Update A Connection",
+                  "id": "beaa1013-1040-4cd7-a90c-215517363b7d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d1c37818-f0df-412d-97e2-8f18aeab6174",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the connection to update."
+                        }
+                      ]
+                    },
+                    "description": "Update an existing connection."
+                  },
+                  "response": [
+                    {
+                      "id": "cc1e88b5-29f2-455f-bbfb-5be0178f09e7",
+                      "name": "The connection was successfully modified.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-cc1e88b5-29f2-455f-bbfb-5be0178f09e7"
+                    },
+                    {
+                      "id": "aeda8140-66cc-4c1f-9b9b-4ba1e25536a1",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-aeda8140-66cc-4c1f-9b9b-4ba1e25536a1"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-beaa1013-1040-4cd7-a90c-215517363b7d"
+                },
+                {
+                  "name": "Delete A Connection",
+                  "id": "d54fedc9-4353-4dbd-b3c0-0f3c6776fe82",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections/:id?type=ServiceNowConnection",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections",
+                        ":id"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                          "key": "type",
+                          "value": "ServiceNowConnection"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "c1775421-04dd-4cb6-a798-dc0c437ef4e9",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the connection to delete."
+                        }
+                      ]
+                    },
+                    "description": "Delete a connection with the given identifier."
+                  },
+                  "response": [
+                    {
+                      "id": "80ca2835-68b9-4c7e-ba1e-bbf7dd25fe02",
+                      "name": "Connection was deleted successfully.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id?type=ServiceNowConnection",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                              "key": "type",
+                              "value": "ServiceNowConnection"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-80ca2835-68b9-4c7e-ba1e-bbf7dd25fe02"
+                    },
+                    {
+                      "id": "d09e331d-6010-4880-885a-2be05067cbc4",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/connections/:id?type=ServiceNowConnection",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "connections",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Type of connection to delete. Valid values are `WebhookConnection`, `ServiceNowConnection`.",
+                              "key": "type",
+                              "value": "ServiceNowConnection"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:05.000Z",
+                      "updatedAt": "2026-10-21T21:27:05.000Z",
+                      "uid": "35240-d09e331d-6010-4880-885a-2be05067cbc4"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-d54fedc9-4353-4dbd-b3c0-0f3c6776fe82"
+                }
+              ],
+              "id": "18b6757c-563d-4525-9b43-0b9b0cf2f1ce",
+              "createdAt": "2026-10-21T21:27:05.000Z",
+              "updatedAt": "2026-10-21T21:27:05.000Z",
+              "uid": "35240-18b6757c-563d-4525-9b43-0b9b0cf2f1ce"
+            },
+            {
+              "name": "Get A List Of Connections",
+              "id": "5e9557cf-6be1-40f5-ac71-74b873250d81",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/connections?limit=100&token=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "connections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of connections returned in the response. The number of connections returned may be less than the `limit`.",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                      "key": "token",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Get a list of all connections in the organization. The response is paginated with a default limit of 100 connections per page."
+              },
+              "response": [
+                {
+                  "id": "183afa42-f692-490a-9950-5f43b76d915e",
+                  "name": "A paginated list of connections in the organization.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections?limit=100&token=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections"
+                      ],
+                      "query": [
+                        {
+                          "description": "Limit the number of connections returned in the response. The number of connections returned may be less than the `limit`.",
+                          "key": "limit",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                          "key": "token",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"id\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"id\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"next\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-183afa42-f692-490a-9950-5f43b76d915e"
+                },
+                {
+                  "id": "fa816c8e-2803-48b4-b66e-cfcd56769770",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections?limit=100&token=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections"
+                      ],
+                      "query": [
+                        {
+                          "description": "Limit the number of connections returned in the response. The number of connections returned may be less than the `limit`.",
+                          "key": "limit",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Continuation token to get the next page of results. A page object with the next continuation token is returned in the response body. Subsequent GET requests should specify the continuation token to get the next page of results. `token` is set to null when no more pages are left.",
+                          "key": "token",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-fa816c8e-2803-48b4-b66e-cfcd56769770"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:05.000Z",
+              "updatedAt": "2026-10-21T21:27:05.000Z",
+              "uid": "35240-5e9557cf-6be1-40f5-ac71-74b873250d81"
+            },
+            {
+              "name": "Create A New Connection",
+              "id": "1044b7aa-54c0-402c-9b38-f401de073e9a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "connections"
+                  ]
+                },
+                "description": "Create a new connection in the organization."
+              },
+              "response": [
+                {
+                  "id": "92353b9e-1492-4010-bac3-d444601baaaa",
+                  "name": "The connection has been created.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-92353b9e-1492-4010-bac3-d444601baaaa"
+                },
+                {
+                  "id": "f3526225-c500-47fc-9ea5-4f1c83587324",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ServiceNowDefinition\",\n  \"description\": \"\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/connections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "connections"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:05.000Z",
+                  "updatedAt": "2026-10-21T21:27:05.000Z",
+                  "uid": "35240-f3526225-c500-47fc-9ea5-4f1c83587324"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:05.000Z",
+              "updatedAt": "2026-10-21T21:27:05.000Z",
+              "uid": "35240-1044b7aa-54c0-402c-9b38-f401de073e9a"
+            }
+          ],
+          "id": "b6b8b16f-0c8f-4ec7-9329-13743db9cac0",
+          "createdAt": "2026-10-21T21:27:05.000Z",
+          "updatedAt": "2026-10-21T21:27:05.000Z",
+          "uid": "35240-b6b8b16f-0c8f-4ec7-9329-13743db9cac0"
+        }
+      ],
+      "id": "cb54a7f9-7161-4ea4-96ce-39474fdf3a8d",
+      "createdAt": "2026-10-21T21:27:05.000Z",
+      "updatedAt": "2026-10-21T21:27:05.000Z",
+      "uid": "35240-cb54a7f9-7161-4ea4-96ce-39474fdf3a8d"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

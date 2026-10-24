@@ -21,12 +21,18 @@ artifacts:
   collections/sumo-logic-accesskeymanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-accesskeymanagement-api
+  collections/sumo-logic-account-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-account-management-api
   collections/sumo-logic-accountmanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
   collections/sumo-logic-accountmanagement-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
+  collections/sumo-logic-app-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-app-management-api
   collections/sumo-logic-appmanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -45,6 +51,9 @@ artifacts:
   collections/sumo-logic-archivemanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-archivemanagement-api
+  collections/sumo-logic-budget-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-budget-management-api
   collections/sumo-logic-budgetmanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -57,6 +66,9 @@ artifacts:
   collections/sumo-logic-collectors-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-collectors-api
+  collections/sumo-logic-connection-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-connection-management-api
   collections/sumo-logic-connectionmanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -69,6 +81,12 @@ artifacts:
   collections/sumo-logic-content-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-content-api
+  collections/sumo-logic-content-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-content-management-api
+  collections/sumo-logic-content-permissions-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-content-permissions-api
   collections/sumo-logic-contentmanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -111,6 +129,9 @@ artifacts:
   collections/sumo-logic-dynamicparsingrulemanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-dynamicparsingrulemanagement-api
+  collections/sumo-logic-event-analytics-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-event-analytics-api
   collections/sumo-logic-eventanalytics-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -243,6 +264,9 @@ artifacts:
   collections/sumo-logic-partitionmanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-partitionmanagement-api
+  collections/sumo-logic-password-policy-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-password-policy-api
   collections/sumo-logic-passwordpolicy-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -255,6 +279,9 @@ artifacts:
   collections/sumo-logic-policiesmanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-policiesmanagement-api
+  collections/sumo-logic-role-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-role-management-api
   collections/sumo-logic-rolemanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -291,6 +318,9 @@ artifacts:
   collections/sumo-logic-schemabasemanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-schemabasemanagement-api
+  collections/sumo-logic-scim-user-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-scim-user-management-api
   collections/sumo-logic-scimusermanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -369,6 +399,9 @@ artifacts:
   collections/sumo-logic-transformationrulemanagement-api.postman_collection.json:
     method: derived
     evidence: openapi/sumo-logic-transformationrulemanagement-api
+  collections/sumo-logic-user-management-api.postman_collection.json:
+    method: derived
+    evidence: openapi/sumo-logic-user-management-api
   collections/sumo-logic-usermanagement-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -405,6 +438,12 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/sumo-logic-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/sumo-logic-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -417,127 +456,7 @@ artifacts:
   json-structure/sumo-logic-user-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -619,6 +538,21 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   mcp/sumo-logic-mcp.yml:

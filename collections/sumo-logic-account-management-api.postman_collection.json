@@ -1,0 +1,1778 @@
+{
+  "info": {
+    "_postman_id": "94f25b40-f87b-4209-a4d5-3b023e7f0a9c",
+    "name": "Sumo Logic Account Management API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:26:54.000Z",
+    "updatedAt": "2026-10-21T21:26:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-94f25b40-f87b-4209-a4d5-3b023e7f0a9c"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "account",
+          "item": [
+            {
+              "name": "accountOwner",
+              "item": [
+                {
+                  "name": "Get The Owner Of An Account",
+                  "id": "cb6dfb52-2cc9-479e-908b-66c5ef177e2e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/accountOwner",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "accountOwner"
+                      ]
+                    },
+                    "description": "Returns the user identifier of the account owner."
+                  },
+                  "response": [
+                    {
+                      "id": "ee57166d-ef5b-49e5-a151-92603585e208",
+                      "name": "User identifier of the account owner.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/accountOwner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "accountOwner"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-ee57166d-ef5b-49e5-a151-92603585e208"
+                    },
+                    {
+                      "id": "955d4eec-09a2-4cec-87f8-3bd0831eb4a6",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/accountOwner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "accountOwner"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-955d4eec-09a2-4cec-87f8-3bd0831eb4a6"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-cb6dfb52-2cc9-479e-908b-66c5ef177e2e"
+                }
+              ],
+              "id": "c5e868f4-b935-48a5-bc04-5856476d1c93",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-c5e868f4-b935-48a5-bc04-5856476d1c93"
+            },
+            {
+              "name": "status",
+              "item": [
+                {
+                  "name": "Get Overview Of The Account Status",
+                  "id": "244eae5b-e5fe-4ec6-8b7d-687dbb979ecb",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/status",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "status"
+                      ]
+                    },
+                    "description": "Get information related to the account's plan, pricing model, expiration and payment status."
+                  },
+                  "response": [
+                    {
+                      "id": "9f3335f3-861c-4bc6-b893-763eebd7d6de",
+                      "name": "Overview of the account.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"applicationUse\": \"ALLOWED\",\n  \"canUpdatePlan\": \"<boolean>\",\n  \"planType\": \"Free\",\n  \"pricingModel\": \"credits\",\n  \"planExpirationDays\": \"<integer>\",\n  \"accountActivated\": \"<boolean>\",\n  \"totalCredits\": \"<integer>\",\n  \"logModel\": \"FlexPlusTiered\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-9f3335f3-861c-4bc6-b893-763eebd7d6de"
+                    },
+                    {
+                      "id": "eb1cd648-3cb0-463a-81f2-1bf01ff65da3",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-eb1cd648-3cb0-463a-81f2-1bf01ff65da3"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-244eae5b-e5fe-4ec6-8b7d-687dbb979ecb"
+                }
+              ],
+              "id": "ee34a25f-4796-430d-871f-d0d4567e31f1",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-ee34a25f-4796-430d-871f-d0d4567e31f1"
+            },
+            {
+              "name": "subdomain",
+              "item": [
+                {
+                  "name": "recover",
+                  "item": [
+                    {
+                      "name": "Recover Subdomains For A User",
+                      "id": "aefbde3e-a9f9-4de9-a77a-30b7ce76e5b8",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain/recover?email=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain",
+                            "recover"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Email address of the user to get subdomain information.",
+                              "key": "email",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Send an email with the subdomain information for a user with the given email address."
+                      },
+                      "response": [
+                        {
+                          "id": "303816bb-6d66-4c0c-9d19-792278b6b65e",
+                          "name": "An email containing information about associated subdomains for the given email was sent.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/account/subdomain/recover?email=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "account",
+                                "subdomain",
+                                "recover"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Email address of the user to get subdomain information.",
+                                  "key": "email",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:26:55.000Z",
+                          "updatedAt": "2026-10-21T21:26:55.000Z",
+                          "uid": "35240-303816bb-6d66-4c0c-9d19-792278b6b65e"
+                        },
+                        {
+                          "id": "43de4198-f218-4a33-a107-6df111127533",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/account/subdomain/recover?email=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "account",
+                                "subdomain",
+                                "recover"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Email address of the user to get subdomain information.",
+                                  "key": "email",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:26:55.000Z",
+                          "updatedAt": "2026-10-21T21:26:55.000Z",
+                          "uid": "35240-43de4198-f218-4a33-a107-6df111127533"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:26:54.000Z",
+                      "updatedAt": "2026-10-21T21:26:54.000Z",
+                      "uid": "35240-aefbde3e-a9f9-4de9-a77a-30b7ce76e5b8"
+                    }
+                  ],
+                  "id": "0211aad6-3dc5-4c5b-8585-923b057ed5cb",
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-0211aad6-3dc5-4c5b-8585-923b057ed5cb"
+                },
+                {
+                  "name": "Get The Configured Subdomain",
+                  "id": "30815261-201d-4096-aa5b-53c975ed1f9b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/subdomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "subdomain"
+                      ]
+                    },
+                    "description": "Get the configured subdomain."
+                  },
+                  "response": [
+                    {
+                      "id": "e483035d-677a-46c7-8978-083d5a06408c",
+                      "name": "The subdomain's definition.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"url\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-e483035d-677a-46c7-8978-083d5a06408c"
+                    },
+                    {
+                      "id": "8e585bf3-6be6-4187-b25d-b25a87e13f8b",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-8e585bf3-6be6-4187-b25d-b25a87e13f8b"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-30815261-201d-4096-aa5b-53c975ed1f9b"
+                },
+                {
+                  "name": "Update Account Subdomain",
+                  "id": "d60d1930-08c0-44e7-8983-d10da6655c35",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/subdomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "subdomain"
+                      ]
+                    },
+                    "description": "Update a subdomain. Only the Account Owner can update the subdomain."
+                  },
+                  "response": [
+                    {
+                      "id": "c8e0752f-7959-41fc-9837-ff966c6db2ef",
+                      "name": "The updated subdomain's definition.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"url\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-c8e0752f-7959-41fc-9837-ff966c6db2ef"
+                    },
+                    {
+                      "id": "a33b27f5-d88c-43ee-8384-af9618778753",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-a33b27f5-d88c-43ee-8384-af9618778753"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-d60d1930-08c0-44e7-8983-d10da6655c35"
+                },
+                {
+                  "name": "Create Account Subdomain",
+                  "id": "ad10d2a9-5b0d-4a05-aed3-1a7d46d6690c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/subdomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "subdomain"
+                      ]
+                    },
+                    "description": "Create a subdomain. Only the Account Owner can create a subdomain."
+                  },
+                  "response": [
+                    {
+                      "id": "47d2ce5f-a360-43e0-bab8-ad615181fc99",
+                      "name": "Created a new subdomain.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"url\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-47d2ce5f-a360-43e0-bab8-ad615181fc99"
+                    },
+                    {
+                      "id": "a39a2e7f-b87d-434c-b536-53cc323fb64b",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subdomain\": \"iiii\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-a39a2e7f-b87d-434c-b536-53cc323fb64b"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-ad10d2a9-5b0d-4a05-aed3-1a7d46d6690c"
+                },
+                {
+                  "name": "Delete The Configured Subdomain",
+                  "id": "80b4f3df-046d-478a-b600-0c1cf7a5ce0c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/subdomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "subdomain"
+                      ]
+                    },
+                    "description": "Delete the configured subdomain."
+                  },
+                  "response": [
+                    {
+                      "id": "73f6b87a-0518-4171-850f-e8967ec8fdba",
+                      "name": "The subdomain was successfully deleted.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-73f6b87a-0518-4171-850f-e8967ec8fdba"
+                    },
+                    {
+                      "id": "dff038de-a922-4e6d-b312-2c6022a8c242",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/subdomain",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "subdomain"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-dff038de-a922-4e6d-b312-2c6022a8c242"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-80b4f3df-046d-478a-b600-0c1cf7a5ce0c"
+                }
+              ],
+              "id": "f1f37290-499b-4e6b-b57e-28bf8a79f165",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-f1f37290-499b-4e6b-b57e-28bf8a79f165"
+            },
+            {
+              "name": "usage",
+              "item": [
+                {
+                  "name": "report",
+                  "item": [
+                    {
+                      "name": "{jobId}",
+                      "item": [
+                        {
+                          "name": "status",
+                          "item": [
+                            {
+                              "name": "Get Report Generation Status",
+                              "id": "8582f760-9627-4863-a55c-7a4914ecbf33",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/account/usage/report/:jobId/status",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "account",
+                                    "usage",
+                                    "report",
+                                    ":jobId",
+                                    "status"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "3f9aecec-125f-478d-a554-1c0cffa8cf85",
+                                      "key": "jobId",
+                                      "value": "<string>",
+                                      "description": "(Required) Job Id for the report to be exported."
+                                    }
+                                  ]
+                                },
+                                "description": "Get the report download URL and status using Job Id."
+                              },
+                              "response": [
+                                {
+                                  "id": "c4227c2c-274e-42d6-a6c7-574665070b99",
+                                  "name": "Status response containing status and downloadURL if successful.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/account/usage/report/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "account",
+                                        "usage",
+                                        "report",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"meta\": {},\n  \"status\": \"Failed\",\n  \"statusMessage\": \"<string>\",\n  \"reportDownloadURL\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:26:55.000Z",
+                                  "updatedAt": "2026-10-21T21:26:55.000Z",
+                                  "uid": "35240-c4227c2c-274e-42d6-a6c7-574665070b99"
+                                },
+                                {
+                                  "id": "3a243c08-0285-4efa-a51d-3dd2399e2f19",
+                                  "name": "Operation failed with an error.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/account/usage/report/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "account",
+                                        "usage",
+                                        "report",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:26:55.000Z",
+                                  "updatedAt": "2026-10-21T21:26:55.000Z",
+                                  "uid": "35240-3a243c08-0285-4efa-a51d-3dd2399e2f19"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:26:54.000Z",
+                              "updatedAt": "2026-10-21T21:26:54.000Z",
+                              "uid": "35240-8582f760-9627-4863-a55c-7a4914ecbf33"
+                            }
+                          ],
+                          "id": "c6145e27-059d-42e3-9dcd-dcdebcc93c20",
+                          "createdAt": "2026-10-21T21:26:54.000Z",
+                          "updatedAt": "2026-10-21T21:26:54.000Z",
+                          "uid": "35240-c6145e27-059d-42e3-9dcd-dcdebcc93c20"
+                        }
+                      ],
+                      "id": "a8dfa48f-b9eb-48ca-89cc-cbd96ab3574c",
+                      "createdAt": "2026-10-21T21:26:54.000Z",
+                      "updatedAt": "2026-10-21T21:26:54.000Z",
+                      "uid": "35240-a8dfa48f-b9eb-48ca-89cc-cbd96ab3574c"
+                    },
+                    {
+                      "name": "Export Credits Usage Details As CSV",
+                      "id": "b876e177-5403-433c-945b-fd3c963f49dd",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"startDate\": \"<string>\",\n  \"endDate\": \"<string>\",\n  \"groupBy\": \"day\",\n  \"reportType\": \"standard\",\n  \"includeDeploymentCharge\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/usage/report",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "usage",
+                            "report"
+                          ]
+                        },
+                        "description": "Export the credit usage details as csv for the specific period of time given as input in the form of a start and end date with a specific grouping according to `day`, `week`, `month`, Note that this API will work only for credits plan customers."
+                      },
+                      "response": [
+                        {
+                          "id": "4c2f47d6-a381-4c35-91e8-480c406c8fcf",
+                          "name": "Export Response with Job Id.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"startDate\": \"<string>\",\n  \"endDate\": \"<string>\",\n  \"groupBy\": \"day\",\n  \"reportType\": \"standard\",\n  \"includeDeploymentCharge\": false\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/account/usage/report",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "account",
+                                "usage",
+                                "report"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"jobId\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:26:55.000Z",
+                          "updatedAt": "2026-10-21T21:26:55.000Z",
+                          "uid": "35240-4c2f47d6-a381-4c35-91e8-480c406c8fcf"
+                        },
+                        {
+                          "id": "4b78fb62-720e-4ce4-bd3b-badd3f77491f",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"startDate\": \"<string>\",\n  \"endDate\": \"<string>\",\n  \"groupBy\": \"day\",\n  \"reportType\": \"standard\",\n  \"includeDeploymentCharge\": false\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/account/usage/report",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "account",
+                                "usage",
+                                "report"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:26:55.000Z",
+                          "updatedAt": "2026-10-21T21:26:55.000Z",
+                          "uid": "35240-4b78fb62-720e-4ce4-bd3b-badd3f77491f"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:26:54.000Z",
+                      "updatedAt": "2026-10-21T21:26:54.000Z",
+                      "uid": "35240-b876e177-5403-433c-945b-fd3c963f49dd"
+                    }
+                  ],
+                  "id": "658fbb34-f6bd-415a-9e0a-a7ed944a7e08",
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-658fbb34-f6bd-415a-9e0a-a7ed944a7e08"
+                }
+              ],
+              "id": "5eb766b9-c9d9-44e3-b726-d8bf5811a205",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-5eb766b9-c9d9-44e3-b726-d8bf5811a205"
+            },
+            {
+              "name": "usageForecast",
+              "item": [
+                {
+                  "name": "Get Usage Forecast With Respect To Last Number Of Days Specified",
+                  "id": "d9345781-e0f2-406b-9dbc-5c48e48dcc91",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/account/usageForecast?numberOfDays=<number>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "account",
+                        "usageForecast"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of days to use for calculating average usage and forecast.",
+                          "key": "numberOfDays",
+                          "value": "<number>"
+                        }
+                      ]
+                    },
+                    "description": "Get usage forecast with respect to last number of days specified. If nothing is provided for last number of days, the average of term period will be taken to do the forecast."
+                  },
+                  "response": [
+                    {
+                      "id": "08fb11b9-8cbe-44b9-8748-6607e7828935",
+                      "name": "Usage Forecast.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/usageForecast?numberOfDays=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "usageForecast"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of days to use for calculating average usage and forecast.",
+                              "key": "numberOfDays",
+                              "value": "<number>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"averageUsage\": \"<double>\",\n  \"usagePercentage\": \"<double>\",\n  \"forecastedUsage\": \"<double>\",\n  \"forecastedUsagePercentage\": \"<double>\",\n  \"remainingDays\": \"<double>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-08fb11b9-8cbe-44b9-8748-6607e7828935"
+                    },
+                    {
+                      "id": "f98c851d-c626-49a6-a041-8d4b48126eeb",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/account/usageForecast?numberOfDays=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "account",
+                            "usageForecast"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of days to use for calculating average usage and forecast.",
+                              "key": "numberOfDays",
+                              "value": "<number>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-f98c851d-c626-49a6-a041-8d4b48126eeb"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-d9345781-e0f2-406b-9dbc-5c48e48dcc91"
+                }
+              ],
+              "id": "30ae56be-2a24-4ef6-81b8-3aa0e533505b",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-30ae56be-2a24-4ef6-81b8-3aa0e533505b"
+            }
+          ],
+          "id": "09384214-011a-4678-ba64-278aa6d7b33b",
+          "createdAt": "2026-10-21T21:26:54.000Z",
+          "updatedAt": "2026-10-21T21:26:54.000Z",
+          "uid": "35240-09384214-011a-4678-ba64-278aa6d7b33b"
+        },
+        {
+          "name": "plan",
+          "item": [
+            {
+              "name": "pendingUpdateRequest",
+              "item": [
+                {
+                  "name": "Get The Pending Plan Update Request, If Any",
+                  "id": "fa56af53-bc1a-4204-9c45-f6d945306890",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "plan",
+                        "pendingUpdateRequest"
+                      ]
+                    },
+                    "description": "Get the pending plan update request which will be applicable from next billing cycle."
+                  },
+                  "response": [
+                    {
+                      "id": "2bbbb726-daed-4e8a-ae13-80f381f0f2e4",
+                      "name": "Pending plan update request.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "plan",
+                            "pendingUpdateRequest"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdOn\": \"<date>\",\n  \"plan\": {\n    \"billingFrequency\": \"Monthly\",\n    \"planCost\": \"<double>\",\n    \"productId\": \"Essentials\",\n    \"consumables\": [\n      {\n        \"consumableId\": \"Metrics\",\n        \"quantity\": {\n          \"unit\": \"GB\",\n          \"value\": \"<long>\"\n        }\n      },\n      {\n        \"consumableId\": \"Metrics\",\n        \"quantity\": {\n          \"unit\": \"DPM\",\n          \"value\": \"<long>\"\n        }\n      }\n    ],\n    \"planType\": \"Trial\",\n    \"planName\": \"<string>\",\n    \"discountAmount\": \"<integer>\",\n    \"contractPeriod\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"currentBillingPeriod\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"credits\": \"<long>\",\n    \"baselines\": {\n      \"continuousIngest\": 0,\n      \"continuousStorage\": 30,\n      \"frequentIngest\": 0,\n      \"frequentStorage\": 30,\n      \"infrequentIngest\": 0,\n      \"infrequentStorage\": 30,\n      \"infrequentScan\": 0,\n      \"metrics\": 0,\n      \"cseIngest\": 0,\n      \"cseStorage\": 0,\n      \"tracingIngest\": 0,\n      \"flexIngest\": 0,\n      \"flexStorage\": 0,\n      \"flexScanRatio\": 0,\n      \"aiInvestigation\": 0\n    },\n    \"pendingUpdateRequest\": \"<boolean>\",\n    \"prorationDetails\": {\n      \"proratedCost\": \"<double>\",\n      \"proratedCredits\": \"<integer>\",\n      \"remainingDays\": \"<integer>\"\n    }\n  }\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-2bbbb726-daed-4e8a-ae13-80f381f0f2e4"
+                    },
+                    {
+                      "id": "b1c46ee6-d72d-4dae-9fa9-1acd69b8f70e",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "plan",
+                            "pendingUpdateRequest"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-b1c46ee6-d72d-4dae-9fa9-1acd69b8f70e"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-fa56af53-bc1a-4204-9c45-f6d945306890"
+                },
+                {
+                  "name": "Delete The Pending Plan Update Request, If Any",
+                  "id": "3a29690e-7f40-4a2d-b358-af7b41d46d74",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "plan",
+                        "pendingUpdateRequest"
+                      ]
+                    },
+                    "description": "Delete the pending plan update request which would be applicable from next billing cycle."
+                  },
+                  "response": [
+                    {
+                      "id": "6cd54357-3977-4de3-9f8b-e50b086d3570",
+                      "name": "Deleted the pending update request.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "plan",
+                            "pendingUpdateRequest"
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-6cd54357-3977-4de3-9f8b-e50b086d3570"
+                    },
+                    {
+                      "id": "465f607a-eac8-4790-b3a3-bfc0d4fd6561",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/plan/pendingUpdateRequest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "plan",
+                            "pendingUpdateRequest"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:26:55.000Z",
+                      "updatedAt": "2026-10-21T21:26:55.000Z",
+                      "uid": "35240-465f607a-eac8-4790-b3a3-bfc0d4fd6561"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:26:54.000Z",
+                  "updatedAt": "2026-10-21T21:26:54.000Z",
+                  "uid": "35240-3a29690e-7f40-4a2d-b358-af7b41d46d74"
+                }
+              ],
+              "id": "3a8a38f6-c5c5-4a4f-a373-341e73f5a5a2",
+              "createdAt": "2026-10-21T21:26:54.000Z",
+              "updatedAt": "2026-10-21T21:26:54.000Z",
+              "uid": "35240-3a8a38f6-c5c5-4a4f-a373-341e73f5a5a2"
+            }
+          ],
+          "id": "b8750200-1872-4025-beea-de7a6bc66919",
+          "createdAt": "2026-10-21T21:26:54.000Z",
+          "updatedAt": "2026-10-21T21:26:54.000Z",
+          "uid": "35240-b8750200-1872-4025-beea-de7a6bc66919"
+        }
+      ],
+      "id": "9b981992-1d41-4a30-8bd1-9514cde7ad3c",
+      "createdAt": "2026-10-21T21:26:54.000Z",
+      "updatedAt": "2026-10-21T21:26:54.000Z",
+      "uid": "35240-9b981992-1d41-4a30-8bd1-9514cde7ad3c"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

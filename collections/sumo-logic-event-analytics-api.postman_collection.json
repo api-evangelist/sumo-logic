@@ -1,0 +1,920 @@
+{
+  "info": {
+    "_postman_id": "60e70aa1-1ab4-43ed-bcf0-c2c29f36879c",
+    "name": "Sumo Logic Event Analytics API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:14.000Z",
+    "updatedAt": "2026-10-21T21:27:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-60e70aa1-1ab4-43ed-bcf0-c2c29f36879c"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "eventExtractionRules",
+          "item": [
+            {
+              "name": "quota",
+              "item": [
+                {
+                  "name": "Get Event Extraction Rules Quota",
+                  "id": "10852ff5-2710-4fa6-bfe6-86611881645c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules/quota",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules",
+                        "quota"
+                      ]
+                    },
+                    "description": "Every customer can use a limited number of Event Extraction Rules. This endpoint allows learning about these limitations and remaining quota."
+                  },
+                  "response": [
+                    {
+                      "id": "85e35fcf-a879-47ea-8cdf-ebe40ccb081b",
+                      "name": "Current state of Event Extraction Rules quota usage (limit and remaining).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/quota",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            "quota"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"quota\": \"<integer>\",\n  \"remaining\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-85e35fcf-a879-47ea-8cdf-ebe40ccb081b"
+                    },
+                    {
+                      "id": "f563c5aa-228b-4a87-9836-59e4a8eb1958",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/quota",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            "quota"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-f563c5aa-228b-4a87-9836-59e4a8eb1958"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-10852ff5-2710-4fa6-bfe6-86611881645c"
+                }
+              ],
+              "id": "d3fb8dc8-b664-40c4-bda6-df69e10ef73c",
+              "createdAt": "2026-10-21T21:27:15.000Z",
+              "updatedAt": "2026-10-21T21:27:15.000Z",
+              "uid": "35240-d3fb8dc8-b664-40c4-bda6-df69e10ef73c"
+            },
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Get An Event Extraction Rule",
+                  "id": "5f0f0edf-bb82-4ef0-963d-3fe910a8e47f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a569702e-3b60-4f67-bd81-f931c7b8cd3c",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The identifier of the event extraction rule."
+                        }
+                      ]
+                    },
+                    "description": "Get an event extraction rule."
+                  },
+                  "response": [
+                    {
+                      "id": "cf15576e-135d-4ce6-987e-4cea98dbdb03",
+                      "name": "Requested event extraction rule.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"disableReason\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-cf15576e-135d-4ce6-987e-4cea98dbdb03"
+                    },
+                    {
+                      "id": "bfb7bc84-dc87-445a-aa2f-4924a9b7a0b7",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-bfb7bc84-dc87-445a-aa2f-4924a9b7a0b7"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-5f0f0edf-bb82-4ef0-963d-3fe910a8e47f"
+                },
+                {
+                  "name": "Update An Event Extraction Rule",
+                  "id": "19b50c7b-444c-4d56-b090-90d29b916caf",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "04e7f54b-f88a-455f-8434-3ff092ea32af",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The identifier of the event extraction rule."
+                        }
+                      ]
+                    },
+                    "description": "Update an event extraction rule."
+                  },
+                  "response": [
+                    {
+                      "id": "2374b65f-1c84-4eaf-b033-e54324348050",
+                      "name": "The event extraction rule was updated.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"disableReason\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-2374b65f-1c84-4eaf-b033-e54324348050"
+                    },
+                    {
+                      "id": "efcbaeb0-b9e6-4d21-bc2e-a00d0e446d42",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-efcbaeb0-b9e6-4d21-bc2e-a00d0e446d42"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-19b50c7b-444c-4d56-b090-90d29b916caf"
+                },
+                {
+                  "name": "Delete An Event Extraction Rule",
+                  "id": "3651fc1b-cd0d-4720-8267-f0d0817c2e76",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "75ceef5b-ad3f-4b0d-9be6-93e530bdb4d4",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The identifier of the event extraction rule."
+                        }
+                      ]
+                    },
+                    "description": "Delete an event extraction rule."
+                  },
+                  "response": [
+                    {
+                      "id": "e86a0b86-d1d8-4e78-b8ba-9fbf7e9e11eb",
+                      "name": "The event extraction rule was successfully deleted.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-e86a0b86-d1d8-4e78-b8ba-9fbf7e9e11eb"
+                    },
+                    {
+                      "id": "fa64346f-bfda-4564-9bf8-84024145c3a4",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/eventExtractionRules/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "eventExtractionRules",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:15.000Z",
+                      "updatedAt": "2026-10-21T21:27:15.000Z",
+                      "uid": "35240-fa64346f-bfda-4564-9bf8-84024145c3a4"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-3651fc1b-cd0d-4720-8267-f0d0817c2e76"
+                }
+              ],
+              "id": "1c49291b-0bc3-4e5f-bfc7-f96e74d2111a",
+              "createdAt": "2026-10-21T21:27:15.000Z",
+              "updatedAt": "2026-10-21T21:27:15.000Z",
+              "uid": "35240-1c49291b-0bc3-4e5f-bfc7-f96e74d2111a"
+            },
+            {
+              "name": "Get All Event Extraction Rules",
+              "id": "3a4b2209-7fff-4a43-84dc-ef1ac0c232d7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "eventExtractionRules"
+                  ]
+                },
+                "description": "Get all event extraction rules."
+              },
+              "response": [
+                {
+                  "id": "9eb40771-3236-4575-b976-c68a6abe43db",
+                  "name": "Event extraction rules.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"configuration\": {\n        \"eventName\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventPriority\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventSource\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventType\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        }\n      },\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"query\": \"<string>\",\n      \"description\": \"<string>\",\n      \"correlationExpression\": {\n        \"eventFieldName\": \"<string>\",\n        \"queryFieldName\": \"<string>\",\n        \"stringMatchingAlgorithm\": \"ExactMatch\"\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"enabled\": \"<boolean>\",\n      \"disableReason\": \"<string>\"\n    },\n    {\n      \"configuration\": {\n        \"eventName\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventPriority\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventSource\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        },\n        \"eventType\": {\n          \"valueSource\": \"<string>\",\n          \"mappingType\": \"HardCoded\"\n        }\n      },\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"query\": \"<string>\",\n      \"description\": \"<string>\",\n      \"correlationExpression\": {\n        \"eventFieldName\": \"<string>\",\n        \"queryFieldName\": \"<string>\",\n        \"stringMatchingAlgorithm\": \"ExactMatch\"\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"createdBy\": \"<string>\",\n      \"modifiedAt\": \"<dateTime>\",\n      \"modifiedBy\": \"<string>\",\n      \"enabled\": \"<boolean>\",\n      \"disableReason\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-9eb40771-3236-4575-b976-c68a6abe43db"
+                },
+                {
+                  "id": "34cc6715-f199-4ff7-a076-93eb7698ee75",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-34cc6715-f199-4ff7-a076-93eb7698ee75"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:15.000Z",
+              "updatedAt": "2026-10-21T21:27:15.000Z",
+              "uid": "35240-3a4b2209-7fff-4a43-84dc-ef1ac0c232d7"
+            },
+            {
+              "name": "Create Event Extraction Rule",
+              "id": "a7536903-073b-4744-b3b0-ee6831cac498",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "eventExtractionRules"
+                  ]
+                },
+                "description": "Create event extraction rule."
+              },
+              "response": [
+                {
+                  "id": "3cb77e55-64dc-4d64-b84c-ff38468c0f34",
+                  "name": "The event extraction rule was created.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"disableReason\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-3cb77e55-64dc-4d64-b84c-ff38468c0f34"
+                },
+                {
+                  "id": "b758e5ff-a8aa-4137-8982-95f46c36320f",
+                  "name": "Operation failed with an error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"configuration\": {\n    \"eventName\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventPriority\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventSource\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    },\n    \"eventType\": {\n      \"valueSource\": \"<string>\",\n      \"mappingType\": \"HardCoded\"\n    }\n  },\n  \"name\": \"<string>\",\n  \"query\": \"<string>\",\n  \"description\": \"<string>\",\n  \"correlationExpression\": {\n    \"eventFieldName\": \"<string>\",\n    \"queryFieldName\": \"<string>\",\n    \"stringMatchingAlgorithm\": \"ExactMatch\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/eventExtractionRules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "eventExtractionRules"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:27:15.000Z",
+                  "updatedAt": "2026-10-21T21:27:15.000Z",
+                  "uid": "35240-b758e5ff-a8aa-4137-8982-95f46c36320f"
+                }
+              ],
+              "createdAt": "2026-10-21T21:27:15.000Z",
+              "updatedAt": "2026-10-21T21:27:15.000Z",
+              "uid": "35240-a7536903-073b-4744-b3b0-ee6831cac498"
+            }
+          ],
+          "id": "61f8bc80-18ba-46a6-b995-d64589c86bb4",
+          "createdAt": "2026-10-21T21:27:15.000Z",
+          "updatedAt": "2026-10-21T21:27:15.000Z",
+          "uid": "35240-61f8bc80-18ba-46a6-b995-d64589c86bb4"
+        }
+      ],
+      "id": "83c55d4e-98ff-4f29-9282-a69fedd00c83",
+      "createdAt": "2026-10-21T21:27:15.000Z",
+      "updatedAt": "2026-10-21T21:27:15.000Z",
+      "uid": "35240-83c55d4e-98ff-4f29-9282-a69fedd00c83"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}

@@ -1,0 +1,2475 @@
+{
+  "info": {
+    "_postman_id": "09600659-cf72-46e3-a8ba-efe4955b1d92",
+    "name": "Sumo Logic Content Management API",
+    "description": "# Getting Started\nWelcome to the Sumo Logic API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:27:07.000Z",
+    "updatedAt": "2026-10-21T21:27:08.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-09600659-cf72-46e3-a8ba-efe4955b1d92"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "content",
+          "item": [
+            {
+              "name": "path",
+              "item": [
+                {
+                  "name": "Get Content Item By Path",
+                  "id": "66c22d4b-6455-474a-a166-cc46aa0820e6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/content/path?path=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "content",
+                        "path"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Path of the content item to retrieve.",
+                          "key": "path",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Get a content item corresponding to the given path.\n\n_Path is specified in the required query parameter `path`. The path should be URL encoded._ For example, to get \"Acme Corp\" folder of a user \"user@sumo.com\" you can use the following curl command:\n```bash\ncurl https://api.sumologic.com/api/v2/content/path?path=/Library/Users/user%40sumo.com/Acme%20Corp\n```\n\nThe absolute path to a content item should be specified to get the item. The content library has \"Library\" folder at the root level. For items in \"Personal\" folder, the base path is \"/Library/Users/user@sumo.com\" where \"user@sumo.com\" is the email address of the user. For example if a user with email address `wile@acme.com` has `Rockets` folder inside Personal folder, the path of Rockets folder will be `/Library/Users/wile@acme.com/Rockets`.\n\nFor items in \"Admin Recommended\" folder, the base path is \"/Library/Admin Recommended\". For example, given a folder `Acme` in Admin Recommended folder, the path will be `/Library/Admin Recommended/Acme`."
+                  },
+                  "response": [
+                    {
+                      "id": "27b709ab-34c4-49a4-ab35-3c60fecd665a",
+                      "name": "Content item corresponding to the given path.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Path of the content item to retrieve.",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"id\": \"<string>\",\n  \"itemType\": \"<string>\",\n  \"modifiedAt\": \"<dateTime>\",\n  \"modifiedBy\": \"<string>\",\n  \"name\": \"<string>\",\n  \"parentId\": \"<string>\",\n  \"permissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"isScheduled\": false\n}",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-27b709ab-34c4-49a4-ab35-3c60fecd665a"
+                    },
+                    {
+                      "id": "459602cc-8096-4eaa-99f6-70db55cf0e90",
+                      "name": "Operation failed with an error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/path?path=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            "path"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Path of the content item to retrieve.",
+                              "key": "path",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-459602cc-8096-4eaa-99f6-70db55cf0e90"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-66c22d4b-6455-474a-a166-cc46aa0820e6"
+                }
+              ],
+              "id": "0f33b3fb-c48b-445f-966d-da56643f405c",
+              "createdAt": "2026-10-21T21:27:08.000Z",
+              "updatedAt": "2026-10-21T21:27:08.000Z",
+              "uid": "35240-0f33b3fb-c48b-445f-966d-da56643f405c"
+            },
+            {
+              "name": "{contentId}",
+              "item": [
+                {
+                  "name": "path",
+                  "item": [
+                    {
+                      "name": "Get Path Of An Item",
+                      "id": "b91020cd-9dfb-4c9a-b8f8-e785346d891a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:contentId/path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":contentId",
+                            "path"
+                          ],
+                          "variable": [
+                            {
+                              "id": "fbc9d802-69d0-41a2-909b-897b69724331",
+                              "key": "contentId",
+                              "value": "<string>",
+                              "description": "(Required) Identifier of the content item to get the path."
+                            }
+                          ]
+                        },
+                        "description": "Get full path of a content item with the given identifier."
+                      },
+                      "response": [
+                        {
+                          "id": "4d17f916-94da-4ff2-bfeb-9ebe8c6762f6",
+                          "name": "Full path of the content item.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:contentId/path",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":contentId",
+                                "path"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "contentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"path\": \"<string>\",\n  \"pathItems\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-4d17f916-94da-4ff2-bfeb-9ebe8c6762f6"
+                        },
+                        {
+                          "id": "588bffe5-ac9f-4c4a-a899-5ab49775b35f",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:contentId/path",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":contentId",
+                                "path"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "contentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-588bffe5-ac9f-4c4a-a899-5ab49775b35f"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-b91020cd-9dfb-4c9a-b8f8-e785346d891a"
+                    }
+                  ],
+                  "id": "f12e43d7-ec1f-4a33-8c13-ef74c4b4e7b1",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-f12e43d7-ec1f-4a33-8c13-ef74c4b4e7b1"
+                },
+                {
+                  "name": "export",
+                  "item": [
+                    {
+                      "name": "{jobId}",
+                      "item": [
+                        {
+                          "name": "status",
+                          "item": [
+                            {
+                              "name": "Content Export Job Status",
+                              "id": "3fbbbcec-8d66-44e6-b68c-4154e139517e",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/status",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":contentId",
+                                    "export",
+                                    ":jobId",
+                                    "status"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "6c7011d8-7894-4f16-bc32-a9e2b51e3867",
+                                      "key": "contentId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the exported content item."
+                                    },
+                                    {
+                                      "id": "fab3f909-1fef-416d-aea1-9747b6cf520b",
+                                      "key": "jobId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the asynchronous export job."
+                                    }
+                                  ]
+                                },
+                                "description": "Get the status of an asynchronous content export request for the given job identifier. On success, use the getExportResult endpoint to get the result of the export job."
+                              },
+                              "response": [
+                                {
+                                  "id": "41fa51c3-9b0f-4e2a-931e-b770b91d4c48",
+                                  "name": "The status of the export job.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":contentId",
+                                        "export",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "contentId"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"status\": \"<string>\",\n  \"statusMessage\": \"<string>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"meta\": {}\n  }\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-41fa51c3-9b0f-4e2a-931e-b770b91d4c48"
+                                },
+                                {
+                                  "id": "e0a3c12c-8e28-4f21-8f7c-7d5be7bfe522",
+                                  "name": "Operation failed with an error.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":contentId",
+                                        "export",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "contentId"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-e0a3c12c-8e28-4f21-8f7c-7d5be7bfe522"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-3fbbbcec-8d66-44e6-b68c-4154e139517e"
+                            }
+                          ],
+                          "id": "28d2b371-a853-422e-9c07-57b449597457",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-28d2b371-a853-422e-9c07-57b449597457"
+                        },
+                        {
+                          "name": "result",
+                          "item": [
+                            {
+                              "name": "Content Export Job Result",
+                              "id": "0a291160-da8f-48b0-b40c-08363141668a",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/result",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":contentId",
+                                    "export",
+                                    ":jobId",
+                                    "result"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "79f43291-b8de-44e2-b056-ffabefb2c434",
+                                      "key": "contentId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the exported content item."
+                                    },
+                                    {
+                                      "id": "192f63e0-ad39-4efa-a820-076214a1557b",
+                                      "key": "jobId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the asynchronous job."
+                                    }
+                                  ]
+                                },
+                                "description": "Get results from content export job for the given job identifier. The results from this export are incompatible with the Library import feature in the Sumo user interface."
+                              },
+                              "response": [
+                                {
+                                  "id": "bfd21f67-591a-491b-ab98-ee0c06d91888",
+                                  "name": "The result of export job.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/result",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":contentId",
+                                        "export",
+                                        ":jobId",
+                                        "result"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "contentId"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-bfd21f67-591a-491b-ab98-ee0c06d91888"
+                                },
+                                {
+                                  "id": "250a9ca0-4653-499b-8ce2-1644096f169c",
+                                  "name": "Operation failed with an error.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:contentId/export/:jobId/result",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":contentId",
+                                        "export",
+                                        ":jobId",
+                                        "result"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "contentId"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-250a9ca0-4653-499b-8ce2-1644096f169c"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-0a291160-da8f-48b0-b40c-08363141668a"
+                            }
+                          ],
+                          "id": "89b9bfd4-9b66-4c0f-8453-83f0efe7cb29",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-89b9bfd4-9b66-4c0f-8453-83f0efe7cb29"
+                        }
+                      ],
+                      "id": "86012f1d-364e-4a28-899e-e54aac48d09a",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-86012f1d-364e-4a28-899e-e54aac48d09a"
+                    }
+                  ],
+                  "id": "e8093fce-bc2e-4a21-a217-6a926edead7c",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-e8093fce-bc2e-4a21-a217-6a926edead7c"
+                }
+              ],
+              "id": "26fa9c8e-9470-4bba-9db7-22d063f9086a",
+              "createdAt": "2026-10-21T21:27:08.000Z",
+              "updatedAt": "2026-10-21T21:27:08.000Z",
+              "uid": "35240-26fa9c8e-9470-4bba-9db7-22d063f9086a"
+            },
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "export",
+                  "item": [
+                    {
+                      "name": "Start A Content Export Job",
+                      "id": "57e4ba48-fd61-496b-a18e-d7067d8a37c5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                            "key": "isAdminMode",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id/export",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id",
+                            "export"
+                          ],
+                          "variable": [
+                            {
+                              "id": "e6ed8899-d30f-4167-918c-8a95641c8a3f",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) The identifier of the content item to export. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                            }
+                          ]
+                        },
+                        "description": "Schedule an _asynchronous_ export of content with the given identifier. You will get back an asynchronous job identifier on success. Use the getAsyncExportStatus endpoint and the job identifier you got back in the response to track the status of an asynchronous export job.\nIf the content item is a folder, everything under the folder is exported recursively. Keep in mind when exporting large folders that there is a limit of 1000 content objects that can be exported at once. If you want to import more than 1000 content objects, then be sure to split the import into batches of 1000 objects or less.\nThe results from the export are compatible with the Library import feature in the Sumo Logic user interface as well as the API content import job."
+                      },
+                      "response": [
+                        {
+                          "id": "09cb8e7c-04b3-498c-9a35-ed96b280d64e",
+                          "name": "Export job has been scheduled.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/export",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "export"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-09cb8e7c-04b3-498c-9a35-ed96b280d64e"
+                        },
+                        {
+                          "id": "064d9057-e8b1-4575-b25a-2d53b7daf4f0",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/export",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "export"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-064d9057-e8b1-4575-b25a-2d53b7daf4f0"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-57e4ba48-fd61-496b-a18e-d7067d8a37c5"
+                    }
+                  ],
+                  "id": "4b0df610-ea9c-4f59-818c-6906b8e4a341",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-4b0df610-ea9c-4f59-818c-6906b8e4a341"
+                },
+                {
+                  "name": "delete",
+                  "item": [
+                    {
+                      "name": "{jobId}",
+                      "item": [
+                        {
+                          "name": "status",
+                          "item": [
+                            {
+                              "name": "Content Deletion Job Status",
+                              "id": "c73faccb-8698-42e0-a4c9-8e24b5d2ff46",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/delete/:jobId/status",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "delete",
+                                    ":jobId",
+                                    "status"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "45d5875e-2ac6-4eb0-b27b-4af063e86b11",
+                                      "key": "id",
+                                      "value": "<string>",
+                                      "description": "(Required) Identifier of the content to delete."
+                                    },
+                                    {
+                                      "id": "554e32c3-96f0-4e37-8342-8c4c03b5750f",
+                                      "key": "jobId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the asynchronous job."
+                                    }
+                                  ]
+                                },
+                                "description": "Get the status of an asynchronous content deletion job request for the given job identifier."
+                              },
+                              "response": [
+                                {
+                                  "id": "c7b920f6-eb77-41a4-bad2-e08a5f645881",
+                                  "name": "The status of the content deletion job.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:id/delete/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":id",
+                                        "delete",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "id"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"status\": \"<string>\",\n  \"statusMessage\": \"<string>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"meta\": {}\n  }\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-c7b920f6-eb77-41a4-bad2-e08a5f645881"
+                                },
+                                {
+                                  "id": "c61f4985-c3dc-42c3-82e9-cf9062d593bd",
+                                  "name": "Operation failed with an error.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:id/delete/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":id",
+                                        "delete",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "id"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-c61f4985-c3dc-42c3-82e9-cf9062d593bd"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-c73faccb-8698-42e0-a4c9-8e24b5d2ff46"
+                            }
+                          ],
+                          "id": "d49a3b12-a47b-48eb-a880-1344c50e1cf0",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-d49a3b12-a47b-48eb-a880-1344c50e1cf0"
+                        }
+                      ],
+                      "id": "4741c9d5-120e-4e94-a5f5-76c6412d5e2c",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-4741c9d5-120e-4e94-a5f5-76c6412d5e2c"
+                    },
+                    {
+                      "name": "Start A Content Deletion Job",
+                      "id": "2f7a54a4-a39e-41f3-b751-36602203b5a6",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                            "key": "isAdminMode",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id",
+                            "delete"
+                          ],
+                          "variable": [
+                            {
+                              "id": "71d8ec65-7c54-46be-b388-a47d75a85883",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Identifier of the content to delete. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                            }
+                          ]
+                        },
+                        "description": "Start an asynchronous content deletion job with the given identifier."
+                      },
+                      "response": [
+                        {
+                          "id": "308ff342-94d5-44aa-91c5-c227c02d3348",
+                          "name": "Deletion job has been scheduled.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/delete",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "delete"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-308ff342-94d5-44aa-91c5-c227c02d3348"
+                        },
+                        {
+                          "id": "f2f99508-059d-4c58-9f9d-bce06f0b05a3",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/delete",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "delete"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-f2f99508-059d-4c58-9f9d-bce06f0b05a3"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-2f7a54a4-a39e-41f3-b751-36602203b5a6"
+                    }
+                  ],
+                  "id": "56c1ba29-a933-4d51-9c6a-06672c2d9091",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-56c1ba29-a933-4d51-9c6a-06672c2d9091"
+                },
+                {
+                  "name": "copy",
+                  "item": [
+                    {
+                      "name": "{jobId}",
+                      "item": [
+                        {
+                          "name": "status",
+                          "item": [
+                            {
+                              "name": "Content Copy Job Status",
+                              "id": "0c0943dd-7edf-4973-8b3c-6e94f1c2db35",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/:id/copy/:jobId/status",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    ":id",
+                                    "copy",
+                                    ":jobId",
+                                    "status"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "dd827d10-73f0-4dc2-8236-4cba607239d3",
+                                      "key": "id",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the content which was copied."
+                                    },
+                                    {
+                                      "id": "122e44c7-0d14-47d9-ab4b-e388e2853bfc",
+                                      "key": "jobId",
+                                      "value": "<string>",
+                                      "description": "(Required) The identifier of the asynchronous copy request job."
+                                    }
+                                  ]
+                                },
+                                "description": "Get the status of the copy request with the given job identifier. On success, field `statusMessage` will contain identifier of the newly copied content in format: `id: {hexIdentifier}`."
+                              },
+                              "response": [
+                                {
+                                  "id": "ead6d73e-9b41-4c4e-a389-69ce60a275f1",
+                                  "name": "The status of the content copy job.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:id/copy/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":id",
+                                        "copy",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "id"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"status\": \"<string>\",\n  \"statusMessage\": \"<string>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"meta\": {}\n  }\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-ead6d73e-9b41-4c4e-a389-69ce60a275f1"
+                                },
+                                {
+                                  "id": "597e0fac-bbf6-4e61-b12c-37c41e61f136",
+                                  "name": "Operation failed with an error.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/:id/copy/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        ":id",
+                                        "copy",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "id"
+                                        },
+                                        {
+                                          "key": "jobId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-597e0fac-bbf6-4e61-b12c-37c41e61f136"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-0c0943dd-7edf-4973-8b3c-6e94f1c2db35"
+                            }
+                          ],
+                          "id": "f302edce-d694-47ad-b4e2-f6ad9dab7de0",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-f302edce-d694-47ad-b4e2-f6ad9dab7de0"
+                        }
+                      ],
+                      "id": "8a8cf81b-8434-48e5-9118-2f150e76dac6",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-8a8cf81b-8434-48e5-9118-2f150e76dac6"
+                    },
+                    {
+                      "name": "Start A Content Copy Job",
+                      "id": "ac9bdd2d-0801-4c7f-9f5f-53a73f43f263",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                            "key": "isAdminMode",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id/copy?destinationFolder=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id",
+                            "copy"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The identifier of the destination folder.",
+                              "key": "destinationFolder",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "79aa783d-9af8-4248-a287-904853f1c935",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) The identifier of the content item to copy. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                            }
+                          ]
+                        },
+                        "description": "Start an asynchronous content copy job with the given identifier to the destination folder. If the content item is a folder, everything under the folder is copied recursively."
+                      },
+                      "response": [
+                        {
+                          "id": "e0b40abe-2737-4bb2-afe1-d9a77626663e",
+                          "name": "Content copy job has been scheduled.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/copy?destinationFolder=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "copy"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) The identifier of the destination folder.",
+                                  "key": "destinationFolder",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-e0b40abe-2737-4bb2-afe1-d9a77626663e"
+                        },
+                        {
+                          "id": "82a71e8e-c2b2-41d5-a3a3-e52b6d8eab3c",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/copy?destinationFolder=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "copy"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) The identifier of the destination folder.",
+                                  "key": "destinationFolder",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-82a71e8e-c2b2-41d5-a3a3-e52b6d8eab3c"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-ac9bdd2d-0801-4c7f-9f5f-53a73f43f263"
+                    }
+                  ],
+                  "id": "ae3eadd9-6f73-45f0-91b7-9f51327e9443",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-ae3eadd9-6f73-45f0-91b7-9f51327e9443"
+                },
+                {
+                  "name": "move",
+                  "item": [
+                    {
+                      "name": "Move An Item",
+                      "id": "711fb39e-746e-4da3-b92b-dd1953dfb295",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                            "key": "isAdminMode",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/content/:id/move?destinationFolderId=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "content",
+                            ":id",
+                            "move"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Identifier of the destination folder.",
+                              "key": "destinationFolderId",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "5aba0cf3-5905-4483-8d77-1e7f92abc13d",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) Identifier of the item the user wants to move."
+                            }
+                          ]
+                        },
+                        "description": "Moves an item from its current location to another folder."
+                      },
+                      "response": [
+                        {
+                          "id": "e1976be3-b908-4ab8-a945-f93af9bb5b78",
+                          "name": "Content was moved successfully.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/move?destinationFolderId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "move"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Identifier of the destination folder.",
+                                  "key": "destinationFolderId",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-e1976be3-b908-4ab8-a945-f93af9bb5b78"
+                        },
+                        {
+                          "id": "1128fdd7-36fa-4d78-8a16-d85a623dc429",
+                          "name": "Operation failed with an error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/:id/move?destinationFolderId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                ":id",
+                                "move"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Identifier of the destination folder.",
+                                  "key": "destinationFolderId",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-1128fdd7-36fa-4d78-8a16-d85a623dc429"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-711fb39e-746e-4da3-b92b-dd1953dfb295"
+                    }
+                  ],
+                  "id": "72f761da-423d-49df-83e9-af40c9f35d1a",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-72f761da-423d-49df-83e9-af40c9f35d1a"
+                }
+              ],
+              "id": "bd0a42d7-30df-48f7-a018-145725d51e5c",
+              "createdAt": "2026-10-21T21:27:08.000Z",
+              "updatedAt": "2026-10-21T21:27:08.000Z",
+              "uid": "35240-bd0a42d7-30df-48f7-a018-145725d51e5c"
+            },
+            {
+              "name": "folders",
+              "item": [
+                {
+                  "name": "{folderId}",
+                  "item": [
+                    {
+                      "name": "import",
+                      "item": [
+                        {
+                          "name": "{jobId}",
+                          "item": [
+                            {
+                              "name": "status",
+                              "item": [
+                                {
+                                  "name": "Content Import Job Status",
+                                  "id": "94dd19cf-d750-4632-a650-76b78a242abf",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/status",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        "folders",
+                                        ":folderId",
+                                        "import",
+                                        ":jobId",
+                                        "status"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "f55e67da-8131-411e-9b74-f4931be7ade0",
+                                          "key": "folderId",
+                                          "value": "<string>",
+                                          "description": "(Required) The identifier of the folder to import into."
+                                        },
+                                        {
+                                          "id": "fabc5b72-9163-49ed-a2ca-204db4109a12",
+                                          "key": "jobId",
+                                          "value": "<string>",
+                                          "description": "(Required) The identifier of the import request."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Get the status of a content import job for the given job identifier."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "aa0d2660-59d6-49e7-ab22-36c989d7e9ee",
+                                      "name": "The status of the import job.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                            "key": "isAdminMode",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: basic",
+                                            "key": "Authorization",
+                                            "value": "Basic <credentials>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/status",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v2",
+                                            "content",
+                                            "folders",
+                                            ":folderId",
+                                            "import",
+                                            ":jobId",
+                                            "status"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "folderId"
+                                            },
+                                            {
+                                              "key": "jobId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"status\": \"<string>\",\n  \"statusMessage\": \"<string>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"meta\": {}\n  }\n}",
+                                      "createdAt": "2026-10-21T21:27:08.000Z",
+                                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                                      "uid": "35240-aa0d2660-59d6-49e7-ab22-36c989d7e9ee"
+                                    },
+                                    {
+                                      "id": "90fd39b9-7858-4949-96fb-8c1e3c7dd579",
+                                      "name": "The operation failed with an error.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                            "key": "isAdminMode",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: basic",
+                                            "key": "Authorization",
+                                            "value": "Basic <credentials>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/status",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v2",
+                                            "content",
+                                            "folders",
+                                            ":folderId",
+                                            "import",
+                                            ":jobId",
+                                            "status"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "folderId"
+                                            },
+                                            {
+                                              "key": "jobId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Internal Server Error",
+                                      "code": 500,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                      "createdAt": "2026-10-21T21:27:08.000Z",
+                                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                                      "uid": "35240-90fd39b9-7858-4949-96fb-8c1e3c7dd579"
+                                    }
+                                  ],
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-94dd19cf-d750-4632-a650-76b78a242abf"
+                                }
+                              ],
+                              "id": "20791184-adf4-4ac2-b0a7-fc43b7795b0e",
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-20791184-adf4-4ac2-b0a7-fc43b7795b0e"
+                            },
+                            {
+                              "name": "result",
+                              "item": [
+                                {
+                                  "name": "Content Import Job Result",
+                                  "id": "6e67a25e-31bc-44d1-855c-5ba380268661",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                        "key": "isAdminMode",
+                                        "value": "<string>"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/result",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "content",
+                                        "folders",
+                                        ":folderId",
+                                        "import",
+                                        ":jobId",
+                                        "result"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "1e03745a-e8e1-4c58-8fed-be6a3f8d7dcb",
+                                          "key": "folderId",
+                                          "value": "<string>",
+                                          "description": "(Required) The identifier of the folder to import into."
+                                        },
+                                        {
+                                          "id": "6b99eef7-f749-4555-9c11-69f75f5cb0ea",
+                                          "key": "jobId",
+                                          "value": "<string>",
+                                          "description": "(Required) The identifier of the import request."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Get the complete summary of content import job for the given job identifier."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "b42394df-fa90-4433-a707-3a34134069d9",
+                                      "name": "The result of the import job.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                            "key": "isAdminMode",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: basic",
+                                            "key": "Authorization",
+                                            "value": "Basic <credentials>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/result",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v2",
+                                            "content",
+                                            "folders",
+                                            ":folderId",
+                                            "import",
+                                            ":jobId",
+                                            "result"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "folderId"
+                                            },
+                                            {
+                                              "key": "jobId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"status\": \"<string>\",\n  \"summary\": {\n    \"totalItems\": \"<integer>\",\n    \"successCount\": \"<integer>\",\n    \"failureCount\": \"<integer>\"\n  },\n  \"failures\": [\n    {\n      \"path\": \"<string>\",\n      \"type\": \"<string>\",\n      \"error\": \"<string>\"\n    },\n    {\n      \"path\": \"<string>\",\n      \"type\": \"<string>\",\n      \"error\": \"<string>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-10-21T21:27:08.000Z",
+                                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                                      "uid": "35240-b42394df-fa90-4433-a707-3a34134069d9"
+                                    },
+                                    {
+                                      "id": "9d31068a-c9f8-4486-a44e-0b6ee215d253",
+                                      "name": "The operation failed with an error.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                            "key": "isAdminMode",
+                                            "value": "<string>"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: basic",
+                                            "key": "Authorization",
+                                            "value": "Basic <credentials>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/v2/content/folders/:folderId/import/:jobId/result",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "v2",
+                                            "content",
+                                            "folders",
+                                            ":folderId",
+                                            "import",
+                                            ":jobId",
+                                            "result"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "folderId"
+                                            },
+                                            {
+                                              "key": "jobId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Internal Server Error",
+                                      "code": 500,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                                      "createdAt": "2026-10-21T21:27:08.000Z",
+                                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                                      "uid": "35240-9d31068a-c9f8-4486-a44e-0b6ee215d253"
+                                    }
+                                  ],
+                                  "createdAt": "2026-10-21T21:27:08.000Z",
+                                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                                  "uid": "35240-6e67a25e-31bc-44d1-855c-5ba380268661"
+                                }
+                              ],
+                              "id": "5975ec80-5648-4252-8c4d-93e09cc04585",
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-5975ec80-5648-4252-8c4d-93e09cc04585"
+                            }
+                          ],
+                          "id": "11536f80-72c2-489c-88e5-a0195ab668cd",
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-11536f80-72c2-489c-88e5-a0195ab668cd"
+                        },
+                        {
+                          "name": "Start A Content Import Job",
+                          "id": "b2044d08-955e-4c3e-9a99-7d7f2cf08078",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                "key": "isAdminMode",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/content/folders/:folderId/import?overwrite=false",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "content",
+                                "folders",
+                                ":folderId",
+                                "import"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Set this to \"true\" to overwrite a content item if the name already exists.",
+                                  "key": "overwrite",
+                                  "value": "false"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "cb0c8f76-483a-46f1-89be-be7e0ab3e624",
+                                  "key": "folderId",
+                                  "value": "<string>",
+                                  "description": "(Required) The identifier of the folder to import into. Identifiers from the Library in the Sumo user interface are provided in decimal format which is incompatible with this API. The identifier needs to be in hexadecimal format."
+                                }
+                              ]
+                            },
+                            "description": "Schedule an asynchronous import of content inside an existing folder with the given identifier. Import requests can be used to create or update content within a folder. Content items need to have a unique name within their folder. If there is already a content item with the same name in the folder, you can set the `overwrite` parameter to `true` to overwrite existing content items. By default, the `overwrite` parameter is set to `false`, where the import will fail if a content item with the same name already exist. Keep in mind when importing large folders that there is a limit of 1000 content objects that can be imported at once. If you want to import more than 1000 content objects, then be sure to split the import into batches of 1000 objects or less."
+                          },
+                          "response": [
+                            {
+                              "id": "e94f8a73-1bc4-47b5-bdd0-a31687814e69",
+                              "name": "Import job has been scheduled.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/folders/:folderId/import?overwrite=false",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    "folders",
+                                    ":folderId",
+                                    "import"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Set this to \"true\" to overwrite a content item if the name already exists.",
+                                      "key": "overwrite",
+                                      "value": "false"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "folderId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-e94f8a73-1bc4-47b5-bdd0-a31687814e69"
+                            },
+                            {
+                              "id": "80996f77-4c74-4ad2-b355-7006825dfe92",
+                              "name": "The operation failed with an error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Set this to \"true\" if you want to perform the request as a Content Administrator.",
+                                    "key": "isAdminMode",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/content/folders/:folderId/import?overwrite=false",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "content",
+                                    "folders",
+                                    ":folderId",
+                                    "import"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Set this to \"true\" to overwrite a content item if the name already exists.",
+                                      "key": "overwrite",
+                                      "value": "false"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "folderId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"detail\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:27:08.000Z",
+                              "updatedAt": "2026-10-21T21:27:08.000Z",
+                              "uid": "35240-80996f77-4c74-4ad2-b355-7006825dfe92"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:27:08.000Z",
+                          "updatedAt": "2026-10-21T21:27:08.000Z",
+                          "uid": "35240-b2044d08-955e-4c3e-9a99-7d7f2cf08078"
+                        }
+                      ],
+                      "id": "b3882961-0518-451f-bf9c-a446128bb754",
+                      "createdAt": "2026-10-21T21:27:08.000Z",
+                      "updatedAt": "2026-10-21T21:27:08.000Z",
+                      "uid": "35240-b3882961-0518-451f-bf9c-a446128bb754"
+                    }
+                  ],
+                  "id": "81d8f87f-a41a-45d3-8a07-7ab2d67ba579",
+                  "createdAt": "2026-10-21T21:27:08.000Z",
+                  "updatedAt": "2026-10-21T21:27:08.000Z",
+                  "uid": "35240-81d8f87f-a41a-45d3-8a07-7ab2d67ba579"
+                }
+              ],
+              "id": "10e46ccf-0cf0-4d77-8c99-d9c7c159c5a4",
+              "createdAt": "2026-10-21T21:27:08.000Z",
+              "updatedAt": "2026-10-21T21:27:08.000Z",
+              "uid": "35240-10e46ccf-0cf0-4d77-8c99-d9c7c159c5a4"
+            }
+          ],
+          "id": "194260b8-be45-4f1f-8f3d-4db36aa48c53",
+          "createdAt": "2026-10-21T21:27:08.000Z",
+          "updatedAt": "2026-10-21T21:27:08.000Z",
+          "uid": "35240-194260b8-be45-4f1f-8f3d-4db36aa48c53"
+        }
+      ],
+      "id": "5e3575b0-481b-4704-9283-7f598c453ab3",
+      "createdAt": "2026-10-21T21:27:08.000Z",
+      "updatedAt": "2026-10-21T21:27:08.000Z",
+      "uid": "35240-5e3575b0-481b-4704-9283-7f598c453ab3"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.au.sumologic.com/api/"
+    }
+  ]
+}
